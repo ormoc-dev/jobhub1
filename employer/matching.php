@@ -70,17 +70,16 @@ if ($selectedJob && !empty($jobApplicants)) {
 $aiCandidates = [];
 if ($selectedJob && !empty($jobApplicants)) {
     foreach ($jobApplicants as $candidate) {
-        // Use strict matching function - skills and experience only, 100% exact match
-        $score = computeStrictSkillExperienceMatchScore($selectedJob, $candidate);
-        // Show only 100% matches (exact skills and experience match)
-        if ($score === 100) {
-            $candidate['ai_score'] = $score;
+        // AI matching can be more flexible, show candidates with at least some overlap
+        $score = computeMatchScore($selectedJob, $candidate);
+        if ($score >= 40) { // Show anyone with 40% or more basic match for AI to analyze
+            $candidate['ai_score_placeholder'] = $score;
             $aiCandidates[] = $candidate;
         }
     }
 
     usort($aiCandidates, function ($a, $b) {
-        return $b['ai_score'] <=> $a['ai_score'];
+        return $b['ai_score_placeholder'] <=> $a['ai_score_placeholder'];
     });
 }
 
@@ -157,10 +156,7 @@ if (!empty($jobs) && !empty($allApplicants)) {
             border: 2px solid transparent;
         }
         
-        .nav-pills .nav-link:not(.active) {
-            background: #f8f9fa;
-            color: #6b7280;
-        }
+    
         
         .nav-pills .nav-link.active {
             background: var(--gradient-primary);
@@ -633,16 +629,15 @@ if (!empty($jobs) && !empty($allApplicants)) {
                                                 <th style="padding-left: 1.5rem;">Candidate Profile</th>
                                                 <th>Technical Skills</th>
                                                 <th>Experience Level</th>
-                                                <th>AI Compatibility Score</th>
+                                                <th>AI Deep Analysis</th>
                                                 <th style="padding-right: 1.5rem;">Quick Actions</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <?php foreach ($aiCandidates as $candidate): 
-                                                $score = $candidate['ai_score'];
                                                 $scoreClass = $score >= 80 ? 'excellent' : ($score >= 60 ? 'good' : 'fair');
                                             ?>
-                                                <tr class="candidate-card">
+                                                 <tr class="candidate-card" id="row-<?php echo $candidate['user_id']; ?>">
                                                     <td style="padding-left: 1.5rem;">
                                                         <div class="d-flex align-items-center">
                                                             <?php
@@ -675,11 +670,13 @@ if (!empty($jobs) && !empty($allApplicants)) {
                                                             <?php echo htmlspecialchars($candidate['experience_level'] ?: 'Not specified'); ?>
                                                         </span>
                                                     </td>
-                                                    <td>
-                                                        <span class="score-badge <?php echo $scoreClass; ?>">
-                                                            <i class="fas fa-<?php echo $score >= 80 ? 'check-circle' : ($score >= 60 ? 'check' : 'exclamation-circle'); ?>"></i>
-                                                            <?php echo $candidate['ai_score']; ?>%
-                                                        </span>
+                                                    <td class="ai-analysis-cell" style="max-width: 300px;">
+                                                        <div class="ai-deep-info">
+                                                            <button type="button" class="btn btn-sm btn-outline-primary btn-ai-analyze" onclick="performAiDeepMatch(<?php echo $selectedJobId; ?>, <?php echo $candidate['user_id']; ?>, this)">
+                                                                <i class="fas fa-magic me-1"></i>Deep Analyze
+                                                            </button>
+                                                            <div class="ai-reasoning mt-1 small text-muted" style="display: none;"></div>
+                                                        </div>
                                                     </td>
                                                     <td style="padding-right: 1.5rem;">
                                                         <div class="btn-group" role="group">
@@ -705,5 +702,67 @@ if (!empty($jobs) && !empty($allApplicants)) {
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        async function performAiDeepMatch(jobId, userId, btn) {
+            const cell = btn.closest('.ai-analysis-cell');
+            const reasoningDiv = cell.querySelector('.ai-reasoning');
+            const originalHtml = btn.innerHTML;
+            
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin me-1"></i>Analyzing...';
+            btn.disabled = true;
+            reasoningDiv.style.display = 'none';
+
+            try {
+                const response = await fetch('generate_ai_match.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ job_id: jobId, user_id: userId })
+                });
+
+                const data = await response.json();
+                
+                if (data.success) {
+                    const score = data.match_score;
+                    const scoreClass = score >= 80 ? 'excellent' : (score >= 60 ? 'good' : 'fair');
+                    const icon = score >= 80 ? 'check-circle' : (score >= 60 ? 'check' : 'exclamation-circle');
+                    
+                    btn.outerHTML = `
+                        <span class="score-badge ${scoreClass}">
+                            <i class="fas fa-${icon}"></i> AI Match: ${score}%
+                        </span>
+                    `;
+                    
+                    reasoningDiv.innerHTML = `<i class="fas fa-quote-left me-1"></i> ${data.reasoning}`;
+                    reasoningDiv.style.display = 'block';
+                    reasoningDiv.classList.add('fade-in');
+                } else {
+                    alert('AI Analysis failed: ' + (data.error || 'Unknown error'));
+                    btn.innerHTML = originalHtml;
+                    btn.disabled = false;
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Connection error during AI analysis.');
+                btn.innerHTML = originalHtml;
+                btn.disabled = false;
+            }
+        }
+    </script>
+    <style>
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .ai-reasoning {
+            border-left: 2px solid #667eea;
+            padding-left: 10px;
+            font-style: italic;
+            color: #4b5563 !important;
+            line-height: 1.4;
+        }
+    </style>
 </body>
 </html>

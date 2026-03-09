@@ -31,9 +31,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $description = sanitizeInput($_POST['description']);
     $requirementsInput = $_POST['requirements'] ?? '';
     if (is_array($requirementsInput)) {
-        $requirementsInput = $requirementsInput[0] ?? '';
+        $requirements = implode(',', array_map('sanitizeInput', $requirementsInput));
+    } else {
+        $requirements = sanitizeInput($requirementsInput);
     }
-    $requirements = sanitizeInput($requirementsInput);
     // Get category ID from category name or direct ID
     $categoryNameOrId = $_POST['category_id'] ?? '';
     if (is_numeric($categoryNameOrId)) {
@@ -8903,13 +8904,13 @@ $jobTitleToQualificationsJson = json_encode($jobTitleToQualifications, JSON_UNES
                                 </label>
                                 <div class="input-group-custom">
                                     <i class="fas fa-check-circle input-icon"></i>
-                                    <select class="form-select form-select-lg" name="requirements" id="requirements" required>
+                                    <select class="form-select form-select-lg" name="requirements[]" id="requirements" multiple style="height: 150px;" required>
                                         <option value="">Select Job Title first to see available skills</option>
                                     </select>
                                 </div>
                                 <div class="form-text">
                                     <i class="fas fa-info-circle me-1"></i>
-                                    Select a job title first, then choose one required skill.
+                                    Select a job title first, then hold Ctrl (Windows) or Cmd (Mac) to select multiple required skills.
                                 </div>
                             </div>
                             </div>
@@ -8989,7 +8990,12 @@ $jobTitleToQualificationsJson = json_encode($jobTitleToQualifications, JSON_UNES
                     option.value = skill;
                     option.textContent = skill;
                     // Preserve selection if it was previously selected or matches preferred selection
-                    if (currentSelected === skill || preferredSelection === skill) {
+                    if (Array.isArray(preferredSelection)) {
+                        if (preferredSelection.includes(skill)) option.selected = true;
+                    } else if (typeof preferredSelection === 'string' && preferredSelection.includes(',')) {
+                        const preferredArray = preferredSelection.split(',').map(s => s.trim());
+                        if (preferredArray.includes(skill)) option.selected = true;
+                    } else if (currentSelected === skill || preferredSelection === skill) {
                         option.selected = true;
                     }
                     requirementsSelect.appendChild(option);

@@ -126,71 +126,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <body class="employee-layout">
     <?php include 'includes/sidebar.php'; ?>
 
-    <!-- Main Content -->
-    <div class="employee-main-content">
-        <div class="row">
-            <!-- Sidebar -->
-            <div class="col-md-3 col-lg-2 sidebar">
-                <div class="d-flex flex-column">
-                    <a href="../index.php" class="navbar-brand text-white p-3 text-center">
-                        <img src="../worklink.jpg" alt="WORKLINK" class="logo-img mb-2" style="height: 40px; width: 40px; border-radius: 50%; object-fit: cover;">
-                        WORKLINK
-                    </a>
-                    <ul class="nav nav-pills flex-column">
-                        <li class="nav-item">
-                            <a class="nav-link" href="dashboard.php">
-                                <i class="fas fa-tachometer-alt"></i>Dashboard
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" href="profile.php">
-                                <i class="fas fa-user"></i>My Profile
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="jobs.php">
-                                <i class="fas fa-search"></i>Browse All Jobs
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="applications.php">
-                                <i class="fas fa-file-alt"></i>My Applications
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="saved-jobs.php">
-                                <i class="fas fa-heart"></i>Saved Jobs
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                         <a class="nav-link" href="interviews.php">
-                                 <i class="fas fa-calendar-check me-2"></i>Interviews
-                                </a>
-                         </li>
-                        <li class="nav-item">
-                         <a class="nav-link" href="careertools.php">
-                                <i class="fas fa-tools me-2"></i>Career Tools
-                                </a>
-                         </li>
-                         <li class="nav-item">
-                             <a class="nav-link" href="verification-history.php">
-                                <i class="fas fa-check-circle me-2"></i>Verification History
-                            </a>
-                          </li>
-                         <li class="nav-item">
-                            <a class="nav-link" href="messages.php">
-                                <i class="fas fa-envelope"></i>Messages
-                            </a>
-                        </li>
-                        <li class="nav-item mt-auto">
-                            <a class="nav-link" href="../logout.php">
-                                <i class="fas fa-sign-out-alt"></i>Logout
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-
+  
             <!-- Main Content -->
             <div class="col-md-9 col-lg-10 p-0 profile-page modern-profile">
                 <!-- Modern Profile Header -->

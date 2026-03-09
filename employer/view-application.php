@@ -1,6 +1,7 @@
 <?php
 include '../config.php';
 include 'env.php';
+include 'mailer.php';
 requireRole('employer');
 
 // Get application ID from URL
@@ -47,6 +48,10 @@ if (!$application) {
 // Handle status update
 $message = '';
 $error = '';
+$sms_message = '';
+$sms_error = '';
+$email_message = '';
+$email_error = '';
 
 function normalizePhoneNumber($number) {
     $number = trim((string) $number);
@@ -190,7 +195,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $verification_history = $stmt->fetchAll();
 
 
-                if ($new_status === 'accepted') {
+                if ($new_status === 'accepted' || $new_status === 'reviewed' || $new_status === 'rejected') {
                     $send_sms = isset($_POST['send_sms']) && $_POST['send_sms'] == '1';
                     
                     if ($send_sms) {
@@ -202,15 +207,70 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         $sms_body = isset($_POST['custom_sms_message']) ? trim($_POST['custom_sms_message']) : '';
                         
                         if (empty($sms_body)) {
-                            $sms_body = sprintf(
-                                "Hi %s, Congratulations! your application for %s at %s has been APPROVED. Please check your account for updates.", 
-                                $jobseeker_name, 
-                                $job_title, 
-                                $company_name
-                            );
+                            if ($new_status === 'accepted') {
+                                $sms_body = sprintf(
+                                    "Hi %s, Congratulations! your application for %s at %s has been APPROVED. Please check your account for updates.", 
+                                    $jobseeker_name, 
+                                    $job_title, 
+                                    $company_name
+                                );
+                            } elseif ($new_status === 'rejected') {
+                                $sms_body = sprintf(
+                                    "Hi %s, Thank you for applying for %s at %s. Unfortunately, we have decided to move forward with other candidates.", 
+                                    $jobseeker_name, 
+                                    $job_title, 
+                                    $company_name
+                                );
+                            } else {
+                                $sms_body = sprintf(
+                                    "Hi %s, We've reviewed your application for %s at %s. We'll be in touch soon for further updates.", 
+                                    $jobseeker_name, 
+                                    $job_title, 
+                                    $company_name
+                                );
+                            }
                         }
                         
-                        sendIprogSmsNotification($recipient, $sms_body);
+                        $sms_response_raw = sendIprogSmsNotification($recipient, $sms_body);
+                        if ($sms_response_raw) {
+                            $sms_response = json_decode($sms_response_raw, true);
+                            if (isset($sms_response['status']) && strtolower($sms_response['status']) === 'success') {
+                                $sms_message = "SMS notification sent successfully!";
+                            } else {
+                                $error_desc = $sms_response['message'] ?? 'Unknown error';
+                                $sms_error = "Failed to send SMS: " . $error_desc;
+                            }
+                        } else {
+                            $sms_error = "Failed to communicate with the SMS gateway.";
+                        }
+                    }
+
+                    $send_email = isset($_POST['send_email']) && $_POST['send_email'] == '1';
+                    if ($send_email) {
+                        $recipient_email = $application['email'] ?? '';
+                        if (!empty($recipient_email)) {
+                            $subject = "Update regarding your application for " . ($application['job_title'] ?? 'the position') . " at " . ($company['company_name'] ?? 'our company');
+                            
+                            $custom_email = isset($_POST['custom_email_message']) ? trim($_POST['custom_email_message']) : '';
+                            
+                            if (!empty($custom_email)) {
+                                // Convert custom message to HTML friendly format (newlines to <br>)
+                                $email_body = nl2br(htmlspecialchars($custom_email));
+                            } elseif ($new_status === 'accepted') {
+                                $email_body = "<h3>Congratulations!</h3><p>Hi " . htmlspecialchars($application['first_name']) . ",</p><p>We are pleased to inform you that your application for <strong>" . htmlspecialchars($application['job_title']) . "</strong> at <strong>" . htmlspecialchars($company['company_name']) . "</strong> has been <strong>APPROVED</strong>.</p><p>Please log in to your account for further details and next steps.</p><p>Best regards,<br>" . htmlspecialchars($company['company_name']) . " Team</p>";
+                            } elseif ($new_status === 'rejected') {
+                                $email_body = "<h3>Application Update</h3><p>Hi " . htmlspecialchars($application['first_name']) . ",</p><p>Thank you for your interest in the <strong>" . htmlspecialchars($application['job_title']) . "</strong> position at <strong>" . htmlspecialchars($company['company_name']) . "</strong>.</p><p>After careful review, we have decided to move forward with other candidates at this time. We appreciate the time and effort you put into your application and wish you the best in your job search.</p><p>Best regards,<br>" . htmlspecialchars($company['company_name']) . " Team</p>";
+                            } else {
+                                $email_body = "<h3>Application Under Review</h3><p>Hi " . htmlspecialchars($application['first_name']) . ",</p><p>We have reviewed your application for <strong>" . htmlspecialchars($application['job_title']) . "</strong> at <strong>" . htmlspecialchars($company['company_name']) . "</strong>.</p><p>We will be in touch with you soon regarding the next steps in our hiring process.</p><p>Best regards,<br>" . htmlspecialchars($company['company_name']) . " Team</p>";
+                            }
+
+                            $email_result = sendEmailNotification($recipient_email, $subject, $email_body);
+                            if ($email_result['status'] === 'success') {
+                                $email_message = "Email notification sent successfully!";
+                            } else {
+                                $email_error = "Failed to send Email: " . $email_result['message'];
+                            }
+                        }
                     }
                 }
                 
@@ -281,10 +341,56 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $application = $stmt->fetch();
                 
                 if ($new_interview_status === 'interviewed') {
-                    $recipient = $application['contact_no'] ?? '';
-                    if (!empty($recipient)) {
-                        $sms_body = buildInterviewSmsMessage($application, $company, $interview_date, $interview_time, $interview_mode);
-                        sendIprogSmsNotification($recipient, $sms_body);
+                    $send_sms = isset($_POST['send_sms']) && $_POST['send_sms'] == '1';
+                    
+                    if ($send_sms) {
+                        $recipient = $application['contact_no'] ?? '';
+                        if (!empty($recipient)) {
+                            $sms_body = isset($_POST['custom_sms_message']) ? trim($_POST['custom_sms_message']) : '';
+                            
+                            if (empty($sms_body)) {
+                                $sms_body = buildInterviewSmsMessage($application, $company, $interview_date, $interview_time, $interview_mode);
+                            }
+                            
+                            $sms_response_raw = sendIprogSmsNotification($recipient, $sms_body);
+                            if ($sms_response_raw) {
+                                $sms_response = json_decode($sms_response_raw, true);
+                                if (isset($sms_response['status']) && strtolower($sms_response['status']) === 'success') {
+                                    $sms_message = "Interview SMS sent successfully!";
+                                } else {
+                                    $error_desc = $sms_response['message'] ?? 'Unknown error';
+                                    $sms_error = "Failed to send Interview SMS: " . $error_desc;
+                                }
+                            } else {
+                                $sms_error = "Failed to communicate with the SMS gateway.";
+                            }
+                        }
+                    }
+
+                    $send_email = isset($_POST['send_email']) && $_POST['send_email'] == '1';
+                    if ($send_email) {
+                        $recipient_email = $application['email'] ?? '';
+                        if (!empty($recipient_email)) {
+                            $subject = "Interview Invitation: " . ($application['job_title'] ?? 'Position') . " at " . ($company['company_name'] ?? 'Company');
+                            
+                            $email_body = "<h3>Interview Invitation</h3>"
+                                . "<p>Hi " . htmlspecialchars($application['first_name']) . ",</p>"
+                                . "<p>We are pleased to invite you for an interview for the <strong>" . htmlspecialchars($application['job_title'] ?? 'position') . "</strong> at <strong>" . htmlspecialchars($company['company_name'] ?? 'our company') . "</strong>.</p>"
+                                . "<ul>"
+                                . "<li><strong>Date:</strong> " . htmlspecialchars($interview_date ?: 'To be confirmed') . "</li>"
+                                . "<li><strong>Time:</strong> " . htmlspecialchars($interview_time ?: 'To be confirmed') . "</li>"
+                                . "<li><strong>Mode:</strong> " . htmlspecialchars($interview_mode ?: 'To be confirmed') . "</li>"
+                                . "</ul>"
+                                . "<p>Please confirm your availability as soon as possible. We look forward to meeting you!</p>"
+                                . "<p>Best regards,<br>" . htmlspecialchars($company['company_name'] ?? 'HR Team') . "</p>";
+
+                            $email_result = sendEmailNotification($recipient_email, $subject, $email_body);
+                            if ($email_result['status'] === 'success') {
+                                $email_message = "Interview Email sent successfully!";
+                            } else {
+                                $email_error = "Failed to send Interview Email: " . $email_result['message'];
+                            }
+                        }
                     }
                 }
 
@@ -481,8 +587,7 @@ switch($application['status']) {
     <?php include 'includes/sidebar.php'; ?>
 
     <!-- Main Content -->
-    <div class="employer-main-content">
-        <div class="row">
+    
             <div class="col-md-9 col-lg-10 ms-sm-auto px-md-4 main-content">
                 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center page-header">
                     <h1 class="h2">
@@ -511,6 +616,53 @@ switch($application['status']) {
                         <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                     </div>
                 <?php endif; ?>
+
+                <!-- SMS Toast Notification Container -->
+                <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 1055;">
+                    <?php if ($sms_message): ?>
+                    <div id="smsSuccessToast" class="toast align-items-center text-bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
+                        <div class="d-flex">
+                            <div class="toast-body">
+                                <i class="fas fa-envelope-open-text me-2"></i><?php echo htmlspecialchars($sms_message); ?>
+                            </div>
+                            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                        </div>
+                    </div>
+                    <?php endif; ?>
+
+                    <?php if ($sms_error): ?>
+                    <div id="smsErrorToast" class="toast align-items-center text-bg-danger border-0" role="alert" aria-live="assertive" aria-atomic="true">
+                        <div class="d-flex">
+                            <div class="toast-body">
+                                <i class="fas fa-exclamation-triangle me-2"></i><?php echo htmlspecialchars($sms_error); ?>
+                            </div>
+                            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                        </div>
+                    </div>
+                    <?php endif; ?>
+
+                    <?php if ($email_message): ?>
+                    <div id="emailSuccessToast" class="toast align-items-center text-bg-info text-white border-0" role="alert" aria-live="assertive" aria-atomic="true">
+                        <div class="d-flex">
+                            <div class="toast-body">
+                                <i class="fas fa-paper-plane me-2"></i><?php echo htmlspecialchars($email_message); ?>
+                            </div>
+                            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                        </div>
+                    </div>
+                    <?php endif; ?>
+
+                    <?php if ($email_error): ?>
+                    <div id="emailErrorToast" class="toast align-items-center text-bg-danger border-0" role="alert" aria-live="assertive" aria-atomic="true">
+                        <div class="d-flex">
+                            <div class="toast-body">
+                                <i class="fas fa-exclamation-circle me-2"></i><?php echo htmlspecialchars($email_error); ?>
+                            </div>
+                            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                        </div>
+                    </div>
+                    <?php endif; ?>
+                </div>
 
                 <!-- Application Overview -->
                 <div class="row g-4">
@@ -1063,14 +1215,10 @@ switch($application['status']) {
                             </div>
                             <div class="card-body">
                                 <!-- Mark as Reviewed -->
-                                <?php if ($application['status'] !== 'reviewed'): ?>
-                                <form method="POST" class="mb-2" action="" onsubmit="this.action = window.location.href;">
-                                    <input type="hidden" name="action" value="update_status">
-                                    <input type="hidden" name="new_status" value="reviewed">
-                                    <button type="submit" class="btn btn-info w-100">
-                                        <i class="fas fa-eye me-1"></i>Mark as Reviewed
-                                    </button>
-                                </form>
+                                <?php if ($application['status'] === 'pending'): ?>
+                                <button type="button" class="btn btn-info w-100 mb-2" data-bs-toggle="modal" data-bs-target="#reviewApplicationModal">
+                                    <i class="fas fa-eye me-1"></i>Mark as Reviewed
+                                </button>
                                 <?php endif; ?>
 
                                 <!-- Approve Application -->
@@ -1082,14 +1230,9 @@ switch($application['status']) {
 
                                 <!-- Reject Application -->
                                 <?php if ($application['status'] !== 'rejected'): ?>
-                                <form method="POST" class="mb-2" action="" onsubmit="this.action = window.location.href;">
-                                    <input type="hidden" name="action" value="update_status">
-                                    <input type="hidden" name="new_status" value="rejected">
-                                    <button type="submit" class="btn btn-danger w-100" 
-                                            onclick="return confirm('Are you sure you want to reject this application?')">
-                                        <i class="fas fa-times me-1"></i>Reject Application
-                                    </button>
-                                </form>
+                                <button type="button" class="btn btn-danger w-100 mb-2" data-bs-toggle="modal" data-bs-target="#rejectApplicationModal">
+                                    <i class="fas fa-times me-1"></i>Reject Application
+                                </button>
                                 <?php endif; ?>
 
                                 <!-- Interview Status -->
@@ -1149,6 +1292,51 @@ switch($application['status']) {
                                         <label class="form-label small mb-1">Interview Mode <span class="text-danger">*</span></label>
                                         <input type="text" name="interview_mode" class="form-control form-control-sm interview-mode-input" placeholder="Online / On-site" required>
                                     </div>
+                                    
+                                    <hr>
+                                    <h6 class="small fw-bold">Notification Options</h6>
+                                     <div class="form-check mb-2">
+                            <input class="form-check-input" type="checkbox" id="sendEmailApproval" name="send_email" value="1" checked>
+                            <label class="form-check-label" for="sendEmailApproval">
+                                Send Email Notification
+                            </label>
+                            <small class="d-block text-muted">Applicant will receive an email about their approved application.</small>
+                        </div>
+                                    <div class="form-check mb-2">
+                                        <input class="form-check-input" type="checkbox" id="sendSmsInterview" name="send_sms" value="1" checked onchange="document.getElementById('interviewSmsTemplateContainer').style.display = this.checked ? 'block' : 'none'">
+                                        <label class="form-check-label small" for="sendSmsInterview">
+                                            Send SMS Invitation
+                                        </label>
+                                    </div>
+                                    <div class="mb-3" id="interviewSmsTemplateContainer">
+                                        <label class="form-label small fw-bold mt-2">Customize SMS Message</label>
+                                        
+                                        <select id="interviewSmsTemplateSelector" class="form-select form-select-sm mb-2" onchange="updateInterviewSmsTextarea(this.value)">
+                                            <option value="default">Template: Default</option>
+                                            <option value="formal">Template: Formal</option>
+                                            <option value="casual">Template: Casual</option>
+                                        </select>
+
+                                        <?php
+                                        $jobseeker_name = trim($application['first_name'] . ' ' . $application['last_name']);
+                                        $company_name = $company['company_name'] ?? 'our company';
+                                        $job_title = $application['job_title'] ?? 'the position';
+                                        
+                                        $interview_default_sms = "Hi {$jobseeker_name}, you are invited for an interview for {$job_title} at {$company_name}. Please check your account for schedule details.";
+                                        $interview_formal_sms = "Dear {$jobseeker_name}, we would like to invite you to an interview for the {$job_title} position at {$company_name}. Please log in for details.";
+                                        $interview_casual_sms = "Hey {$jobseeker_name}! We'd love to chat with you about the {$job_title} role at {$company_name}. Check your account for the interview schedule!";
+                                        ?>
+                                        
+                                        <textarea name="custom_sms_message" id="interviewCustomSmsMessage" class="form-control form-control-sm" rows="5"><?php echo htmlspecialchars($interview_default_sms); ?></textarea>
+                                        <small class="text-muted d-block mt-1" style="font-size: 0.75rem;">You can freely edit the message above before sending.</small>
+
+                                        <div class="mt-2 text-end">
+                                            <button type="button" class="btn btn-sm btn-outline-info" id="btnGenerateAiInterviewMessage">
+                                                <i class="fas fa-magic me-1"></i>Generate AI Invite
+                                            </button>
+                                        </div>
+                                    </div>
+
                                     <button type="submit" class="btn btn-success w-100 btn-mark-interviewed" disabled>
                                         <i class="fas fa-check-circle me-1"></i>Mark as Interviewed
                                     </button>
@@ -1194,6 +1382,74 @@ switch($application['status']) {
                                             checkFields();
                                         }
                                         document.querySelectorAll('form').forEach(bindInterviewTime);
+
+                                        // AI generation logic for interview
+                                        function updateInterviewSmsTextarea(template) {
+                                            const textarea = document.getElementById('interviewCustomSmsMessage');
+                                            if (template === 'default') {
+                                                textarea.value = <?php echo json_encode($interview_default_sms); ?>;
+                                            } else if (template === 'formal') {
+                                                textarea.value = <?php echo json_encode($interview_formal_sms); ?>;
+                                            } else if (template === 'casual') {
+                                                textarea.value = <?php echo json_encode($interview_casual_sms); ?>;
+                                            }
+                                        }
+
+                                        const btnGenerateAiInterview = document.getElementById('btnGenerateAiInterviewMessage');
+                                        if (btnGenerateAiInterview) {
+                                            btnGenerateAiInterview.addEventListener('click', async function() {
+                                                const btn = this;
+                                                const textarea = document.getElementById('interviewCustomSmsMessage');
+                                                const form = btn.closest('form');
+                                                
+                                                // Get current values from the form
+                                                const dateInput = form.querySelector('.interview-date-input').value;
+                                                const timeInput = form.querySelector('.interview-time-hidden').value;
+                                                const modeInput = form.querySelector('.interview-mode-input').value;
+                                                
+                                                if (!dateInput || !timeInput || !modeInput) {
+                                                    alert('Please fill out the interview date, time, and mode before generating an AI message.');
+                                                    return;
+                                                }
+                                                
+                                                const originalText = btn.innerHTML;
+                                                btn.innerHTML = '<i class="fas fa-spinner fa-spin me-1"></i>Generating...';
+                                                btn.disabled = true;
+
+                                                try {
+                                                    const response = await fetch('generate_ai_sms.php', {
+                                                        method: 'POST',
+                                                        headers: {
+                                                            'Content-Type': 'application/json',
+                                                        },
+                                                        body: JSON.stringify({
+                                                            application_id: <?php echo $application_id; ?>,
+                                                            jobseeker_name: <?php echo json_encode($jobseeker_name); ?>,
+                                                            job_title: <?php echo json_encode($job_title); ?>,
+                                                            company_name: <?php echo json_encode($company_name); ?>,
+                                                            status: 'interviewed',
+                                                            interview_date: dateInput,
+                                                            interview_time: timeInput,
+                                                            interview_mode: modeInput
+                                                        })
+                                                    });
+
+                                                    const data = await response.json();
+                                                    
+                                                    if (data.success) {
+                                                        textarea.value = data.message;
+                                                    } else {
+                                                        alert('Failed to generate AI message: ' + (data.error || 'Unknown error'));
+                                                    }
+                                                } catch (error) {
+                                                    console.error('Error generating AI text:', error);
+                                                    alert('An error occurred while communicating with the AI server.');
+                                                } finally {
+                                                    btn.innerHTML = originalText;
+                                                    btn.disabled = false;
+                                                }
+                                            });
+                                        }
                                     })();
                                 </script>
 
@@ -1261,8 +1517,7 @@ switch($application['status']) {
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
+      
 
     <!-- Verification Modals -->
     <!-- Verify Document 1 Modal -->
@@ -1747,8 +2002,138 @@ switch($application['status']) {
             </div>
         </div>
     </div>
-    </div>
     <?php endif; ?>
+    <!-- Review Application Modal -->
+    <div class="modal fade" id="reviewApplicationModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-info text-white">
+                    <h5 class="modal-title">Mark Application as Reviewed</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <form method="POST" action="">
+                    <div class="modal-body">
+                        <input type="hidden" name="action" value="update_status">
+                        <input type="hidden" name="new_status" value="reviewed">
+                        
+                        <p>Are you sure you want to mark this application as reviewed? This will notify the applicant that their profile has been seen.</p>
+                        
+                        <hr>
+                        <h6>Notification Options</h6>
+                         <div class="form-check mb-2">
+                            <input class="form-check-input" type="checkbox" id="sendEmailReviewChoice" name="send_email" value="1" checked onchange="document.getElementById('reviewEmailTemplateContainer').style.display = this.checked ? 'block' : 'none'">
+                            <label class="form-check-label" for="sendEmailReviewChoice">
+                                Send Email Notification
+                            </label>
+                            <small class="d-block text-muted">Applicant will receive an email about their profile being reviewed.</small>
+                        </div>
+                        <div class="mb-3" id="reviewEmailTemplateContainer">
+                            <label class="form-label small fw-bold">Customize Email Message (Optional)</label>
+                            <textarea name="custom_email_message" id="reviewCustomEmailMessage" class="form-control form-control-sm" rows="4" placeholder="Leave empty to use the default professional template..."></textarea>
+                            <div class="mt-2 text-end">
+                                <button type="button" class="btn btn-sm btn-outline-info" onclick="generateAiEmail(<?php echo $application_id; ?>, 'reviewed', 'reviewCustomEmailMessage', this)">
+                                    <i class="fas fa-magic me-1"></i>Generate AI Email
+                                </button>
+                            </div>
+                        </div>
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" type="checkbox" id="sendSmsReview" name="send_sms" value="1" checked onchange="document.getElementById('reviewSmsTemplateContainer').style.display = this.checked ? 'block' : 'none'">
+                            <label class="form-check-label" for="sendSmsReview">
+                                Send SMS Notification
+                            </label>
+                            <small class="d-block text-muted">Applicant will receive a text message (if phone number is available).</small>
+                        </div>
+                        <div class="mb-3" id="reviewSmsTemplateContainer">
+                            <label class="form-label small fw-bold">Customize SMS Message</label>
+                            
+                            <select id="reviewSmsTemplateSelector" class="form-select form-select-sm mb-2" onchange="updateReviewSmsTextarea(this.value)">
+                                <option value="default">Template: Default</option>
+                                <option value="formal">Template: Formal</option>
+                                <option value="casual">Template: Casual</option>
+                            </select>
+
+                            <?php
+                            $jobseeker_name = trim($application['first_name'] . ' ' . $application['last_name']);
+                            $company_name = $company['company_name'] ?? 'our company';
+                            $job_title = $application['job_title'] ?? 'the position';
+                            
+                            $reviewed_default_sms = "Hi {$jobseeker_name}, We've reviewed your application for {$job_title} at {$company_name}. We'll be in touch soon!";
+                            $reviewed_formal_sms = "Dear {$jobseeker_name}, This is to inform you that your application for {$job_title} at {$company_name} has been reviewed by our hiring team.";
+                            $reviewed_casual_sms = "Hey {$jobseeker_name}, Just a quick update: we've had a look at your application for {$job_title} at {$company_name}! Stay tuned.";
+                            ?>
+                            
+                            <textarea name="custom_sms_message" id="reviewCustomSmsMessage" class="form-control form-control-sm" rows="5"><?php echo htmlspecialchars($reviewed_default_sms); ?></textarea>
+                            <small class="text-muted d-block mt-1">You can freely edit the message above before sending.</small>
+
+                            <div class="mt-2 text-end">
+                                <button type="button" class="btn btn-sm btn-outline-info" id="btnGenerateAiReviewMessage">
+                                    <i class="fas fa-magic me-1"></i>Generate AI Message
+                                </button>
+                            </div>
+
+                            <script>
+                                function updateReviewSmsTextarea(template) {
+                                    const textarea = document.getElementById('reviewCustomSmsMessage');
+                                    if (template === 'default') {
+                                        textarea.value = <?php echo json_encode($reviewed_default_sms); ?>;
+                                    } else if (template === 'formal') {
+                                        textarea.value = <?php echo json_encode($reviewed_formal_sms); ?>;
+                                    } else if (template === 'casual') {
+                                        textarea.value = <?php echo json_encode($reviewed_casual_sms); ?>;
+                                    }
+                                }
+
+                                document.getElementById('btnGenerateAiReviewMessage').addEventListener('click', async function() {
+                                    const btn = this;
+                                    const textarea = document.getElementById('reviewCustomSmsMessage');
+                                    
+                                    const originalText = btn.innerHTML;
+                                    btn.innerHTML = '<i class="fas fa-spinner fa-spin me-1"></i>Generating...';
+                                    btn.disabled = true;
+
+                                    try {
+                                        const response = await fetch('generate_ai_sms.php', {
+                                            method: 'POST',
+                                            headers: {
+                                                'Content-Type': 'application/json',
+                                            },
+                                            body: JSON.stringify({
+                                                application_id: <?php echo $application_id; ?>,
+                                                jobseeker_name: <?php echo json_encode($jobseeker_name); ?>,
+                                                job_title: <?php echo json_encode($job_title); ?>,
+                                                company_name: <?php echo json_encode($company_name); ?>,
+                                                status: 'reviewed'
+                                            })
+                                        });
+
+                                        const data = await response.json();
+                                        
+                                        if (data.success) {
+                                            textarea.value = data.message;
+                                        } else {
+                                            alert('Failed to generate AI message: ' + (data.error || 'Unknown error'));
+                                        }
+                                    } catch (error) {
+                                        console.error('Error generating AI text:', error);
+                                        alert('An error occurred while communicating with the AI server.');
+                                    } finally {
+                                        btn.innerHTML = originalText;
+                                        btn.disabled = false;
+                                    }
+                                });
+                            </script>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-info">
+                            <i class="fas fa-check me-1"></i>Confirm Review
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
     <!-- Approve Application Modal -->
     <div class="modal fade" id="approveApplicationModal" tabindex="-1">
@@ -1768,11 +2153,20 @@ switch($application['status']) {
                         <hr>
                         <h6>Notification Options</h6>
                         <div class="form-check mb-2">
-                            <input class="form-check-input" type="checkbox" id="sendEmailApproval" name="send_email" value="1" checked>
-                            <label class="form-check-label" for="sendEmailApproval">
+                            <input class="form-check-input" type="checkbox" id="sendEmailApproveChoice" name="send_email" value="1" checked onchange="document.getElementById('approveEmailTemplateContainer').style.display = this.checked ? 'block' : 'none'">
+                            <label class="form-check-label" for="sendEmailApproveChoice">
                                 Send Email Notification
                             </label>
                             <small class="d-block text-muted">Applicant will receive an email about their approved application.</small>
+                        </div>
+                        <div class="mb-3" id="approveEmailTemplateContainer">
+                            <label class="form-label small fw-bold">Customize Email Message (Optional)</label>
+                            <textarea name="custom_email_message" id="approveCustomEmailMessage" class="form-control form-control-sm" rows="4" placeholder="Leave empty to use the default professional template..."></textarea>
+                            <div class="mt-2 text-end">
+                                <button type="button" class="btn btn-sm btn-outline-info" onclick="generateAiEmail(<?php echo $application_id; ?>, 'accepted', 'approveCustomEmailMessage', this)">
+                                    <i class="fas fa-magic me-1"></i>Generate AI Email
+                                </button>
+                            </div>
                         </div>
                         <div class="form-check mb-3">
                             <input class="form-check-input" type="checkbox" id="sendSmsApproval" name="send_sms" value="1" checked onchange="document.getElementById('smsTemplateContainer').style.display = this.checked ? 'block' : 'none'">
@@ -1873,6 +2267,200 @@ switch($application['status']) {
         </div>
     </div>
 
+    <!-- Reject Application Modal -->
+    <div class="modal fade" id="rejectApplicationModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title">Reject Application</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <form method="POST" action="">
+                    <div class="modal-body">
+                        <input type="hidden" name="action" value="update_status">
+                        <input type="hidden" name="new_status" value="rejected">
+                        
+                        <p>Are you sure you want to reject this application? The applicant will be notified of your decision.</p>
+                        
+                        <hr>
+                        <h6>Notification Options</h6>
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="checkbox" id="sendEmailRejectChoice" name="send_email" value="1" checked onchange="document.getElementById('rejectEmailTemplateContainer').style.display = this.checked ? 'block' : 'none'">
+                            <label class="form-check-label" for="sendEmailRejectChoice">
+                                Send Email Notification
+                            </label>
+                            <small class="d-block text-muted">Applicant will receive an email about their rejected application.</small>
+                        </div>
+                        <div class="mb-3" id="rejectEmailTemplateContainer">
+                            <label class="form-label small fw-bold">Customize Email Message (Optional)</label>
+                            <textarea name="custom_email_message" id="rejectCustomEmailMessage" class="form-control form-control-sm" rows="4" placeholder="Leave empty to use the default professional template..."></textarea>
+                            <div class="mt-2 text-end">
+                                <button type="button" class="btn btn-sm btn-outline-info" onclick="generateAiEmail(<?php echo $application_id; ?>, 'rejected', 'rejectCustomEmailMessage', this)">
+                                    <i class="fas fa-magic me-1"></i>Generate AI Email
+                                </button>
+                            </div>
+                        </div>
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" type="checkbox" id="sendSmsReject" name="send_sms" value="1" checked onchange="document.getElementById('rejectSmsTemplateContainer').style.display = this.checked ? 'block' : 'none'">
+                            <label class="form-check-label" for="sendSmsReject">
+                                Send SMS Notification
+                            </label>
+                            <small class="d-block text-muted">Applicant will receive a text message (if phone number is available).</small>
+                        </div>
+                        <div class="mb-3" id="rejectSmsTemplateContainer">
+                            <label class="form-label small fw-bold">Customize SMS Message</label>
+                            
+                            <select id="rejectSmsTemplateSelector" class="form-select form-select-sm mb-2" onchange="updateRejectSmsTextarea(this.value)">
+                                <option value="default">Template: Default</option>
+                                <option value="formal">Template: Formal</option>
+                                <option value="casual">Template: Casual</option>
+                            </select>
+
+                            <?php
+                            $jobseeker_name = trim($application['first_name'] . ' ' . $application['last_name']);
+                            $company_name = $company['company_name'] ?? 'our company';
+                            $job_title = $application['job_title'] ?? 'the position';
+                            
+                            $reject_default_sms = "Hi {$jobseeker_name}, Thank you for applying for {$job_title} at {$company_name}. Unfortunately, we have decided to move forward with other candidates.";
+                            $reject_formal_sms = "Dear {$jobseeker_name}, We appreciate your interest in the {$job_title} role at {$company_name}. However, we will not be proceeding with your application at this time.";
+                            $reject_casual_sms = "Hi {$jobseeker_name}, Thanks for your time! We won't be moving forward with your application for {$job_title} at {$company_name}, but we wish you the best!";
+                            ?>
+                            
+                            <textarea name="custom_sms_message" id="rejectCustomSmsMessage" class="form-control form-control-sm" rows="5"><?php echo htmlspecialchars($reject_default_sms); ?></textarea>
+                            <small class="text-muted d-block mt-1">You can freely edit the message above before sending.</small>
+
+                            <div class="mt-2 text-end">
+                                <button type="button" class="btn btn-sm btn-outline-info" id="btnGenerateAiRejectMessage">
+                                    <i class="fas fa-magic me-1"></i>Generate AI Message
+                                </button>
+                            </div>
+
+                            <script>
+                                function updateRejectSmsTextarea(template) {
+                                    const textarea = document.getElementById('rejectCustomSmsMessage');
+                                    textarea.value = <?php echo json_encode($reject_default_sms); ?>; // default fallback
+                                    if (template === 'default') {
+                                        textarea.value = <?php echo json_encode($reject_default_sms); ?>;
+                                    } else if (template === 'formal') {
+                                        textarea.value = <?php echo json_encode($reject_formal_sms); ?>;
+                                    } else if (template === 'casual') {
+                                        textarea.value = <?php echo json_encode($reject_casual_sms); ?>;
+                                    }
+                                }
+
+                                document.getElementById('btnGenerateAiRejectMessage').addEventListener('click', async function() {
+                                    const btn = this;
+                                    const textarea = document.getElementById('rejectCustomSmsMessage');
+                                    
+                                    const originalText = btn.innerHTML;
+                                    btn.innerHTML = '<i class="fas fa-spinner fa-spin me-1"></i>Generating...';
+                                    btn.disabled = true;
+
+                                    try {
+                                        const response = await fetch('generate_ai_sms.php', {
+                                            method: 'POST',
+                                            headers: {
+                                                'Content-Type': 'application/json',
+                                            },
+                                            body: JSON.stringify({
+                                                application_id: <?php echo $application_id; ?>,
+                                                jobseeker_name: <?php echo json_encode($jobseeker_name); ?>,
+                                                job_title: <?php echo json_encode($job_title); ?>,
+                                                company_name: <?php echo json_encode($company_name); ?>,
+                                                status: 'rejected'
+                                            })
+                                        });
+
+                                        const data = await response.json();
+                                        
+                                        if (data.success) {
+                                            textarea.value = data.message;
+                                        } else {
+                                            alert('Failed to generate AI message: ' + (data.error || 'Unknown error'));
+                                        }
+                                    } catch (error) {
+                                        console.error('Error generating AI text:', error);
+                                        alert('An error occurred while communicating with the AI server.');
+                                    } finally {
+                                        btn.innerHTML = originalText;
+                                        btn.disabled = false;
+                                    }
+                                });
+                            </script>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-danger">
+                            <i class="fas fa-times me-1"></i>Confirm Rejection
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        async function generateAiEmail(applicationId, status, textareaId, btn) {
+            const textarea = document.getElementById(textareaId);
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin me-1"></i>Generating...';
+            btn.disabled = true;
+
+            try {
+                const response = await fetch('generate_ai_sms.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        application_id: applicationId,
+                        status: status,
+                        is_email: true // Add a flag for email generation if needed
+                    })
+                });
+
+                const data = await response.json();
+                if (data.success) {
+                    textarea.value = data.message;
+                } else {
+                    alert('Failed to generate AI email: ' + (data.error || 'Unknown error'));
+                }
+            } catch (error) {
+                console.error('Error generating AI text:', error);
+                alert('An error occurred while communicating with the AI server.');
+            } finally {
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            }
+        }
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Initialize and show SMS toasts if they exist
+            var successToastEl = document.getElementById('smsSuccessToast');
+            if (successToastEl) {
+                var successToast = new bootstrap.Toast(successToastEl, { autohide: true, delay: 5000 });
+                successToast.show();
+            }
+
+            var errorToastEl = document.getElementById('smsErrorToast');
+            if (errorToastEl) {
+                var errorToast = new bootstrap.Toast(errorToastEl, { autohide: true, delay: 7000 });
+                errorToast.show();
+            }
+
+            var emailSuccessToastEl = document.getElementById('emailSuccessToast');
+            if (emailSuccessToastEl) {
+                var emailSuccessToast = new bootstrap.Toast(emailSuccessToastEl, { autohide: true, delay: 5000 });
+                emailSuccessToast.show();
+            }
+
+            var emailErrorToastEl = document.getElementById('emailErrorToast');
+            if (emailErrorToastEl) {
+                var emailErrorToast = new bootstrap.Toast(emailErrorToastEl, { autohide: true, delay: 10000 });
+                emailErrorToast.show();
+            }
+        });
+    </script>
 </body>
 </html>
