@@ -109,6 +109,96 @@ CREATE TABLE IF NOT EXISTS employee_profiles (
     FOREIGN KEY (company_id) REFERENCES companies(id) ON DELETE SET NULL
 );
 
+-- Skills table (managed by admin)
+CREATE TABLE IF NOT EXISTS skills (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    skill_name VARCHAR(100) NOT NULL UNIQUE,
+    category VARCHAR(100) DEFAULT 'General',
+    description TEXT,
+    status ENUM('active', 'inactive') DEFAULT 'active',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+-- Seed data for skills
+INSERT INTO skills (skill_name, category, description) VALUES
+-- Technical Skills
+('PHP', 'Technical', 'Server-side scripting language'),
+('JavaScript', 'Technical', 'Client-side web programming language'),
+('Python', 'Technical', 'General-purpose programming language'),
+('Java', 'Technical', 'Object-oriented programming language'),
+('HTML/CSS', 'Technical', 'Web markup and styling languages'),
+('MySQL', 'Technical', 'Relational database management system'),
+('React', 'Technical', 'JavaScript library for building user interfaces'),
+('Node.js', 'Technical', 'JavaScript runtime environment'),
+('Laravel', 'Technical', 'PHP web application framework'),
+('Bootstrap', 'Technical', 'CSS framework for responsive design'),
+('Git', 'Technical', 'Version control system'),
+('AWS', 'Technical', 'Cloud computing platform'),
+('Docker', 'Technical', 'Containerization platform'),
+('Linux', 'Technical', 'Operating system'),
+('WordPress', 'Technical', 'Content management system'),
+
+-- Office Skills
+('Microsoft Excel', 'Office', 'Spreadsheet application'),
+('Microsoft Word', 'Office', 'Word processing application'),
+('Microsoft PowerPoint', 'Office', 'Presentation software'),
+('Google Workspace', 'Office', 'Cloud-based productivity tools'),
+('Data Entry', 'Office', 'Inputting data into computer systems'),
+('Typing', 'Office', 'Fast and accurate keyboard typing'),
+('Filing', 'Office', 'Organizing and maintaining documents'),
+
+-- Soft Skills
+('Communication', 'Soft Skills', 'Verbal and written communication abilities'),
+('Leadership', 'Soft Skills', 'Leading and managing teams'),
+('Problem Solving', 'Soft Skills', 'Analyzing and resolving issues'),
+('Time Management', 'Soft Skills', 'Organizing and planning time effectively'),
+('Teamwork', 'Soft Skills', 'Working collaboratively with others'),
+('Critical Thinking', 'Soft Skills', 'Analyzing information objectively'),
+('Adaptability', 'Soft Skills', 'Adjusting to new conditions'),
+('Creativity', 'Soft Skills', 'Thinking outside the box'),
+
+-- Management Skills
+('Project Management', 'Management', 'Planning and executing projects'),
+('Team Management', 'Management', 'Leading and coordinating teams'),
+('Strategic Planning', 'Management', 'Long-term business planning'),
+('Budgeting', 'Management', 'Financial planning and control'),
+('Recruitment', 'Management', 'Hiring and talent acquisition'),
+('Training', 'Management', 'Employee development and coaching'),
+
+-- Customer Service
+('Customer Support', 'Customer Service', 'Assisting customers with inquiries'),
+('Sales', 'Customer Service', 'Selling products and services'),
+('CRM', 'Customer Service', 'Customer relationship management'),
+('Conflict Resolution', 'Customer Service', 'Handling customer complaints'),
+
+-- Marketing
+('Social Media Marketing', 'Marketing', 'Promoting on social platforms'),
+('SEO', 'Marketing', 'Search engine optimization'),
+('Content Writing', 'Marketing', 'Creating written content'),
+('Email Marketing', 'Marketing', 'Marketing through email campaigns'),
+('Graphic Design', 'Marketing', 'Visual content creation'),
+('Video Editing', 'Marketing', 'Editing video content'),
+
+-- Finance
+('Accounting', 'Finance', 'Financial record keeping'),
+('Bookkeeping', 'Finance', 'Recording financial transactions'),
+('Financial Analysis', 'Finance', 'Analyzing financial data'),
+('QuickBooks', 'Finance', 'Accounting software'),
+
+-- Healthcare
+('Nursing', 'Healthcare', 'Patient care and medical support'),
+('First Aid', 'Healthcare', 'Emergency medical assistance'),
+('Medical Coding', 'Healthcare', 'Medical billing and coding'),
+('Patient Care', 'Healthcare', 'Caring for patients'),
+
+-- Other
+('Driving', 'General', 'Vehicle operation license'),
+('Cooking', 'General', 'Food preparation'),
+('Cleaning', 'General', 'Maintenance and sanitation'),
+('Security', 'General', 'Safety and security services')
+ON DUPLICATE KEY UPDATE skill_name = skill_name;
+
 -- Job categories
 CREATE TABLE IF NOT EXISTS job_categories (
     id INT PRIMARY KEY AUTO_INCREMENT,

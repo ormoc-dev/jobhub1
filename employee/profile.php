@@ -22,10 +22,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $placeOfBirth = sanitizeInput($_POST['place_of_birth']);
     $contactNo = sanitizeInput($_POST['contact_no']);
     $civilStatus = sanitizeInput($_POST['civil_status']);
-    $position = sanitizeInput($_POST['position']);
+    $position = sanitizeInput($_POST['position'] ?? '');
     $hiredDate = !empty($_POST['hired_date']) ? sanitizeInput($_POST['hired_date']) : null;
     $highestEducation = sanitizeInput($_POST['highest_education']);
-    $skills = sanitizeInput($_POST['skills']);
+    $skills = sanitizeInput($_POST['skills'] ?? '');
+    $customSkill = sanitizeInput($_POST['custom_skill'] ?? '');
+    // Use custom skill if provided, otherwise use selected skill
+    if (!empty($customSkill)) {
+        $skills = $customSkill;
+    }
     $experienceLevel = sanitizeInput($_POST['experience_level']);
     
     try {
@@ -344,6 +349,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                     </div>
                                 </div>
 
+                                <?php if (!empty($profile['skills'])): ?>
+                                <div class="alert alert-info-modern mb-4">
+                                    <div class="alert-icon-wrapper">
+                                        <i class="fas fa-check-circle"></i>
+                                    </div>
+                                    <div class="alert-content-modern">
+                                        <strong>Current Skill:</strong> <?php echo htmlspecialchars($profile['skills']); ?>
+                                    </div>
+                                </div>
+                                <?php endif; ?>
+
                                 <div class="form-fields-modern">
                                     <div class="row">
                                         <div class="col-md-6 mb-4">
@@ -354,18 +370,40 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                                 <option value="">Select one skill</option>
                                                 <?php 
                                                 $allSkills = getAllUniqueSkills();
-                                                $currentSkill = $profile['skills'] ?? '';
+                                                $currentSkill = trim($profile['skills'] ?? '');
+                                                $skillFound = false;
                                                 foreach ($allSkills as $skill): 
+                                                    $skill = trim($skill);
+                                                    $isSelected = ($currentSkill === $skill);
+                                                    if ($isSelected) $skillFound = true;
                                                 ?>
-                                                    <option value="<?php echo htmlspecialchars($skill); ?>" <?php echo $currentSkill === $skill ? 'selected' : ''; ?>>
+                                                    <option value="<?php echo htmlspecialchars($skill); ?>" <?php echo $isSelected ? 'selected' : ''; ?>>
                                                         <?php echo htmlspecialchars($skill); ?>
                                                     </option>
-                                                <?php endforeach; ?>
+                                                <?php endforeach; 
+                                                // If current skill is not in the list but exists, add it as an option
+                                                if (!$skillFound && !empty($currentSkill)): 
+                                                ?>
+                                                    <option value="<?php echo htmlspecialchars($currentSkill); ?>" selected>
+                                                        <?php echo htmlspecialchars($currentSkill); ?> (saved)
+                                                    </option>
+                                                <?php endif; ?>
                                             </select>
                                             <div class="form-text-modern">
-                                                <i class="fas fa-info-circle me-1"></i>Select one skill
+                                                <i class="fas fa-info-circle me-1"></i>Select from list or add your own below
                                             </div>
                                         </div>
+                                        <div class="col-md-6 mb-4">
+                                            <label for="custom_skill" class="form-label-modern">
+                                                <i class="fas fa-plus-circle me-2"></i>Or Add Custom Skill
+                                            </label>
+                                            <input type="text" class="form-control-modern" id="custom_skill" name="custom_skill" value="" placeholder="Enter your skill if not in list">
+                                            <div class="form-text-modern">
+                                                <i class="fas fa-lightbulb me-1"></i>Type your own skill (optional)
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
                                         <div class="col-md-6 mb-4">
                                             <label for="experience_level" class="form-label-modern">
                                                 <i class="fas fa-briefcase me-2"></i>Experience Level
