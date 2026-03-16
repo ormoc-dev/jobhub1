@@ -16,9 +16,8 @@ $displayName = $firstName !== '' ? ('Hi ' . $firstName) : ('Hi ' . ($_SESSION['u
 <!-- Employee Sidebar -->
 <div class="sidebar">
     <div class="sidebar-wrapper d-flex flex-column h-100">
-        <a href="../index.php" class="navbar-brand">
-            <img src="../worklink.jpg" alt="WORKLINK" class="logo-img me-2" style="height: 30px; width: 30px; border-radius: 50%; object-fit: cover;">
-            WORKLINK
+         <a href="../index.php" class="navbar-brand">
+            <img src="../images/LOGO.png" alt="WORKLINK"  style="height: 70px; width: 100%;  object-fit: cover;">
         </a>
         <hr class="mx-3 my-0" style="border-color: rgba(255, 255, 255, 0.2);">
         <ul class="nav nav-pills flex-column mb-auto">

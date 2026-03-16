@@ -16,8 +16,7 @@ $displayName = $userData['company_name'] ?? $_SESSION['username'] ?? 'Employer';
 <div class="sidebar">
     <div class="sidebar-wrapper d-flex flex-column h-100">
         <a href="../index.php" class="navbar-brand">
-            <img src="../worklink.jpg" alt="WORKLINK" class="logo-img me-2" style="height: 30px; width: 30px; border-radius: 50%; object-fit: cover;">
-            WORKLINK
+            <img src="../images/LOGO.png" alt="WORKLINK"  style="height: 70px; width: 100%;  object-fit: cover;">
         </a>
         <hr class="mx-3 my-0" style="border-color: rgba(255, 255, 255, 0.2);">
         <ul class="nav nav-pills flex-column mb-auto">
@@ -114,7 +113,7 @@ $displayName = $userData['company_name'] ?? $_SESSION['username'] ?? 'Employer';
 .sidebar {
     background: linear-gradient(180deg, #4c1d95 0%, #2d1b69 100%) !important;
     border-right: 1px solid rgba(139, 92, 246, 0.3);
-    box-shadow: 2px 0 15px rgba(124, 58, 237, 0.2);
+  
 }
 
 .sidebar-wrapper {
@@ -158,7 +157,7 @@ $displayName = $userData['company_name'] ?? $_SESSION['username'] ?? 'Employer';
     color: #e9d5ff !important;
     margin: 4px 0;
     border-radius: 10px;
-    padding: 12px 16px;
+    padding: 7px 10px;
     transition: all 0.3s ease;
     font-weight: 500;
     border-left: 3px solid transparent;

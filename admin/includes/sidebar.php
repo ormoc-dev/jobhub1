@@ -6,10 +6,8 @@ $pending_users = $pdo->query("SELECT COUNT(*) FROM users WHERE status = 'pending
 <!-- Admin Sidebar -->
 <div class="sidebar">
     <div class="sidebar-wrapper">
-        <a href="../index.php" class="navbar-brand">
-            <img src="../worklink.jpg" alt="WORKLINK" class="logo-img me-2" style="height: 30px; width: 30px; border-radius: 50%; object-fit: cover;"> 
-            WORKLINK    <br>
-            <div class="small text-muted mt-2">Admin Panel</div>
+         <a href="../index.php" class="navbar-brand">
+            <img src="../images/LOGO.png" alt="WORKLINK"  style="height: 70px; width: 100%;  object-fit: cover;">
         </a>
         <hr class="mx-3 my-0" style="border-color: #495057;">
         <ul class="nav nav-pills flex-column mb-auto">
