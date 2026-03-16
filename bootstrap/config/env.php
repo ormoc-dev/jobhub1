@@ -4,7 +4,6 @@
 <?php
 /**
  * Load environment variables from .env file
- * This replaces the old env.php with a .env file loader
  */
 
 function loadEnv($path) {
