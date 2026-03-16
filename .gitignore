@@ -1,0 +1,37 @@
+# Environment variables and sensitive configuration
+employer/env.php
+bootstrap/config/.env
+.env
+.env.local
+.env.*.local
+
+# Configuration files with sensitive data
+config.php
+
+# Uploads and user-generated content
+uploads/
+employee/uploads/
+employer/uploads/
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Dependencies
+vendor/
+node_modules/
+
+# Cache
+.cache/
+temp/

@@ -1,6 +1,6 @@
 <?php
 include '../config.php';
-include 'env.php';
+include '../bootstrap/config/env.php';
 include 'mailer.php';
 requireRole('employer');
 

@@ -1,6 +1,6 @@
 <?php
 include '../config.php';
-include 'env.php';
+include '../bootstrap/config/env.php';
 requireRole('employer');
 
 header('Content-Type: application/json');
