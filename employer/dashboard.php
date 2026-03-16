@@ -173,20 +173,20 @@ $stats['total_views'] = $stats['total_applications'] * 3; // Estimated views
     <title>Employer Dashboard - WORKLINK</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="../assets/style.css" rel="stylesheet">
+    <link href="css/minimal.css" rel="stylesheet">
 </head>
 <body class="employer-layout">
     <?php include 'includes/sidebar.php'; ?>
 
     <!-- Main Content -->
     <div class="employer-main-content">
-                <div class="d-flex justify-content-between align-items-center mb-4">
+                <div class="page-header d-flex justify-content-between align-items-center">
                     <div>
-                        <h1 class="h3 mb-0">Welcome back, <?php echo htmlspecialchars($company['company_name']); ?>!</h1>
-                        <p class="text-muted">Manage your job postings and applications</p>
+                        <h1>Welcome back, <?php echo htmlspecialchars($company['company_name']); ?>!</h1>
+                        <p>Manage your job postings and applications</p>
                     </div>
                     <div class="text-end">
-                        <a href="reports.php" class="btn me-2" style="background: #10b981; border-color: #10b981; color: white;">
+                        <a href="reports.php" class="btn btn-success me-2">
                             <i class="fas fa-chart-bar me-2"></i>View Reports
                         </a>
                         <?php if ($company['status'] === 'pending'): ?>
@@ -198,68 +198,56 @@ $stats['total_views'] = $stats['total_applications'] * 3; // Estimated views
                 </div>
 
                 <!-- Key Performance Indicators -->
-                <div class="row g-4 mb-4">
-                    <div class="col-md-3 m-2">
-                        <div class="card dashboard-card text-white" style="background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);">
-                            <div class="card-body">
-                                <div class="d-flex justify-content-between">
-                                    <div>
-                                        <h4 class="card-title"><?php echo $stats['this_week_applications']; ?></h4>
-                                        <p class="card-text">This Week</p>
-                                    </div>
-                                    <i class="fas fa-calendar-week fa-2x"></i>
+                <div class="row g-3 mb-4">
+                    <div class="col-md-3">
+                        <div class="stat-card">
+                            <div class="d-flex align-items-center">
+                                <div class="stat-icon primary me-3">
+                                    <i class="fas fa-calendar-week"></i>
                                 </div>
-                                <small class="text-white-50">
-                                    New applications received
-                                </small>
+                                <div>
+                                    <div class="stat-value"><?php echo $stats['this_week_applications']; ?></div>
+                                    <div class="stat-label">This Week</div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-3 m-2">
-                        <div class="card dashboard-card text-white" style="background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%);">
-                            <div class="card-body">
-                                <div class="d-flex justify-content-between">
-                                    <div>
-                                        <h4 class="card-title"><?php echo $stats['this_month_applications']; ?></h4>
-                                        <p class="card-text">This Month</p>
-                                    </div>
-                                    <i class="fas fa-calendar-alt fa-2x"></i>
+                    <div class="col-md-3">
+                        <div class="stat-card">
+                            <div class="d-flex align-items-center">
+                                <div class="stat-icon info me-3">
+                                    <i class="fas fa-calendar-alt"></i>
                                 </div>
-                                <small class="text-white-50">
-                                    Monthly application count
-                                </small>
+                                <div>
+                                    <div class="stat-value"><?php echo $stats['this_month_applications']; ?></div>
+                                    <div class="stat-label">This Month</div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-3 m-2">
-                        <div class="card dashboard-card text-white" style="background: linear-gradient(135deg, #ec4899 0%, #be185d 100%);">
-                            <div class="card-body">
-                                <div class="d-flex justify-content-between">
-                                    <div>
-                                        <h4 class="card-title"><?php echo $stats['acceptance_rate']; ?>%</h4>
-                                        <p class="card-text">Acceptance Rate</p>
-                                    </div>
-                                    <i class="fas fa-percentage fa-2x"></i>
+                    <div class="col-md-3">
+                        <div class="stat-card">
+                            <div class="d-flex align-items-center">
+                                <div class="stat-icon success me-3">
+                                    <i class="fas fa-percentage"></i>
                                 </div>
-                                <small class="text-white-50">
-                                    <?php echo $stats['accepted_applications']; ?> accepted
-                                </small>
+                                <div>
+                                    <div class="stat-value"><?php echo $stats['acceptance_rate']; ?>%</div>
+                                    <div class="stat-label">Acceptance Rate</div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-3 m-2">
-                        <div class="card dashboard-card text-white" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);">
-                            <div class="card-body">
-                                <div class="d-flex justify-content-between">
-                                    <div>
-                                        <h4 class="card-title"><?php echo $stats['avg_applications_per_job']; ?></h4>
-                                        <p class="card-text">Avg per Job</p>
-                                    </div>
-                                    <i class="fas fa-chart-line fa-2x"></i>
+                    <div class="col-md-3">
+                        <div class="stat-card">
+                            <div class="d-flex align-items-center">
+                                <div class="stat-icon warning me-3">
+                                    <i class="fas fa-chart-line"></i>
                                 </div>
-                                <small class="text-white-50">
-                                    Average applications per job
-                                </small>
+                                <div>
+                                    <div class="stat-value"><?php echo $stats['avg_applications_per_job']; ?></div>
+                                    <div class="stat-label">Avg per Job</div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -318,7 +306,7 @@ $stats['total_views'] = $stats['total_applications'] * 3; // Estimated views
                         <div class="card dashboard-card">
                             <div class="card-header d-flex justify-content-between align-items-center">
                                 <h5 class="mb-0">Application Status Overview</h5>
-                                <a href="applications.php" class="btn btn-sm" style="border-color: #10b981; color: #10b981;">View All</a>
+                                <a href="applications.php" class="btn btn-sm btn-outline-success">View All</a>
                             </div>
                             <div class="card-body">
                                 <div class="row text-center mb-3">
@@ -355,14 +343,14 @@ $stats['total_views'] = $stats['total_applications'] * 3; // Estimated views
                         <div class="card dashboard-card">
                             <div class="card-header d-flex justify-content-between align-items-center">
                                 <h5 class="mb-0">Top Performing Jobs</h5>
-                                <a href="jobs.php" class="btn btn-sm" style="border-color: #10b981; color: #10b981;">View All</a>
+                                <a href="jobs.php" class="btn btn-sm btn-outline-success">View All</a>
                             </div>
                             <div class="card-body">
                                 <?php if (empty($top_jobs)): ?>
                                     <div class="text-center py-4">
                                         <i class="fas fa-briefcase fa-3x text-muted mb-3"></i>
                                         <p class="text-muted">No jobs posted yet</p>
-                                        <a href="post-job.php" class="btn" style="background: #10b981; border-color: #10b981; color: white;">Post a Job</a>
+                                        <a href="post-job.php" class="btn btn-success">Post a Job</a>
                                     </div>
                                 <?php else: ?>
                                     <?php foreach ($top_jobs as $job): ?>
@@ -382,7 +370,7 @@ $stats['total_views'] = $stats['total_applications'] * 3; // Estimated views
                                                     <span class="badge bg-info text-white fs-6"><?php echo $job['application_count']; ?></span>
                                                 </div>
                                                 <small class="text-muted d-block">applications</small>
-                                                <a href="job-applications.php?job_id=<?php echo $job['id']; ?>" class="btn btn-sm mt-1" style="border-color: #10b981; color: #10b981;">View</a>
+                                                <a href="job-applications.php?job_id=<?php echo $job['id']; ?>" class="btn btn-sm btn-outline-success mt-1">View</a>
                                             </div>
                                         </div>
                                     <?php endforeach; ?>
@@ -594,6 +582,499 @@ $stats['total_views'] = $stats['total_applications'] * 3; // Estimated views
                 }
             }
         });
+    </script>
+
+    <!-- AI Chat Widget -->
+    <div id="aiChatWidget" class="ai-chat-widget">
+        <!-- Chat Button -->
+        <button id="aiChatToggle" class="ai-chat-toggle" title="Chat with AI Assistant">
+            <i class="fas fa-robot"></i>
+            <span class="ai-chat-badge" id="aiChatBadge" style="display: none;">1</span>
+        </button>
+
+        <!-- Chat Window -->
+        <div id="aiChatWindow" class="ai-chat-window" style="display: none;">
+            <div class="ai-chat-header">
+                <div class="ai-chat-title">
+                    <i class="fas fa-robot me-2"></i>
+                    <span>AI Hiring Assistant</span>
+                </div>
+                <button id="aiChatClose" class="ai-chat-close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div id="aiChatMessages" class="ai-chat-messages">
+                <div class="ai-message ai-message-bot">
+                    <div class="ai-message-avatar">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <div class="ai-message-content">
+                        <p>Hello! I'm your AI Hiring Assistant. I have access to your company's applicant data and can help you with:</p>
+                        <ul>
+                            <li>Analyzing applicants and their qualifications</li>
+                            <li>Writing job descriptions</li>
+                            <li>Drafting interview questions</li>
+                            <li>Creating offer letters</li>
+                            <li>Hiring tips and best practices</li>
+                        </ul>
+                        <p>Ask me anything about your applicants or hiring needs!</p>
+                    </div>
+                </div>
+            </div>
+            <div class="ai-chat-input-area">
+                <div class="ai-chat-suggestions">
+                    <button class="ai-suggestion-btn" data-message="Analyze my recent applicants">Analyze applicants</button>
+                    <button class="ai-suggestion-btn" data-message="Who are my top candidates?">Top candidates</button>
+                    <button class="ai-suggestion-btn" data-message="Help me write a job description">Write job description</button>
+                    <button class="ai-suggestion-btn" data-message="Generate interview questions">Interview questions</button>
+                    <button class="ai-suggestion-btn" data-message="Draft an offer letter">Draft offer letter</button>
+                </div>
+                <div class="ai-chat-input-wrapper">
+                    <textarea id="aiChatInput" class="ai-chat-input" placeholder="Type your message..." rows="1"></textarea>
+                    <button id="aiChatSend" class="ai-chat-send">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        /* AI Chat Widget Styles */
+        .ai-chat-widget {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 9999;
+        }
+
+        .ai-chat-toggle {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #4c1d95 0%, #2d1b69 100%);
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(76, 29, 149, 0.4);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .ai-chat-toggle:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(76, 29, 149, 0.5);
+        }
+
+        .ai-chat-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: #ef4444;
+            color: white;
+            font-size: 12px;
+            font-weight: bold;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .ai-chat-window {
+            position: absolute;
+            bottom: 80px;
+            right: 0;
+            width: 380px;
+            height: 500px;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            animation: aiChatSlideIn 0.3s ease;
+        }
+
+        @keyframes aiChatSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .ai-chat-header {
+            background: linear-gradient(135deg, #4c1d95 0%, #2d1b69 100%);
+            color: white;
+            padding: 16px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .ai-chat-title {
+            display: flex;
+            align-items: center;
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        .ai-chat-close {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .ai-chat-close:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .ai-chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            background: #f8fafc;
+        }
+
+        .ai-message {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .ai-message-user {
+            flex-direction: row-reverse;
+        }
+
+        .ai-message-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 14px;
+        }
+
+        .ai-message-bot .ai-message-avatar {
+            background: linear-gradient(135deg, #4c1d95 0%, #2d1b69 100%);
+            color: white;
+        }
+
+        .ai-message-user .ai-message-avatar {
+            background: #3b82f6;
+            color: white;
+        }
+
+        .ai-message-content {
+            max-width: 75%;
+            padding: 12px 16px;
+            border-radius: 12px;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .ai-message-bot .ai-message-content {
+            background: white;
+            border: 1px solid #e2e8f0;
+            color: #1e293b;
+        }
+
+        .ai-message-user .ai-message-content {
+            background: #3b82f6;
+            color: white;
+        }
+
+        .ai-message-content ul {
+            margin: 8px 0;
+            padding-left: 20px;
+        }
+
+        .ai-message-content li {
+            margin: 4px 0;
+        }
+
+        .ai-message-content p {
+            margin: 0 0 8px 0;
+        }
+
+        .ai-message-content p:last-child {
+            margin-bottom: 0;
+        }
+
+        .ai-chat-input-area {
+            background: white;
+            border-top: 1px solid #e2e8f0;
+            padding: 12px 16px;
+        }
+
+        .ai-chat-suggestions {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+        }
+
+        .ai-suggestion-btn {
+            background: #f1f5f9;
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 6px 12px;
+            font-size: 12px;
+            color: #475569;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .ai-suggestion-btn:hover {
+            background: #e2e8f0;
+            border-color: #cbd5e1;
+        }
+
+        .ai-chat-input-wrapper {
+            display: flex;
+            gap: 8px;
+            align-items: flex-end;
+        }
+
+        .ai-chat-input {
+            flex: 1;
+            border: 1px solid #e2e8f0;
+            border-radius: 20px;
+            padding: 10px 16px;
+            font-size: 14px;
+            resize: none;
+            max-height: 100px;
+            font-family: inherit;
+        }
+
+        .ai-chat-input:focus {
+            outline: none;
+            border-color: #4c1d95;
+            box-shadow: 0 0 0 3px rgba(76, 29, 149, 0.1);
+        }
+
+        .ai-chat-send {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #4c1d95 0%, #2d1b69 100%);
+            border: none;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            flex-shrink: 0;
+        }
+
+        .ai-chat-send:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(76, 29, 149, 0.3);
+        }
+
+        .ai-chat-send:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .ai-typing {
+            display: flex;
+            gap: 4px;
+            padding: 12px 16px;
+            align-items: center;
+        }
+
+        .ai-typing-dot {
+            width: 8px;
+            height: 8px;
+            background: #94a3b8;
+            border-radius: 50%;
+            animation: aiTypingBounce 1.4s infinite ease-in-out both;
+        }
+
+        .ai-typing-dot:nth-child(1) { animation-delay: -0.32s; }
+        .ai-typing-dot:nth-child(2) { animation-delay: -0.16s; }
+
+        @keyframes aiTypingBounce {
+            0%, 80%, 100% { transform: scale(0); }
+            40% { transform: scale(1); }
+        }
+
+        /* Responsive */
+        @media (max-width: 480px) {
+            .ai-chat-window {
+                width: calc(100vw - 40px);
+                right: -10px;
+            }
+        }
+    </style>
+
+    <script>
+        // AI Chat Widget Functionality
+        (function() {
+            const chatToggle = document.getElementById('aiChatToggle');
+            const chatWindow = document.getElementById('aiChatWindow');
+            const chatClose = document.getElementById('aiChatClose');
+            const chatInput = document.getElementById('aiChatInput');
+            const chatSend = document.getElementById('aiChatSend');
+            const chatMessages = document.getElementById('aiChatMessages');
+            const suggestionBtns = document.querySelectorAll('.ai-suggestion-btn');
+
+            let isOpen = false;
+
+            // Toggle chat window
+            chatToggle.addEventListener('click', () => {
+                isOpen = !isOpen;
+                chatWindow.style.display = isOpen ? 'flex' : 'none';
+                if (isOpen) {
+                    chatInput.focus();
+                }
+            });
+
+            // Close chat window
+            chatClose.addEventListener('click', () => {
+                isOpen = false;
+                chatWindow.style.display = 'none';
+            });
+
+            // Send message
+            async function sendMessage(message) {
+                if (!message.trim()) return;
+
+                // Add user message
+                addMessage(message, 'user');
+                chatInput.value = '';
+                chatInput.style.height = 'auto';
+
+                // Show typing indicator
+                showTyping();
+
+                try {
+                    // Call AI API
+                    const response = await fetch('ai_chat.php', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            message: message,
+                            context: 'employer_dashboard'
+                        })
+                    });
+
+                    const data = await response.json();
+
+                    // Remove typing indicator
+                    hideTyping();
+
+                    if (data.success) {
+                        addMessage(data.response, 'bot');
+                    } else {
+                        console.error('AI Chat Error:', data);
+                        addMessage('Sorry, I encountered an error: ' + (data.error || 'Unknown error'), 'bot');
+                    }
+                } catch (error) {
+                    hideTyping();
+                    console.error('AI Chat Exception:', error);
+                    addMessage('Sorry, I\'m having trouble connecting. Please try again later.', 'bot');
+                }
+            }
+
+            // Add message to chat
+            function addMessage(text, sender) {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = `ai-message ai-message-${sender}`;
+                messageDiv.innerHTML = `
+                    <div class="ai-message-avatar">
+                        <i class="fas fa-${sender === 'bot' ? 'robot' : 'user'}"></i>
+                    </div>
+                    <div class="ai-message-content">
+                        <p>${escapeHtml(text)}</p>
+                    </div>
+                `;
+                chatMessages.appendChild(messageDiv);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+
+            // Show typing indicator
+            function showTyping() {
+                const typingDiv = document.createElement('div');
+                typingDiv.id = 'aiTyping';
+                typingDiv.className = 'ai-message ai-message-bot';
+                typingDiv.innerHTML = `
+                    <div class="ai-message-avatar">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <div class="ai-message-content ai-typing">
+                        <div class="ai-typing-dot"></div>
+                        <div class="ai-typing-dot"></div>
+                        <div class="ai-typing-dot"></div>
+                    </div>
+                `;
+                chatMessages.appendChild(typingDiv);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+
+            // Hide typing indicator
+            function hideTyping() {
+                const typing = document.getElementById('aiTyping');
+                if (typing) typing.remove();
+            }
+
+            // Escape HTML
+            function escapeHtml(text) {
+                const div = document.createElement('div');
+                div.textContent = text;
+                return div.innerHTML;
+            }
+
+            // Send button click
+            chatSend.addEventListener('click', () => {
+                sendMessage(chatInput.value);
+            });
+
+            // Enter key to send
+            chatInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    sendMessage(chatInput.value);
+                }
+            });
+
+            // Auto-resize textarea
+            chatInput.addEventListener('input', function() {
+                this.style.height = 'auto';
+                this.style.height = Math.min(this.scrollHeight, 100) + 'px';
+            });
+
+            // Suggestion buttons
+            suggestionBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    sendMessage(btn.dataset.message);
+                });
+            });
+        })();
     </script>
 </body>
 </html>

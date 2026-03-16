@@ -203,20 +203,18 @@ $company_jobs = $company_jobs->fetchAll();
     <title>Job Applications - WORKLINK</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="../assets/style.css" rel="stylesheet">
+    <link href="css/minimal.css" rel="stylesheet">
 </head>
 <body class="employer-layout">
     <?php include 'includes/sidebar.php'; ?>
 
     <!-- Main Content -->
     <div class="employer-main-content">
-        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-            <h1 class="h2"><i class="fas fa-users me-2"></i>Job Applications</h1>
-            <div class="btn-toolbar mb-2 mb-md-0">
-                <a href="jobs.php" class="btn btn-outline-light">
-                    <i class="fas fa-briefcase me-1"></i>My Jobs
-                </a>
-            </div>
+        <div class="page-header d-flex justify-content-between align-items-center">
+            <h1><i class="fas fa-users me-2"></i>Job Applications</h1>
+            <a href="jobs.php" class="btn btn-outline-primary">
+                <i class="fas fa-briefcase me-1"></i>My Jobs
+            </a>
         </div>
 
         <!-- Success/Error Messages -->
@@ -234,93 +232,38 @@ $company_jobs = $company_jobs->fetchAll();
             </div>
         <?php endif; ?>
 
-        <style>
-            @keyframes pulse-glow {
-                0%, 100% { 
-                    box-shadow: 0 4px 15px rgba(40,167,69,0.5);
-                }
-                50% { 
-                    box-shadow: 0 4px 25px rgba(40,167,69,0.8);
-                }
-            }
-            .table-warning:hover {
-                transform: scale(1.01);
-                transition: transform 0.2s ease;
-            }
-            .application-row {
-                cursor: pointer;
-                transition: background-color 0.2s ease;
-            }
-            .application-row:hover {
-                background-color: #f8f9fa !important;
-            }
-            .application-row.table-warning:hover {
-                background: linear-gradient(90deg, #fff9e6 0%, #fff8e0 100%) !important;
-            }
-            .nav-tabs {
-                border-bottom: 2px solid #dee2e6;
-            }
-            .nav-tabs .nav-link {
-                color: #495057;
-                border: none;
-                border-bottom: 3px solid transparent;
-                padding: 15px 20px;
-                font-weight: 500;
-                transition: all 0.3s ease;
-            }
-            .nav-tabs .nav-link:hover {
-                border-bottom-color: #0d6efd;
-                color: #0d6efd;
-                background-color: #f8f9fa;
-            }
-            .nav-tabs .nav-link.active {
-                color: #0d6efd;
-                border-bottom-color: #0d6efd;
-                background-color: #f8f9fa;
-                font-weight: 600;
-            }
-        </style>
+
 
         <!-- Application Statistics -->
         <div class="row g-3 mb-4">
             <div class="col-md-3 col-sm-6">
-                <div class="card dashboard-card text-white" style="background: linear-gradient(135deg, #10b981 0%, #047857 100%);">
-                    <div class="card-body text-center p-3">
-                        <h4 class="mb-2"><?php echo $stats['total']; ?></h4>
-                        <small class="text-nowrap">Total Applications</small>
-                    </div>
+                <div class="stat-card text-center">
+                    <div class="stat-value"><?php echo $stats['total']; ?></div>
+                    <div class="stat-label">Total Applications</div>
                 </div>
             </div>
             <div class="col-md-2 col-sm-6">
-                <div class="card dashboard-card text-dark bg-warning">
-                    <div class="card-body text-center p-3">
-                        <h4 class="mb-2"><?php echo $stats['pending']; ?></h4>
-                        <small>Pending</small>
-                    </div>
+                <div class="stat-card text-center">
+                    <div class="stat-value text-warning"><?php echo $stats['pending']; ?></div>
+                    <div class="stat-label">Pending</div>
                 </div>
             </div>
             <div class="col-md-2 col-sm-6">
-                <div class="card dashboard-card text-white bg-info">
-                    <div class="card-body text-center p-3">
-                        <h4 class="mb-2"><?php echo $stats['reviewed']; ?></h4>
-                        <small>Reviewed</small>
-                    </div>
+                <div class="stat-card text-center">
+                    <div class="stat-value text-info"><?php echo $stats['reviewed']; ?></div>
+                    <div class="stat-label">Reviewed</div>
                 </div>
             </div>
             <div class="col-md-2 col-sm-6">
-                <div class="card dashboard-card text-white bg-success">
-                    <div class="card-body text-center p-3">
-                        <h4 class="mb-2"><?php echo $stats['accepted']; ?></h4>
-                        <small>Accepted</small>
-                    </div>
+                <div class="stat-card text-center">
+                    <div class="stat-value text-success"><?php echo $stats['accepted']; ?></div>
+                    <div class="stat-label">Accepted</div>
                 </div>
             </div>
             <div class="col-md-3 col-sm-6">
-                <div class="card dashboard-card text-white bg-danger">
-                    <div class="card-body text-center p-3">
-                        <h4 class="mb-2"><?php echo $stats['rejected']; ?></h4>
-                        <small>Rejected</small>
-                    </div>
+                <div class="stat-card text-center">
+                    <div class="stat-value text-danger"><?php echo $stats['rejected']; ?></div>
+                    <div class="stat-label">Rejected</div>
                 </div>
             </div>
         </div>
@@ -393,7 +336,7 @@ $company_jobs = $company_jobs->fetchAll();
                             <?php endif; ?>
                         </p>
                         <?php if (empty($company_jobs)): ?>
-                            <a href="post-job.php" class="btn" style="background: #10b981; border-color: #10b981; color: white;">
+                            <a href="post-job.php" class="btn btn-success">
                                 <i class="fas fa-plus me-1"></i>Post Your First Job
                             </a>
                         <?php endif; ?>

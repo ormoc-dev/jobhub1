@@ -158,175 +158,165 @@ $categories = $pdo->query("SELECT * FROM job_categories WHERE status = 'active' 
     <title>Jobs - WORKLINK</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="../assets/style.css" rel="stylesheet">
+    <link href="css/minimal.css" rel="stylesheet">
     <style>
-        :root {
-            --primary-gradient: linear-gradient(135deg, #10b981 0%, #047857 100%);
-            --primary-color: #10b981;
-            --primary-dark: #047857;
-            --secondary-color: #059669;
-            --accent-color: #34d399;
-            --text-dark: #1f2937;
-            --text-light: #6b7280;
-            --bg-light: #f9fafb;
-            --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-            --card-hover-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-        }
-
-        body {
-            background: var(--bg-light);
-        }
-
         .jobs-header {
-            background: var(--primary-gradient);
-            color: white;
-            padding: 2rem 0;
-            margin-bottom: 2rem;
-            box-shadow: var(--card-shadow);
+            background: #fff;
+            border-bottom: 1px solid #e2e8f0;
+            padding: 1.5rem 0;
+            margin-bottom: 1.5rem;
+        }
+
+        .jobs-header h1 {
+            color: #1e293b;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .jobs-header p {
+            color: #64748b;
         }
 
         .nav-tabs {
-            border-bottom: 3px solid #e5e7eb;
-            margin-bottom: 2rem;
+            border-bottom: 1px solid #e5e7eb;
+            margin-bottom: 1.5rem;
         }
 
         .nav-tabs .nav-link {
-            color: var(--text-light);
+            color: #6b7280;
             border: none;
-            border-bottom: 3px solid transparent;
-            padding: 1rem 2rem;
-            font-weight: 600;
-            transition: all 0.3s ease;
+            border-bottom: 2px solid transparent;
+            padding: 0.75rem 1.5rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
             background: transparent;
         }
 
         .nav-tabs .nav-link:hover {
-            color: var(--primary-color);
-            border-bottom-color: var(--accent-color);
+            color: #374151;
+            border-bottom-color: #d1d5db;
         }
 
         .nav-tabs .nav-link.active {
-            color: var(--primary-color);
-            border-bottom-color: var(--primary-color);
+            color: #3b82f6;
+            border-bottom-color: #3b82f6;
             background: transparent;
         }
 
         .job-card {
             background: white;
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            box-shadow: var(--card-shadow);
-            transition: all 0.3s ease;
-            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 1.25rem;
+            margin-bottom: 1rem;
+            border: 1px solid #e2e8f0;
+            transition: box-shadow 0.2s ease;
         }
 
         .job-card:hover {
-            box-shadow: var(--card-hover-shadow);
-            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
         }
 
         .company-logo {
-            width: 60px;
-            height: 60px;
+            width: 48px;
+            height: 48px;
             object-fit: cover;
-            border-radius: 10px;
-            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
         }
 
         .company-logo-placeholder {
-            width: 60px;
-            height: 60px;
-            background: var(--primary-gradient);
-            border-radius: 10px;
+            width: 48px;
+            height: 48px;
+            background: #f1f5f9;
+            border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: white;
-            font-size: 1.5rem;
+            color: #94a3b8;
+            font-size: 1.25rem;
         }
 
         .job-title {
-            color: var(--text-dark);
-            font-weight: 700;
-            font-size: 1.25rem;
-            margin-bottom: 0.5rem;
+            color: #1e293b;
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 0.25rem;
             text-decoration: none;
-            transition: color 0.3s ease;
         }
 
         .job-title:hover {
-            color: var(--primary-color);
+            color: #3b82f6;
         }
 
         .company-name {
-            color: var(--primary-color);
-            font-weight: 600;
-            margin-bottom: 0.75rem;
+            color: #3b82f6;
+            font-weight: 500;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
         }
 
         .job-meta {
             display: flex;
             flex-wrap: wrap;
             gap: 1rem;
-            margin-bottom: 1rem;
-            color: var(--text-light);
-            font-size: 0.9rem;
+            margin-bottom: 0.75rem;
+            color: #64748b;
+            font-size: 0.85rem;
         }
 
         .job-meta span {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.375rem;
         }
 
         .job-meta i {
-            color: var(--primary-color);
+            color: #9ca3af;
         }
 
         .btn-primary-custom {
-            background: var(--primary-gradient);
+            background: #3b82f6;
             border: none;
             color: white;
-            padding: 0.75rem 1.5rem;
-            border-radius: 8px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 6px rgba(16, 185, 129, 0.3);
+            padding: 0.625rem 1.25rem;
+            border-radius: 6px;
+            font-weight: 500;
+            font-size: 0.875rem;
+            transition: all 0.2s ease;
         }
 
         .btn-primary-custom:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(16, 185, 129, 0.4);
+            background: #2563eb;
             color: white;
         }
 
         .btn-outline-primary-custom {
-            border: 2px solid var(--primary-color);
-            color: var(--primary-color);
-            padding: 0.75rem 1.5rem;
-            border-radius: 8px;
-            font-weight: 600;
-            transition: all 0.3s ease;
+            border: 1px solid #d1d5db;
+            color: #374151;
+            padding: 0.625rem 1.25rem;
+            border-radius: 6px;
+            font-weight: 500;
+            font-size: 0.875rem;
+            transition: all 0.2s ease;
             background: white;
         }
 
         .btn-outline-primary-custom:hover {
-            background: var(--primary-color);
-            color: white;
-            transform: translateY(-2px);
+            background: #f9fafb;
+            border-color: #9ca3af;
+            color: #1f2937;
         }
 
         .match-badge {
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            font-weight: 600;
-            font-size: 0.875rem;
+            padding: 0.375rem 0.75rem;
+            border-radius: 9999px;
+            font-weight: 500;
+            font-size: 0.75rem;
         }
 
         .match-progress {
-            height: 8px;
-            border-radius: 10px;
+            height: 6px;
+            border-radius: 9999px;
             background: #e5e7eb;
             overflow: hidden;
             margin-top: 0.5rem;
@@ -334,65 +324,57 @@ $categories = $pdo->query("SELECT * FROM job_categories WHERE status = 'active' 
 
         .stats-card {
             background: white;
-            border-radius: 12px;
-            padding: 1.5rem;
-            box-shadow: var(--card-shadow);
+            border-radius: 8px;
+            padding: 1.25rem;
+            border: 1px solid #e2e8f0;
             text-align: center;
-            transition: all 0.3s ease;
-        }
-
-        .stats-card:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--card-hover-shadow);
         }
 
         .stats-card .number {
-            font-size: 2.5rem;
+            font-size: 2rem;
             font-weight: 700;
-            background: var(--primary-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: #1e293b;
         }
 
         .stats-card .label {
-            color: var(--text-light);
-            font-size: 0.9rem;
-            margin-top: 0.5rem;
+            color: #64748b;
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
         }
 
         .filter-card {
             background: white;
-            border-radius: 12px;
-            padding: 1.5rem;
-            box-shadow: var(--card-shadow);
-            margin-bottom: 2rem;
+            border-radius: 8px;
+            padding: 1.25rem;
+            border: 1px solid #e2e8f0;
+            margin-bottom: 1.5rem;
         }
 
         .empty-state {
             text-align: center;
-            padding: 4rem 2rem;
-            color: var(--text-light);
+            padding: 3rem 2rem;
+            color: #6b7280;
         }
 
         .empty-state i {
-            font-size: 4rem;
+            font-size: 3rem;
             margin-bottom: 1rem;
-            color: var(--accent-color);
+            color: #d1d5db;
         }
 
         .save-btn {
-            border: 2px solid var(--secondary-color);
-            color: var(--secondary-color);
+            border: 1px solid #d1d5db;
+            color: #374151;
             background: white;
             padding: 0.5rem 1rem;
-            border-radius: 8px;
-            transition: all 0.3s ease;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            transition: all 0.2s ease;
         }
 
         .save-btn:hover {
-            background: var(--secondary-color);
-            color: white;
+            background: #f9fafb;
+            border-color: #9ca3af;
         }
 
         .save-btn.saved {
@@ -404,21 +386,6 @@ $categories = $pdo->query("SELECT * FROM job_categories WHERE status = 'active' 
         .save-btn.saved:hover {
             background: #ef4444;
             color: white;
-        }
-
-        .tab-content {
-            animation: fadeIn 0.3s ease;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
         }
     </style>
 </head>

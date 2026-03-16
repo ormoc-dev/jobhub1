@@ -35,27 +35,21 @@ $applications = $stmt->fetchAll();
     <title>Employment Records - WORKLINK</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="../assets/style.css" rel="stylesheet">
+    <link href="css/minimal.css" rel="stylesheet">
 </head>
 <body class="employer-layout">
     <?php include 'includes/sidebar.php'; ?>
 
     <!-- Main Content -->
     <div class="employer-main-content">
-        <div class="row">
-            <div class="col-md-12 ms-sm-auto px-md-4 main-content">
-                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                    <h1 class="h2">
-                        <i class="fas fa-file-alt me-2"></i>Hiring Reports
-                    </h1>
-                    <div class="btn-toolbar mb-2 mb-md-0">
-                        <div class="btn-group me-2">
-                            <a href="applications.php" class="btn btn-outline-secondary">
-                                <i class="fas fa-arrow-left me-1"></i>Back to Applications
-                            </a>
-                        </div>
-                    </div>
-                </div>
+        <div class="page-header d-flex justify-content-between align-items-center">
+            <h1>
+                <i class="fas fa-file-alt me-2"></i>Hiring Reports
+            </h1>
+            <a href="applications.php" class="btn btn-outline-primary">
+                <i class="fas fa-arrow-left me-1"></i>Back to Applications
+            </a>
+        </div>
 
                 <!-- Applications List -->
                 <?php if (empty($applications)): ?>
@@ -68,7 +62,7 @@ $applications = $stmt->fetchAll();
                         <?php foreach ($applications as $app): ?>
                             <div class="col-md-6 mb-4">
                                 <div class="card h-100">
-                                    <div class="card-header bg-primary text-white">
+                                    <div class="card-header">
                                         <h5 class="mb-0">
                                             <i class="fas fa-user me-2"></i><?php echo htmlspecialchars($app['first_name'] . ' ' . $app['last_name']); ?>
                                         </h5>

@@ -174,42 +174,41 @@ $user_stats['active_jobs_available'] = $system_stats['total_active_jobs'];
     <title>Employee Dashboard - WORKLINK</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="../assets/style.css" rel="stylesheet">
-    <link href="css/dashboard.css" rel="stylesheet">
+    <link href="css/minimal.css" rel="stylesheet">
 </head>
-<body class="employee-layout employee-dashboard-ui">
+<body class="employee-layout">
     <?php include 'includes/sidebar.php'; ?>
 
     <div class="employee-main-content">
-        <div class="d-flex justify-content-between align-items-center mb-4">
+        <div class="page-header d-flex justify-content-between align-items-center">
             <div>
-                <h1 class="h3 mb-0">Welcome back, <?php echo htmlspecialchars($profile['first_name'] ?? $_SESSION['username']); ?>!</h1>
-                <p class="text-muted mb-0">Ready to find your next opportunity?</p>
+                <h1>Welcome back, <?php echo htmlspecialchars($profile['first_name'] ?? $_SESSION['username']); ?>!</h1>
+                <p>Ready to find your next opportunity?</p>
             </div>
-            <div class="text-end d-flex align-items-center gap-2">
-                <a href="jobs.php" class="btn btn-dash-primary">
+            <div class="d-flex align-items-center gap-2">
+                <a href="jobs.php" class="btn btn-primary">
                     <i class="fas fa-search me-2"></i>Browse Jobs
                 </a>
                 <?php if ($profile['status'] === 'pending'): ?>
-                    <span class="badge bg-warning text-dark fs-6">Profile Pending Approval</span>
+                    <span class="badge bg-warning">Profile Pending</span>
                 <?php else: ?>
-                    <span class="badge bg-success text-white fs-6">Profile Active</span>
+                    <span class="badge bg-success">Active</span>
                 <?php endif; ?>
             </div>
         </div>
 
         <!-- System Overview -->
-        <h5 class="mb-3 dashboard-section-title"><i class="fas fa-globe me-2"></i>System Overview</h5>
-        <div class="row g-4 mb-4">
+        <div class="section-title">System Overview</div>
+        <div class="row g-3 mb-4">
             <div class="col-md-3 col-sm-6">
-                <div class="card stat-card stat-card--sky h-100">
+                <div class="card stat-card h-100">
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center">
                             <div>
-                                <p class="card-text mb-1">Active Jobs</p>
+                                <p class="card-text">Active Jobs</p>
                                 <h3 class="card-title"><?php echo number_format($system_stats['total_active_jobs']); ?></h3>
                             </div>
-                            <div class="dashboard-stat-icon bg-primary">
+                            <div class="stat-icon blue">
                                 <i class="fas fa-briefcase"></i>
                             </div>
                         </div>
@@ -217,14 +216,14 @@ $user_stats['active_jobs_available'] = $system_stats['total_active_jobs'];
                 </div>
             </div>
             <div class="col-md-3 col-sm-6">
-                <div class="card stat-card stat-card--emerald h-100">
+                <div class="card stat-card h-100">
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center">
                             <div>
-                                <p class="card-text mb-1">Active Companies</p>
+                                <p class="card-text">Active Companies</p>
                                 <h3 class="card-title"><?php echo number_format($system_stats['total_active_companies']); ?></h3>
                             </div>
-                            <div class="dashboard-stat-icon bg-success">
+                            <div class="stat-icon green">
                                 <i class="fas fa-building"></i>
                             </div>
                         </div>
@@ -232,14 +231,14 @@ $user_stats['active_jobs_available'] = $system_stats['total_active_jobs'];
                 </div>
             </div>
             <div class="col-md-3 col-sm-6">
-                <div class="card stat-card stat-card--sky h-100">
+                <div class="card stat-card h-100">
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center">
                             <div>
-                                <p class="card-text mb-1">Active Employees</p>
+                                <p class="card-text">Active Employees</p>
                                 <h3 class="card-title"><?php echo number_format($system_stats['total_active_employees']); ?></h3>
                             </div>
-                            <div class="dashboard-stat-icon bg-info">
+                            <div class="stat-icon purple">
                                 <i class="fas fa-users"></i>
                             </div>
                         </div>
@@ -247,14 +246,14 @@ $user_stats['active_jobs_available'] = $system_stats['total_active_jobs'];
                 </div>
             </div>
             <div class="col-md-3 col-sm-6">
-                <div class="card stat-card stat-card--amber h-100">
+                <div class="card stat-card h-100">
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center">
                             <div>
-                                <p class="card-text mb-1">Total Applications</p>
+                                <p class="card-text">Total Applications</p>
                                 <h3 class="card-title"><?php echo number_format($system_stats['total_applications']); ?></h3>
                             </div>
-                            <div class="dashboard-stat-icon bg-warning">
+                            <div class="stat-icon orange">
                                 <i class="fas fa-file-alt"></i>
                             </div>
                         </div>
@@ -264,37 +263,37 @@ $user_stats['active_jobs_available'] = $system_stats['total_active_jobs'];
         </div>
 
         <!-- User Statistics -->
-        <h5 class="mb-3 dashboard-section-title"><i class="fas fa-user-circle me-2"></i>User Statistics</h5>
-        <div class="row g-4 mb-4">
+        <div class="section-title">Your Statistics</div>
+        <div class="row g-3 mb-4">
             <div class="col-md-3 col-sm-6">
-                <div class="card stat-card stat-card--sky h-100">
+                <div class="card stat-card h-100">
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center">
                             <div>
-                                <p class="card-text mb-1">Profile Completion</p>
+                                <p class="card-text">Profile Completion</p>
                                 <h3 class="card-title"><?php echo $user_stats['profile_completion']; ?>%</h3>
                                 <small><?php echo $completed_fields; ?>/<?php echo $total_fields; ?> fields</small>
                             </div>
-                            <div class="dashboard-stat-icon bg-primary">
+                            <div class="stat-icon blue">
                                 <i class="fas fa-user-check"></i>
                             </div>
                         </div>
-                        <div class="progress mt-2" style="height: 6px; background: rgba(255,255,255,0.3);">
-                            <div class="progress-bar bg-white" role="progressbar" style="width: <?php echo $user_stats['profile_completion']; ?>%" aria-valuenow="<?php echo $user_stats['profile_completion']; ?>" aria-valuemin="0" aria-valuemax="100"></div>
+                        <div class="progress mt-2">
+                            <div class="progress-bar" role="progressbar" style="width: <?php echo $user_stats['profile_completion']; ?>%"></div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col-md-3 col-sm-6">
-                <div class="card stat-card stat-card--sky h-100">
+                <div class="card stat-card h-100">
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center">
                             <div>
-                                <p class="card-text mb-1">My Applications</p>
+                                <p class="card-text">My Applications</p>
                                 <h3 class="card-title"><?php echo number_format($user_stats['total_applications']); ?></h3>
                                 <small><?php echo $stats['pending_applications']; ?> pending</small>
                             </div>
-                            <div class="dashboard-stat-icon bg-info">
+                            <div class="stat-icon purple">
                                 <i class="fas fa-paper-plane"></i>
                             </div>
                         </div>
@@ -302,15 +301,15 @@ $user_stats['active_jobs_available'] = $system_stats['total_active_jobs'];
                 </div>
             </div>
             <div class="col-md-3 col-sm-6">
-                <div class="card stat-card h-100" style="background: var(--dash-stat-2); color: #fff;">
+                <div class="card stat-card h-100">
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center">
                             <div>
-                                <p class="card-text mb-1">Saved Jobs</p>
+                                <p class="card-text">Saved Jobs</p>
                                 <h3 class="card-title"><?php echo number_format($user_stats['saved_jobs']); ?></h3>
-                                <small><a href="saved-jobs.php" class="text-white text-decoration-none" style="opacity: 0.9;">View all</a></small>
+                                <small><a href="saved-jobs.php">View all</a></small>
                             </div>
-                            <div class="dashboard-stat-icon bg-danger">
+                            <div class="stat-icon orange">
                                 <i class="fas fa-heart"></i>
                             </div>
                         </div>
@@ -318,15 +317,15 @@ $user_stats['active_jobs_available'] = $system_stats['total_active_jobs'];
                 </div>
             </div>
             <div class="col-md-3 col-sm-6">
-                <div class="card stat-card stat-card--emerald h-100">
+                <div class="card stat-card h-100">
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center">
                             <div>
-                                <p class="card-text mb-1">Acceptance Rate</p>
+                                <p class="card-text">Acceptance Rate</p>
                                 <h3 class="card-title"><?php echo $user_stats['acceptance_rate']; ?>%</h3>
                                 <small><?php echo $stats['accepted_applications']; ?> accepted</small>
                             </div>
-                            <div class="dashboard-stat-icon bg-success">
+                            <div class="stat-icon green">
                                 <i class="fas fa-check-circle"></i>
                             </div>
                         </div>
@@ -335,100 +334,97 @@ $user_stats['active_jobs_available'] = $system_stats['total_active_jobs'];
             </div>
         </div>
 
-        <!-- Job & Application Metrics - Charts -->
-        <h5 class="mb-3 dashboard-section-title"><i class="fas fa-chart-bar me-2"></i>Job & Application Metrics</h5>
-        <div class="row g-4 mb-4">
+        <!-- Charts -->
+        <div class="section-title">Analytics</div>
+        <div class="row g-3 mb-4">
             <div class="col-md-6">
-                <div class="card dashboard-card dash-chart-card">
-                    <div class="card-header">
-                        <h5 class="mb-0">Daily Application Trends</h5>
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <span>Daily Applications</span>
                     </div>
-                    <div class="card-body chart-container">
+                    <div class="card-body">
                         <canvas id="dailyApplicationsChart" height="200"></canvas>
                     </div>
                 </div>
             </div>
             <div class="col-md-6">
-                <div class="card dashboard-card dash-chart-card">
+                <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-center">
-                        <h5 class="mb-0"><i class="fas fa-tasks me-2"></i>Site Application Status</h5>
-                        <a href="applications.php" class="btn btn-sm btn-dash-outline">View All</a>
+                        <span>Application Status</span>
+                        <a href="applications.php" class="btn btn-sm btn-outline-primary">View All</a>
                     </div>
-                    <div class="card-body chart-container">
+                    <div class="card-body">
                         <canvas id="responseRateChart" height="200"></canvas>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Charts row 2: Application Funnel + Monthly Applications -->
-        <div class="row g-4 mb-4">
+        <div class="row g-3 mb-4">
             <div class="col-md-6">
-                <div class="card dashboard-card dash-chart-card">
+                <div class="card">
                     <div class="card-header">
-                        <h5 class="mb-0">Application Funnel</h5>
+                        <span>Application Funnel</span>
                     </div>
-                    <div class="card-body chart-container">
+                    <div class="card-body">
                         <canvas id="funnelChart" height="200"></canvas>
                     </div>
                 </div>
             </div>
             <div class="col-md-6">
-                <div class="card dashboard-card dash-chart-card">
+                <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-center">
-                        <h5 class="mb-0"><i class="fas fa-chart-pie me-2"></i>Site Job Match Summary</h5>
-                        <a href="jobs.php" class="btn btn-sm btn-dash-outline">View All</a>
+                        <span>Monthly Activity</span>
+                        <a href="jobs.php" class="btn btn-sm btn-outline-primary">View All</a>
                     </div>
-                    <div class="card-body chart-container">
+                    <div class="card-body">
                         <canvas id="monthlyApplicationsChart" height="200"></canvas>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Quick Actions + Recent Apps | Job Match (optional) -->
-        <div class="row g-4">
+        <!-- Quick Actions + Recent Applications -->
+        <div class="row g-3">
             <div class="col-md-6">
-                <div class="card dashboard-card">
-                    <div class="card-header d-flex justify-content-between align-items-center">
-                        <h5 class="mb-0">Quick Actions</h5>
-                    </div>
+                <div class="card">
+                    <div class="card-header">Quick Actions</div>
                     <div class="card-body">
                         <div class="row g-2">
                             <div class="col-6">
-                                <a href="jobs.php" class="btn btn-dash-primary w-100"><i class="fas fa-search me-2"></i>Browse Jobs</a>
+                                <a href="jobs.php" class="btn btn-primary w-100"><i class="fas fa-search me-2"></i>Browse Jobs</a>
                             </div>
                             <div class="col-6">
-                                <a href="profile.php" class="btn btn-dash-outline w-100"><i class="fas fa-user-edit me-2"></i>Update Profile</a>
+                                <a href="profile.php" class="btn btn-outline-primary w-100"><i class="fas fa-user-edit me-2"></i>Update Profile</a>
                             </div>
                             <div class="col-6">
-                                <a href="applications.php" class="btn btn-dash-outline w-100"><i class="fas fa-file-alt me-2"></i>Applications</a>
+                                <a href="applications.php" class="btn btn-outline-primary w-100"><i class="fas fa-file-alt me-2"></i>Applications</a>
                             </div>
                             <div class="col-6">
-                                <a href="saved-jobs.php" class="btn btn-dash-outline w-100"><i class="fas fa-heart me-2"></i>Saved Jobs</a>
+                                <a href="saved-jobs.php" class="btn btn-outline-primary w-100"><i class="fas fa-heart me-2"></i>Saved Jobs</a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col-md-6">
-                <div class="card dashboard-card">
+                <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-center">
-                        <h5 class="mb-0">Recent Applications</h5>
-                        <a href="applications.php" class="btn btn-sm btn-dash-outline">View All</a>
+                        <span>Recent Applications</span>
+                        <a href="applications.php" class="btn btn-sm btn-outline-primary">View All</a>
                     </div>
                     <div class="card-body">
                         <?php if (empty($recent_applications)): ?>
-                            <div class="text-center py-4">
-                                <i class="fas fa-file-alt fa-2x text-muted mb-2"></i>
-                                <p class="text-muted mb-2 small">No applications yet</p>
-                                <a href="jobs.php" class="btn btn-dash-primary btn-sm">Start Applying</a>
+                            <div class="empty-state">
+                                <i class="fas fa-file-alt"></i>
+                                <p>No applications yet</p>
+                                <a href="jobs.php" class="btn btn-primary btn-sm">Start Applying</a>
                             </div>
                         <?php else: ?>
                             <?php foreach ($recent_applications as $app): ?>
                                 <div class="d-flex justify-content-between align-items-center py-2 border-bottom">
                                     <div>
-                                        <strong class="small"><?php echo htmlspecialchars($app['title']); ?></strong>
+                                        <strong><?php echo htmlspecialchars($app['title']); ?></strong>
                                         <br><small class="text-muted"><?php echo htmlspecialchars($app['company_name']); ?> • <?php echo date('M j, Y', strtotime($app['applied_date'])); ?></small>
                                     </div>
                                     <span class="badge bg-<?php echo $app['status'] === 'pending' ? 'warning' : ($app['status'] === 'accepted' ? 'success' : 'secondary'); ?>"><?php echo ucfirst($app['status']); ?></span>
@@ -441,12 +437,12 @@ $user_stats['active_jobs_available'] = $system_stats['total_active_jobs'];
         </div>
 
         <?php if ($profile['status'] === 'pending' || empty($profile['first_name'])): ?>
-        <div class="row g-4 mt-4">
+        <div class="row g-3 mt-2">
             <div class="col-12">
                 <div class="alert alert-warning">
-                    <h5 class="alert-heading"><i class="fas fa-exclamation-triangle me-2"></i>Complete Your Profile</h5>
-                    <p class="mb-3">Your profile is incomplete. Complete your profile to get better job recommendations and increase your chances of getting hired.</p>
-                    <a href="profile.php" class="btn btn-warning">Complete Profile</a>
+                    <strong><i class="fas fa-exclamation-triangle me-2"></i>Complete Your Profile</strong>
+                    <p class="mb-2 mt-1">Your profile is incomplete. Complete your profile to get better job recommendations.</p>
+                    <a href="profile.php" class="btn btn-sm btn-warning">Complete Profile</a>
                 </div>
             </div>
         </div>

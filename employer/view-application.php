@@ -482,58 +482,21 @@ switch($application['status']) {
     <title>View Application - WORKLINK</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="../assets/style.css" rel="stylesheet">
+    <link href="css/minimal.css" rel="stylesheet">
     <style>
-        .application-view {
-            background: #f3f6fb;
-        }
-
         .application-view .main-content {
             padding-top: 1.5rem;
         }
 
-        .application-view .page-header {
-            background: linear-gradient(135deg, #1d4ed8 0%, #2563eb 55%, #3b82f6 100%);
-            color: #fff;
-            padding: 1rem 1.5rem;
-            border-radius: 14px;
-            margin-bottom: 1.5rem;
-            box-shadow: 0 12px 28px rgba(37, 99, 235, 0.28);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-        }
-
-        .application-view .page-header h1,
-        .application-view .page-header h5,
-        .application-view .page-header .h2 {
-            color: #fff;
-        }
-
-        .application-view .page-header .btn {
-            border-color: rgba(255, 255, 255, 0.6);
-            color: #fff;
-        }
-
-        .application-view .page-header .btn:hover {
-            background: rgba(255, 255, 255, 0.18);
-            color: #fff;
-        }
-
         .application-view .card {
-            border: 0;
-            border-radius: 14px;
-            box-shadow: 0 10px 25px rgba(15, 23, 42, 0.08);
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
         }
 
         .application-view .card-header {
-            background: #f8fafc;
+            background: #fff;
             border-bottom: 1px solid #e2e8f0;
-            border-top-left-radius: 14px;
-            border-top-right-radius: 14px;
             font-weight: 600;
-        }
-
-        .application-view .card-body p {
-            color: #0f172a;
         }
 
         .application-view .badge {
@@ -541,13 +504,8 @@ switch($application['status']) {
             padding: 0.4rem 0.75rem;
         }
 
-        .application-view .table thead th {
-            background: #f1f5f9;
-            border-bottom: 1px solid #e2e8f0;
-        }
-
         .application-view .alert {
-            border-radius: 12px;
+            border-radius: 8px;
         }
 
         .application-view .application-sidebar {
@@ -589,17 +547,13 @@ switch($application['status']) {
     <!-- Main Content -->
     
             <div class="col-md-9 col-lg-10 ms-sm-auto px-md-4 main-content">
-                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center page-header">
-                    <h1 class="h2">
+                <div class="page-header d-flex justify-content-between align-items-center">
+                    <h1>
                         <i class="fas fa-file-alt me-2"></i>Application Details
                     </h1>
-                    <div class="btn-toolbar mb-2 mb-md-0">
-                        <div class="btn-group me-2">
-                            <a href="applications.php" class="btn btn-outline-secondary">
-                                <i class="fas fa-arrow-left me-1"></i>Back to Applications
-                            </a>
-                        </div>
-                    </div>
+                    <a href="applications.php" class="btn btn-outline-primary">
+                        <i class="fas fa-arrow-left me-1"></i>Back to Applications
+                    </a>
                 </div>
 
                 <!-- Success/Error Messages -->
