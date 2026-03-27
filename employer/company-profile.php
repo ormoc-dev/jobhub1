@@ -110,70 +110,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <title>Company Profile - WORKLINK</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="../assets/style.css" rel="stylesheet">
-    <style>
-        /* Company Profile – UI Layout & Color Design */
-        .cp-section-label {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.5rem 1rem;
-            border-radius: 10px;
-            font-size: 0.95rem;
-            font-weight: 600;
-            letter-spacing: 0.02em;
-            margin-bottom: 0;
-            border-left: 4px solid;
-        }
-        .cp-section-label.section-info {
-            background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
-            color: #1e40af;
-            border-left-color: #2563eb;
-        }
-        .cp-section-label.section-branding {
-            background: linear-gradient(135deg, #ccfbf1 0%, #99f6e4 100%);
-            color: #0f766e;
-            border-left-color: #0d9488;
-        }
-        .cp-section-label.section-verification {
-            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
-            color: #92400e;
-            border-left-color: #d97706;
-        }
-        .cp-card {
-            border-radius: 12px;
-            border: 1px solid #e5e7eb;
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.08), 0 2px 4px -2px rgba(0,0,0,0.06);
-            overflow: hidden;
-        }
-        .cp-card .card-header {
-            padding: 1rem 1.25rem;
-            font-weight: 600;
-            border-bottom: 1px solid #e5e7eb;
-            background: #fff;
-        }
-        .cp-card .card-body { padding: 1.25rem; }
-        .cp-form-section {
-            padding: 1.25rem 0;
-            border-bottom: 1px dashed #e5e7eb;
-        }
-        .cp-form-section:last-of-type { border-bottom: 0; }
-        .employer-main-content .progress { height: 0.75rem; border-radius: 9999px; background: #e5e7eb; }
-        .employer-main-content .progress-bar { background: linear-gradient(90deg, #0d9488 0%, #10b981 100%); }
-    </style>
+    <link href="css/minimal.css" rel="stylesheet">
 </head>
 <body class="employer-layout">
     <?php include 'includes/sidebar.php'; ?>
 
     <!-- Main Content -->
     <div class="employer-main-content">
-        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-            <h1 class="h2"><i class="fas fa-building me-2"></i>Company Profile</h1>
-            <div class="btn-toolbar mb-2 mb-md-0">
-                <a href="dashboard.php" class="btn btn-outline-light">
-                    <i class="fas fa-arrow-left me-1"></i>Back to Dashboard
-                </a>
-            </div>
+        <div class="page-header d-flex justify-content-between align-items-center">
+            <h1><i class="fas fa-building me-2"></i>Company Profile</h1>
+            <a href="dashboard.php" class="btn btn-outline-primary">
+                <i class="fas fa-arrow-left me-1"></i>Back to Dashboard
+            </a>
         </div>
 
                 <?php if ($message): ?>
@@ -288,7 +236,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                     </div>
 
                                     <div class="text-end pt-3">
-                                        <button type="submit" class="btn" style="background: #10b981; border-color: #10b981; color: white;">
+                                        <button type="submit" class="btn btn-success">
                                             <i class="fas fa-save me-2"></i>Save Profile
                                         </button>
                                     </div>
@@ -385,21 +333,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 <div class="mt-3">
                                     <label class="form-label">Quick Actions:</label>
                                     <div class="d-grid gap-2">
-                                        <a href="verify-document.php" class="btn btn-outline-light">
+                                        <a href="verify-document.php" class="btn btn-outline-primary">
                                             <i class="fas fa-file-circle-check me-2"></i>Verify Documents
                                         </a>
-                                        <a href="#company-profile-form" class="btn" style="background: #10b981; border-color: #10b981; color: white;">
+                                        <a href="#company-profile-form" class="btn btn-success">
                                             <i class="fas fa-pen-to-square me-2"></i>Update Profile
                                         </a>
                                     </div>
                                 </div>
 
                                 <div class="d-grid gap-2">
-                                    <a href="dashboard.php" class="btn" style="border-color: #10b981; color: #10b981;">
+                                    <a href="dashboard.php" class="btn btn-outline-success">
                                         <i class="fas fa-chart-line me-2"></i>View Dashboard
                                     </a>
                                     <?php if ($company && $company['status'] === 'active'): ?>
-                                        <a href="post-job.php" class="btn" style="background: #059669; border-color: #059669; color: white;">
+                                        <a href="post-job.php" class="btn btn-success">
                                             <i class="fas fa-plus me-2"></i>Post New Job
                                         </a>
                                     <?php endif; ?>

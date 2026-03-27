@@ -385,53 +385,49 @@ function updateSessionActivity($userId) {
     }
 }
 
-// Function to get all unique required skills from $jobTitleToSkills (same as post-job.php)
+// Function to get all active skills from database (replaces hardcoded skills)
 function getAllUniqueSkills() {
     static $cachedSkills = null;
     if ($cachedSkills !== null) {
         return $cachedSkills;
     }
     
-    $postJobPath = __DIR__ . '/employer/post-job.php';
-    if (!file_exists($postJobPath)) {
+    global $pdo;
+    try {
+        $stmt = $pdo->query("SELECT skill_name FROM skills WHERE status = 'active' ORDER BY skill_name");
+        $skills = $stmt->fetchAll(PDO::FETCH_COLUMN);
+        $cachedSkills = $skills ?: [];
+    } catch (Exception $e) {
         $cachedSkills = [];
-        return $cachedSkills;
     }
-    
-    $content = file_get_contents($postJobPath);
-    
-    // Extract only the $jobTitleToSkills block (required skills), not $categorySkillOptions etc.
-    if (!preg_match('/\$jobTitleToSkills\s*=\s*\[/s', $content, $startMatch, PREG_OFFSET_CAPTURE)) {
-        $cachedSkills = [];
-        return $cachedSkills;
-    }
-    $blockStart = $startMatch[0][1];
-    if (!preg_match('/\$jobTitleToQualifications\s*=\s*\[/s', $content, $endMatch, PREG_OFFSET_CAPTURE)) {
-        $cachedSkills = [];
-        return $cachedSkills;
-    }
-    $blockEnd = $endMatch[0][1];
-    $block = substr($content, $blockStart, $blockEnd - $blockStart);
-    
-    // Match only inner arrays (=> [ 'Skill1', 'Skill2', ... ]) — these are required skills; keys are job titles
-    $allSkills = [];
-    if (preg_match_all("/=>\s*\[\s*([\s\S]*?)\]\s*(?=\s*,|\s*\];)/", $block, $innerMatches)) {
-        foreach ($innerMatches[1] as $innerContent) {
-            if (preg_match_all("/'([^']+)'/", $innerContent, $skillMatches) && !empty($skillMatches[1])) {
-                foreach ($skillMatches[1] as $skill) {
-                    $skill = trim($skill);
-                    if ($skill !== '' && strlen($skill) < 80 && !preg_match('/^\/\//', $skill)) {
-                        $allSkills[] = $skill;
-                    }
-                }
-            }
-        }
-    }
-    
-    $uniqueSkills = array_unique($allSkills);
-    sort($uniqueSkills);
-    $cachedSkills = array_values($uniqueSkills);
     return $cachedSkills;
+}
+
+// Function to get all skills with details (for admin)
+function getAllSkillsWithDetails() {
+    global $pdo;
+    try {
+        $stmt = $pdo->query("SELECT * FROM skills ORDER BY category, skill_name");
+        return $stmt->fetchAll();
+    } catch (Exception $e) {
+        return [];
+    }
+}
+
+// Function to get skills by category
+function getSkillsByCategory() {
+    global $pdo;
+    try {
+        $stmt = $pdo->query("SELECT * FROM skills WHERE status = 'active' ORDER BY category, skill_name");
+        $skills = $stmt->fetchAll();
+        $grouped = [];
+        foreach ($skills as $skill) {
+            $grouped[$skill['category']][] = $skill['skill_name'];
+        }
+        return $grouped;
+    } catch (Exception $e) {
+        return [];
+    }
 }
 
 // 2FA Helper Functions

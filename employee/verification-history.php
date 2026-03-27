@@ -49,72 +49,18 @@ try {
     <title>Document Verification History - WORKLINK</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="../assets/style.css" rel="stylesheet">
+    <link href="css/minimal.css" rel="stylesheet">
 </head>
 <body class="employee-layout">
     <?php include 'includes/sidebar.php'; ?>
 
-    <!-- Main Content -->
     <div class="employee-main-content">
-        <div class="row">
-            <div class="col-md-3 col-lg-2 sidebar">
-                <div class="d-flex flex-column">
-                    <a href="../index.php" class="navbar-brand text-white p-3 text-center">
-                        <img src="../worklink.jpg" alt="WORKLINK" class="logo-img mb-2" style="height: 40px; width: 40px; border-radius: 50%; object-fit: cover;">
-                        WORKLINK
-                    </a>
-                    <ul class="nav nav-pills flex-column">
-                        <li class="nav-item">
-                            <a class="nav-link" href="dashboard.php">
-                                <i class="fas fa-tachometer-alt"></i>Dashboard
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="profile.php">
-                                <i class="fas fa-user"></i>My Profile
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="jobs.php">
-                                <i class="fas fa-search"></i>Browse All Jobs
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="applications.php">
-                                <i class="fas fa-file-alt"></i>My Applications
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" href="verification-history.php">
-                                <i class="fas fa-check-circle"></i>Verification History
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="saved-jobs.php">
-                                <i class="fas fa-heart"></i>Saved Jobs
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="messages.php">
-                                <i class="fas fa-envelope"></i>Messages
-                            </a>
-                        </li>
-                        <li class="nav-item mt-auto">
-                            <a class="nav-link" href="../logout.php">
-                                <i class="fas fa-sign-out-alt"></i>Logout
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- Main Content -->
-            <div class="col-md-9 col-lg-10 p-4">
-                <div class="d-flex justify-content-between align-items-center mb-4">
-                    <h1 class="h3 mb-0">
-                        <i class="fas fa-check-circle me-2"></i>Document Verification History
-                    </h1>
-                    <a href="dashboard.php" class="btn" style="border-color: #10b981; color: #10b981;">
+                <div class="page-header d-flex justify-content-between align-items-center">
+                    <div>
+                        <h1>Document Verification History</h1>
+                        <p>Track your document verification status</p>
+                    </div>
+                    <a href="dashboard.php" class="btn btn-outline-primary">
                         <i class="fas fa-arrow-left me-2"></i>Back to Dashboard
                     </a>
                 </div>
@@ -125,7 +71,7 @@ try {
                         No document verifications yet. Your documents will appear here once employers verify them.
                     </div>
                 <?php else: ?>
-                    <div class="card dashboard-card">
+                    <div class="card">
                         <div class="card-header">
                             <h5 class="mb-0">Verification Records</h5>
                         </div>
@@ -194,8 +140,6 @@ try {
                         </div>
                     </div>
                 <?php endif; ?>
-            </div>
-        </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>

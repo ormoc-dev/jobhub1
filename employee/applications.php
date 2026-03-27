@@ -91,65 +91,62 @@ $stats['offers'] = count(array_filter($all_applications, function($app) {
     <title>My Applications - WORKLINK</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="../assets/style.css" rel="stylesheet">
+    <link href="css/minimal.css" rel="stylesheet">
 </head>
 <body class="employee-layout">
     <?php include 'includes/sidebar.php'; ?>
 
     <!-- Main Content -->
     <div class="employee-main-content">
-        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-            <h1 class="h2"><i class="fas fa-file-alt me-2"></i>My Applications</h1>
-            <div class="btn-toolbar mb-2 mb-md-0">
-                <a href="jobs.php" class="btn" style="background: #10b981; border-color: #10b981; color: white;">
-                    <i class="fas fa-search me-1"></i>Browse More Jobs
-                </a>
+        <div class="page-header d-flex justify-content-between align-items-center">
+            <div>
+                <h1>My Applications</h1>
+                <p>Track your job applications and their status</p>
             </div>
+            <a href="jobs.php" class="btn btn-primary">
+                <i class="fas fa-search me-1"></i>Browse More Jobs
+            </a>
         </div>
 
         <!-- Application Statistics -->
-        <div class="row g-4 mb-4">
-            <div class="col-md-2">
-                <div class="card dashboard-card text-white" style="background: linear-gradient(135deg, #10b981 0%, #047857 100%);">
-                    <div class="card-body text-center">
-                        <h4><?php echo $stats['total']; ?></h4>
-                        <small>Total Applications</small>
+        <div class="row g-3 mb-4">
+            <div class="col-md-2 col-sm-4">
+                <div class="card stat-card text-center">
+                    <div class="card-body">
+                        <h3 class="card-title"><?php echo $stats['total']; ?></h3>
+                        <p class="card-text">Total</p>
                     </div>
                 </div>
             </div>
-            <div class="col-md-2">
-                <div class="card dashboard-card text-dark bg-warning">
-                    <div class="card-body text-center">
-                        <h4><?php echo $stats['pending']; ?></h4>
-                        <small><i class="fas fa-clock me-1"></i>Pending</small>
-                        <div class="small text-muted" style="font-size: 0.65rem;">Hindi pa nakita</div>
+            <div class="col-md-2 col-sm-4">
+                <div class="card stat-card text-center">
+                    <div class="card-body">
+                        <h3 class="card-title"><?php echo $stats['pending']; ?></h3>
+                        <p class="card-text">Pending</p>
                     </div>
                 </div>
             </div>
-            <div class="col-md-2">
-                <div class="card dashboard-card text-white bg-info">
-                    <div class="card-body text-center">
-                        <h4><?php echo $stats['reviewed']; ?></h4>
-                        <small><i class="fas fa-eye me-1"></i>Under Review</small>
-                        <div class="small" style="font-size: 0.65rem; opacity: 0.9;">Nakita na</div>
+            <div class="col-md-2 col-sm-4">
+                <div class="card stat-card text-center">
+                    <div class="card-body">
+                        <h3 class="card-title"><?php echo $stats['reviewed']; ?></h3>
+                        <p class="card-text">Reviewed</p>
                     </div>
                 </div>
             </div>
-            <div class="col-md-2">
-                <div class="card dashboard-card text-white bg-success">
-                    <div class="card-body text-center">
-                        <h4><?php echo $stats['accepted']; ?></h4>
-                        <small><i class="fas fa-check-circle me-1"></i>Accepted</small>
-                        <div class="small" style="font-size: 0.65rem; opacity: 0.9;">Approved na!</div>
+            <div class="col-md-2 col-sm-4">
+                <div class="card stat-card text-center">
+                    <div class="card-body">
+                        <h3 class="card-title"><?php echo $stats['accepted']; ?></h3>
+                        <p class="card-text">Accepted</p>
                     </div>
                 </div>
             </div>
-            <div class="col-md-3">
-                <div class="card dashboard-card text-white bg-danger">
-                    <div class="card-body text-center">
-                        <h4><?php echo $stats['rejected']; ?></h4>
-                        <small><i class="fas fa-times-circle me-1"></i>Rejected</small>
-                        <div class="small" style="font-size: 0.65rem; opacity: 0.9;">Hindi na-approve</div>
+            <div class="col-md-2 col-sm-4">
+                <div class="card stat-card text-center">
+                    <div class="card-body">
+                        <h3 class="card-title"><?php echo $stats['rejected']; ?></h3>
+                        <p class="card-text">Rejected</p>
                     </div>
                 </div>
             </div>
@@ -158,39 +155,31 @@ $stats['offers'] = count(array_filter($all_applications, function($app) {
         <!-- Tab Navigation -->
         <div class="row mb-3">
             <div class="col-12">
-                <ul class="nav nav-pills nav-justified" id="applicationsTab" role="tablist">
+                <ul class="nav nav-tabs" id="applicationsTab" role="tablist">
                     <li class="nav-item" role="presentation">
-                        <a class="nav-link <?php echo $active_tab === 'submitted' ? 'active' : ''; ?>" 
-                           href="?tab=submitted"
-                           style="<?php echo $active_tab === 'submitted' ? 'background: #10b981; color: white;' : 'color: #10b981; border: 1px solid #10b981;'; ?>">
-                            <i class="fas fa-file-alt me-2"></i>Submitted Applications
+                        <a class="nav-link <?php echo $active_tab === 'submitted' ? 'active' : ''; ?>" href="?tab=submitted">
+                            <i class="fas fa-file-alt me-2"></i>Submitted
                         </a>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <a class="nav-link <?php echo $active_tab === 'interviews' ? 'active' : ''; ?>" 
-                           href="?tab=interviews"
-                           style="<?php echo $active_tab === 'interviews' ? 'background: #10b981; color: white;' : 'color: #10b981; border: 1px solid #10b981;'; ?>">
-                            <i class="fas fa-calendar-check me-2"></i>Interview Invites
+                        <a class="nav-link <?php echo $active_tab === 'interviews' ? 'active' : ''; ?>" href="?tab=interviews">
+                            <i class="fas fa-calendar-check me-2"></i>Interviews
                             <?php if ($stats['interviews'] > 0): ?>
                                 <span class="badge bg-info ms-1"><?php echo $stats['interviews']; ?></span>
                             <?php endif; ?>
                         </a>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <a class="nav-link <?php echo $active_tab === 'offers' ? 'active' : ''; ?>" 
-                           href="?tab=offers"
-                           style="<?php echo $active_tab === 'offers' ? 'background: #10b981; color: white;' : 'color: #10b981; border: 1px solid #10b981;'; ?>">
-                            <i class="fas fa-hand-holding-usd me-2"></i>Job Offers
+                        <a class="nav-link <?php echo $active_tab === 'offers' ? 'active' : ''; ?>" href="?tab=offers">
+                            <i class="fas fa-hand-holding-usd me-2"></i>Offers
                             <?php if ($stats['offers'] > 0): ?>
                                 <span class="badge bg-success ms-1"><?php echo $stats['offers']; ?></span>
                             <?php endif; ?>
                         </a>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <a class="nav-link <?php echo $active_tab === 'history' ? 'active' : ''; ?>" 
-                           href="?tab=history"
-                           style="<?php echo $active_tab === 'history' ? 'background: #10b981; color: white;' : 'color: #10b981; border: 1px solid #10b981;'; ?>">
-                            <i class="fas fa-history me-2"></i>Application History
+                        <a class="nav-link <?php echo $active_tab === 'history' ? 'active' : ''; ?>" href="?tab=history">
+                            <i class="fas fa-history me-2"></i>History
                         </a>
                     </li>
                 </ul>
@@ -248,7 +237,7 @@ $stats['offers'] = count(array_filter($all_applications, function($app) {
                                     ?>
                                 </p>
                                 <?php if ($active_tab !== 'interviews' && $active_tab !== 'offers'): ?>
-                                    <a href="jobs.php" class="btn" style="background: #10b981; border-color: #10b981; color: white;">
+                                    <a href="jobs.php" class="btn btn-primary">
                                         <i class="fas fa-search me-1"></i>Browse All Jobs
                                     </a>
                                 <?php endif; ?>
@@ -427,7 +416,7 @@ $stats['offers'] = count(array_filter($all_applications, function($app) {
                                                 <td>
                                                     <div class="btn-group btn-group-sm">
                                                         <a href="../job-details.php?id=<?php echo $app['job_id']; ?>" 
-                                                           class="btn" style="border-color: #10b981; color: #10b981;" title="View Job Details">
+                                                           class="btn btn-outline-primary" title="View Job Details">
                                                             <i class="fas fa-eye"></i>
                                                         </a>
                                                         <a href="view-application.php?id=<?php echo $app['id']; ?>" 
@@ -549,59 +538,8 @@ $stats['offers'] = count(array_filter($all_applications, function($app) {
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <style>
-        #applicationsTab .nav-link {
-            transition: all 0.3s ease;
-            margin: 0 2px;
-            border-radius: 8px;
-        }
-        #applicationsTab .nav-link:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(16, 185, 129, 0.3);
-        }
-        #applicationsTab .nav-link.active {
-            font-weight: 600;
-        }
-        
-        /* Status Container Styling */
-        .status-container {
-            display: inline-block;
-            text-align: left;
-        }
-        .status-container .badge {
-            padding: 6px 12px;
-            border-radius: 20px;
-        }
-        
-        /* Pending Status - Pulsing animation */
-        .badge.bg-warning {
-            animation: pulse-warning 2s infinite;
-        }
-        @keyframes pulse-warning {
-            0%, 100% { box-shadow: 0 0 0 0 rgba(255, 193, 7, 0.4); }
-            50% { box-shadow: 0 0 0 8px rgba(255, 193, 7, 0); }
-        }
-        
-        /* Under Review Status - Subtle glow */
-        .badge.bg-info {
-            box-shadow: 0 2px 8px rgba(13, 202, 240, 0.3);
-        }
-        
-        /* Accepted Status - Success glow */
-        .badge.bg-success {
-            box-shadow: 0 2px 8px rgba(25, 135, 84, 0.4);
-        }
-        
-        /* Rejected Status */
-        .badge.bg-danger {
-            box-shadow: 0 2px 8px rgba(220, 53, 69, 0.3);
-        }
-        
-        /* Status description styling */
-        .status-container small.text-muted {
-            display: block;
-            margin-top: 4px;
-            line-height: 1.2;
-        }
+        .status-container { display: inline-block; text-align: left; }
+        .status-container .badge { padding: 6px 12px; border-radius: 20px; }
     </style>
 </body>
 </html>

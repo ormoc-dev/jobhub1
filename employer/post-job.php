@@ -29,9 +29,14 @@ foreach ($categories as $category) {
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $title = sanitizeInput($_POST['title']);
     $description = sanitizeInput($_POST['description']);
+    
+    // Get selected skill or custom skill
     $requirementsInput = $_POST['requirements'] ?? '';
-    if (is_array($requirementsInput)) {
-        $requirements = implode(',', array_map('sanitizeInput', $requirementsInput));
+    $customRequirements = $_POST['custom_requirements'] ?? '';
+    
+    // Use custom skill if provided, otherwise use selected skill
+    if (!empty(trim($customRequirements))) {
+        $requirements = sanitizeInput($customRequirements);
     } else {
         $requirements = sanitizeInput($requirementsInput);
     }
@@ -7910,6 +7915,10 @@ $jobTitleToCategoryOptionJson = json_encode($jobTitleToCategoryOption, JSON_UNES
 $jobTitleDescriptionsJson = json_encode($jobTitleDescriptions, JSON_UNESCAPED_UNICODE);
 $jobTitleToSkillsJson = json_encode($jobTitleToSkills, JSON_UNESCAPED_UNICODE);
 $jobTitleToQualificationsJson = json_encode($jobTitleToQualifications, JSON_UNESCAPED_UNICODE);
+
+// Get database skills for the skills dropdown
+$databaseSkills = getAllUniqueSkills();
+$databaseSkillsJson = json_encode($databaseSkills, JSON_UNESCAPED_UNICODE);
 ?>
 
 <!DOCTYPE html>
@@ -7920,7 +7929,7 @@ $jobTitleToQualificationsJson = json_encode($jobTitleToQualifications, JSON_UNES
     <title>Post New Job - WORKLINK</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="../assets/style.css" rel="stylesheet">
+    <link href="css/minimal.css" rel="stylesheet">
     <style>
         :root {
             --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -8530,16 +8539,20 @@ $jobTitleToQualificationsJson = json_encode($jobTitleToQualifications, JSON_UNES
                                         Job Title<span class="required-indicator">*</span>
                                     </label>
                                     <div class="input-group-custom no-input-icon">
-                                        <select class="form-select form-select-lg" name="title" id="title" required>
-                                            <option value="">Select Job Title</option>
+                                        <input type="text" class="form-control form-control-lg" name="title" id="title" 
+                                               value="<?php echo htmlspecialchars($_POST['title'] ?? ''); ?>" 
+                                               placeholder="Enter job title (e.g., Senior PHP Developer)" 
+                                               list="jobTitleSuggestions" required>
+                                        <datalist id="jobTitleSuggestions">
                                             <?php foreach ($jobTitleGroups as $groupLabel => $titles): ?>
                                                 <?php foreach ($titles as $title): ?>
-                                                    <option value="<?php echo htmlspecialchars($title); ?>" <?php echo ($_POST['title'] ?? '') === $title ? 'selected' : ''; ?>>
-                                                        <?php echo htmlspecialchars($title); ?>
-                                                    </option>
+                                                    <option value="<?php echo htmlspecialchars($title); ?>">
                                                 <?php endforeach; ?>
                                             <?php endforeach; ?>
-                                        </select>
+                                        </datalist>
+                                    </div>
+                                    <div class="form-text text-muted">
+                                        <i class="fas fa-lightbulb me-1"></i>Type your own title or select from suggestions
                                     </div>
                                 </div>
 
@@ -8902,15 +8915,27 @@ $jobTitleToQualificationsJson = json_encode($jobTitleToQualifications, JSON_UNES
                                 <label for="requirements" class="form-label fw-bold">
                                     <i class="fas fa-tools me-2" style="color: var(--primary-color);"></i>Required Skills<span class="required-indicator">*</span>
                                 </label>
-                                <div class="input-group-custom">
-                                    <i class="fas fa-check-circle input-icon"></i>
-                                    <select class="form-select form-select-lg" name="requirements[]" id="requirements" multiple style="height: 150px;" required>
-                                        <option value="">Select Job Title first to see available skills</option>
-                                    </select>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Select from List</label>
+                                        <div class="input-group-custom">
+                                            <i class="fas fa-check-circle input-icon"></i>
+                                            <select class="form-select form-select-lg" name="requirements" id="requirements">
+                                                <option value="">Select a skill</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Or Add Custom Skill</label>
+                                        <div class="input-group-custom">
+                                            <i class="fas fa-plus-circle input-icon"></i>
+                                            <input type="text" class="form-control form-control-lg" name="custom_requirements" id="custom_requirements" placeholder="Type your own skill">
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="form-text">
                                     <i class="fas fa-info-circle me-1"></i>
-                                    Select a job title first, then hold Ctrl (Windows) or Cmd (Mac) to select multiple required skills.
+                                    Select from the dropdown OR type your own custom skill.
                                 </div>
                             </div>
                             </div>
@@ -8927,6 +8952,31 @@ $jobTitleToQualificationsJson = json_encode($jobTitleToQualifications, JSON_UNES
                             </div>
                         </form>
                         <script>
+                            // Add custom skill input field
+                            function addCustomSkill() {
+                                const container = document.getElementById('customSkillsContainer');
+                                const div = document.createElement('div');
+                                div.className = 'input-group mb-2';
+                                div.innerHTML = `
+                                    <input type="text" class="form-control" name="custom_requirements[]" placeholder="Enter custom skill">
+                                    <button type="button" class="btn btn-outline-danger" onclick="removeCustomSkill(this)">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                `;
+                                container.appendChild(div);
+                            }
+                            
+                            // Remove custom skill input field
+                            function removeCustomSkill(button) {
+                                const container = document.getElementById('customSkillsContainer');
+                                const inputGroups = container.querySelectorAll('.input-group');
+                                if (inputGroups.length > 1) {
+                                    button.closest('.input-group').remove();
+                                } else {
+                                    // Clear the input if it's the last one
+                                    button.closest('.input-group').querySelector('input').value = '';
+                                }
+                            }
                         </script>
                     </div>
                 </div>
@@ -8958,6 +9008,7 @@ $jobTitleToQualificationsJson = json_encode($jobTitleToQualifications, JSON_UNES
             const titleToQualifications = <?php echo $jobTitleToQualificationsJson; ?>;
             const selectedRequirement = <?php echo json_encode($requirementsValue, JSON_UNESCAPED_UNICODE); ?>;
             const titleDescriptions = <?php echo $jobTitleDescriptionsJson; ?>;
+            const databaseSkills = <?php echo $databaseSkillsJson; ?>;
 
             const normalizeKey = (value) => (value || '').toLowerCase().trim();
             const descriptionField = document.getElementById('description');
@@ -8970,10 +9021,13 @@ $jobTitleToQualificationsJson = json_encode($jobTitleToQualifications, JSON_UNES
                 // Clear the dropdown
                 requirementsSelect.innerHTML = '';
                 
-                if (!skills || skills.length === 0) {
+                // Use provided skills or default to database skills
+                const skillsToShow = (skills && skills.length > 0) ? skills : databaseSkills;
+                
+                if (!skillsToShow || skillsToShow.length === 0) {
                     const option = document.createElement('option');
                     option.value = '';
-                    option.textContent = 'Select Job Title first to see available skills';
+                    option.textContent = 'No skills available';
                     requirementsSelect.appendChild(option);
                     return;
                 }
@@ -8985,22 +9039,20 @@ $jobTitleToQualificationsJson = json_encode($jobTitleToQualifications, JSON_UNES
                 requirementsSelect.appendChild(defaultOption);
 
                 // Add all skills as options
-                skills.forEach((skill) => {
+                skillsToShow.forEach((skill) => {
                     const option = document.createElement('option');
                     option.value = skill;
                     option.textContent = skill;
                     // Preserve selection if it was previously selected or matches preferred selection
-                    if (Array.isArray(preferredSelection)) {
-                        if (preferredSelection.includes(skill)) option.selected = true;
-                    } else if (typeof preferredSelection === 'string' && preferredSelection.includes(',')) {
-                        const preferredArray = preferredSelection.split(',').map(s => s.trim());
-                        if (preferredArray.includes(skill)) option.selected = true;
-                    } else if (currentSelected === skill || preferredSelection === skill) {
+                    if (currentSelected === skill || preferredSelection === skill) {
                         option.selected = true;
                     }
                     requirementsSelect.appendChild(option);
                 });
             };
+            
+            // Initialize with database skills on page load
+            updateRequirements(databaseSkills, selectedRequirement);
 
             const updateRequirementsByKey = (categoryKey, preferredSelection = '') => {
                 const skills = categorySkills[normalizeKey(categoryKey)] || [];

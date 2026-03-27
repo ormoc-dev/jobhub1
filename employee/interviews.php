@@ -77,70 +77,70 @@ $interviews = $active_tab === 'results' ? $past_interviews : $upcoming_interview
     <title>My Interviews - WORKLINK</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="../assets/style.css" rel="stylesheet">
-    <link href="css/dashboard.css" rel="stylesheet">
+    <link href="css/minimal.css" rel="stylesheet">
 </head>
 <body class="employee-layout">
     <?php include 'includes/sidebar.php'; ?>
 
     <!-- Main Content -->
     <div class="employee-main-content">
-        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-            <h1 class="h2"><i class="fas fa-calendar-check me-2"></i>My Interviews</h1>
-            <div class="btn-toolbar mb-2 mb-md-0">
-                <a href="applications.php" class="btn" style="background: #10b981; border-color: #10b981; color: white;">
-                    <i class="fas fa-file-alt me-1"></i>View Applications
-                </a>
+        <div class="page-header d-flex justify-content-between align-items-center">
+            <div>
+                <h1>My Interviews</h1>
+                <p>Track your interview schedule and results</p>
             </div>
+            <a href="applications.php" class="btn btn-primary">
+                <i class="fas fa-file-alt me-1"></i>View Applications
+            </a>
         </div>
 
         <!-- Interview Statistics -->
-        <div class="row g-4 mb-4">
-            <div class="col-md-2">
-                <div class="card dashboard-card text-white" style="background: linear-gradient(135deg, #10b981 0%, #047857 100%);">
-                    <div class="card-body text-center">
-                        <h4><?php echo $stats['total']; ?></h4>
-                        <small>Total Interviews</small>
+        <div class="row g-3 mb-4">
+            <div class="col-md-2 col-sm-4">
+                <div class="card stat-card text-center">
+                    <div class="card-body">
+                        <h3 class="card-title"><?php echo $stats['total']; ?></h3>
+                        <p class="card-text">Total</p>
                     </div>
                 </div>
             </div>
-            <div class="col-md-2">
-                <div class="card dashboard-card text-white" style="background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);">
-                    <div class="card-body text-center">
-                        <h4><?php echo $stats['upcoming']; ?></h4>
-                        <small>Upcoming</small>
+            <div class="col-md-2 col-sm-4">
+                <div class="card stat-card text-center">
+                    <div class="card-body">
+                        <h3 class="card-title"><?php echo $stats['upcoming']; ?></h3>
+                        <p class="card-text">Upcoming</p>
                     </div>
                 </div>
             </div>
-            <div class="col-md-2">
-                <div class="card dashboard-card text-white" style="background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%);">
-                    <div class="card-body text-center">
-                        <h4><?php echo $stats['completed']; ?></h4>
-                        <small>Completed</small>
+            <div class="col-md-2 col-sm-4">
+                <div class="card stat-card text-center">
+                    <div class="card-body">
+                        <h3 class="card-title"><?php echo $stats['completed']; ?></h3>
+                        <p class="card-text">Completed</p>
                     </div>
                 </div>
             </div>
-            <div class="col-md-2">
-                <div class="card dashboard-card text-white bg-success">
-                    <div class="card-body text-center">
-                        <h4><?php echo $stats['passed']; ?></h4>
-                        <small>Passed</small>
+            <div class="col-md-2 col-sm-4">
+                <div class="card stat-card text-center">
+                    <div class="card-body">
+                        <h3 class="card-title"><?php echo $stats['passed']; ?></h3>
+                        <p class="card-text">Passed</p>
                     </div>
                 </div>
             </div>
-            <div class="col-md-2">
-                <div class="card dashboard-card text-white bg-danger">
-                    <div class="card-body text-center">
-                        <h4><?php echo $stats['failed']; ?></h4>
-                        <small>Failed</small>
+            <div class="col-md-2 col-sm-4">
+                <div class="card stat-card text-center">
+                    <div class="card-body">
+                        <h3 class="card-title"><?php echo $stats['failed']; ?></h3>
+                        <p class="card-text">Failed</p>
                     </div>
                 </div>
             </div>
-            <div class="col-md-2">
-                <div class="card dashboard-card text-dark bg-warning">
-                    <div class="card-body text-center">
-                        <h4><?php echo $stats['pending_result']; ?></h4>
-                        <small>Pending Result</small>
+            <div class="col-md-2 col-sm-4">
+                <div class="card stat-card text-center">
+                    <div class="card-body">
+                        <h3 class="card-title"><?php echo $stats['pending_result']; ?></h3>
+                        <p class="card-text">Pending</p>
                     </div>
                 </div>
             </div>
@@ -149,22 +149,18 @@ $interviews = $active_tab === 'results' ? $past_interviews : $upcoming_interview
         <!-- Tab Navigation -->
         <div class="row mb-3">
             <div class="col-12">
-                <ul class="nav nav-pills nav-justified" id="interviewsTab" role="tablist">
+                <ul class="nav nav-tabs" id="interviewsTab" role="tablist">
                     <li class="nav-item" role="presentation">
-                        <a class="nav-link <?php echo $active_tab === 'schedule' ? 'active' : ''; ?>" 
-                           href="?tab=schedule"
-                           style="<?php echo $active_tab === 'schedule' ? 'background: #10b981; color: white;' : 'color: #10b981; border: 1px solid #10b981;'; ?>">
-                            <i class="fas fa-calendar-alt me-2"></i>Interview Schedule
+                        <a class="nav-link <?php echo $active_tab === 'schedule' ? 'active' : ''; ?>" href="?tab=schedule">
+                            <i class="fas fa-calendar-alt me-2"></i>Schedule
                             <?php if ($stats['upcoming'] > 0): ?>
                                 <span class="badge bg-info ms-1"><?php echo $stats['upcoming']; ?></span>
                             <?php endif; ?>
                         </a>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <a class="nav-link <?php echo $active_tab === 'results' ? 'active' : ''; ?>" 
-                           href="?tab=results"
-                           style="<?php echo $active_tab === 'results' ? 'background: #10b981; color: white;' : 'color: #10b981; border: 1px solid #10b981;'; ?>">
-                            <i class="fas fa-clipboard-check me-2"></i>Interview Results
+                        <a class="nav-link <?php echo $active_tab === 'results' ? 'active' : ''; ?>" href="?tab=results">
+                            <i class="fas fa-clipboard-check me-2"></i>Results
                             <?php if ($stats['completed'] > 0): ?>
                                 <span class="badge bg-success ms-1"><?php echo $stats['completed']; ?></span>
                             <?php endif; ?>
@@ -206,7 +202,7 @@ $interviews = $active_tab === 'results' ? $past_interviews : $upcoming_interview
                                     <?php endif; ?>
                                 </p>
                                 <?php if ($active_tab === 'schedule'): ?>
-                                    <a href="applications.php?tab=interviews" class="btn" style="background: #10b981; border-color: #10b981; color: white;">
+                                    <a href="applications.php?tab=interviews" class="btn btn-primary">
                                         <i class="fas fa-envelope-open-text me-1"></i>Go to Interview Invites
                                     </a>
                                 <?php endif; ?>
@@ -388,8 +384,7 @@ $interviews = $active_tab === 'results' ? $past_interviews : $upcoming_interview
                                                        class="btn btn-sm btn-outline-primary">
                                                         <i class="fas fa-eye me-1"></i>View Job
                                                     </a>
-                                                    <a href="applications.php?tab=interviews" 
-                                                       class="btn btn-sm" style="background: #10b981; border-color: #10b981; color: white;">
+                                                    <a href="applications.php?tab=interviews" class="btn btn-sm btn-primary">
                                                         <i class="fas fa-file-alt me-1"></i>View Application
                                                     </a>
                                                 </div>
@@ -407,27 +402,11 @@ $interviews = $active_tab === 'results' ? $past_interviews : $upcoming_interview
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <style>
-        #interviewsTab .nav-link {
-            transition: all 0.3s ease;
-            margin: 0 2px;
-            border-radius: 8px;
-        }
-        #interviewsTab .nav-link:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(16, 185, 129, 0.3);
-        }
-        #interviewsTab .nav-link.active {
-            font-weight: 600;
-        }
-        .card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12) !important;
-        }
-        .employee-main-content {
-            background: #f1f5f9;
-            min-height: 100vh;
-            padding: 1.5rem 1.75rem 2rem;
-        }
+        .interview-card { border-left: 3px solid #e2e8f0; }
+        .interview-card.today { border-left-color: #f59e0b; }
+        .interview-card.scheduled { border-left-color: #3b82f6; }
+        .interview-card.passed { border-left-color: #10b981; }
+        .interview-card.failed { border-left-color: #ef4444; }
     </style>
 </body>
 </html>

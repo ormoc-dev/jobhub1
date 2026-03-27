@@ -141,25 +141,23 @@ $admin = $stmt->fetch();
     <title>Messages - WORKLINK</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="../assets/style.css" rel="stylesheet">
+    <link href="css/minimal.css" rel="stylesheet">
 </head>
 <body class="employer-layout">
     <?php include 'includes/sidebar.php'; ?>
 
     <!-- Main Content -->
     <div class="employer-main-content">
-        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-            <h1 class="h2">
+        <div class="page-header d-flex justify-content-between align-items-center">
+            <h1>
                 <i class="fas fa-envelope me-2"></i>Messages
                 <?php if ($unread_count > 0): ?>
                     <span class="badge bg-danger text-white"><?php echo $unread_count; ?></span>
                 <?php endif; ?>
             </h1>
-            <div class="btn-toolbar mb-2 mb-md-0">
-                <button class="btn" style="background: #10b981; border-color: #10b981; color: white;" data-bs-toggle="modal" data-bs-target="#composeModal">
-                    <i class="fas fa-plus me-1"></i>Compose Message
-                </button>
-            </div>
+            <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#composeModal">
+                <i class="fas fa-plus me-1"></i>Compose Message
+            </button>
         </div>
 
         <!-- Alert Messages -->
@@ -178,21 +176,17 @@ $admin = $stmt->fetch();
         <?php endif; ?>
 
         <!-- Message Stats -->
-        <div class="row g-4 mb-4">
+        <div class="row g-3 mb-4">
             <div class="col-md-3">
-                <div class="card dashboard-card text-white" style="background: linear-gradient(135deg, #10b981 0%, #047857 100%);">
-                    <div class="card-body text-center">
-                        <h4><?php echo $total_messages; ?></h4>
-                        <small>Total Messages</small>
-                    </div>
+                <div class="stat-card text-center">
+                    <div class="stat-value"><?php echo $total_messages; ?></div>
+                    <div class="stat-label">Total Messages</div>
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="card dashboard-card text-dark bg-warning">
-                    <div class="card-body text-center">
-                        <h4><?php echo $unread_count; ?></h4>
-                        <small>Unread Messages</small>
-                    </div>
+                <div class="stat-card text-center">
+                    <div class="stat-value text-warning"><?php echo $unread_count; ?></div>
+                    <div class="stat-label">Unread Messages</div>
                 </div>
             </div>
             <div class="col-md-6">
@@ -254,7 +248,7 @@ $admin = $stmt->fetch();
                                         <i class="fas fa-users fa-3x text-muted mb-3"></i>
                                         <h5 class="text-muted">No applicant messages yet</h5>
                                         <p class="text-muted">Messages from job applicants will appear here</p>
-                                        <button class="btn" style="background: #10b981; border-color: #10b981; color: white;" data-bs-toggle="modal" data-bs-target="#composeModal">
+                                        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#composeModal">
                                             <i class="fas fa-plus me-1"></i>Send your first message
                                         </button>
                                     </div>
@@ -279,11 +273,11 @@ $admin = $stmt->fetch();
                                                     <div class="text-end">
                                                         <small class="text-muted"><?php echo timeAgo($msg['sent_date']); ?></small>
                                                         <div class="mt-2">
-                                                            <a href="view-message.php?id=<?php echo $msg['id']; ?>" class="btn btn-sm" style="border-color: #10b981; color: #10b981;">
+                                                            <a href="view-message.php?id=<?php echo $msg['id']; ?>" class="btn btn-sm btn-outline-success">
                                                                 <i class="fas fa-eye"></i> View
                                                             </a>
                                                             <?php if (!$msg['is_read']): ?>
-                                                                <a href="?mark_read=1&msg_id=<?php echo $msg['id']; ?>" class="btn btn-sm" style="border-color: #059669; color: #059669;">
+                                                                <a href="?mark_read=1&msg_id=<?php echo $msg['id']; ?>" class="btn btn-sm btn-outline-primary">
                                                                     <i class="fas fa-check"></i> Mark Read
                                                                 </a>
                                                             <?php endif; ?>
@@ -340,7 +334,7 @@ $admin = $stmt->fetch();
                                                         <small class="text-muted"><?php echo timeAgo($notif['created_at']); ?></small>
                                                         <div class="mt-2">
                                                             <?php if (!$notif['is_read']): ?>
-                                                                <a href="?mark_notif_read=1&notif_id=<?php echo $notif['id']; ?>" class="btn btn-sm" style="border-color: #059669; color: #059669;">
+                                                                <a href="?mark_notif_read=1&notif_id=<?php echo $notif['id']; ?>" class="btn btn-sm btn-outline-success">
                                                                     <i class="fas fa-check"></i> Mark Read
                                                                 </a>
                                                             <?php endif; ?>
@@ -382,11 +376,11 @@ $admin = $stmt->fetch();
                                                     <div class="text-end">
                                                         <small class="text-muted"><?php echo timeAgo($msg['sent_date']); ?></small>
                                                         <div class="mt-2">
-                                                            <a href="view-message.php?id=<?php echo $msg['id']; ?>" class="btn btn-sm" style="border-color: #10b981; color: #10b981;">
+                                                            <a href="view-message.php?id=<?php echo $msg['id']; ?>" class="btn btn-sm btn-outline-success">
                                                                 <i class="fas fa-eye"></i> View
                                                             </a>
                                                             <?php if (!$msg['is_read']): ?>
-                                                                <a href="?mark_read=1&msg_id=<?php echo $msg['id']; ?>" class="btn btn-sm" style="border-color: #059669; color: #059669;">
+                                                                <a href="?mark_read=1&msg_id=<?php echo $msg['id']; ?>" class="btn btn-sm btn-outline-primary">
                                                                     <i class="fas fa-check"></i> Mark Read
                                                                 </a>
                                                             <?php endif; ?>
@@ -448,7 +442,7 @@ $admin = $stmt->fetch();
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                        <button type="submit" name="send_message" class="btn" style="background: #10b981; border-color: #10b981; color: white;">
+                        <button type="submit" name="send_message" class="btn btn-success">
                             <i class="fas fa-paper-plane me-1"></i>Send Message
                         </button>
                     </div>

@@ -32,6 +32,11 @@ $pending_users = $pdo->query("SELECT COUNT(*) FROM users WHERE status = 'pending
                 </a>
             </li>
             <li class="nav-item">
+                <a href="skills.php" class="nav-link <?php echo basename($_SERVER['PHP_SELF']) === 'skills.php' ? 'active' : ''; ?>">
+                    <i class="fas fa-tools me-2"></i>Skills Management
+                </a>
+            </li>
+            <li class="nav-item">
                 <a href="system.php" class="nav-link <?php echo basename($_SERVER['PHP_SELF']) === 'system.php' ? 'active' : ''; ?>">
                     <i class="fas fa-cogs me-2"></i>System Settings
                 </a>

@@ -108,20 +108,18 @@ $stats['total_applications'] = $stats['total_applications']->fetchColumn();
     <title>Pamahalaan ang Listahan ng Trabaho - WORKLINK</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="../assets/style.css" rel="stylesheet">
+    <link href="css/minimal.css" rel="stylesheet">
 </head>
 <body class="employer-layout">
     <?php include 'includes/sidebar.php'; ?>
 
     <!-- Main Content -->
     <div class="employer-main-content">
-        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-            <h1 class="h2"><i class="fas fa-briefcase me-2"></i>Pamahalaan ang Listahan ng Trabaho</h1>
-            <div class="btn-toolbar mb-2 mb-md-0">
-                <a href="post-job.php" class="btn style="background: #10b981; border-color: #10b981; color: white;"">
-                    <i class="fas fa-plus me-1"></i>Mag-post ng Trabaho
-                </a>
-            </div>
+        <div class="page-header d-flex justify-content-between align-items-center">
+            <h1><i class="fas fa-briefcase me-2"></i>Pamahalaan ang Listahan ng Trabaho</h1>
+            <a href="post-job.php" class="btn btn-success">
+                <i class="fas fa-plus me-1"></i>Mag-post ng Trabaho
+            </a>
         </div>
 
         <!-- Success/Error Messages -->
@@ -140,53 +138,41 @@ $stats['total_applications'] = $stats['total_applications']->fetchColumn();
         <?php endif; ?>
 
         <!-- Job Statistics -->
-        <div class="row g-4 mb-4">
-            <div class="col-md-2">
-                <div class="card dashboard-card text-white" style="background: linear-gradient(135deg, #10b981 0%, #047857 100%);">
-                    <div class="card-body text-center">
-                        <h4><?php echo $stats['total']; ?></h4>
-                        <small>Total Jobs</small>
-                    </div>
+        <div class="row g-3 mb-4">
+            <div class="col-md-2 col-sm-4 col-6">
+                <div class="stat-card text-center">
+                    <div class="stat-value"><?php echo $stats['total']; ?></div>
+                    <div class="stat-label">Total Jobs</div>
                 </div>
             </div>
-            <div class="col-md-2">
-                <div class="card dashboard-card text-white bg-success">
-                    <div class="card-body text-center">
-                        <h4><?php echo $stats['active']; ?></h4>
-                        <small>Active</small>
-                    </div>
+            <div class="col-md-2 col-sm-4 col-6">
+                <div class="stat-card text-center">
+                    <div class="stat-value text-success"><?php echo $stats['active']; ?></div>
+                    <div class="stat-label">Active</div>
                 </div>
             </div>
-            <div class="col-md-2">
-                <div class="card dashboard-card text-dark bg-warning">
-                    <div class="card-body text-center">
-                        <h4><?php echo $stats['pending']; ?></h4>
-                        <small>Pending</small>
-                    </div>
+            <div class="col-md-2 col-sm-4 col-6">
+                <div class="stat-card text-center">
+                    <div class="stat-value text-warning"><?php echo $stats['pending']; ?></div>
+                    <div class="stat-label">Pending</div>
                 </div>
             </div>
-            <div class="col-md-2">
-                <div class="card dashboard-card text-white bg-danger">
-                    <div class="card-body text-center">
-                        <h4><?php echo $stats['expired']; ?></h4>
-                        <small>Expired</small>
-                    </div>
+            <div class="col-md-2 col-sm-4 col-6">
+                <div class="stat-card text-center">
+                    <div class="stat-value text-danger"><?php echo $stats['expired']; ?></div>
+                    <div class="stat-label">Expired</div>
                 </div>
             </div>
-            <div class="col-md-2">
-                <div class="card dashboard-card text-white bg-dark">
-                    <div class="card-body text-center">
-                        <h4><?php echo $stats['rejected']; ?></h4>
-                        <small>Rejected</small>
-                    </div>
+            <div class="col-md-2 col-sm-4 col-6">
+                <div class="stat-card text-center">
+                    <div class="stat-value text-secondary"><?php echo $stats['rejected']; ?></div>
+                    <div class="stat-label">Rejected</div>
                 </div>
             </div>
-            <div class="col-md-2">
-                <div class="card dashboard-card text-white bg-info">
-                    <div class="card-body text-center">
-                        <h4><?php echo $stats['total_applications']; ?></h4>
-                        <small>Total Applications</small>
-                    </div>
+            <div class="col-md-2 col-sm-4 col-6">
+                <div class="stat-card text-center">
+                    <div class="stat-value text-info"><?php echo $stats['total_applications']; ?></div>
+                    <div class="stat-label">Applications</div>
                 </div>
             </div>
         </div>
@@ -224,7 +210,7 @@ $stats['total_applications'] = $stats['total_applications']->fetchColumn();
                                placeholder="Search by job title or description..." value="<?php echo htmlspecialchars($search); ?>">
                     </div>
                     <div class="col-md-2 d-flex align-items-end">
-                        <button type="submit" class="btn style="border-color: #10b981; color: #10b981;" w-100">
+                        <button type="submit" class="btn btn-outline-success w-100">
                             <i class="fas fa-search me-1"></i>Filter
                         </button>
                     </div>
@@ -243,7 +229,7 @@ $stats['total_applications'] = $stats['total_applications']->fetchColumn();
                         <i class="fas fa-briefcase fa-3x text-muted mb-3"></i>
                         <h5 class="text-muted">No jobs posted yet</h5>
                         <p class="text-muted">Start posting jobs to attract talented candidates.</p>
-                        <a href="post-job.php" class="btn" style="background: #10b981; border-color: #10b981; color: white;">
+                        <a href="post-job.php" class="btn btn-success">
                             <i class="fas fa-plus me-1"></i>Post Your First Job
                         </a>
                     </div>
@@ -337,19 +323,19 @@ $stats['total_applications'] = $stats['total_applications']->fetchColumn();
                                         <td>
                                             <div class="btn-group btn-group-sm">
                                                 <a href="view-job.php?id=<?php echo $job['id']; ?>" 
-                                                   class="btn style="border-color: #06b6d4; color: #06b6d4;"" title="View Details">
+                                                   class="btn btn-outline-info" title="View Details">
                                                     <i class="fas fa-eye"></i>
                                                 </a>
                                                 
                                                 <?php if ($job['application_count'] > 0): ?>
                                                     <a href="applications.php?job_id=<?php echo $job['id']; ?>" 
-                                                       class="btn style="border-color: #10b981; color: #10b981;"" title="View Applications">
+                                                       class="btn btn-outline-success" title="View Applications">
                                                         <i class="fas fa-users"></i>
                                                     </a>
                                                 <?php endif; ?>
                                                 
                                                 <a href="edit-job.php?id=<?php echo $job['id']; ?>" 
-                                                   class="btn style="border-color: #f59e0b; color: #f59e0b;"" title="Edit Job">
+                                                   class="btn btn-outline-warning" title="Edit Job">
                                                     <i class="fas fa-edit"></i>
                                                 </a>
                                                 
