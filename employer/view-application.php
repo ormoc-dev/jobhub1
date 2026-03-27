@@ -234,7 +234,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         $sms_response_raw = sendIprogSmsNotification($recipient, $sms_body);
                         if ($sms_response_raw) {
                             $sms_response = json_decode($sms_response_raw, true);
-                            if (isset($sms_response['status']) && strtolower($sms_response['status']) === 'success') {
+                            $response_status = strtolower($sms_response['status'] ?? '');
+                            $response_message = strtolower($sms_response['message'] ?? '');
+                            
+                            // Check for success - either status is 'success' or message contains 'success'
+                            if ($response_status === 'success' || 
+                                strpos($response_message, 'success') !== false ||
+                                strpos($response_message, 'queued') !== false) {
                                 $sms_message = "SMS notification sent successfully!";
                             } else {
                                 $error_desc = $sms_response['message'] ?? 'Unknown error';
@@ -257,11 +263,55 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 // Convert custom message to HTML friendly format (newlines to <br>)
                                 $email_body = nl2br(htmlspecialchars($custom_email));
                             } elseif ($new_status === 'accepted') {
-                                $email_body = "<h3>Congratulations!</h3><p>Hi " . htmlspecialchars($application['first_name']) . ",</p><p>We are pleased to inform you that your application for <strong>" . htmlspecialchars($application['job_title']) . "</strong> at <strong>" . htmlspecialchars($company['company_name']) . "</strong> has been <strong>APPROVED</strong>.</p><p>Please log in to your account for further details and next steps.</p><p>Best regards,<br>" . htmlspecialchars($company['company_name']) . " Team</p>";
+                                // Professional Approved Email Template
+                                $email_body = "<div style='text-align: center; margin-bottom: 30px;'>"
+                                    . "<div style='display: inline-block; background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; padding: 15px 30px; border-radius: 50px; font-size: 18px; font-weight: 600;'>"
+                                    . "<i class='fas fa-check-circle' style='margin-right: 10px;'></i>Application Approved!"
+                                    . "</div>"
+                                    . "</div>"
+                                    . "<p style='font-size: 16px; line-height: 1.6; color: #334155;'>Hi " . htmlspecialchars($application['first_name']) . ",</p>"
+                                    . "<p style='font-size: 16px; line-height: 1.6; color: #334155;'>We are delighted to inform you that your application for the <strong style='color: #1e293b;'>" . htmlspecialchars($application['job_title']) . "</strong> position at <strong style='color: #1e293b;'>" . htmlspecialchars($company['company_name']) . "</strong> has been <strong style='color: #059669;'>APPROVED</strong>!</p>"
+                                    . "<div style='background: #f0fdf4; border-left: 4px solid #10b981; padding: 20px; margin: 25px 0; border-radius: 0 8px 8px 0;'>"
+                                    . "<h4 style='margin: 0 0 10px 0; color: #065f46; font-size: 16px;'>Next Steps</h4>"
+                                    . "<p style='margin: 0; color: #374151; font-size: 15px; line-height: 1.5;'>Please log in to your account to view the complete details about your approval and any further instructions regarding the next stages of the hiring process.</p>"
+                                    . "</div>"
+                                    . "<p style='font-size: 16px; line-height: 1.6; color: #334155;'>Congratulations on this achievement! We are excited about the possibility of having you join our team.</p>"
+                                    . "<div style='margin-top: 30px; padding-top: 20px; border-top: 1px solid #e2e8f0;'>"
+                                    . "<p style='margin: 0; color: #64748b; font-size: 14px;'>Best regards,<br><strong style='color: #1e293b;'>" . htmlspecialchars($company['company_name']) . "</strong> Team</p>"
+                                    . "</div>";
                             } elseif ($new_status === 'rejected') {
-                                $email_body = "<h3>Application Update</h3><p>Hi " . htmlspecialchars($application['first_name']) . ",</p><p>Thank you for your interest in the <strong>" . htmlspecialchars($application['job_title']) . "</strong> position at <strong>" . htmlspecialchars($company['company_name']) . "</strong>.</p><p>After careful review, we have decided to move forward with other candidates at this time. We appreciate the time and effort you put into your application and wish you the best in your job search.</p><p>Best regards,<br>" . htmlspecialchars($company['company_name']) . " Team</p>";
+                                // Professional Rejected Email Template
+                                $email_body = "<div style='text-align: center; margin-bottom: 30px;'>"
+                                    . "<div style='display: inline-block; background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); color: white; padding: 15px 30px; border-radius: 50px; font-size: 18px; font-weight: 600;'>"
+                                    . "<i class='fas fa-info-circle' style='margin-right: 10px;'></i>Application Update"
+                                    . "</div>"
+                                    . "</div>"
+                                    . "<p style='font-size: 16px; line-height: 1.6; color: #334155;'>Hi " . htmlspecialchars($application['first_name']) . ",</p>"
+                                    . "<p style='font-size: 16px; line-height: 1.6; color: #334155;'>Thank you for your interest in the <strong style='color: #1e293b;'>" . htmlspecialchars($application['job_title']) . "</strong> position at <strong style='color: #1e293b;'>" . htmlspecialchars($company['company_name']) . "</strong>.</p>"
+                                    . "<div style='background: #fef2f2; border-left: 4px solid #ef4444; padding: 20px; margin: 25px 0; border-radius: 0 8px 8px 0;'>"
+                                    . "<p style='margin: 0; color: #374151; font-size: 15px; line-height: 1.5;'>After careful consideration of all applications received, we have decided to move forward with other candidates whose qualifications more closely match our current requirements.</p>"
+                                    . "</div>"
+                                    . "<p style='font-size: 16px; line-height: 1.6; color: #334155;'>We genuinely appreciate the time and effort you invested in your application. We encourage you to continue exploring opportunities with us in the future.</p>"
+                                    . "<p style='font-size: 16px; line-height: 1.6; color: #334155;'>We wish you every success in your job search and future endeavors.</p>"
+                                    . "<div style='margin-top: 30px; padding-top: 20px; border-top: 1px solid #e2e8f0;'>"
+                                    . "<p style='margin: 0; color: #64748b; font-size: 14px;'>Best regards,<br><strong style='color: #1e293b;'>" . htmlspecialchars($company['company_name']) . "</strong> Team</p>"
+                                    . "</div>";
                             } else {
-                                $email_body = "<h3>Application Under Review</h3><p>Hi " . htmlspecialchars($application['first_name']) . ",</p><p>We have reviewed your application for <strong>" . htmlspecialchars($application['job_title']) . "</strong> at <strong>" . htmlspecialchars($company['company_name']) . "</strong>.</p><p>We will be in touch with you soon regarding the next steps in our hiring process.</p><p>Best regards,<br>" . htmlspecialchars($company['company_name']) . " Team</p>";
+                                // Professional Reviewed Email Template
+                                $email_body = "<div style='text-align: center; margin-bottom: 30px;'>"
+                                    . "<div style='display: inline-block; background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); color: white; padding: 15px 30px; border-radius: 50px; font-size: 18px; font-weight: 600;'>"
+                                    . "<i class='fas fa-eye' style='margin-right: 10px;'></i>Application Reviewed"
+                                    . "</div>"
+                                    . "</div>"
+                                    . "<p style='font-size: 16px; line-height: 1.6; color: #334155;'>Hi " . htmlspecialchars($application['first_name']) . ",</p>"
+                                    . "<p style='font-size: 16px; line-height: 1.6; color: #334155;'>We wanted to let you know that your application for the <strong style='color: #1e293b;'>" . htmlspecialchars($application['job_title']) . "</strong> position at <strong style='color: #1e293b;'>" . htmlspecialchars($company['company_name']) . "</strong> has been reviewed by our hiring team.</p>"
+                                    . "<div style='background: #eff6ff; border-left: 4px solid #3b82f6; padding: 20px; margin: 25px 0; border-radius: 0 8px 8px 0;'>"
+                                    . "<p style='margin: 0; color: #374151; font-size: 15px; line-height: 1.5;'>We are currently evaluating all candidates and will be in touch with you soon regarding the next steps in our hiring process.</p>"
+                                    . "</div>"
+                                    . "<p style='font-size: 16px; line-height: 1.6; color: #334155;'>Thank you for your patience and interest in joining our team.</p>"
+                                    . "<div style='margin-top: 30px; padding-top: 20px; border-top: 1px solid #e2e8f0;'>"
+                                    . "<p style='margin: 0; color: #64748b; font-size: 14px;'>Best regards,<br><strong style='color: #1e293b;'>" . htmlspecialchars($company['company_name']) . "</strong> Team</p>"
+                                    . "</div>";
                             }
 
                             $email_result = sendEmailNotification($recipient_email, $subject, $email_body);
@@ -355,7 +405,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             $sms_response_raw = sendIprogSmsNotification($recipient, $sms_body);
                             if ($sms_response_raw) {
                                 $sms_response = json_decode($sms_response_raw, true);
-                                if (isset($sms_response['status']) && strtolower($sms_response['status']) === 'success') {
+                                $response_status = strtolower($sms_response['status'] ?? '');
+                                $response_message = strtolower($sms_response['message'] ?? '');
+                                
+                                // Check for success - either status is 'success' or message contains 'success'
+                                if ($response_status === 'success' || 
+                                    strpos($response_message, 'success') !== false ||
+                                    strpos($response_message, 'queued') !== false) {
                                     $sms_message = "Interview SMS sent successfully!";
                                 } else {
                                     $error_desc = $sms_response['message'] ?? 'Unknown error';
@@ -373,16 +429,40 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         if (!empty($recipient_email)) {
                             $subject = "Interview Invitation: " . ($application['job_title'] ?? 'Position') . " at " . ($company['company_name'] ?? 'Company');
                             
-                            $email_body = "<h3>Interview Invitation</h3>"
-                                . "<p>Hi " . htmlspecialchars($application['first_name']) . ",</p>"
-                                . "<p>We are pleased to invite you for an interview for the <strong>" . htmlspecialchars($application['job_title'] ?? 'position') . "</strong> at <strong>" . htmlspecialchars($company['company_name'] ?? 'our company') . "</strong>.</p>"
-                                . "<ul>"
-                                . "<li><strong>Date:</strong> " . htmlspecialchars($interview_date ?: 'To be confirmed') . "</li>"
-                                . "<li><strong>Time:</strong> " . htmlspecialchars($interview_time ?: 'To be confirmed') . "</li>"
-                                . "<li><strong>Mode:</strong> " . htmlspecialchars($interview_mode ?: 'To be confirmed') . "</li>"
-                                . "</ul>"
-                                . "<p>Please confirm your availability as soon as possible. We look forward to meeting you!</p>"
-                                . "<p>Best regards,<br>" . htmlspecialchars($company['company_name'] ?? 'HR Team') . "</p>";
+                            $custom_email = isset($_POST['custom_email_message']) ? trim($_POST['custom_email_message']) : '';
+                            
+                            if (!empty($custom_email)) {
+                                // Use custom message with interview details appended
+                                $email_body = nl2br(htmlspecialchars($custom_email)) 
+                                    . "<hr style='margin: 20px 0; border: none; border-top: 1px solid #e2e8f0;'>"
+                                    . "<h4 style='color: #1e293b; margin-bottom: 15px;'>Interview Details</h4>"
+                                    . "<table style='width: 100%; border-collapse: collapse; background: #f8fafc; border-radius: 8px;'>"
+                                    . "<tr><td style='padding: 12px 15px; border-bottom: 1px solid #e2e8f0; font-weight: 600; color: #475569; width: 30%;'>Date:</td><td style='padding: 12px 15px; border-bottom: 1px solid #e2e8f0; color: #1e293b;'>" . htmlspecialchars($interview_date ?: 'To be confirmed') . "</td></tr>"
+                                    . "<tr><td style='padding: 12px 15px; border-bottom: 1px solid #e2e8f0; font-weight: 600; color: #475569;'>Time:</td><td style='padding: 12px 15px; border-bottom: 1px solid #e2e8f0; color: #1e293b;'>" . htmlspecialchars($interview_time ?: 'To be confirmed') . "</td></tr>"
+                                    . "<tr><td style='padding: 12px 15px; font-weight: 600; color: #475569;'>Mode:</td><td style='padding: 12px 15px; color: #1e293b;'>" . htmlspecialchars($interview_mode ?: 'To be confirmed') . "</td></tr>"
+                                    . "</table>";
+                            } else {
+                                // Default professional template
+                                $email_body = "<div style='text-align: center; margin-bottom: 30px;'>"
+                                    . "<div style='display: inline-block; background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; padding: 15px 30px; border-radius: 50px; font-size: 18px; font-weight: 600;'>"
+                                    . "<i class='fas fa-calendar-check' style='margin-right: 10px;'></i>Interview Invitation"
+                                    . "</div>"
+                                    . "</div>"
+                                    . "<p style='font-size: 16px; line-height: 1.6; color: #334155;'>Hi " . htmlspecialchars($application['first_name']) . ",</p>"
+                                    . "<p style='font-size: 16px; line-height: 1.6; color: #334155;'>We are pleased to invite you for an interview for the <strong style='color: #1e293b;'>" . htmlspecialchars($application['job_title'] ?? 'position') . "</strong> position at <strong style='color: #1e293b;'>" . htmlspecialchars($company['company_name'] ?? 'our company') . "</strong>.</p>"
+                                    . "<div style='background: #f0fdf4; border-left: 4px solid #10b981; padding: 20px; margin: 25px 0; border-radius: 0 8px 8px 0;'>"
+                                    . "<h4 style='margin: 0 0 15px 0; color: #065f46; font-size: 16px;'>Interview Schedule</h4>"
+                                    . "<table style='width: 100%;'>"
+                                    . "<tr><td style='padding: 8px 0; color: #6b7280; width: 80px;'><i class='far fa-calendar' style='margin-right: 8px;'></i>Date:</td><td style='padding: 8px 0; color: #1f2937; font-weight: 500;'>" . htmlspecialchars($interview_date ?: 'To be confirmed') . "</td></tr>"
+                                    . "<tr><td style='padding: 8px 0; color: #6b7280;'><i class='far fa-clock' style='margin-right: 8px;'></i>Time:</td><td style='padding: 8px 0; color: #1f2937; font-weight: 500;'>" . htmlspecialchars($interview_time ?: 'To be confirmed') . "</td></tr>"
+                                    . "<tr><td style='padding: 8px 0; color: #6b7280;'><i class='fas fa-video' style='margin-right: 8px;'></i>Mode:</td><td style='padding: 8px 0; color: #1f2937; font-weight: 500;'>" . htmlspecialchars($interview_mode ?: 'To be confirmed') . "</td></tr>"
+                                    . "</table>"
+                                    . "</div>"
+                                    . "<p style='font-size: 16px; line-height: 1.6; color: #334155;'>Please confirm your availability as soon as possible. We look forward to meeting you!</p>"
+                                    . "<div style='margin-top: 30px; padding-top: 20px; border-top: 1px solid #e2e8f0;'>"
+                                    . "<p style='margin: 0; color: #64748b; font-size: 14px;'>Best regards,<br><strong style='color: #1e293b;'>" . htmlspecialchars($company['company_name'] ?? 'HR Team') . "</strong></p>"
+                                    . "</div>";
+                            }
 
                             $email_result = sendEmailNotification($recipient_email, $subject, $email_body);
                             if ($email_result['status'] === 'success') {
@@ -1249,13 +1329,22 @@ switch($application['status']) {
                                     
                                     <hr>
                                     <h6 class="small fw-bold">Notification Options</h6>
-                                     <div class="form-check mb-2">
-                            <input class="form-check-input" type="checkbox" id="sendEmailApproval" name="send_email" value="1" checked>
-                            <label class="form-check-label" for="sendEmailApproval">
-                                Send Email Notification
-                            </label>
-                            <small class="d-block text-muted">Applicant will receive an email about their approved application.</small>
-                        </div>
+                                    <div class="form-check mb-2">
+                                        <input class="form-check-input" type="checkbox" id="sendEmailInterview" name="send_email" value="1" checked onchange="document.getElementById('interviewEmailTemplateContainer').style.display = this.checked ? 'block' : 'none'">
+                                        <label class="form-check-label" for="sendEmailInterview">
+                                            Send Email Notification
+                                        </label>
+                                        <small class="d-block text-muted">Applicant will receive an email about their interview invitation.</small>
+                                    </div>
+                                    <div class="mb-3" id="interviewEmailTemplateContainer">
+                                        <label class="form-label small fw-bold">Customize Email Message</label>
+                                        <textarea name="custom_email_message" id="interviewCustomEmailMessage" class="form-control form-control-sm" rows="4" placeholder="Leave empty to use the default professional template..."></textarea>
+                                        <div class="mt-2 text-end">
+                                            <button type="button" class="btn btn-sm btn-outline-info" onclick="generateAiEmail(<?php echo $application_id; ?>, 'interviewed', 'interviewCustomEmailMessage', this)">
+                                                <i class="fas fa-magic me-1"></i>Generate AI Email
+                                            </button>
+                                        </div>
+                                    </div>
                                     <div class="form-check mb-2">
                                         <input class="form-check-input" type="checkbox" id="sendSmsInterview" name="send_sms" value="1" checked onchange="document.getElementById('interviewSmsTemplateContainer').style.display = this.checked ? 'block' : 'none'">
                                         <label class="form-check-label small" for="sendSmsInterview">

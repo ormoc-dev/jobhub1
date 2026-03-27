@@ -9,34 +9,80 @@ require __DIR__ . '/../vendor/autoload.php';
  */
 function wrapInTemplate($content, $logo_cid = null) {
     $site_name = SITE_NAME;
+    $current_year = date('Y');
     
     // Use the embedded CID if available, otherwise fallback to SITE_URL
     $logo_src = $logo_cid ? "cid:{$logo_cid}" : SITE_URL . 'images/LOGO.png';
     
-    return "
-    <div style='background-color: #f4f7f9; padding: 40px 0; font-family: -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif;'>
-        <table align='center' border='0' cellpadding='0' cellspacing='0' width='600' style='background-color: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.05);'>
-            <!-- Header -->
-            <tr style='background-color: #ffffff; border-bottom: 2px solid #f0f4f8;'>
-                <td align='center' style='padding: 30px 0;'>
-                    <img src='{$logo_src}' alt='{$site_name}' style='max-height: 60px; display: block;'>
-                </td>
-            </tr>
-            <!-- Content -->
-            <tr>
-                <td style='padding: 40px; line-height: 1.6; color: #334155; font-size: 16px;'>
-                    {$content}
-                </td>
-            </tr>
-            <!-- Footer -->
-            <tr style='background-color: #f8fafc; border-top: 1px solid #e2e8f0;'>
-                <td align='center' style='padding: 20px; color: #94a3b8; font-size: 12px;'>
-                    <p style='margin: 0;'>&copy; " . date('Y') . " {$site_name}. All rights reserved.</p>
-                    <p style='margin: 5px 0 0;'>You received this email because of your recent activity on our platform.</p>
-                </td>
-            </tr>
-        </table>
-    </div>";
+    return "<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>{$site_name} Notification</title>
+</head>
+<body style='margin: 0; padding: 0; background-color: #f1f5f9; font-family: -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif;'>
+    <table role='presentation' cellpadding='0' cellspacing='0' width='100%' style='border-collapse: collapse;'>
+        <tr>
+            <td align='center' style='padding: 40px 20px;'>
+                <!-- Main Container -->
+                <table role='presentation' cellpadding='0' cellspacing='0' width='600' style='border-collapse: collapse; max-width: 600px; width: 100%; background-color: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.08);'>
+                    <!-- Header with Gradient -->
+                    <tr>
+                        <td style='background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%); padding: 30px; text-align: center;'>
+                            <img src='{$logo_src}' alt='{$site_name}' style='max-height: 50px; display: inline-block; filter: brightness(0) invert(1);'>
+                        </td>
+                    </tr>
+                    <!-- Decorative Line -->
+                    <tr>
+                        <td style='height: 4px; background: linear-gradient(90deg, #10b981, #3b82f6, #f59e0b);'></td>
+                    </tr>
+                    <!-- Content -->
+                    <tr>
+                        <td style='padding: 40px;'>
+                            {$content}
+                        </td>
+                    </tr>
+                    <!-- Call to Action Area -->
+                    <tr>
+                        <td style='padding: 0 40px 30px; text-align: center;'>
+                            <div style='background: #f8fafc; border-radius: 8px; padding: 20px; margin-top: 10px;'>
+                                <p style='margin: 0 0 15px 0; color: #64748b; font-size: 14px;'>Access your account for more details</p>
+                                <a href='" . SITE_URL . "login.php' style='display: inline-block; background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); color: #ffffff; text-decoration: none; padding: 12px 30px; border-radius: 6px; font-weight: 600; font-size: 14px;'>Log In to Your Account</a>
+                            </div>
+                        </td>
+                    </tr>
+                    <!-- Footer -->
+                    <tr>
+                        <td style='background-color: #f8fafc; border-top: 1px solid #e2e8f0; padding: 30px 40px; text-align: center;'>
+                            <!-- Social Links Placeholder -->
+                            <p style='margin: 0 0 15px 0;'>
+                                <a href='#' style='display: inline-block; margin: 0 8px; color: #94a3b8; text-decoration: none;'><span style='font-size: 18px;'>📧</span></a>
+                                <a href='#' style='display: inline-block; margin: 0 8px; color: #94a3b8; text-decoration: none;'><span style='font-size: 18px;'>🌐</span></a>
+                                <a href='#' style='display: inline-block; margin: 0 8px; color: #94a3b8; text-decoration: none;'><span style='font-size: 18px;'>💼</span></a>
+                            </p>
+                            <p style='margin: 0; color: #94a3b8; font-size: 13px; line-height: 1.5;'>
+                                &copy; {$current_year} {$site_name}. All rights reserved.
+                            </p>
+                            <p style='margin: 8px 0 0 0; color: #cbd5e1; font-size: 12px;'>
+                                You received this email because of your activity on our platform.
+                            </p>
+                        </td>
+                    </tr>
+                </table>
+                <!-- Bottom Spacing -->
+                <table role='presentation' cellpadding='0' cellspacing='0' width='600' style='border-collapse: collapse; max-width: 600px; width: 100%; margin-top: 20px;'>
+                    <tr>
+                        <td style='text-align: center; color: #94a3b8; font-size: 12px;'>
+                            <p style='margin: 0;'>Need help? Contact our support team</p>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>";
 }
 
 /**
