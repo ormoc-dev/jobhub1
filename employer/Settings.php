@@ -300,17 +300,37 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_password'])) {
         }
 
         .settings-hero {
-            background: linear-gradient(135deg, #10b981 0%, #22c55e 45%, #0ea5e9 100%);
-            color: #ffffff;
-            border-radius: 16px;
-            padding: 22px 26px;
-            box-shadow: 0 12px 30px rgba(16, 185, 129, 0.25);
+            background: #ffffff;
+            color: #0f172a;
+            border-radius: 12px;
+            padding: 1.5rem 1.75rem;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 1px 2px rgba(15, 23, 42, 0.06);
         }
 
-        .settings-hero .badge {
-            background: rgba(255, 255, 255, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.35);
-            color: #ffffff;
+        .settings-hero-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 0.35rem;
+        }
+
+        .settings-hero-desc {
+            color: #64748b;
+            font-size: 0.9375rem;
+            line-height: 1.5;
+            max-width: 36rem;
+        }
+
+        .settings-hero .settings-hero-meta {
+            display: inline-block;
+            font-size: 0.8125rem;
+            font-weight: 600;
+            color: #475569;
+            background: #f1f5f9;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 0.4rem 0.75rem;
         }
 
         .settings-section .card-header {
@@ -383,26 +403,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_password'])) {
         }
 
         .nav-tabs {
-            border-bottom: 2px solid #e2e8f0;
+            border-bottom: 1px solid #e2e8f0;
         }
 
         .nav-tabs .nav-link {
-            color: var(--muted);
+            color: #64748b;
             border: none;
-            border-bottom: 3px solid transparent;
-            padding: 12px 20px;
-            transition: all 0.3s ease;
+            border-bottom: 2px solid transparent;
+            padding: 12px 18px;
+            transition: color 0.2s ease, border-color 0.2s ease;
         }
 
         .nav-tabs .nav-link:hover {
-            color: var(--accent);
-            border-bottom-color: rgba(16, 185, 129, 0.3);
+            color: #0f172a;
+            border-bottom-color: #cbd5e1;
         }
 
         .nav-tabs .nav-link.active {
-            color: var(--accent);
+            color: #1d4ed8;
             background-color: transparent;
-            border-bottom-color: var(--accent);
+            border-bottom-color: #2563eb;
             font-weight: 600;
         }
 
@@ -416,18 +436,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_password'])) {
 
     <div class="employer-main-content">
         <div class="settings-hero mb-4">
-            <div class="d-flex flex-wrap align-items-center justify-content-between gap-3">
-                <div>
-                    <h1 class="h3 mb-2">Settings</h1>
-                    <p class="mb-0 text-white-50">Manage your account, users, subscription, and security preferences.</p>
+            <div class="d-flex flex-wrap align-items-start justify-content-between gap-3">
+                <div class="min-w-0">
+                    <h1 class="settings-hero-title">Settings</h1>
+                    <p class="mb-0 settings-hero-desc">Manage your account, users, subscription, and security preferences.</p>
                 </div>
-                <div class="text-end">
-                    <span class="badge px-3 py-2">Last updated: <?php echo date('M d, Y'); ?></span>
-                    <div class="mt-2">
-                        <button class="btn btn-light btn-sm">
-                            <i class="fas fa-shield-alt me-2"></i>Security Checklist
-                        </button>
-                    </div>
+                <div class="text-md-end flex-shrink-0 d-flex flex-column align-items-stretch align-items-md-end gap-2">
+                    <span class="settings-hero-meta">Last updated: <?php echo date('M d, Y'); ?></span>
+                    <button type="button" class="btn btn-outline-secondary btn-sm">
+                        <i class="fas fa-shield-alt me-2"></i>Security Checklist
+                    </button>
                 </div>
             </div>
         </div>

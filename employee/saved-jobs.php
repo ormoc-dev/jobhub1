@@ -52,7 +52,7 @@ $saved_jobs = $stmt->fetchAll();
     <title>Saved Jobs - WORKLINK</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="css/minimal.css" rel="stylesheet">
+    <link href="css/modern.css" rel="stylesheet">
     <style>
         .job-card { border: 1px solid #e2e8f0; border-radius: 8px; padding: 1.25rem; margin-bottom: 1rem; background: #fff; }
         .job-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.05); }

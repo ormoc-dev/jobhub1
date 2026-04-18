@@ -19,7 +19,8 @@ $displayName = $userData['company_name'] ?? $_SESSION['username'] ?? 'Employer';
             <img src="../images/LOGO.png" alt="WORKLINK"  style="height: 70px; width: 100%;  object-fit: cover;">
         </a>
         <hr class="mx-3 my-0" style="border-color: rgba(255, 255, 255, 0.2);">
-        <ul class="nav nav-pills flex-column mb-auto">
+        <div class="sidebar-nav-scroll">
+        <ul class="nav nav-pills flex-column">
             <li class="nav-item">
                 <a href="dashboard.php" class="nav-link <?php echo basename($_SERVER['PHP_SELF']) === 'dashboard.php' ? 'active' : ''; ?>">
                     <i class="fas fa-chart-line me-2"></i>Dashboard
@@ -86,8 +87,10 @@ $displayName = $userData['company_name'] ?? $_SESSION['username'] ?? 'Employer';
                 </a>
             </li>
         </ul>
+        </div>
+
         <hr class="mx-3 my-3" style="border-color: rgba(255, 255, 255, 0.2);">
-        <div class="dropdown mt-auto" style="padding: 0 15px 15px;">
+        <div class="dropdown sidebar-footer-user" style="padding: 0 15px 15px;">
             <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
                 <?php if ($profileImage && file_exists('../' . $profileImage)): ?>
                     <img src="../<?php echo htmlspecialchars($profileImage); ?>" alt="Profile" class="rounded-circle me-2" style="width: 32px; height: 32px; object-fit: cover;">
@@ -109,4 +112,50 @@ $displayName = $userData['company_name'] ?? $_SESSION['username'] ?? 'Employer';
     </div>
 </div>
 
+<!-- AI chat: fixed FAB on every employer page (included with sidebar) -->
+<div id="aiChatWidget" class="ai-chat-widget ai-chat-widget--floating">
+    <button type="button" id="aiChatToggle" class="ai-chat-toggle ai-chat-toggle--floating" title="Chat with AI Assistant" aria-expanded="false" aria-controls="aiChatWindow">
+        <i class="fas fa-robot" aria-hidden="true"></i>
+        <span class="ai-chat-badge" id="aiChatBadge" style="display: none;">1</span>
+    </button>
+    <div id="aiChatWindow" class="ai-chat-window" style="display: none;" role="dialog" aria-label="AI Hiring Assistant">
+        <div class="ai-chat-header">
+            <div class="ai-chat-title">
+                <i class="fas fa-robot me-2"></i>
+                <span>AI Hiring Assistant</span>
+            </div>
+            <button type="button" id="aiChatClose" class="ai-chat-close" aria-label="Close chat">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div id="aiChatMessages" class="ai-chat-messages">
+            <div class="ai-message ai-message-bot">
+                <div class="ai-message-avatar">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <div class="ai-message-content">
+                    <p>Hello! I'm your AI Hiring Assistant. I have access to your company's applicant data and can help you with:</p>
+                    <ul>
+                        <li>Analyzing applicants and their qualifications</li>
+                        <li>Writing job descriptions</li>
+                        <li>Drafting interview questions</li>
+                        <li>Creating offer letters</li>
+                        <li>Hiring tips and best practices</li>
+                    </ul>
+                    <p>Ask me anything about your applicants or hiring needs!</p>
+                </div>
+            </div>
+        </div>
+        <div class="ai-chat-input-area">
+            <div class="ai-chat-input-wrapper">
+                <textarea id="aiChatInput" class="ai-chat-input" placeholder="Type your message..." rows="1"></textarea>
+                <button type="button" id="aiChatSend" class="ai-chat-send" aria-label="Send message">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <link rel="stylesheet" href="css/minimal.css">
+<script src="js/ai-chat-widget.js" defer></script>

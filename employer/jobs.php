@@ -109,6 +109,133 @@ $stats['total_applications'] = $stats['total_applications']->fetchColumn();
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="css/minimal.css" rel="stylesheet">
+    <style>
+        .jobs-filter-card {
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            box-shadow: 0 1px 2px rgba(15, 23, 42, 0.06);
+            overflow: hidden;
+        }
+
+        .jobs-filter-card .card-body {
+            padding: 1.25rem 1.5rem;
+        }
+
+        .jobs-filter-heading {
+            font-size: 0.8125rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: #64748b;
+            margin-bottom: 0.75rem;
+        }
+
+        .jobs-filter-heading i {
+            color: #2563eb;
+            margin-right: 0.35rem;
+        }
+
+        .jobs-status-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            padding: 0.35rem;
+            background: #f1f5f9;
+            border-radius: 10px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .jobs-status-tab {
+            flex: 1 1 auto;
+            min-width: 7rem;
+            text-align: center;
+            padding: 0.5rem 0.75rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: #475569;
+            text-decoration: none;
+            border-radius: 8px;
+            border: 1px solid transparent;
+            transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+        }
+
+        .jobs-status-tab:hover {
+            background: #fff;
+            color: #0f172a;
+            border-color: #e2e8f0;
+        }
+
+        .jobs-status-tab.active {
+            background: #fff;
+            color: #1d4ed8;
+            border-color: #cbd5e1;
+            box-shadow: 0 1px 2px rgba(15, 23, 42, 0.06);
+        }
+
+        .jobs-status-tab .jobs-tab-count {
+            display: block;
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: #94a3b8;
+            margin-top: 0.15rem;
+        }
+
+        .jobs-status-tab.active .jobs-tab-count {
+            color: #64748b;
+        }
+
+        .jobs-search-row {
+            margin-top: 1.25rem;
+        }
+
+        .jobs-search-row .input-group {
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+        }
+
+        .jobs-search-row .input-group:focus-within {
+            border-color: #93c5fd;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+        }
+
+        .jobs-search-row .input-group-text {
+            border: none;
+            background: #f8fafc;
+            color: #64748b;
+        }
+
+        .jobs-search-row .form-control {
+            border: none;
+            padding-top: 0.65rem;
+            padding-bottom: 0.65rem;
+        }
+
+        .jobs-search-row .form-control:focus {
+            box-shadow: none;
+        }
+
+        .jobs-search-row .btn-apply-filter {
+            background: #2563eb;
+            color: #fff;
+            font-weight: 600;
+            border: none;
+            padding-left: 1.25rem;
+            padding-right: 1.25rem;
+        }
+
+        .jobs-search-row .btn-apply-filter:hover {
+            background: #1d4ed8;
+            color: #fff;
+        }
+
+        @media (max-width: 576px) {
+            .jobs-status-tab {
+                min-width: calc(50% - 0.25rem);
+            }
+        }
+    </style>
 </head>
 <body class="employer-layout">
     <?php include 'includes/sidebar.php'; ?>
@@ -178,40 +305,45 @@ $stats['total_applications'] = $stats['total_applications']->fetchColumn();
         </div>
 
         <!-- Filters -->
-        <div class="card mb-4">
+        <?php $jobsSearchQuery = $search !== '' ? '&search=' . urlencode($search) : ''; ?>
+        <div class="card mb-4 jobs-filter-card">
             <div class="card-body">
-                <div class="d-flex flex-wrap gap-2 mb-3">
-                    <a class="btn btn-outline-success <?php echo $status_filter === 'active' ? 'active' : ''; ?>" href="jobs.php?status=active">
-                        Active Only
-                    </a>
-                    <a class="btn btn-outline-warning <?php echo $status_filter === 'pending' ? 'active' : ''; ?>" href="jobs.php?status=pending">
-                        Pending Only
-                    </a>
-                    <a class="btn btn-outline-danger <?php echo $status_filter === 'expired' ? 'active' : ''; ?>" href="jobs.php?status=expired">
-                        Expired Only
-                    </a>
-                    <a class="btn btn-outline-dark <?php echo $status_filter === 'rejected' ? 'active' : ''; ?>" href="jobs.php?status=rejected">
-                        Rejected Only
-                    </a>
+                <div class="jobs-filter-heading">
+                    <i class="fas fa-sliders-h" aria-hidden="true"></i>Filter listings
                 </div>
-                <form method="GET" class="row g-3">
-                    <div class="col-md-4">
-                        <label for="status" class="form-label">Status</label>
-                        <select class="form-select" name="status" id="status">
-                            <option value="active" <?php echo $status_filter === 'active' ? 'selected' : ''; ?>>Active</option>
-                            <option value="pending" <?php echo $status_filter === 'pending' ? 'selected' : ''; ?>>Pending</option>
-                            <option value="expired" <?php echo $status_filter === 'expired' ? 'selected' : ''; ?>>Expired</option>
-                            <option value="rejected" <?php echo $status_filter === 'rejected' ? 'selected' : ''; ?>>Rejected</option>
-                        </select>
-                    </div>
-                    <div class="col-md-6">
-                        <label for="search" class="form-label">Search</label>
-                        <input type="text" class="form-control" name="search" id="search" 
-                               placeholder="Search by job title or description..." value="<?php echo htmlspecialchars($search); ?>">
-                    </div>
-                    <div class="col-md-2 d-flex align-items-end">
-                        <button type="submit" class="btn btn-outline-success w-100">
-                            <i class="fas fa-search me-1"></i>Filter
+                <nav class="jobs-status-tabs" aria-label="Job status">
+                    <a class="jobs-status-tab <?php echo $status_filter === 'active' ? 'active' : ''; ?>"
+                       href="jobs.php?status=active<?php echo $jobsSearchQuery; ?>">
+                        Active
+                        <span class="jobs-tab-count"><?php echo (int) $stats['active']; ?> jobs</span>
+                    </a>
+                    <a class="jobs-status-tab <?php echo $status_filter === 'pending' ? 'active' : ''; ?>"
+                       href="jobs.php?status=pending<?php echo $jobsSearchQuery; ?>">
+                        Pending
+                        <span class="jobs-tab-count"><?php echo (int) $stats['pending']; ?> jobs</span>
+                    </a>
+                    <a class="jobs-status-tab <?php echo $status_filter === 'expired' ? 'active' : ''; ?>"
+                       href="jobs.php?status=expired<?php echo $jobsSearchQuery; ?>">
+                        Expired
+                        <span class="jobs-tab-count"><?php echo (int) $stats['expired']; ?> jobs</span>
+                    </a>
+                    <a class="jobs-status-tab <?php echo $status_filter === 'rejected' ? 'active' : ''; ?>"
+                       href="jobs.php?status=rejected<?php echo $jobsSearchQuery; ?>">
+                        Rejected
+                        <span class="jobs-tab-count"><?php echo (int) $stats['rejected']; ?> jobs</span>
+                    </a>
+                </nav>
+                <form method="GET" class="jobs-search-row">
+                    <input type="hidden" name="status" value="<?php echo htmlspecialchars($status_filter); ?>">
+                    <label for="search" class="visually-hidden">Search jobs</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-search" aria-hidden="true"></i></span>
+                        <input type="text" class="form-control" name="search" id="search"
+                               placeholder="Search by title or description…"
+                               value="<?php echo htmlspecialchars($search); ?>"
+                               autocomplete="off">
+                        <button type="submit" class="btn btn-apply-filter">
+                            <i class="fas fa-check me-1" aria-hidden="true"></i>Apply
                         </button>
                     </div>
                 </form>

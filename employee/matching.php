@@ -121,7 +121,7 @@ function getScoreBadgeClass($score) {
     <title>Smart Matching - WORKLINK</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="../assets/style.css" rel="stylesheet">
+    <link href="css/modern.css" rel="stylesheet">
     <style>
         .matching-hero {
             background: linear-gradient(135deg, #7c3aed 0%, #4c1d95 50%, #2d1b69 100%);

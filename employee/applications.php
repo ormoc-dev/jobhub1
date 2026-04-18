@@ -91,62 +91,81 @@ $stats['offers'] = count(array_filter($all_applications, function($app) {
     <title>My Applications - WORKLINK</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="css/minimal.css" rel="stylesheet">
+    <link href="css/modern.css" rel="stylesheet">
 </head>
 <body class="employee-layout">
     <?php include 'includes/sidebar.php'; ?>
 
     <!-- Main Content -->
     <div class="employee-main-content">
-        <div class="page-header d-flex justify-content-between align-items-center">
-            <div>
-                <h1>My Applications</h1>
-                <p>Track your job applications and their status</p>
+        <!-- Hero Header -->
+        <div class="page-header">
+            <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+                <div>
+                    <h1><i class="fas fa-file-alt me-2"></i>My Applications</h1>
+                    <p>Track your job applications and their status</p>
+                </div>
+                <a href="jobs.php" class="btn btn-primary">
+                    <i class="fas fa-search me-2"></i>Browse More Jobs
+                </a>
             </div>
-            <a href="jobs.php" class="btn btn-primary">
-                <i class="fas fa-search me-1"></i>Browse More Jobs
-            </a>
         </div>
 
+        <div class="content-container">
         <!-- Application Statistics -->
-        <div class="row g-3 mb-4">
-            <div class="col-md-2 col-sm-4">
-                <div class="card stat-card text-center">
-                    <div class="card-body">
-                        <h3 class="card-title"><?php echo $stats['total']; ?></h3>
-                        <p class="card-text">Total</p>
+        <div class="stats-grid">
+            <div class="stat-card primary">
+                <div class="stat-card-header">
+                    <div>
+                        <div class="stat-card-value"><?php echo $stats['total']; ?></div>
+                        <div class="stat-card-label">Total Applications</div>
+                    </div>
+                    <div class="stat-card-icon blue">
+                        <i class="fas fa-file-alt"></i>
                     </div>
                 </div>
             </div>
-            <div class="col-md-2 col-sm-4">
-                <div class="card stat-card text-center">
-                    <div class="card-body">
-                        <h3 class="card-title"><?php echo $stats['pending']; ?></h3>
-                        <p class="card-text">Pending</p>
+            <div class="stat-card warning">
+                <div class="stat-card-header">
+                    <div>
+                        <div class="stat-card-value"><?php echo $stats['pending']; ?></div>
+                        <div class="stat-card-label">Pending</div>
+                    </div>
+                    <div class="stat-card-icon orange">
+                        <i class="fas fa-clock"></i>
                     </div>
                 </div>
             </div>
-            <div class="col-md-2 col-sm-4">
-                <div class="card stat-card text-center">
-                    <div class="card-body">
-                        <h3 class="card-title"><?php echo $stats['reviewed']; ?></h3>
-                        <p class="card-text">Reviewed</p>
+            <div class="stat-card info">
+                <div class="stat-card-header">
+                    <div>
+                        <div class="stat-card-value"><?php echo $stats['reviewed']; ?></div>
+                        <div class="stat-card-label">Reviewed</div>
+                    </div>
+                    <div class="stat-card-icon cyan">
+                        <i class="fas fa-eye"></i>
                     </div>
                 </div>
             </div>
-            <div class="col-md-2 col-sm-4">
-                <div class="card stat-card text-center">
-                    <div class="card-body">
-                        <h3 class="card-title"><?php echo $stats['accepted']; ?></h3>
-                        <p class="card-text">Accepted</p>
+            <div class="stat-card success">
+                <div class="stat-card-header">
+                    <div>
+                        <div class="stat-card-value"><?php echo $stats['accepted']; ?></div>
+                        <div class="stat-card-label">Accepted</div>
+                    </div>
+                    <div class="stat-card-icon green">
+                        <i class="fas fa-check-circle"></i>
                     </div>
                 </div>
             </div>
-            <div class="col-md-2 col-sm-4">
-                <div class="card stat-card text-center">
-                    <div class="card-body">
-                        <h3 class="card-title"><?php echo $stats['rejected']; ?></h3>
-                        <p class="card-text">Rejected</p>
+            <div class="stat-card purple">
+                <div class="stat-card-header">
+                    <div>
+                        <div class="stat-card-value"><?php echo $stats['rejected']; ?></div>
+                        <div class="stat-card-label">Rejected</div>
+                    </div>
+                    <div class="stat-card-icon purple">
+                        <i class="fas fa-times-circle"></i>
                     </div>
                 </div>
             </div>
@@ -190,8 +209,8 @@ $stats['offers'] = count(array_filter($all_applications, function($app) {
         <div class="row">
             <div class="col-12">
                 <div class="card">
-                    <div class="card-header d-flex align-items-center">
-                        <h5 class="mb-0">
+                    <div class="card-header">
+                        <h5>
                             <?php
                             $tabLabels = [
                                 'submitted' => '<i class="fas fa-file-alt me-2"></i>Submitted Applications',
@@ -203,12 +222,14 @@ $stats['offers'] = count(array_filter($all_applications, function($app) {
                             ?>
                         </h5>
                     </div>
-                    <div class="card-body">
+                    <div class="card-body p-0">
                         <div class="tab-content" id="applicationsTabContent">
                         <?php if (empty($applications)): ?>
-                            <div class="text-center py-5">
-                                <i class="fas fa-file-alt fa-3x text-muted mb-3"></i>
-                                <h5 class="text-muted">
+                            <div class="empty-state">
+                                <div class="empty-state-icon">
+                                    <i class="fas fa-file-alt"></i>
+                                </div>
+                                <h5>
                                     <?php 
                                     switch($active_tab) {
                                         case 'interviews':
@@ -222,7 +243,7 @@ $stats['offers'] = count(array_filter($all_applications, function($app) {
                                     }
                                     ?>
                                 </h5>
-                                <p class="text-muted">
+                                <p>
                                     <?php 
                                     switch($active_tab) {
                                         case 'interviews':
@@ -238,7 +259,7 @@ $stats['offers'] = count(array_filter($all_applications, function($app) {
                                 </p>
                                 <?php if ($active_tab !== 'interviews' && $active_tab !== 'offers'): ?>
                                     <a href="jobs.php" class="btn btn-primary">
-                                        <i class="fas fa-search me-1"></i>Browse All Jobs
+                                        <i class="fas fa-search me-2"></i>Browse All Jobs
                                     </a>
                                 <?php endif; ?>
                             </div>
@@ -287,31 +308,26 @@ $stats['offers'] = count(array_filter($all_applications, function($app) {
                                                     $statusClass = '';
                                                     $statusIcon = '';
                                                     $statusLabel = '';
-                                                    $statusDescription = '';
                                                     switch($app['status']) {
                                                         case 'pending':
-                                                            $statusClass = 'bg-warning text-dark';
+                                                            $statusClass = 'status-pending';
                                                             $statusIcon = 'clock';
                                                             $statusLabel = 'Pending';
-                                                            $statusDescription = 'Hindi pa nakita ng Employer';
                                                             break;
                                                         case 'reviewed':
-                                                            $statusClass = 'bg-info text-white';
+                                                            $statusClass = 'status-reviewed';
                                                             $statusIcon = 'eye';
                                                             $statusLabel = 'Under Review';
-                                                            $statusDescription = 'Nakita na ng Employer';
                                                             break;
                                                         case 'accepted':
-                                                            $statusClass = 'bg-success text-white';
+                                                            $statusClass = 'status-accepted';
                                                             $statusIcon = 'check-circle';
                                                             $statusLabel = 'Accepted';
-                                                            $statusDescription = 'Congratulations! Approved na';
                                                             break;
                                                         case 'rejected':
-                                                            $statusClass = 'bg-danger text-white';
+                                                            $statusClass = 'status-rejected';
                                                             $statusIcon = 'times-circle';
                                                             $statusLabel = 'Rejected';
-                                                            $statusDescription = 'Hindi na-approve';
                                                             break;
                                                     }
                                                     ?>
@@ -325,76 +341,64 @@ $stats['offers'] = count(array_filter($all_applications, function($app) {
                                                         $is_interviewed = (isset($app['interview_status']) && $app['interview_status'] === 'interviewed');
                                                         
                                                         if ($is_interviewed) {
-                                                            $badge_class = 'bg-success';
+                                                            $badge_class = 'badge-soft-success';
                                                             $badge_text = 'Interview Completed';
                                                             $badge_icon = 'check-circle';
-                                                            $bg_color = '#e8f5e9';
-                                                            $border_color = '#10b981';
                                                         } elseif ($is_today) {
-                                                            $badge_class = 'bg-warning text-dark';
+                                                            $badge_class = 'badge-soft-warning';
                                                             $badge_text = 'Interview TODAY!';
                                                             $badge_icon = 'exclamation-circle';
-                                                            $bg_color = '#fff3cd';
-                                                            $border_color = '#ffc107';
                                                         } elseif ($is_past) {
-                                                            $badge_class = 'bg-info';
+                                                            $badge_class = 'badge-soft-info';
                                                             $badge_text = 'Waiting for Result';
                                                             $badge_icon = 'hourglass-half';
-                                                            $bg_color = '#e3f2fd';
-                                                            $border_color = '#2196f3';
                                                         } else {
-                                                            $badge_class = 'bg-primary';
+                                                            $badge_class = 'badge-soft-primary';
                                                             $badge_text = 'Interview Scheduled';
                                                             $badge_icon = 'calendar-check';
-                                                            $bg_color = '#e8f4fc';
-                                                            $border_color = '#0d6efd';
                                                         }
                                                         ?>
-                                                        <!-- Interview Invites Tab - Show interview details prominently -->
-                                                        <span class="badge <?php echo $badge_class; ?> mb-2" style="font-size: 0.9rem;">
+                                                        <span class="badge <?php echo $badge_class; ?> mb-2">
                                                             <i class="fas fa-<?php echo $badge_icon; ?> me-1"></i><?php echo $badge_text; ?>
                                                         </span>
-                                                        <div class="mt-1 p-2 rounded" style="background: <?php echo $bg_color; ?>; border-left: 3px solid <?php echo $border_color; ?>;">
-                                                            <small class="d-block text-dark fw-bold">
-                                                                <i class="fas fa-calendar me-1" style="color: <?php echo $border_color; ?>"></i>
-                                                                <?php echo date('F j, Y', strtotime($app['interview_date'])); ?>
+                                                        <div class="interview-card">
+                                                            <div class="interview-card-header">
+                                                                <i class="fas fa-calendar"></i> Interview Details
                                                                 <?php if ($is_today): ?>
-                                                                    <span class="badge bg-danger ms-1">TODAY</span>
+                                                                    <span class="badge badge-soft-danger ms-2">TODAY</span>
                                                                 <?php endif; ?>
-                                                            </small>
+                                                            </div>
+                                                            <div class="interview-card-detail">
+                                                                <i class="fas fa-calendar-day"></i>
+                                                                <?php echo date('F j, Y', strtotime($app['interview_date'])); ?>
+                                                            </div>
                                                             <?php if (isset($app['interview_time']) && $app['interview_time']): ?>
-                                                                <small class="d-block text-dark">
-                                                                    <i class="fas fa-clock me-1" style="color: <?php echo $border_color; ?>"></i>
+                                                                <div class="interview-card-detail">
+                                                                    <i class="fas fa-clock"></i>
                                                                     <?php echo htmlspecialchars($app['interview_time']); ?>
-                                                                </small>
+                                                                </div>
                                                             <?php endif; ?>
                                                             <?php if (isset($app['interview_mode']) && $app['interview_mode']): ?>
-                                                                <small class="d-block text-dark">
-                                                                    <i class="fas fa-video me-1" style="color: <?php echo $border_color; ?>"></i>
+                                                                <div class="interview-card-detail">
+                                                                    <i class="fas fa-video"></i>
                                                                     <?php echo htmlspecialchars($app['interview_mode']); ?>
-                                                                </small>
+                                                                </div>
                                                             <?php endif; ?>
                                                             <?php if (isset($app['interview_location']) && $app['interview_location']): ?>
-                                                                <small class="d-block text-dark">
-                                                                    <i class="fas fa-map-marker-alt me-1" style="color: <?php echo $border_color; ?>"></i>
+                                                                <div class="interview-card-detail">
+                                                                    <i class="fas fa-map-marker-alt"></i>
                                                                     <?php echo htmlspecialchars($app['interview_location']); ?>
-                                                                </small>
+                                                                </div>
                                                             <?php endif; ?>
                                                         </div>
                                                     <?php else: ?>
-                                                        <!-- Other tabs - Show regular status with descriptive labels -->
-                                                        <div class="status-container">
-                                                            <span class="badge <?php echo $statusClass; ?> mb-1" style="font-size: 0.85rem;">
-                                                                <i class="fas fa-<?php echo $statusIcon; ?> me-1"></i>
-                                                                <?php echo $statusLabel; ?>
-                                                            </span>
-                                                            <br><small class="text-muted fst-italic" style="font-size: 0.75rem;">
-                                                                <?php echo $statusDescription; ?>
-                                                            </small>
-                                                        </div>
+                                                        <span class="status-badge <?php echo $statusClass; ?>">
+                                                            <i class="fas fa-<?php echo $statusIcon; ?>"></i>
+                                                            <?php echo $statusLabel; ?>
+                                                        </span>
                                                         <?php if (isset($app['interview_date']) && $app['interview_date']): ?>
                                                             <div class="mt-2">
-                                                                <small class="text-info">
+                                                                <small style="color: var(--info);">
                                                                     <i class="fas fa-calendar-check me-1"></i>
                                                                     Interview: <?php echo date('M j, Y', strtotime($app['interview_date'])); ?>
                                                                     <?php if (isset($app['interview_time']) && $app['interview_time']): ?>
@@ -405,7 +409,7 @@ $stats['offers'] = count(array_filter($all_applications, function($app) {
                                                         <?php endif; ?>
                                                         <?php if (isset($app['offer_status']) && $app['offer_status']): ?>
                                                             <div class="mt-1">
-                                                                <small class="text-success">
+                                                                <small style="color: var(--success);">
                                                                     <i class="fas fa-hand-holding-usd me-1"></i>
                                                                     Offer: <?php echo ucfirst($app['offer_status']); ?>
                                                                 </small>
@@ -536,10 +540,9 @@ $stats['offers'] = count(array_filter($all_applications, function($app) {
         </div>
     </div>
 
+        </div><!-- /content-container -->
+    </div><!-- /employee-main-content -->
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-    <style>
-        .status-container { display: inline-block; text-align: left; }
-        .status-container .badge { padding: 6px 12px; border-radius: 20px; }
-    </style>
 </body>
 </html>

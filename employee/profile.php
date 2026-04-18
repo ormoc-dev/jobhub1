@@ -126,178 +126,95 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <title>My Profile - WORKLINK</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="css/minimal.css" rel="stylesheet">
+    <link href="css/modern.css" rel="stylesheet">
     <style>
-        .profile-header {
-            background: #fff;
-            border-bottom: 1px solid #e2e8f0;
-            padding: 1.5rem 0;
-            margin-bottom: 1.5rem;
+        /* Profile page specific styles */
+        .profile-hero {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--purple) 100%);
+            padding: 2rem;
+            color: var(--white);
         }
-
-        .profile-header h1 {
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: #1e293b;
+        
+        .profile-hero h1 {
+            font-size: 1.75rem;
+            font-weight: 700;
             margin-bottom: 0.25rem;
         }
-
-        .profile-header p {
-            color: #64748b;
-            font-size: 0.9rem;
+        
+        .profile-hero p {
+            color: rgba(255, 255, 255, 0.85);
+            margin: 0;
         }
-
-        .section-header {
+        
+        .section-header-modern {
             display: flex;
             align-items: center;
-            gap: 0.75rem;
+            gap: 0.875rem;
             margin-bottom: 1.5rem;
-            padding-bottom: 0.75rem;
-            border-bottom: 1px solid #e2e8f0;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--gray-100);
         }
-
-        .section-header i {
-            width: 36px;
-            height: 36px;
-            background: #eff6ff;
-            color: #3b82f6;
-            border-radius: 8px;
+        
+        .section-header-modern i {
+            width: 44px;
+            height: 44px;
+            background: var(--primary-soft);
+            color: var(--primary);
+            border-radius: var(--radius);
             display: flex;
             align-items: center;
             justify-content: center;
+            font-size: 1.125rem;
         }
-
-        .section-header h4 {
-            font-size: 1rem;
+        
+        .section-header-modern h4 {
+            font-size: 1.125rem;
             font-weight: 600;
-            color: #1e293b;
+            color: var(--gray-900);
             margin: 0;
         }
-
-        .section-header p {
-            font-size: 0.85rem;
-            color: #64748b;
+        
+        .section-header-modern p {
+            font-size: 0.875rem;
+            color: var(--gray-500);
             margin: 0;
         }
-
-        .form-label {
-            font-size: 0.875rem;
-            font-weight: 500;
-            color: #374151;
-            margin-bottom: 0.375rem;
-        }
-
-        .form-control, .form-select {
-            border: 1px solid #d1d5db;
-            border-radius: 6px;
-            padding: 0.625rem 0.875rem;
-            font-size: 0.875rem;
-        }
-
-        .form-control:focus, .form-select:focus {
-            border-color: #3b82f6;
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-        }
-
-        .document-card {
-            background: #f9fafb;
-            border: 1px solid #e2e8f0;
-            border-radius: 8px;
-            padding: 1rem;
+        
+        .document-card-modern {
+            background: var(--gray-50);
+            border: 2px dashed var(--gray-200);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
             text-align: center;
+            transition: all var(--transition);
         }
-
-        .document-card i {
-            font-size: 2rem;
-            color: #9ca3af;
-            margin-bottom: 0.5rem;
+        
+        .document-card-modern:hover {
+            border-color: var(--primary);
+            background: var(--primary-soft);
         }
-
-        .document-card img {
+        
+        .document-card-modern i {
+            font-size: 2.5rem;
+            color: var(--gray-400);
+            margin-bottom: 0.75rem;
+        }
+        
+        .document-card-modern img {
             max-width: 100%;
             max-height: 150px;
-            border-radius: 6px;
-            margin-bottom: 0.5rem;
+            border-radius: var(--radius);
+            margin-bottom: 0.75rem;
+            box-shadow: var(--shadow);
         }
-
-        .completion-card {
-            background: #fff;
-            border: 1px solid #e2e8f0;
-            border-radius: 8px;
-            padding: 1.25rem;
-        }
-
-        .completion-percentage {
-            text-align: center;
-            margin-bottom: 1rem;
-        }
-
-        .completion-percentage .number {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: #1e293b;
-        }
-
-        .completion-percentage .label {
-            color: #64748b;
-            font-size: 0.875rem;
-        }
-
-        .completion-list {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        .completion-list li {
-            display: flex;
-            align-items: center;
-            padding: 0.5rem 0;
-            font-size: 0.875rem;
-            color: #374151;
-        }
-
-        .completion-list li.completed {
-            color: #059669;
-        }
-
-        .completion-list li i {
-            margin-right: 0.5rem;
-        }
-
-        .tips-card {
-            background: #fff;
-            border: 1px solid #e2e8f0;
-            border-radius: 8px;
-            padding: 1.25rem;
-            margin-top: 1rem;
-        }
-
-        .tips-list {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        .tips-list li {
-            display: flex;
-            align-items: center;
-            padding: 0.5rem 0;
-            font-size: 0.875rem;
-            color: #374151;
-        }
-
-        .tips-list li i {
-            color: #10b981;
-            margin-right: 0.5rem;
-        }
-
+        
         .photo-preview {
-            width: 100px;
-            height: 100px;
-            border-radius: 8px;
+            width: 120px;
+            height: 120px;
+            border-radius: var(--radius-lg);
             object-fit: cover;
-            border: 1px solid #e2e8f0;
+            border: 3px solid var(--white);
+            box-shadow: var(--shadow-md);
         }
     </style>
 </head>
@@ -308,17 +225,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <!-- Main Content -->
             <div class="employee-main-content">
                 <!-- Profile Header -->
-                <div class="profile-header">
-                    <div class="d-flex justify-content-between align-items-center">
+                <div class="profile-hero">
+                    <div class="d-flex justify-content-between align-items-start flex-wrap gap-3">
                         <div>
-                            <h1>My Profile</h1>
+                            <h1><i class="fas fa-user-circle me-2"></i>My Profile</h1>
                             <p>Manage your personal information and documents</p>
                         </div>
-                        <a href="dashboard.php" class="btn btn-outline-primary">
+                        <a href="dashboard.php" class="btn btn-light">
                             <i class="fas fa-arrow-left me-2"></i>Back to Dashboard
                         </a>
                     </div>
                 </div>
+                
+                <div class="content-container">
 
                 <!-- Alert Messages -->
                 <?php if ($message): ?>
@@ -341,7 +260,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             <div class="card-body">
                             <form method="POST" enctype="multipart/form-data">
                                 <!-- Section Header -->
-                                <div class="section-header">
+                                <div class="section-header-modern">
                                     <i class="fas fa-user"></i>
                                     <div>
                                         <h4>Personal Information</h4>
@@ -435,7 +354,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                     </div>
 
                                 <!-- Education Section -->
-                                <div class="section-header mt-4">
+                                <div class="section-header-modern mt-5">
                                     <i class="fas fa-graduation-cap"></i>
                                     <div>
                                         <h4>Education</h4>
@@ -462,7 +381,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 </div>
 
                                 <!-- Skills Section -->
-                                <div class="section-header mt-4">
+                                <div class="section-header-modern mt-5">
                                     <i class="fas fa-tools"></i>
                                     <div>
                                         <h4>Skills & Certifications</h4>
@@ -525,7 +444,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 </div>
 
                                 <!-- Documents Section -->
-                                <div class="section-header mt-4">
+                                <div class="section-header-modern mt-5">
                                     <i class="fas fa-file-alt"></i>
                                     <div>
                                         <h4>Resume / CV</h4>
@@ -537,7 +456,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 <div class="row mb-3">
                                     <div class="col-md-6 mb-3">
                                         <label class="form-label">Document 1 (Resume/CV)</label>
-                                        <div class="document-card">
+                                        <div class="document-card-modern">
                                             <?php 
                                             $doc1_exists = false;
                                             $doc1_url = '';
@@ -724,6 +643,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     </div>
                 </div>
             </div>
+        </div><!-- /content-container -->
+    </div><!-- /employee-main-content -->
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>

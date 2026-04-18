@@ -86,4 +86,4 @@ $displayName = $firstName !== '' ? ('Hi ' . $firstName) : ('Hi ' . ($_SESSION['u
     </div>
 </div>
 
-<link href="css/minimal.css" rel="stylesheet">
+<link href="css/modern.css" rel="stylesheet">

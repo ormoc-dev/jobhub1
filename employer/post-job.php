@@ -7932,28 +7932,24 @@ $databaseSkillsJson = json_encode($databaseSkills, JSON_UNESCAPED_UNICODE);
     <link href="css/minimal.css" rel="stylesheet">
     <style>
         :root {
-            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            --success-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-            --accent-gradient: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
-            --primary-color: #667eea;
-            --primary-dark: #5568d3;
-            --secondary-color: #764ba2;
-            --success-color: #10b981;
-            --warning-color: #f59e0b;
-            --danger-color: #ef4444;
-            --text-dark: #1f2937;
-            --text-gray: #6b7280;
-            --bg-light: #f9fafb;
-            --border-color: #e5e7eb;
-            --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
-            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            --primary-color: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary-color: #475569;
+            --success-color: #059669;
+            --warning-color: #d97706;
+            --danger-color: #dc2626;
+            --text-dark: #0f172a;
+            --text-gray: #64748b;
+            --bg-light: #f8fafc;
+            --border-color: #e2e8f0;
+            --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.06);
+            --shadow-md: 0 4px 12px rgba(15, 23, 42, 0.08);
+            --shadow-lg: 0 8px 24px rgba(15, 23, 42, 0.08);
+            --shadow-xl: 0 12px 32px rgba(15, 23, 42, 0.1);
         }
 
         body.employer-layout {
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            background: var(--bg-light);
             min-height: 100vh;
         }
 
@@ -7965,21 +7961,22 @@ $databaseSkillsJson = json_encode($databaseSkills, JSON_UNESCAPED_UNICODE);
         /* Header Section */
         .page-header {
             background: white;
-            border-radius: 16px;
+            border-radius: 12px;
             padding: 2rem;
             margin-bottom: 2rem;
-            box-shadow: var(--shadow-md);
+            box-shadow: var(--shadow-sm);
             border: 1px solid var(--border-color);
         }
 
         .page-header h1 {
-            background: var(--primary-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: var(--text-dark);
             font-weight: 700;
             font-size: 2rem;
             margin: 0;
+        }
+
+        .page-header h1 i {
+            color: var(--primary-color);
         }
 
         .btn-back {
@@ -7994,9 +7991,10 @@ $databaseSkillsJson = json_encode($databaseSkills, JSON_UNESCAPED_UNICODE);
         }
 
         .btn-back:hover {
-            background: var(--primary-gradient);
+            background: var(--primary-color);
+            border-color: var(--primary-color);
             color: white;
-            transform: translateY(-2px);
+            transform: translateY(-1px);
             box-shadow: var(--shadow-md);
         }
 
@@ -8010,44 +8008,53 @@ $databaseSkillsJson = json_encode($databaseSkills, JSON_UNESCAPED_UNICODE);
         }
 
         .alert-success {
-            background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+            background: #ecfdf5;
             color: #065f46;
+            border: 1px solid #a7f3d0;
         }
 
         .alert-danger {
-            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+            background: #fef2f2;
             color: #991b1b;
+            border: 1px solid #fecaca;
         }
 
         /* Card Styles */
         .dashboard-card {
-            border: none;
-            border-radius: 20px;
-            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            box-shadow: var(--shadow-sm);
             overflow: hidden;
-            transition: all 0.3s ease;
+            transition: box-shadow 0.2s ease, border-color 0.2s ease;
             background: white;
             margin-bottom: 1.5rem;
         }
 
         .dashboard-card:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-xl);
+            box-shadow: var(--shadow-md);
+            border-color: #cbd5e1;
         }
 
         .dashboard-card .card-header {
-            background: var(--primary-gradient);
-            color: white;
-            padding: 1.5rem 2rem;
+            background: #f8fafc;
+            color: var(--text-dark);
+            padding: 1rem 1.5rem;
             border: none;
+            border-bottom: 1px solid var(--border-color);
             font-weight: 600;
         }
 
         .dashboard-card .card-header h4,
         .dashboard-card .card-header h5 {
             margin: 0;
-            color: white;
-            font-weight: 700;
+            color: var(--text-dark);
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .dashboard-card .card-header i {
+            color: var(--primary-color);
+            opacity: 0.9;
         }
 
         .dashboard-card .card-body {
@@ -8070,9 +8077,9 @@ $databaseSkillsJson = json_encode($databaseSkills, JSON_UNESCAPED_UNICODE);
 
         .form-label::before {
             content: '';
-            width: 4px;
-            height: 18px;
-            background: var(--primary-gradient);
+            width: 3px;
+            height: 16px;
+            background: var(--primary-color);
             border-radius: 2px;
             margin-right: 0.75rem;
         }
@@ -8090,7 +8097,7 @@ $databaseSkillsJson = json_encode($databaseSkills, JSON_UNESCAPED_UNICODE);
         .form-select:focus,
         .form-control:focus {
             border-color: var(--primary-color);
-            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
             outline: none;
         }
 
@@ -8110,7 +8117,7 @@ $databaseSkillsJson = json_encode($databaseSkills, JSON_UNESCAPED_UNICODE);
 
         textarea.form-control:focus {
             border-color: var(--primary-color);
-            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
             outline: none;
         }
 
@@ -8122,20 +8129,20 @@ $databaseSkillsJson = json_encode($databaseSkills, JSON_UNESCAPED_UNICODE);
 
         /* Button Styles */
         .btn-primary-custom {
-            background: var(--primary-gradient);
+            background: var(--primary-color);
             border: none;
             color: white;
             padding: 1rem 2.5rem;
-            border-radius: 12px;
+            border-radius: 10px;
             font-weight: 600;
             font-size: 1.05rem;
-            transition: all 0.3s ease;
-            box-shadow: var(--shadow-md);
+            transition: background 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: var(--shadow-sm);
         }
 
         .btn-primary-custom:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-lg);
+            background: var(--primary-dark);
+            box-shadow: var(--shadow-md);
             color: white;
         }
 
@@ -8159,17 +8166,18 @@ $databaseSkillsJson = json_encode($databaseSkills, JSON_UNESCAPED_UNICODE);
 
         /* Tips Card */
         .tips-card {
-            background: linear-gradient(135deg, #fff5e6 0%, #ffe8cc 100%);
-            border-left: 4px solid var(--warning-color);
+            background: #fffbeb;
+            border-left: 3px solid var(--warning-color);
         }
 
         .tips-card .card-header {
-            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+            background: #fef3c7;
+            border-bottom-color: #fde68a;
         }
 
         .tips-card ul li {
             padding: 0.875rem 0;
-            border-bottom: 1px solid rgba(251, 191, 36, 0.2);
+            border-bottom: 1px solid rgba(217, 119, 6, 0.12);
             display: flex;
             align-items: flex-start;
         }
@@ -8210,11 +8218,13 @@ $databaseSkillsJson = json_encode($databaseSkills, JSON_UNESCAPED_UNICODE);
 
         /* Company Info Card */
         .company-card {
-            background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);
+            background: #f0f9ff;
+            border-left: 3px solid #0284c7;
         }
 
         .company-card .card-header {
-            background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+            background: #e0f2fe;
+            border-bottom-color: #bae6fd;
         }
 
         .company-card img {
@@ -8233,19 +8243,20 @@ $databaseSkillsJson = json_encode($databaseSkills, JSON_UNESCAPED_UNICODE);
         }
 
         .btn-edit-profile:hover {
-            background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+            background: #0284c7;
+            border-color: #0284c7;
             color: white;
-            transform: translateY(-2px);
         }
 
         /* Guidelines Card */
         .guidelines-card {
-            background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
-            border-left: 4px solid var(--success-color);
+            background: #ecfdf5;
+            border-left: 3px solid var(--success-color);
         }
 
         .guidelines-card .card-header {
-            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            background: #d1fae5;
+            border-bottom-color: #a7f3d0;
         }
 
         .guidelines-card ul li {
@@ -8262,11 +8273,11 @@ $databaseSkillsJson = json_encode($databaseSkills, JSON_UNESCAPED_UNICODE);
         .form-section {
             position: relative;
             padding: 1.75rem;
-            background: linear-gradient(135deg, #fafbfc 0%, #ffffff 100%);
-            border-radius: 12px;
+            background: #fafafa;
+            border-radius: 10px;
             border: 1px solid var(--border-color);
             margin-bottom: 2rem;
-            box-shadow: var(--shadow-sm);
+            box-shadow: none;
         }
 
         .form-section:last-of-type {
@@ -8285,17 +8296,14 @@ $databaseSkillsJson = json_encode($databaseSkills, JSON_UNESCAPED_UNICODE);
         }
 
         .section-title i {
-            background: var(--primary-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            font-size: 1.5rem;
+            color: var(--primary-color);
+            font-size: 1.35rem;
         }
 
         /* Section Dividers */
         .section-divider {
-            height: 2px;
-            background: linear-gradient(90deg, transparent, var(--border-color), transparent);
+            height: 1px;
+            background: var(--border-color);
             margin: 2rem 0;
         }
 
@@ -8386,7 +8394,7 @@ $databaseSkillsJson = json_encode($databaseSkills, JSON_UNESCAPED_UNICODE);
 
         .input-group-custom select.form-select {
             appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23667eea' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%232563eb' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
             background-repeat: no-repeat;
             background-position: right 1rem center;
             padding-right: 2.5rem;

@@ -324,7 +324,7 @@ $top_skills = array_slice($skills_distribution, 0, 10, true);
         }
 
         body.employer-layout {
-            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 50%, #f0f9ff 100%);
+            background: #f8fafc;
             min-height: 100vh;
             overflow-x: hidden;
             color: #1e293b;
@@ -360,12 +360,13 @@ $top_skills = array_slice($skills_distribution, 0, 10, true);
 
         /* Header Section */
         .reports-header {
-            background: linear-gradient(135deg, var(--wl-primary) 0%, var(--wl-primary-light) 100%);
-            color: white;
+            background: #ffffff;
+            color: #0f172a;
             padding: 1.5rem 2rem;
-            border-radius: 15px;
+            border-radius: 12px;
             margin-bottom: 2rem;
-            box-shadow: 0 10px 30px rgba(30, 58, 138, 0.3);
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 1px 2px rgba(15, 23, 42, 0.06);
             width: 100%;
             box-sizing: border-box;
         }
@@ -376,29 +377,40 @@ $top_skills = array_slice($skills_distribution, 0, 10, true);
             margin-bottom: 0.5rem;
             white-space: nowrap;
             overflow: visible;
+            color: #0f172a;
+        }
+
+        .reports-header h1 i {
+            color: var(--wl-primary-light);
         }
 
         .reports-header p {
-            opacity: 0.9;
             font-size: 1rem;
             margin: 0;
+            color: #64748b;
+        }
+
+        .reports-header .btn {
+            border-radius: 10px;
+            font-weight: 600;
         }
 
         /* Filter Card */
         .filter-card {
             background: var(--wl-card);
-            border: none;
-            border-radius: 15px;
-            box-shadow: 0 5px 20px var(--wl-shadow);
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            box-shadow: 0 1px 2px rgba(15, 23, 42, 0.06);
             margin-bottom: 2rem;
             padding: 1.5rem;
-            transition: all 0.3s ease;
+            transition: box-shadow 0.2s ease, border-color 0.2s ease;
             width: 100%;
             box-sizing: border-box;
         }
 
         .filter-card:hover {
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08);
+            border-color: #cbd5e1;
         }
 
         .filter-card .row {
@@ -445,49 +457,244 @@ $top_skills = array_slice($skills_distribution, 0, 10, true);
             overflow: visible;
         }
 
+        .reports-layout {
+            display: flex;
+            flex-direction: column;
+            gap: 1.75rem;
+            padding-bottom: 2rem;
+        }
+
+        .reports-layout .report-section {
+            margin-bottom: 0;
+        }
+
+        .reports-layout .report-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .report-lead {
+            font-size: 0.875rem;
+            color: #64748b;
+            margin: 0 0 1.25rem;
+            max-width: 42rem;
+            line-height: 1.5;
+        }
+
+        .report-subtitle {
+            font-size: 0.8125rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #475569;
+            margin: 0 0 0.75rem;
+        }
+
+        .report-subtitle i {
+            opacity: 0.85;
+        }
+
+        .report-kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 1rem;
+        }
+
+        .report-kpi-item {
+            min-width: 0;
+        }
+
+        .report-kpi-grid .stat-card {
+            margin-bottom: 0;
+            height: 100%;
+            min-height: 8.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .report-chart-shell {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 1rem 1.25rem 1.25rem;
+        }
+
+        .report-chart-shell .chart-container {
+            margin-bottom: 0;
+            background: #fff;
+            border: 1px solid #e2e8f0;
+        }
+
+        .report-two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            align-items: start;
+        }
+
+        .report-table-shell {
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            overflow: hidden;
+            background: #fff;
+        }
+
+        .report-table-shell .report-subtitle {
+            padding: 1rem 1.25rem 0;
+            margin-bottom: 0.5rem;
+        }
+
+        .report-table-shell .table-responsive {
+            border-radius: 0;
+        }
+
+        .report-skills-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 1.25rem;
+        }
+
+        .report-skills-panel {
+            background: #fafafa;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 1rem 1rem 1.25rem;
+        }
+
+        .report-skills-panel .report-subtitle {
+            margin-bottom: 0.65rem;
+        }
+
+        .report-skills-panel .chart-container {
+            margin-bottom: 0;
+            background: #fff;
+            border: 1px solid #e2e8f0;
+        }
+
+        .report-skills-wide {
+            background: #fafafa;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 1rem 1rem 1.25rem;
+        }
+
+        .report-skills-wide .chart-container {
+            margin-bottom: 0;
+            background: #fff;
+            border: 1px solid #e2e8f0;
+        }
+
+        @media (max-width: 1199px) {
+            .report-kpi-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 991px) {
+            .report-two-col {
+                grid-template-columns: 1fr;
+            }
+
+            .report-skills-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 575px) {
+            .report-kpi-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
         .report-card {
-            border: none;
-            border-radius: 15px;
-            box-shadow: 0 5px 20px var(--wl-shadow);
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            box-shadow: 0 1px 2px rgba(15, 23, 42, 0.06);
             margin-bottom: 1.5rem;
             overflow: visible;
-            transition: all 0.3s ease;
+            transition: box-shadow 0.2s ease, border-color 0.2s ease;
             background: var(--wl-card);
             width: 100%;
         }
 
         .report-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08);
+            border-color: #cbd5e1;
         }
 
         .report-card .card-header {
-            background: linear-gradient(135deg, var(--wl-primary) 0%, var(--wl-primary-light) 100%);
-            color: white;
-            padding: 1.25rem 1.5rem;
+            background: #f8fafc !important;
+            color: #0f172a !important;
+            padding: 1rem 1.5rem;
             border: none;
+            border-bottom: 1px solid #e2e8f0;
             font-weight: 600;
-            font-size: 1.1rem;
+            font-size: 1rem;
+        }
+
+        .report-card .card-header h4,
+        .report-card .card-header h4 i {
+            color: inherit !important;
+        }
+
+        .report-card .card-header.bg-primary {
+            background: #eff6ff !important;
+            color: #1e3a8a !important;
+            border-bottom-color: #bfdbfe;
+        }
+
+        .report-card .card-header.bg-primary h4 i {
+            color: #2563eb !important;
         }
 
         .report-card .card-header.bg-info {
-            background: linear-gradient(135deg, var(--wl-info) 0%, #0891b2 100%);
+            background: #ecfeff !important;
+            color: #164e63 !important;
+            border-bottom-color: #a5f3fc;
+        }
+
+        .report-card .card-header.bg-info h4 i {
+            color: #0891b2 !important;
         }
 
         .report-card .card-header.bg-success {
-            background: linear-gradient(135deg, var(--wl-success) 0%, #047857 100%);
+            background: #ecfdf5 !important;
+            color: #065f46 !important;
+            border-bottom-color: #a7f3d0;
+        }
+
+        .report-card .card-header.bg-success h4 i {
+            color: #059669 !important;
         }
 
         .report-card .card-header.bg-warning {
-            background: linear-gradient(135deg, var(--wl-warning) 0%, #d97706 100%);
+            background: #fffbeb !important;
+            color: #78350f !important;
+            border-bottom-color: #fde68a;
+        }
+
+        .report-card .card-header.bg-warning h4 i {
+            color: #d97706 !important;
         }
 
         .report-card .card-header.bg-secondary {
-            background: linear-gradient(135deg, #64748b 0%, #475569 100%);
+            background: #f1f5f9 !important;
+            color: #334155 !important;
+            border-bottom-color: #e2e8f0;
+        }
+
+        .report-card .card-header.bg-secondary h4 i {
+            color: #64748b !important;
         }
 
         .report-card .card-header.bg-dark {
-            background: linear-gradient(135deg, var(--wl-dark) 0%, #0f172a 100%);
+            background: #e2e8f0 !important;
+            color: #0f172a !important;
+            border-bottom-color: #cbd5e1;
+        }
+
+        .report-card .card-header.bg-dark h4 i {
+            color: #475569 !important;
         }
 
         .report-card .card-body {
@@ -507,7 +714,6 @@ $top_skills = array_slice($skills_distribution, 0, 10, true);
         /* Ensure text visibility in stat cards */
         .stat-card * {
             color: white !important;
-            text-shadow: 0 1px 2px rgba(0,0,0,0.1);
         }
 
         .stat-card h3 {
@@ -531,43 +737,43 @@ $top_skills = array_slice($skills_distribution, 0, 10, true);
 
         .stat-card small {
             font-size: 0.9rem;
-            opacity: 1;
+            opacity: 0.95;
             position: relative;
             z-index: 10;
-            color: rgba(255,255,255,0.95) !important;
+            color: rgba(255, 255, 255, 0.92) !important;
             font-weight: 400;
         }
 
         .stat-card.success {
-            background: linear-gradient(135deg, var(--wl-success) 0%, #047857 100%);
-            box-shadow: 0 5px 15px rgba(16, 185, 129, 0.3);
+            background: #059669;
+            box-shadow: 0 1px 2px rgba(15, 23, 42, 0.08);
         }
 
         .stat-card.success:hover {
-            box-shadow: 0 10px 25px rgba(16, 185, 129, 0.4);
+            box-shadow: 0 4px 12px rgba(5, 150, 105, 0.25);
         }
 
         .stat-card.warning {
-            background: linear-gradient(135deg, var(--wl-warning) 0%, #d97706 100%);
-            box-shadow: 0 5px 15px rgba(245, 158, 11, 0.3);
+            background: #d97706;
+            box-shadow: 0 1px 2px rgba(15, 23, 42, 0.08);
         }
 
         .stat-card.warning:hover {
-            box-shadow: 0 10px 25px rgba(245, 158, 11, 0.4);
+            box-shadow: 0 4px 12px rgba(217, 119, 6, 0.25);
         }
 
         .stat-card.info {
-            background: linear-gradient(135deg, var(--wl-primary-light) 0%, var(--wl-primary) 100%);
-            box-shadow: 0 5px 15px rgba(59, 130, 246, 0.3);
+            background: #2563eb;
+            box-shadow: 0 1px 2px rgba(15, 23, 42, 0.08);
         }
 
         .stat-card.danger {
-            background: linear-gradient(135deg, var(--wl-danger) 0%, #dc2626 100%);
-            box-shadow: 0 5px 15px rgba(239, 68, 68, 0.3);
+            background: #dc2626;
+            box-shadow: 0 1px 2px rgba(15, 23, 42, 0.08);
         }
 
         .stat-card.danger:hover {
-            box-shadow: 0 10px 25px rgba(239, 68, 68, 0.4);
+            box-shadow: 0 4px 12px rgba(220, 38, 38, 0.25);
         }
 
         /* Chart Container */
@@ -596,14 +802,14 @@ $top_skills = array_slice($skills_distribution, 0, 10, true);
         }
 
         .funnel-bar {
-            background: linear-gradient(90deg, var(--wl-primary-light) 0%, var(--wl-primary) 100%);
+            background: #2563eb;
             color: white;
             padding: 1.25rem 1.5rem;
             margin-bottom: 0.75rem;
-            border-radius: 12px;
+            border-radius: 10px;
             text-align: center;
-            transition: all 0.3s ease;
-            box-shadow: 0 3px 10px rgba(59, 130, 246, 0.3);
+            transition: box-shadow 0.2s ease;
+            box-shadow: 0 1px 2px rgba(15, 23, 42, 0.08);
             position: relative;
             overflow: visible;
             min-width: 200px;
@@ -611,24 +817,8 @@ $top_skills = array_slice($skills_distribution, 0, 10, true);
             display: block;
         }
 
-        .funnel-bar::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            transition: left 0.5s ease;
-        }
-
         .funnel-bar:hover {
-            transform: translateX(5px) scale(1.02);
-            box-shadow: 0 5px 15px rgba(59, 130, 246, 0.4);
-        }
-
-        .funnel-bar:hover::before {
-            left: 100%;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
         }
 
         .funnel-bar strong {
@@ -644,25 +834,20 @@ $top_skills = array_slice($skills_distribution, 0, 10, true);
             font-size: 0.9rem;
         }
 
-        .funnel-bar:nth-child(1) { 
-            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
-            box-shadow: 0 3px 10px rgba(102, 126, 234, 0.3);
+        .funnel-bar:nth-child(1) {
+            background: #4f46e5;
         }
-        .funnel-bar:nth-child(2) { 
-            background: linear-gradient(90deg, var(--wl-primary-light) 0%, var(--wl-primary) 100%);
-            box-shadow: 0 3px 10px rgba(59, 130, 246, 0.3);
+        .funnel-bar:nth-child(2) {
+            background: #2563eb;
         }
-        .funnel-bar:nth-child(3) { 
-            background: linear-gradient(90deg, var(--wl-success) 0%, #047857 100%);
-            box-shadow: 0 3px 10px rgba(16, 185, 129, 0.3);
+        .funnel-bar:nth-child(3) {
+            background: #059669;
         }
-        .funnel-bar:nth-child(4) { 
-            background: linear-gradient(90deg, var(--wl-warning) 0%, #d97706 100%);
-            box-shadow: 0 3px 10px rgba(245, 158, 11, 0.3);
+        .funnel-bar:nth-child(4) {
+            background: #d97706;
         }
-        .funnel-bar:nth-child(5) { 
-            background: linear-gradient(90deg, var(--wl-danger) 0%, #dc2626 100%);
-            box-shadow: 0 3px 10px rgba(239, 68, 68, 0.3);
+        .funnel-bar:nth-child(5) {
+            background: #dc2626;
         }
 
         /* Tables */
@@ -685,26 +870,27 @@ $top_skills = array_slice($skills_distribution, 0, 10, true);
         }
 
         .table thead {
-            background: linear-gradient(135deg, var(--wl-primary) 0%, var(--wl-primary-light) 100%);
-            color: white;
+            background: #f8fafc !important;
+            color: #0f172a !important;
         }
 
         .table thead th {
             border: none;
+            border-bottom: 2px solid #e2e8f0;
             padding: 1rem;
             font-weight: 600;
             text-transform: uppercase;
-            font-size: 0.85rem;
-            letter-spacing: 0.5px;
+            font-size: 0.8rem;
+            letter-spacing: 0.04em;
+            color: #475569 !important;
         }
 
         .table tbody tr {
-            transition: all 0.2s ease;
+            transition: background-color 0.15s ease;
         }
 
         .table tbody tr:hover {
-            background-color: #f0f9ff;
-            transform: scale(1.01);
+            background-color: #f1f5f9;
         }
 
         .table tbody td {
@@ -723,28 +909,32 @@ $top_skills = array_slice($skills_distribution, 0, 10, true);
             border-radius: 10px;
             padding: 0.75rem 1.5rem;
             font-weight: 600;
-            transition: all 0.3s ease;
+            transition: background-color 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+        }
+
+        .btn-primary,
+        .btn-success {
             border: none;
         }
 
         .btn-success {
-            background: linear-gradient(135deg, var(--wl-success) 0%, #047857 100%);
-            box-shadow: 0 3px 10px rgba(16, 185, 129, 0.3);
+            background: #059669 !important;
+            box-shadow: none;
         }
 
         .btn-success:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(16, 185, 129, 0.4);
+            background: #047857 !important;
+            box-shadow: 0 2px 8px rgba(5, 150, 105, 0.3);
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, var(--wl-primary-light) 0%, var(--wl-primary) 100%);
-            box-shadow: 0 3px 10px rgba(59, 130, 246, 0.3);
+            background: #2563eb !important;
+            box-shadow: none;
         }
 
         .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(59, 130, 246, 0.4);
+            background: #1d4ed8 !important;
+            box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3);
         }
 
         /* Section Headings */
@@ -811,11 +1001,6 @@ $top_skills = array_slice($skills_distribution, 0, 10, true);
             overflow: visible !important;
         }
 
-        /* Better spacing for sections */
-        .report-section:last-child {
-            margin-bottom: 3rem;
-        }
-
         /* Stat Cards - Ensure full visibility */
         .stat-cards-row {
             display: flex;
@@ -837,17 +1022,21 @@ $top_skills = array_slice($skills_distribution, 0, 10, true);
         }
 
         .stat-card {
-            background: linear-gradient(135deg, var(--wl-primary-light) 0%, var(--wl-primary) 100%);
+            background: #2563eb;
             color: white;
-            border-radius: 15px;
+            border-radius: 12px;
             padding: 1.75rem;
             margin-bottom: 1rem;
-            box-shadow: 0 5px 15px rgba(59, 130, 246, 0.3);
-            transition: all 0.3s ease;
+            box-shadow: 0 1px 2px rgba(15, 23, 42, 0.08);
+            transition: box-shadow 0.2s ease;
             position: relative;
             overflow: visible;
             width: 100%;
             box-sizing: border-box;
+        }
+
+        .stat-card:hover {
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
         }
 
         /* Responsive */
@@ -955,19 +1144,6 @@ $top_skills = array_slice($skills_distribution, 0, 10, true);
             color: #64748b !important;
         }
 
-        /* Ensure card headers text is visible */
-        .card-header {
-            color: white !important;
-        }
-
-        .card-header h4 {
-            color: white !important;
-        }
-
-        .card-header h4 i {
-            color: white !important;
-        }
-
         /* Ensure form controls are visible */
         .form-control {
             color: #1e293b !important;
@@ -1006,10 +1182,10 @@ $top_skills = array_slice($skills_distribution, 0, 10, true);
                     <p class="mb-0"><i class="fas fa-building me-2"></i><?php echo htmlspecialchars($company['company_name']); ?></p>
                 </div>
                 <div class="mt-3 mt-md-0">
-                    <button class="btn btn-light me-2" onclick="exportToPDF()" style="background: rgba(255,255,255,0.2); color: white; border: 2px solid rgba(255,255,255,0.3);">
+                    <button type="button" class="btn btn-outline-secondary me-2" onclick="exportToPDF()">
                         <i class="fas fa-file-pdf me-2"></i>Download PDF
                     </button>
-                    <button class="btn btn-light" onclick="exportToExcel()" style="background: rgba(255,255,255,0.2); color: white; border: 2px solid rgba(255,255,255,0.3);">
+                    <button type="button" class="btn btn-outline-secondary" onclick="exportToExcel()">
                         <i class="fas fa-file-excel me-2"></i>Download Excel
                     </button>
                 </div>
@@ -1036,43 +1212,49 @@ $top_skills = array_slice($skills_distribution, 0, 10, true);
             </form>
         </div>
 
+        <div class="reports-layout">
+
         <!-- 1. HIRING PERFORMANCE REPORT -->
         <div class="report-section">
             <div class="card report-card">
-                <div class="card-header bg-primary text-white">
+                <div class="card-header bg-primary">
                     <h4 class="mb-0"><i class="fas fa-bullseye me-2"></i>Hiring Performance Report</h4>
                 </div>
                 <div class="card-body">
-                    <div class="row g-3 mb-4">
-                        <div class="col-md-3">
+                    <p class="report-lead">Application volume, outcomes, and the six‑month hiring trend for the dates you selected above.</p>
+                    <div class="report-kpi-grid">
+                        <div class="report-kpi-item">
                             <div class="stat-card info">
                                 <h3><?php echo number_format($hiring_stats['total_applications']); ?></h3>
                                 <p class="mb-0">Total Applications</p>
                             </div>
                         </div>
-                        <div class="col-md-3">
+                        <div class="report-kpi-item">
                             <div class="stat-card success">
                                 <h3><?php echo number_format($hiring_stats['hired']); ?></h3>
                                 <p class="mb-0">Hired Candidates</p>
                                 <small><?php echo $hiring_stats['hire_rate']; ?>% Hire Rate</small>
                             </div>
                         </div>
-                        <div class="col-md-3">
+                        <div class="report-kpi-item">
                             <div class="stat-card danger">
                                 <h3><?php echo number_format($hiring_stats['rejected']); ?></h3>
                                 <p class="mb-0">Rejected</p>
                                 <small><?php echo $hiring_stats['rejection_rate']; ?>% Rejection Rate</small>
                             </div>
                         </div>
-                        <div class="col-md-3">
+                        <div class="report-kpi-item">
                             <div class="stat-card warning">
                                 <h3><?php echo number_format($hiring_stats['pending']); ?></h3>
                                 <p class="mb-0">Pending Review</p>
                             </div>
                         </div>
                     </div>
-                    <div class="chart-container">
-                        <canvas id="hiringPerformanceChart"></canvas>
+                    <div class="report-chart-shell mt-4">
+                        <h5 class="report-subtitle"><i class="fas fa-chart-area me-2 text-primary"></i>Hiring trend (last 6 months)</h5>
+                        <div class="chart-container">
+                            <canvas id="hiringPerformanceChart"></canvas>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1081,12 +1263,14 @@ $top_skills = array_slice($skills_distribution, 0, 10, true);
         <!-- 2. APPLICATION FUNNEL REPORT -->
         <div class="report-section">
             <div class="card report-card">
-                <div class="card-header bg-info text-white">
+                <div class="card-header bg-info">
                     <h4 class="mb-0"><i class="fas fa-filter me-2"></i>Application Funnel Report</h4>
                 </div>
                 <div class="card-body">
-                    <div class="row g-4">
-                        <div class="col-lg-6 col-md-12">
+                    <p class="report-lead">Stage counts and conversion view: bars show relative width; chart compares absolute numbers.</p>
+                    <div class="report-two-col">
+                        <div>
+                            <h5 class="report-subtitle"><i class="fas fa-stream me-2"></i>Pipeline stages</h5>
                             <div class="funnel-container">
                                 <div class="funnel-bar" style="width: 100%;">
                                     <strong><i class="fas fa-user-check me-2"></i>Applied</strong>
@@ -1114,7 +1298,8 @@ $top_skills = array_slice($skills_distribution, 0, 10, true);
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-6 col-md-12">
+                        <div>
+                            <h5 class="report-subtitle"><i class="fas fa-chart-bar me-2"></i>Funnel comparison</h5>
                             <div class="chart-container">
                                 <canvas id="funnelChart"></canvas>
                             </div>
@@ -1127,38 +1312,42 @@ $top_skills = array_slice($skills_distribution, 0, 10, true);
         <!-- 3. TIME-TO-HIRE REPORT -->
         <div class="report-section">
             <div class="card report-card">
-                <div class="card-header bg-success text-white">
+                <div class="card-header bg-success">
                     <h4 class="mb-0"><i class="fas fa-clock me-2"></i>Time-to-Hire Report</h4>
                 </div>
                 <div class="card-body">
-                    <div class="stat-cards-row">
-                        <div class="col-md-3 col-sm-6 col-12">
+                    <p class="report-lead">Average days between milestones, plus how hires cluster by time-to-review buckets.</p>
+                    <div class="report-kpi-grid">
+                        <div class="report-kpi-item">
                             <div class="stat-card info">
                                 <h3><?php echo round($time_to_hire['avg_time_to_review'] ?? 0, 1); ?></h3>
                                 <p class="mb-0"><i class="fas fa-eye me-2"></i>Avg Days to Review</p>
                             </div>
                         </div>
-                        <div class="col-md-3 col-sm-6 col-12">
+                        <div class="report-kpi-item">
                             <div class="stat-card">
                                 <h3><?php echo round($time_to_hire['avg_time_to_interview'] ?? 0, 1); ?></h3>
                                 <p class="mb-0"><i class="fas fa-comments me-2"></i>Avg Days to Interview</p>
                             </div>
                         </div>
-                        <div class="col-md-3 col-sm-6 col-12">
+                        <div class="report-kpi-item">
                             <div class="stat-card warning">
                                 <h3><?php echo round($time_to_hire['avg_time_to_offer'] ?? 0, 1); ?></h3>
                                 <p class="mb-0"><i class="fas fa-handshake me-2"></i>Avg Days to Offer</p>
                             </div>
                         </div>
-                        <div class="col-md-3 col-sm-6 col-12">
+                        <div class="report-kpi-item">
                             <div class="stat-card success">
                                 <h3><?php echo round($time_to_hire['avg_time_to_hire'] ?? 0, 1); ?></h3>
                                 <p class="mb-0"><i class="fas fa-check-circle me-2"></i>Avg Days to Hire</p>
                             </div>
                         </div>
                     </div>
-                    <div class="chart-container">
-                        <canvas id="timeToHireChart"></canvas>
+                    <div class="report-chart-shell mt-4">
+                        <h5 class="report-subtitle"><i class="fas fa-chart-pie me-2 text-success"></i>Time-to-review distribution</h5>
+                        <div class="chart-container">
+                            <canvas id="timeToHireChart"></canvas>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1171,19 +1360,24 @@ $top_skills = array_slice($skills_distribution, 0, 10, true);
                     <h4 class="mb-0"><i class="fas fa-briefcase me-2"></i>Job Post Effectiveness</h4>
                 </div>
                 <div class="card-body">
-                    <div class="row g-4">
-                        <div class="col-lg-6 col-md-12">
+                    <p class="report-lead">Per-job demand (applications, interviews, hires) and category mix, then a sortable-style detail table.</p>
+                    <div class="report-two-col">
+                        <div>
+                            <h5 class="report-subtitle"><i class="fas fa-chart-line me-2"></i>Top jobs (applications vs hired)</h5>
                             <div class="chart-container">
                                 <canvas id="jobEffectivenessChart"></canvas>
                             </div>
                         </div>
-                        <div class="col-lg-6 col-md-12">
+                        <div>
+                            <h5 class="report-subtitle"><i class="fas fa-tags me-2"></i>Applications by category</h5>
                             <div class="chart-container">
                                 <canvas id="categoryPerformanceChart"></canvas>
                             </div>
                         </div>
                     </div>
-                    <div class="table-responsive mt-4">
+                    <div class="report-table-shell mt-4">
+                        <h5 class="report-subtitle"><i class="fas fa-table me-2"></i>Job listing details</h5>
+                        <div class="table-responsive">
                         <table class="table table-hover">
                             <thead>
                                 <tr>
@@ -1219,6 +1413,7 @@ $top_skills = array_slice($skills_distribution, 0, 10, true);
                                 <?php endif; ?>
                             </tbody>
                         </table>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1227,31 +1422,33 @@ $top_skills = array_slice($skills_distribution, 0, 10, true);
         <!-- 5. CANDIDATE SOURCE REPORT -->
         <div class="report-section">
             <div class="card report-card">
-                <div class="card-header bg-secondary text-white">
+                <div class="card-header bg-secondary">
                     <h4 class="mb-0"><i class="fas fa-users me-2"></i>Candidate Source Report</h4>
                 </div>
                 <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-6">
+                    <p class="report-lead">Application volume over time alongside which job titles attract the most applicants.</p>
+                    <div class="report-two-col">
+                        <div>
+                            <h5 class="report-subtitle"><i class="fas fa-calendar-alt me-2"></i>Applications by month</h5>
                             <div class="chart-container">
                                 <canvas id="sourceByMonthChart"></canvas>
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <h5>Top Jobs by Applications</h5>
+                        <div class="report-table-shell">
+                            <h5 class="report-subtitle"><i class="fas fa-fire me-2"></i>Top jobs by applications</h5>
                             <div class="table-responsive">
-                                <table class="table table-sm">
+                                <table class="table table-sm mb-0">
                                     <thead>
                                         <tr>
                                             <th>Job Title</th>
-                                            <th>Applications</th>
+                                            <th class="text-end">Applications</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <?php foreach ($source_by_job as $job): ?>
                                         <tr>
                                             <td><?php echo htmlspecialchars($job['title']); ?></td>
-                                            <td><span class="badge bg-primary"><?php echo $job['application_count']; ?></span></td>
+                                            <td class="text-end"><span class="badge bg-primary"><?php echo $job['application_count']; ?></span></td>
                                         </tr>
                                         <?php endforeach; ?>
                                     </tbody>
@@ -1266,41 +1463,43 @@ $top_skills = array_slice($skills_distribution, 0, 10, true);
         <!-- 6. DIVERSITY / SKILLS DISTRIBUTION -->
         <div class="report-section">
             <div class="card report-card">
-                <div class="card-header bg-dark text-white">
+                <div class="card-header bg-dark">
                     <h4 class="mb-0"><i class="fas fa-chart-pie me-2"></i>Diversity & Skills Distribution</h4>
                 </div>
                 <div class="card-body">
-                    <div class="row g-4">
-                        <div class="col-lg-4 col-md-6 col-12">
-                            <h5><i class="fas fa-venus-mars me-2 text-primary"></i>Gender Distribution</h5>
+                    <p class="report-lead">Demographics and profile signals from applicants in the selected period; skills chart uses the tallest canvas for readability.</p>
+                    <div class="report-skills-grid">
+                        <div class="report-skills-panel">
+                            <h5 class="report-subtitle"><i class="fas fa-venus-mars me-2 text-primary"></i>Gender distribution</h5>
                             <div class="chart-container">
                                 <canvas id="genderChart"></canvas>
                             </div>
                         </div>
-                        <div class="col-lg-4 col-md-6 col-12">
-                            <h5><i class="fas fa-graduation-cap me-2 text-success"></i>Education Level</h5>
+                        <div class="report-skills-panel">
+                            <h5 class="report-subtitle"><i class="fas fa-graduation-cap me-2 text-success"></i>Education level</h5>
                             <div class="chart-container">
                                 <canvas id="educationChart"></canvas>
                             </div>
                         </div>
-                        <div class="col-lg-4 col-md-6 col-12">
-                            <h5><i class="fas fa-briefcase me-2 text-warning"></i>Experience Level</h5>
+                        <div class="report-skills-panel">
+                            <h5 class="report-subtitle"><i class="fas fa-briefcase me-2 text-warning"></i>Experience level</h5>
                             <div class="chart-container">
                                 <canvas id="experienceChart"></canvas>
                             </div>
                         </div>
                     </div>
-                    <div class="row mt-4">
-                        <div class="col-12">
-                            <h5><i class="fas fa-code me-2 text-info"></i>Top Skills</h5>
-                            <div class="chart-container" style="height: 400px;">
-                                <canvas id="skillsChart"></canvas>
-                            </div>
+                    <div class="report-skills-wide mt-4">
+                        <h5 class="report-subtitle"><i class="fas fa-code me-2 text-info"></i>Top skills</h5>
+                        <div class="chart-container" style="height: 400px;">
+                            <canvas id="skillsChart"></canvas>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
+        </div><!-- .reports-layout -->
+
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
