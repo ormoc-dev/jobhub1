@@ -128,24 +128,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="css/modern.css" rel="stylesheet">
     <style>
-        /* Profile page specific styles */
-        .profile-hero {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--purple) 100%);
-            padding: 2rem;
-            color: var(--white);
-        }
-        
-        .profile-hero h1 {
-            font-size: 1.75rem;
-            font-weight: 700;
-            margin-bottom: 0.25rem;
-        }
-        
-        .profile-hero p {
-            color: rgba(255, 255, 255, 0.85);
-            margin: 0;
-        }
-        
+        /* Profile page specific styles (hero uses employee/css/modern.css) */
         .section-header-modern {
             display: flex;
             align-items: center;
@@ -226,14 +209,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div class="employee-main-content">
                 <!-- Profile Header -->
                 <div class="profile-hero">
-                    <div class="d-flex justify-content-between align-items-start flex-wrap gap-3">
-                        <div>
-                            <h1><i class="fas fa-user-circle me-2"></i>My Profile</h1>
-                            <p>Manage your personal information and documents</p>
+                    <div class="hero-content">
+                        <div class="row align-items-center g-4">
+                            <div class="col-lg">
+                                <p class="hero-eyebrow mb-1">Account</p>
+                                <h1 class="hero-title mb-2"><i class="fas fa-user-circle text-primary me-2 fs-5 align-middle"></i>My profile</h1>
+                                <p class="hero-lead mb-0">Update your details, skills, and documents so employers see an accurate picture of you.</p>
+                            </div>
+                            <div class="col-lg-auto">
+                                <a href="dashboard.php" class="btn btn-outline-primary btn-lg px-4">
+                                    <i class="fas fa-arrow-left me-2"></i>Back to dashboard
+                                </a>
+                            </div>
                         </div>
-                        <a href="dashboard.php" class="btn btn-light">
-                            <i class="fas fa-arrow-left me-2"></i>Back to Dashboard
-                        </a>
                     </div>
                 </div>
                 

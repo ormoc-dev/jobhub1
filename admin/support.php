@@ -234,416 +234,403 @@ if (isset($_GET['ticket_id'])) {
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link href="../assets/style.css" rel="stylesheet">
-    <style>
-        :root {
-            --primary: #6366f1;
-            --primary-light: #818cf8;
-            --primary-dark: #4f46e5;
-            --cyan: #06b6d4;
-            --cyan-light: #22d3ee;
-            --emerald: #10b981;
-            --emerald-light: #34d399;
-            --amber: #f59e0b;
-            --amber-light: #fbbf24;
-            --rose: #f43f5e;
-            --rose-light: #fb7185;
-            --violet: #8b5cf6;
-            --violet-light: #a78bfa;
-            --blue: #3b82f6;
-            --blue-light: #60a5fa;
-            --slate-900: #0f172a;
-            --slate-800: #1e293b;
-            --slate-700: #334155;
-            --slate-600: #475569;
-            --slate-500: #64748b;
-            --slate-400: #94a3b8;
-            --slate-300: #cbd5e1;
-            --slate-200: #e2e8f0;
-        }
-        
-        .support-page {
+        <style>
+.support-admin-page .admin-main-content {
             font-family: 'Plus Jakarta Sans', sans-serif;
-            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #0f172a 100%);
-            min-height: 100vh;
+            background: linear-gradient(180deg, #eef2ff 0%, #f8fafc 18%, #f1f5f9 55%, #f8fafc 100%);
+            padding: 1.5rem 2rem 2.5rem;
         }
-        
-        .support-page .admin-main-content {
-            background: transparent;
-            padding: 24px 32px;
+
+        .support-page-header {
+            padding: 1.25rem 1.5rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(120deg, #ffffff 0%, #f5f8ff 50%, #eef4ff 100%);
+            border: 1px solid rgba(37, 99, 235, 0.12);
+            border-radius: 14px;
+            box-shadow: 0 2px 8px rgba(30, 58, 138, 0.06);
         }
-        
-        /* Page Header */
-        .page-header {
-            margin-bottom: 28px;
-        }
-        
-        .page-header h1 {
-            font-weight: 800;
-            font-size: 1.75rem;
-            color: #fff;
-            margin-bottom: 6px;
+
+        .support-page-header h1 {
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: #1e3a8a;
+            margin-bottom: 0.35rem;
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 0.65rem;
         }
-        
-        .page-header h1 i {
-            background: linear-gradient(135deg, var(--emerald), var(--cyan));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+
+        .support-page-header h1 i {
+            color: #059669;
+            opacity: 0.95;
         }
-        
-        .page-header p {
-            color: var(--slate-500);
+
+        .support-page-header p {
+            color: #64748b;
             margin: 0;
             font-size: 0.95rem;
         }
-        
-        /* Stats Row */
+
         .stats-row {
             display: grid;
             grid-template-columns: repeat(5, 1fr);
-            gap: 16px;
-            margin-bottom: 28px;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
         }
-        
+
         @media (max-width: 1200px) {
             .stats-row { grid-template-columns: repeat(3, 1fr); }
         }
-        
+
         @media (max-width: 768px) {
             .stats-row { grid-template-columns: repeat(2, 1fr); }
         }
-        
+
         .stat-box {
-            background: rgba(30, 41, 59, 0.7);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 16px;
-            padding: 20px;
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 14px;
+            padding: 1.1rem 1.15rem;
             display: flex;
             align-items: center;
-            gap: 16px;
-            transition: all 0.3s ease;
+            gap: 1rem;
+            transition: box-shadow 0.2s ease, border-color 0.2s ease;
+            box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05);
         }
-        
+
         .stat-box:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+            border-color: rgba(5, 150, 105, 0.28);
+            box-shadow: 0 4px 14px rgba(5, 150, 105, 0.1);
         }
-        
+
         .stat-icon {
-            width: 52px;
-            height: 52px;
-            border-radius: 14px;
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 20px;
+            font-size: 1.05rem;
+            flex-shrink: 0;
         }
-        
-        .stat-box.tickets .stat-icon { background: linear-gradient(135deg, var(--primary), var(--primary-light)); color: white; }
-        .stat-box.open .stat-icon { background: linear-gradient(135deg, var(--amber), var(--amber-light)); color: white; }
-        .stat-box.errors .stat-icon { background: linear-gradient(135deg, var(--rose), var(--rose-light)); color: white; }
-        .stat-box.health .stat-icon { background: linear-gradient(135deg, var(--emerald), var(--emerald-light)); color: white; }
-        .stat-box.urgent .stat-icon { background: linear-gradient(135deg, #dc2626, #ef4444); color: white; }
-        
+
+        .stat-box.tickets .stat-icon { background: #eef2ff; color: #2563eb; }
+        .stat-box.open .stat-icon { background: #fffbeb; color: #d97706; }
+        .stat-box.errors .stat-icon { background: #ffe4e6; color: #be123c; }
+        .stat-box.health .stat-icon { background: #ecfdf5; color: #059669; }
+        .stat-box.urgent .stat-icon { background: #fee2e2; color: #dc2626; }
+
         .stat-info h3 {
-            font-size: 1.5rem;
+            font-size: 1.35rem;
             font-weight: 700;
-            color: #fff;
+            color: #0f172a;
             margin: 0;
-            line-height: 1;
+            line-height: 1.15;
         }
-        
+
         .stat-info span {
             font-size: 0.8rem;
-            color: var(--slate-500);
+            color: #64748b;
             font-weight: 500;
         }
-        
-        /* Alert Styles */
+
         .alert-custom {
-            border: none;
-            border-radius: 14px;
-            padding: 16px 20px;
-            margin-bottom: 24px;
+            border-radius: 12px;
+            padding: 14px 18px;
+            margin-bottom: 1.25rem;
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             gap: 12px;
+            border: 1px solid transparent;
         }
-        
+
         .alert-custom.success {
-            background: rgba(16, 185, 129, 0.15);
-            border-left: 4px solid var(--emerald);
-            color: #6ee7b7;
+            background: #ecfdf5;
+            border-color: #a7f3d0;
+            color: #065f46;
         }
-        
+
         .alert-custom.danger {
-            background: rgba(244, 63, 94, 0.15);
-            border-left: 4px solid var(--rose);
-            color: #fda4af;
+            background: #fef2f2;
+            border-color: #fecaca;
+            color: #991b1b;
         }
-        
-        /* Tab Navigation */
+
         .tab-nav {
             display: flex;
-            gap: 4px;
-            margin-bottom: 24px;
-            background: rgba(30, 41, 59, 0.5);
+            gap: 6px;
+            margin-bottom: 1.25rem;
+            background: #f1f5f9;
             padding: 6px;
-            border-radius: 16px;
-            flex-wrap: wrap;
-        }
-        
-        .tab-link {
-            padding: 14px 24px;
             border-radius: 12px;
-            color: var(--slate-400);
+            flex-wrap: wrap;
+            border: 1px solid #e2e8f0;
+        }
+
+        .tab-link {
+            padding: 10px 18px;
+            border-radius: 10px;
+            color: #64748b;
             text-decoration: none;
             font-weight: 600;
-            font-size: 0.9rem;
-            transition: all 0.3s ease;
+            font-size: 0.875rem;
+            transition: background 0.2s, color 0.2s;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
             white-space: nowrap;
         }
-        
+
         .tab-link:hover {
-            color: #fff;
-            background: rgba(255,255,255,0.05);
+            color: #1e3a8a;
+            background: rgba(255, 255, 255, 0.85);
         }
-        
+
         .tab-link.active {
-            background: linear-gradient(135deg, var(--emerald), #059669);
-            color: white;
-            box-shadow: 0 4px 20px rgba(16, 185, 129, 0.4);
+            background: #fff;
+            color: #1d4ed8;
+            box-shadow: 0 1px 4px rgba(30, 58, 138, 0.12);
         }
-        
+
         .tab-link .badge {
-            background: rgba(255,255,255,0.2);
+            background: #e0e7ff;
+            color: #4338ca;
             padding: 3px 8px;
             border-radius: 6px;
             font-size: 0.7rem;
+            font-weight: 600;
         }
-        
-        /* Main Card */
+
+        .tab-link.active .badge {
+            background: #dbeafe;
+            color: #1d4ed8;
+        }
+
+        .tab-badge-critical {
+            background: #fee2e2 !important;
+            color: #b91c1c !important;
+        }
+
         .main-card {
-            background: rgba(30, 41, 59, 0.7);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 20px;
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 14px;
             overflow: hidden;
+            box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05);
         }
-        
+
         .card-header-custom {
-            padding: 20px 24px;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
+            padding: 1.1rem 1.35rem;
+            border-bottom: 1px solid #e2e8f0;
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: 16px;
+            gap: 14px;
+            background: linear-gradient(120deg, #fafbff 0%, #f8fafc 100%);
         }
-        
+
         .card-header-custom h5 {
-            color: #fff;
+            color: #1e3a8a;
             font-weight: 700;
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             margin: 0;
             display: flex;
             align-items: center;
             gap: 10px;
+            flex-wrap: wrap;
         }
-        
+
         .card-header-custom h5 i {
-            color: var(--emerald);
+            color: #059669;
         }
-        
+
         .card-body-custom {
-            padding: 24px;
+            padding: 1.35rem 1.35rem 1.5rem;
+            background: #fff;
         }
-        
-        /* Filter Bar */
+
         .filter-bar {
             display: flex;
             gap: 12px;
             flex-wrap: wrap;
-            padding: 16px 24px;
-            background: rgba(15, 23, 42, 0.3);
-            border-bottom: 1px solid rgba(255,255,255,0.05);
+            padding: 14px 1.35rem;
+            background: #f8fafc;
+            border-bottom: 1px solid #e2e8f0;
         }
-        
+
         .filter-select {
-            background: var(--slate-800);
-            border: 1px solid rgba(255,255,255,0.1);
+            background: #fff;
+            border: 1px solid #cbd5e1;
             border-radius: 10px;
-            color: #fff;
-            padding: 10px 16px;
+            color: #0f172a;
+            padding: 10px 14px;
             font-size: 0.85rem;
             min-width: 150px;
         }
-        
+
         .filter-select:focus {
-            border-color: var(--emerald);
-            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15);
+            border-color: #059669;
+            box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.15);
             outline: none;
         }
-        
-        /* Ticket Cards */
+
+        .filter-select--compact {
+            padding: 6px 12px;
+            font-size: 0.75rem;
+            min-width: auto;
+        }
+
         .ticket-list {
             display: flex;
             flex-direction: column;
-            gap: 16px;
+            gap: 14px;
         }
-        
+
         .ticket-card {
-            background: rgba(15, 23, 42, 0.5);
-            border: 1px solid rgba(255,255,255,0.05);
-            border-radius: 16px;
-            padding: 20px;
-            transition: all 0.3s ease;
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 14px;
+            padding: 18px;
+            transition: box-shadow 0.2s, border-color 0.2s;
             cursor: pointer;
+            box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
         }
-        
+
         .ticket-card:hover {
-            border-color: rgba(16, 185, 129, 0.3);
-            transform: translateX(4px);
+            border-color: rgba(5, 150, 105, 0.35);
+            box-shadow: 0 4px 14px rgba(15, 23, 42, 0.08);
         }
-        
-        .ticket-card.priority-urgent {
-            border-left: 4px solid #dc2626;
+
+        .ticket-card.priority-urgent { border-left: 4px solid #dc2626; }
+        .ticket-card.priority-high { border-left: 4px solid #d97706; }
+        .ticket-card.priority-medium { border-left: 4px solid #2563eb; }
+        .ticket-card.priority-low { border-left: 4px solid #94a3b8; }
+
+        .ticket-card-link {
+            text-decoration: none;
+            color: inherit;
+            display: block;
         }
-        
-        .ticket-card.priority-high {
-            border-left: 4px solid var(--amber);
-        }
-        
-        .ticket-card.priority-medium {
-            border-left: 4px solid var(--blue);
-        }
-        
-        .ticket-card.priority-low {
-            border-left: 4px solid var(--slate-500);
-        }
-        
+
         .ticket-header {
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
             margin-bottom: 12px;
         }
-        
+
         .ticket-number {
-            color: var(--slate-500);
+            color: #64748b;
             font-size: 0.75rem;
             font-weight: 600;
-            font-family: monospace;
+            font-family: ui-monospace, 'Consolas', monospace;
         }
-        
+
         .ticket-subject {
-            color: #fff;
+            color: #0f172a;
             font-weight: 600;
             font-size: 1rem;
             margin: 6px 0;
         }
-        
+
         .ticket-meta {
             display: flex;
-            gap: 16px;
+            gap: 14px;
             font-size: 0.75rem;
-            color: var(--slate-500);
+            color: #64748b;
             flex-wrap: wrap;
         }
-        
+
         .ticket-meta span {
             display: flex;
             align-items: center;
             gap: 6px;
         }
-        
+
         .ticket-badges {
             display: flex;
             gap: 8px;
             align-items: center;
         }
-        
-        /* Badges */
+
         .badge-status, .badge-priority, .badge-category {
             padding: 5px 12px;
             border-radius: 8px;
-            font-size: 0.7rem;
+            font-size: 0.68rem;
             font-weight: 600;
             text-transform: uppercase;
         }
-        
-        .badge-status.open { background: rgba(245, 158, 11, 0.15); color: var(--amber-light); }
-        .badge-status.in_progress { background: rgba(59, 130, 246, 0.15); color: var(--blue-light); }
-        .badge-status.pending { background: rgba(139, 92, 246, 0.15); color: var(--violet-light); }
-        .badge-status.resolved { background: rgba(16, 185, 129, 0.15); color: var(--emerald-light); }
-        .badge-status.closed { background: rgba(100, 116, 139, 0.15); color: var(--slate-400); }
-        
-        .badge-priority.urgent { background: rgba(220, 38, 38, 0.2); color: #fca5a5; }
-        .badge-priority.high { background: rgba(245, 158, 11, 0.15); color: var(--amber-light); }
-        .badge-priority.medium { background: rgba(59, 130, 246, 0.15); color: var(--blue-light); }
-        .badge-priority.low { background: rgba(100, 116, 139, 0.15); color: var(--slate-400); }
-        
-        .badge-category { background: rgba(99, 102, 241, 0.15); color: var(--primary-light); }
-        
-        /* Error Log Cards */
+
+        .badge-status.open { background: #fffbeb; color: #b45309; border: 1px solid #fde68a; }
+        .badge-status.in_progress { background: #dbeafe; color: #1d4ed8; border: 1px solid #93c5fd; }
+        .badge-status.pending { background: #ede9fe; color: #6d28d9; border: 1px solid #c4b5fd; }
+        .badge-status.resolved { background: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; }
+        .badge-status.closed { background: #f1f5f9; color: #64748b; border: 1px solid #e2e8f0; }
+
+        .badge-priority.urgent { background: #fee2e2; color: #991b1b; border: 1px solid #fecaca; }
+        .badge-priority.high { background: #fffbeb; color: #b45309; border: 1px solid #fde68a; }
+        .badge-priority.medium { background: #dbeafe; color: #1e40af; border: 1px solid #93c5fd; }
+        .badge-priority.low { background: #f1f5f9; color: #64748b; border: 1px solid #e2e8f0; }
+
+        .badge-category { background: #eef2ff; color: #4338ca; border: 1px solid #c7d2fe; }
+        .badge-category--spaced { margin-left: 8px; }
+
+        .supp-status-inline { margin-left: 12px; }
+
         .error-list {
             display: flex;
             flex-direction: column;
             gap: 12px;
         }
-        
+
         .error-card {
-            background: rgba(15, 23, 42, 0.5);
-            border: 1px solid rgba(255,255,255,0.05);
+            background: #fff;
+            border: 1px solid #e2e8f0;
             border-radius: 14px;
-            padding: 16px 20px;
-            transition: all 0.3s ease;
+            padding: 16px 18px;
+            transition: box-shadow 0.2s, border-color 0.2s;
         }
-        
+
         .error-card:hover {
-            border-color: rgba(244, 63, 94, 0.3);
+            border-color: rgba(190, 18, 60, 0.25);
+            box-shadow: 0 4px 12px rgba(15, 23, 42, 0.06);
         }
-        
+
         .error-card.severity-critical {
             border-left: 4px solid #dc2626;
-            background: rgba(220, 38, 38, 0.05);
+            background: #fef2f2;
         }
-        
+
         .error-card.severity-error {
-            border-left: 4px solid var(--rose);
+            border-left: 4px solid #e11d48;
         }
-        
+
         .error-card.severity-warning {
-            border-left: 4px solid var(--amber);
+            border-left: 4px solid #d97706;
         }
-        
+
         .error-card.severity-info {
-            border-left: 4px solid var(--blue);
+            border-left: 4px solid #2563eb;
         }
-        
+
         .error-card.resolved {
-            opacity: 0.6;
+            opacity: 0.72;
         }
-        
+
         .error-header {
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
             margin-bottom: 10px;
         }
-        
+
         .error-type {
             display: flex;
             align-items: center;
             gap: 10px;
         }
-        
+
         .error-type-icon {
             width: 36px;
             height: 36px;
@@ -653,30 +640,37 @@ if (isset($_GET['ticket_id'])) {
             justify-content: center;
             font-size: 0.9rem;
         }
-        
-        .error-type-icon.php { background: linear-gradient(135deg, #8b5cf6, #a78bfa); color: white; }
-        .error-type-icon.javascript { background: linear-gradient(135deg, #f59e0b, #fbbf24); color: white; }
-        .error-type-icon.database { background: linear-gradient(135deg, #3b82f6, #60a5fa); color: white; }
-        .error-type-icon.security { background: linear-gradient(135deg, #dc2626, #ef4444); color: white; }
-        .error-type-icon.api { background: linear-gradient(135deg, #06b6d4, #22d3ee); color: white; }
-        .error-type-icon.system { background: linear-gradient(135deg, #6366f1, #818cf8); color: white; }
-        
+
+        .error-type-icon.php { background: #ede9fe; color: #6d28d9; }
+        .error-type-icon.javascript { background: #fffbeb; color: #b45309; }
+        .error-type-icon.database { background: #dbeafe; color: #1d4ed8; }
+        .error-type-icon.security { background: #fee2e2; color: #b91c1c; }
+        .error-type-icon.api { background: #ecfeff; color: #0e7490; }
+        .error-type-icon.system { background: #eef2ff; color: #4338ca; }
+
         .error-message {
-            color: #fff;
-            font-size: 0.9rem;
+            color: #0f172a;
+            font-size: 0.875rem;
             margin-bottom: 8px;
-            font-family: 'Monaco', 'Menlo', monospace;
+            font-family: ui-monospace, 'Consolas', monospace;
             word-break: break-word;
         }
-        
+
         .error-location {
-            color: var(--slate-500);
+            color: #64748b;
             font-size: 0.75rem;
             display: flex;
             align-items: center;
             gap: 8px;
         }
-        
+
+        .error-type-label {
+            color: #0f172a;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+        }
+
         .severity-badge {
             padding: 4px 10px;
             border-radius: 6px;
@@ -684,79 +678,67 @@ if (isset($_GET['ticket_id'])) {
             font-weight: 600;
             text-transform: uppercase;
         }
-        
-        .severity-badge.critical { background: rgba(220, 38, 38, 0.2); color: #fca5a5; }
-        .severity-badge.error { background: rgba(244, 63, 94, 0.15); color: var(--rose-light); }
-        .severity-badge.warning { background: rgba(245, 158, 11, 0.15); color: var(--amber-light); }
-        .severity-badge.info { background: rgba(59, 130, 246, 0.15); color: var(--blue-light); }
-        
-        /* System Status Grid */
+
+        .severity-badge.critical { background: #fee2e2; color: #991b1b; }
+        .severity-badge.error { background: #ffe4e6; color: #be123c; }
+        .severity-badge.warning { background: #fffbeb; color: #b45309; }
+        .severity-badge.info { background: #dbeafe; color: #1e40af; }
+
+        .severity-inline { margin-left: 8px; }
+
         .status-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 16px;
+            gap: 14px;
         }
-        
+
         .status-card {
-            background: rgba(15, 23, 42, 0.5);
-            border: 1px solid rgba(255,255,255,0.05);
+            background: #fff;
+            border: 1px solid #e2e8f0;
             border-radius: 14px;
-            padding: 20px;
-            transition: all 0.3s ease;
+            padding: 18px;
+            transition: box-shadow 0.2s, border-color 0.2s;
         }
-        
+
         .status-card:hover {
-            border-color: rgba(16, 185, 129, 0.3);
+            border-color: rgba(5, 150, 105, 0.35);
+            box-shadow: 0 4px 12px rgba(15, 23, 42, 0.06);
         }
-        
-        .status-card.operational {
-            border-left: 4px solid var(--emerald);
-        }
-        
-        .status-card.degraded {
-            border-left: 4px solid var(--amber);
-        }
-        
-        .status-card.partial_outage {
-            border-left: 4px solid #f97316;
-        }
-        
-        .status-card.major_outage {
-            border-left: 4px solid #dc2626;
-        }
-        
-        .status-card.maintenance {
-            border-left: 4px solid var(--violet);
-        }
-        
+
+        .status-card.operational { border-left: 4px solid #059669; }
+        .status-card.degraded { border-left: 4px solid #d97706; }
+        .status-card.partial_outage { border-left: 4px solid #ea580c; }
+        .status-card.major_outage { border-left: 4px solid #dc2626; }
+        .status-card.maintenance { border-left: 4px solid #7c3aed; }
+
         .status-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 12px;
         }
-        
+
         .component-name {
-            color: #fff;
+            color: #0f172a;
             font-weight: 600;
             font-size: 0.95rem;
             display: flex;
             align-items: center;
             gap: 10px;
         }
-        
+
         .component-icon {
             width: 36px;
             height: 36px;
             border-radius: 10px;
-            background: linear-gradient(135deg, var(--emerald), #059669);
+            background: #ecfdf5;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: white;
+            color: #059669;
             font-size: 0.9rem;
         }
-        
+
         .status-indicator {
             display: flex;
             align-items: center;
@@ -764,414 +746,516 @@ if (isset($_GET['ticket_id'])) {
             font-size: 0.75rem;
             font-weight: 600;
         }
-        
+
         .status-dot {
             width: 10px;
             height: 10px;
             border-radius: 50%;
-            animation: pulse 2s infinite;
+            animation: supp-pulse 2s infinite;
         }
-        
-        .status-dot.operational { background: var(--emerald); box-shadow: 0 0 10px var(--emerald); }
-        .status-dot.degraded { background: var(--amber); box-shadow: 0 0 10px var(--amber); }
-        .status-dot.partial_outage { background: #f97316; box-shadow: 0 0 10px #f97316; }
-        .status-dot.major_outage { background: #dc2626; box-shadow: 0 0 10px #dc2626; animation: pulse-fast 1s infinite; }
-        .status-dot.maintenance { background: var(--violet); box-shadow: 0 0 10px var(--violet); }
-        
-        @keyframes pulse {
+
+        .status-dot.operational { background: #059669; }
+        .status-dot.degraded { background: #d97706; }
+        .status-dot.partial_outage { background: #ea580c; }
+        .status-dot.major_outage { background: #dc2626; animation: supp-pulse-fast 1s infinite; }
+        .status-dot.maintenance { background: #7c3aed; }
+
+        @keyframes supp-pulse {
             0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
+            50% { opacity: 0.45; }
         }
-        
-        @keyframes pulse-fast {
+
+        @keyframes supp-pulse-fast {
             0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.5; transform: scale(1.2); }
+            50% { opacity: 0.5; transform: scale(1.15); }
         }
-        
-        .status-text.operational { color: var(--emerald-light); }
-        .status-text.degraded { color: var(--amber-light); }
-        .status-text.partial_outage { color: #fb923c; }
-        .status-text.major_outage { color: #fca5a5; }
-        .status-text.maintenance { color: var(--violet-light); }
-        
+
+        .status-text.operational { color: #047857; }
+        .status-text.degraded { color: #b45309; }
+        .status-text.partial_outage { color: #c2410c; }
+        .status-text.major_outage { color: #b91c1c; }
+        .status-text.maintenance { color: #6d28d9; }
+
         .response-time {
             display: flex;
             align-items: center;
             gap: 8px;
-            color: var(--slate-500);
+            color: #64748b;
             font-size: 0.8rem;
         }
-        
+
         .response-time i {
-            color: var(--cyan);
+            color: #0891b2;
         }
-        
-        /* Maintenance Schedule */
+
         .maintenance-section {
-            margin-top: 32px;
+            margin-top: 28px;
         }
-        
+
         .maintenance-list {
             display: flex;
             flex-direction: column;
             gap: 12px;
         }
-        
+
         .maintenance-card {
-            background: rgba(15, 23, 42, 0.5);
-            border: 1px solid rgba(255,255,255,0.05);
+            background: #fff;
+            border: 1px solid #e2e8f0;
             border-radius: 14px;
-            padding: 20px;
+            padding: 18px;
             display: flex;
             align-items: center;
-            gap: 20px;
+            gap: 18px;
         }
-        
+
         .maintenance-icon {
             width: 48px;
             height: 48px;
             border-radius: 12px;
-            background: linear-gradient(135deg, var(--violet), var(--violet-light));
+            background: #ede9fe;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: white;
-            font-size: 1.2rem;
+            color: #6d28d9;
+            font-size: 1.15rem;
             flex-shrink: 0;
         }
-        
-        .maintenance-info {
-            flex: 1;
-        }
-        
+
+        .maintenance-info { flex: 1; }
+
         .maintenance-title {
-            color: #fff;
+            color: #0f172a;
             font-weight: 600;
             font-size: 0.95rem;
             margin-bottom: 4px;
         }
-        
+
         .maintenance-time {
-            color: var(--slate-500);
+            color: #64748b;
             font-size: 0.8rem;
         }
-        
+
         .maintenance-status {
             padding: 6px 14px;
             border-radius: 8px;
-            font-size: 0.7rem;
+            font-size: 0.68rem;
             font-weight: 600;
             text-transform: uppercase;
         }
-        
-        .maintenance-status.scheduled { background: rgba(99, 102, 241, 0.15); color: var(--primary-light); }
-        .maintenance-status.in_progress { background: rgba(245, 158, 11, 0.15); color: var(--amber-light); }
-        .maintenance-status.completed { background: rgba(16, 185, 129, 0.15); color: var(--emerald-light); }
-        .maintenance-status.cancelled { background: rgba(100, 116, 139, 0.15); color: var(--slate-400); }
-        
-        /* Buttons */
+
+        .maintenance-status.scheduled { background: #eef2ff; color: #4338ca; }
+        .maintenance-status.in_progress { background: #fffbeb; color: #b45309; }
+        .maintenance-status.completed { background: #ecfdf5; color: #047857; }
+        .maintenance-status.cancelled { background: #f1f5f9; color: #64748b; }
+
         .btn-primary-custom {
-            background: linear-gradient(135deg, var(--emerald), #059669);
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
             border: none;
             color: white;
-            padding: 12px 24px;
+            padding: 10px 20px;
             border-radius: 10px;
             font-weight: 600;
-            font-size: 0.9rem;
+            font-size: 0.875rem;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: box-shadow 0.2s, transform 0.15s;
             display: inline-flex;
             align-items: center;
             gap: 8px;
         }
-        
+
         .btn-primary-custom:hover {
-            box-shadow: 0 4px 20px rgba(16, 185, 129, 0.4);
-            transform: translateY(-2px);
+            box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
+            transform: translateY(-1px);
             color: white;
         }
-        
+
         .btn-action {
             padding: 8px 12px;
             border-radius: 8px;
             font-size: 0.75rem;
             font-weight: 600;
-            border: none;
+            border: 1px solid transparent;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: background 0.2s;
             display: inline-flex;
             align-items: center;
             gap: 6px;
         }
-        
-        .btn-action:hover { transform: translateY(-2px); }
-        
-        .btn-view { background: rgba(99, 102, 241, 0.15); color: var(--primary-light); }
-        .btn-view:hover { background: rgba(99, 102, 241, 0.25); color: var(--primary-light); }
-        
-        .btn-resolve { background: rgba(16, 185, 129, 0.15); color: var(--emerald-light); }
-        .btn-resolve:hover { background: rgba(16, 185, 129, 0.25); color: var(--emerald-light); }
-        
-        .btn-delete { background: rgba(244, 63, 94, 0.15); color: var(--rose-light); }
-        .btn-delete:hover { background: rgba(244, 63, 94, 0.25); color: var(--rose-light); }
-        
-        /* Form Elements */
-        .form-control, .form-select {
-            background: var(--slate-900);
-            border: 1px solid rgba(255,255,255,0.1);
+
+        .btn-view {
+            background: #fff;
+            color: #2563eb;
+            border-color: rgba(37, 99, 235, 0.35);
+        }
+        .btn-view:hover { background: #eef2ff; }
+
+        .btn-resolve {
+            background: #ecfdf5;
+            color: #047857;
+            border-color: #a7f3d0;
+        }
+        .btn-resolve:hover { background: #d1fae5; }
+
+        .btn-delete {
+            background: #fff;
+            color: #b91c1c;
+            border-color: #fecaca;
+        }
+        .btn-delete:hover { background: #fef2f2; }
+
+        .support-admin-page .form-control,
+        .support-admin-page .form-select {
+            background: #fff;
+            border: 1px solid #cbd5e1;
             border-radius: 10px;
-            color: #fff;
-            padding: 12px 16px;
+            color: #0f172a;
+            padding: 10px 14px;
             font-size: 0.9rem;
         }
-        
-        .form-control:focus, .form-select:focus {
-            background: var(--slate-900);
-            border-color: var(--emerald);
-            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15);
-            color: #fff;
+
+        .support-admin-page .form-control:focus,
+        .support-admin-page .form-select:focus {
+            background: #fff;
+            border-color: #059669;
+            box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.15);
+            color: #0f172a;
         }
-        
-        .form-control::placeholder { color: var(--slate-500); }
-        
-        .form-label {
-            color: var(--slate-300);
+
+        .support-admin-page .form-control::placeholder {
+            color: #94a3b8;
+        }
+
+        .support-admin-page .form-label {
+            color: #334155;
             font-weight: 600;
             font-size: 0.85rem;
             margin-bottom: 8px;
         }
-        
-        /* Modal Styles */
-        .modal-content {
-            background: var(--slate-800);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 20px;
+
+        .support-admin-page .form-check-input {
+            margin: 0;
         }
-        
-        .modal-header {
-            background: linear-gradient(135deg, var(--emerald), #059669);
-            border-radius: 20px 20px 0 0;
-            padding: 20px 24px;
-            border: none;
+
+        .support-admin-page .modal-content {
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 14px;
+            box-shadow: 0 12px 40px rgba(15, 23, 42, 0.12);
         }
-        
-        .modal-title {
-            color: white;
+
+        .support-admin-page .modal-header {
+            background: linear-gradient(120deg, #ecfdf5 0%, #eef4ff 100%);
+            border-bottom: 1px solid #e2e8f0;
+            border-radius: 14px 14px 0 0;
+            padding: 16px 20px;
+        }
+
+        .support-admin-page .modal-title {
+            color: #1e3a8a;
             font-weight: 700;
         }
-        
-        .modal-body {
-            padding: 24px;
-            color: var(--slate-300);
+
+        .support-admin-page .modal-body {
+            padding: 20px;
+            color: #334155;
         }
-        
-        .modal-footer {
-            padding: 16px 24px;
-            border-top: 1px solid rgba(255,255,255,0.05);
+
+        .support-admin-page .modal-footer {
+            padding: 14px 20px;
+            border-top: 1px solid #e2e8f0;
+            background: #fafafa;
         }
-        
+
         .btn-modal-cancel {
-            background: var(--slate-700);
-            color: var(--slate-300);
-            border: none;
-            padding: 10px 20px;
+            background: #fff;
+            color: #475569;
+            border: 1px solid #cbd5e1;
+            padding: 10px 18px;
             border-radius: 10px;
             font-weight: 600;
         }
-        
+
         .btn-modal-cancel:hover {
-            background: var(--slate-600);
-            color: #fff;
+            background: #f1f5f9;
+            color: #0f172a;
         }
-        
+
         .btn-modal-save {
-            background: linear-gradient(135deg, var(--emerald), #059669);
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
             color: white;
             border: none;
-            padding: 10px 20px;
+            padding: 10px 18px;
             border-radius: 10px;
             font-weight: 600;
         }
-        
+
         .btn-modal-save:hover {
-            box-shadow: 0 4px 20px rgba(16, 185, 129, 0.3);
+            box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3);
             color: white;
         }
-        
-        /* Ticket Detail View */
+
         .ticket-detail {
             display: grid;
             grid-template-columns: 2fr 1fr;
             gap: 24px;
         }
-        
+
         @media (max-width: 992px) {
             .ticket-detail {
                 grid-template-columns: 1fr;
             }
         }
-        
+
         .ticket-conversation {
-            background: rgba(15, 23, 42, 0.5);
-            border: 1px solid rgba(255,255,255,0.05);
-            border-radius: 16px;
-            padding: 24px;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 14px;
+            padding: 1.25rem;
         }
-        
+
         .ticket-info-panel {
-            background: rgba(15, 23, 42, 0.5);
-            border: 1px solid rgba(255,255,255,0.05);
-            border-radius: 16px;
-            padding: 24px;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 14px;
+            padding: 1.25rem;
             height: fit-content;
         }
-        
-        .reply-item {
-            padding: 16px;
-            border-radius: 12px;
+
+        .supp-ticket-subject {
+            color: #0f172a;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .supp-ticket-desc {
+            color: #475569;
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .supp-section-heading {
+            color: #64748b;
+            font-size: 0.85rem;
+            font-weight: 600;
             margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #e2e8f0;
         }
-        
+
+        .supp-empty-replies {
+            color: #64748b;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .supp-reply-form {
+            margin-top: 24px;
+        }
+
+        .supp-panel-heading {
+            color: #0f172a;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .supp-panel-heading .fa-info-circle {
+            color: #059669;
+        }
+
+        .form-select--flex {
+            flex: 1;
+        }
+
+        .reply-item {
+            padding: 14px 16px;
+            border-radius: 12px;
+            margin-bottom: 14px;
+        }
+
         .reply-item.admin {
-            background: rgba(16, 185, 129, 0.1);
-            border-left: 3px solid var(--emerald);
+            background: #ecfdf5;
+            border-left: 3px solid #059669;
         }
-        
+
         .reply-item.user {
-            background: rgba(99, 102, 241, 0.1);
-            border-left: 3px solid var(--primary);
+            background: #eef2ff;
+            border-left: 3px solid #6366f1;
         }
-        
+
         .reply-header {
             display: flex;
             justify-content: space-between;
             margin-bottom: 10px;
         }
-        
+
         .reply-author {
-            color: #fff;
+            color: #0f172a;
             font-weight: 600;
             font-size: 0.9rem;
         }
-        
+
         .reply-time {
-            color: var(--slate-500);
+            color: #64748b;
             font-size: 0.75rem;
         }
-        
+
         .reply-content {
-            color: var(--slate-300);
+            color: #334155;
             font-size: 0.9rem;
             line-height: 1.6;
         }
-        
+
         .info-item {
             margin-bottom: 16px;
             padding-bottom: 16px;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
+            border-bottom: 1px solid #e2e8f0;
         }
-        
+
         .info-item:last-child {
             margin-bottom: 0;
             padding-bottom: 0;
             border-bottom: none;
         }
-        
+
         .info-label {
-            color: var(--slate-500);
-            font-size: 0.75rem;
+            color: #64748b;
+            font-size: 0.72rem;
             font-weight: 600;
             text-transform: uppercase;
             margin-bottom: 4px;
         }
-        
+
         .info-value {
-            color: #fff;
+            color: #0f172a;
             font-size: 0.9rem;
             font-weight: 500;
         }
-        
-        /* Empty State */
+
         .empty-state {
             text-align: center;
-            padding: 60px 20px;
+            padding: 48px 20px;
         }
-        
+
         .empty-state i {
-            font-size: 60px;
-            color: var(--slate-700);
-            margin-bottom: 20px;
+            font-size: 48px;
+            color: #cbd5e1;
+            margin-bottom: 16px;
         }
-        
+
         .empty-state h5 {
-            color: var(--slate-300);
+            color: #334155;
             font-weight: 600;
             margin-bottom: 8px;
         }
-        
+
         .empty-state p {
-            color: var(--slate-500);
+            color: #64748b;
             font-size: 0.9rem;
         }
-        
-        /* Overall System Status */
+
+        .empty-state--compact {
+            padding: 40px;
+        }
+
+        .empty-state--compact i {
+            font-size: 40px;
+        }
+
         .overall-status {
-            background: rgba(15, 23, 42, 0.5);
-            border: 1px solid rgba(255,255,255,0.05);
-            border-radius: 16px;
-            padding: 24px;
-            margin-bottom: 24px;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 14px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
             text-align: center;
         }
-        
+
         .overall-status h3 {
-            color: #fff;
+            color: #0f172a;
             font-weight: 700;
             margin-bottom: 8px;
         }
-        
+
         .overall-status p {
-            color: var(--slate-500);
+            color: #64748b;
             margin: 0;
         }
-        
+
         .overall-status.all-operational {
-            border-color: rgba(16, 185, 129, 0.3);
+            border-color: rgba(5, 150, 105, 0.35);
+            background: linear-gradient(120deg, #f0fdf4 0%, #f8fafc 100%);
         }
-        
+
         .overall-status.all-operational h3 {
-            color: var(--emerald-light);
+            color: #047857;
         }
-        
+
+        .overall-status-degraded h3 {
+            color: #b45309;
+        }
+
+        .status-ok-icon {
+            color: #059669;
+        }
+
         .status-summary {
             display: flex;
             justify-content: center;
             gap: 32px;
             margin-top: 20px;
+            flex-wrap: wrap;
         }
-        
+
         .summary-item {
             text-align: center;
         }
-        
+
         .summary-number {
             font-size: 2rem;
             font-weight: 700;
-            color: #fff;
+            color: #0f172a;
         }
-        
+
+        .summary-number--success {
+            color: #047857;
+        }
+
         .summary-label {
             font-size: 0.8rem;
-            color: var(--slate-500);
+            color: #64748b;
+        }
+
+        .section-heading-muted {
+            color: #64748b;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        .maintenance-service-option {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 12px;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .maintenance-service-option span {
+            color: #475569;
+            font-size: 0.85rem;
         }
     </style>
 </head>
-<body class="admin-layout support-page">
+<body class="admin-layout support-admin-page">
     <?php include 'includes/sidebar.php'; ?>
 
     <div class="admin-main-content">
         <!-- Page Header -->
-        <div class="page-header">
+        <div class="support-page-header">
             <h1><i class="fas fa-headset"></i> Support & Maintenance</h1>
             <p>Manage helpdesk tickets, monitor error logs, and track system health</p>
         </div>
@@ -1240,7 +1324,7 @@ if (isset($_GET['ticket_id'])) {
             <a href="?tab=errors" class="tab-link <?php echo $currentTab === 'errors' ? 'active' : ''; ?>">
                 <i class="fas fa-bug"></i> Error Logs
                 <?php if ($stats['critical_errors'] > 0): ?>
-                    <span class="badge" style="background: rgba(220, 38, 38, 0.5);"><?php echo $stats['critical_errors']; ?></span>
+                    <span class="badge tab-badge-critical"><?php echo $stats['critical_errors']; ?></span>
                 <?php endif; ?>
             </a>
             <a href="?tab=status" class="tab-link <?php echo $currentTab === 'status' ? 'active' : ''; ?>">
@@ -1258,7 +1342,7 @@ if (isset($_GET['ticket_id'])) {
                 <h5>
                     <i class="fas fa-ticket-alt"></i> 
                     <?php echo htmlspecialchars($ticketDetails['ticket_number']); ?>
-                    <span class="badge-status <?php echo $ticketDetails['status']; ?>" style="margin-left: 12px;">
+                    <span class="badge-status <?php echo $ticketDetails['status']; ?> supp-status-inline">
                         <?php echo ucfirst(str_replace('_', ' ', $ticketDetails['status'])); ?>
                     </span>
                 </h5>
@@ -1269,19 +1353,19 @@ if (isset($_GET['ticket_id'])) {
             <div class="card-body-custom">
                 <div class="ticket-detail">
                     <div class="ticket-conversation">
-                        <h6 style="color: #fff; font-weight: 600; margin-bottom: 8px;">
+                        <h6 class="supp-ticket-subject">
                             <?php echo htmlspecialchars($ticketDetails['subject']); ?>
                         </h6>
-                        <p style="color: var(--slate-400); font-size: 0.9rem; margin-bottom: 24px; line-height: 1.6;">
+                        <p class="supp-ticket-desc">
                             <?php echo nl2br(htmlspecialchars($ticketDetails['description'])); ?>
                         </p>
                         
-                        <h6 style="color: var(--slate-400); font-size: 0.85rem; font-weight: 600; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 1px solid rgba(255,255,255,0.05);">
+                        <h6 class="supp-section-heading">
                             <i class="fas fa-comments me-2"></i>Conversation
                         </h6>
                         
                         <?php if (empty($ticketReplies)): ?>
-                            <p style="color: var(--slate-500); text-align: center; padding: 20px;">No replies yet</p>
+                            <p class="supp-empty-replies">No replies yet</p>
                         <?php else: ?>
                             <?php foreach ($ticketReplies as $reply): ?>
                             <div class="reply-item <?php echo $reply['is_admin'] ? 'admin' : 'user'; ?>">
@@ -1290,7 +1374,7 @@ if (isset($_GET['ticket_id'])) {
                                         <i class="fas fa-<?php echo $reply['is_admin'] ? 'user-shield' : 'user'; ?> me-2"></i>
                                         <?php echo htmlspecialchars($reply['user_name'] ?? 'User'); ?>
                                         <?php if ($reply['is_admin']): ?>
-                                            <span class="badge-category" style="margin-left: 8px;">Admin</span>
+                                            <span class="badge-category badge-category--spaced">Admin</span>
                                         <?php endif; ?>
                                     </span>
                                     <span class="reply-time"><?php echo date('M j, Y g:i A', strtotime($reply['created_at'])); ?></span>
@@ -1303,7 +1387,7 @@ if (isset($_GET['ticket_id'])) {
                         <?php endif; ?>
                         
                         <!-- Reply Form -->
-                        <form method="POST" style="margin-top: 24px;">
+                        <form method="POST" class="supp-reply-form">
                             <input type="hidden" name="action" value="reply_ticket">
                             <input type="hidden" name="ticket_id" value="<?php echo $ticketDetails['id']; ?>">
                             <div class="mb-3">
@@ -1317,8 +1401,8 @@ if (isset($_GET['ticket_id'])) {
                     </div>
                     
                     <div class="ticket-info-panel">
-                        <h6 style="color: #fff; font-weight: 600; margin-bottom: 20px;">
-                            <i class="fas fa-info-circle me-2" style="color: var(--emerald);"></i>Ticket Information
+                        <h6 class="supp-panel-heading">
+                            <i class="fas fa-info-circle me-2"></i>Ticket Information
                         </h6>
                         
                         <div class="info-item">
@@ -1326,7 +1410,7 @@ if (isset($_GET['ticket_id'])) {
                             <form method="POST" class="d-flex gap-2">
                                 <input type="hidden" name="action" value="update_ticket_status">
                                 <input type="hidden" name="ticket_id" value="<?php echo $ticketDetails['id']; ?>">
-                                <select name="status" class="form-select" style="flex: 1;">
+                                <select name="status" class="form-select form-select--flex">
                                     <option value="open" <?php echo $ticketDetails['status'] === 'open' ? 'selected' : ''; ?>>Open</option>
                                     <option value="in_progress" <?php echo $ticketDetails['status'] === 'in_progress' ? 'selected' : ''; ?>>In Progress</option>
                                     <option value="pending" <?php echo $ticketDetails['status'] === 'pending' ? 'selected' : ''; ?>>Pending</option>
@@ -1423,7 +1507,7 @@ if (isset($_GET['ticket_id'])) {
                 <?php else: ?>
                 <div class="ticket-list">
                     <?php foreach ($tickets as $ticket): ?>
-                    <a href="?tab=helpdesk&ticket_id=<?php echo $ticket['id']; ?>" style="text-decoration: none;">
+                    <a href="?tab=helpdesk&ticket_id=<?php echo $ticket['id']; ?>" class="ticket-card-link">
                         <div class="ticket-card priority-<?php echo $ticket['priority']; ?>">
                             <div class="ticket-header">
                                 <div>
@@ -1489,7 +1573,7 @@ if (isset($_GET['ticket_id'])) {
             <div class="card-body-custom">
                 <?php if (empty($errors)): ?>
                 <div class="empty-state">
-                    <i class="fas fa-check-circle" style="color: var(--emerald);"></i>
+                    <i class="fas fa-check-circle status-ok-icon"></i>
                     <h5>No Errors Found</h5>
                     <p>Great! There are no error logs matching your filters.</p>
                 </div>
@@ -1513,10 +1597,10 @@ if (isset($_GET['ticket_id'])) {
                                     <i class="fab <?php echo $icons[$err['error_type']] ?? 'fas fa-exclamation'; ?>"></i>
                                 </div>
                                 <div>
-                                    <span style="color: #fff; font-weight: 600; text-transform: uppercase; font-size: 0.8rem;">
+                                    <span class="error-type-label">
                                         <?php echo $err['error_type']; ?>
                                     </span>
-                                    <span class="severity-badge <?php echo $err['severity']; ?>" style="margin-left: 8px;">
+                                    <span class="severity-badge <?php echo $err['severity']; ?> severity-inline">
                                         <?php echo ucfirst($err['severity']); ?>
                                     </span>
                                 </div>
@@ -1565,17 +1649,17 @@ if (isset($_GET['ticket_id'])) {
             </div>
             <div class="card-body-custom">
                 <!-- Overall Status -->
-                <div class="overall-status <?php echo $stats['healthy_components'] == $stats['total_components'] ? 'all-operational' : ''; ?>">
+                <div class="overall-status <?php echo $stats['healthy_components'] == $stats['total_components'] ? 'all-operational' : 'overall-status-degraded'; ?>">
                     <?php if ($stats['healthy_components'] == $stats['total_components']): ?>
-                        <h3><i class="fas fa-check-circle me-2"></i>All Systems Operational</h3>
+                        <h3><i class="fas fa-check-circle me-2 status-ok-icon"></i>All Systems Operational</h3>
                         <p>All components are running smoothly</p>
                     <?php else: ?>
-                        <h3 style="color: var(--amber-light);"><i class="fas fa-exclamation-circle me-2"></i>Some Systems Degraded</h3>
+                        <h3><i class="fas fa-exclamation-circle me-2"></i>Some Systems Degraded</h3>
                         <p><?php echo $stats['total_components'] - $stats['healthy_components']; ?> component(s) require attention</p>
                     <?php endif; ?>
                     <div class="status-summary">
                         <div class="summary-item">
-                            <div class="summary-number" style="color: var(--emerald-light);"><?php echo $stats['healthy_components']; ?></div>
+                            <div class="summary-number summary-number--success"><?php echo $stats['healthy_components']; ?></div>
                             <div class="summary-label">Operational</div>
                         </div>
                         <div class="summary-item">
@@ -1586,7 +1670,7 @@ if (isset($_GET['ticket_id'])) {
                 </div>
                 
                 <!-- Component Status Grid -->
-                <h6 style="color: var(--slate-400); font-size: 0.85rem; font-weight: 600; margin-bottom: 16px;">
+                <h6 class="section-heading-muted">
                     <i class="fas fa-cubes me-2"></i>Component Status
                 </h6>
                 <div class="status-grid">
@@ -1626,7 +1710,7 @@ if (isset($_GET['ticket_id'])) {
                             <form method="POST" class="d-inline">
                                 <input type="hidden" name="action" value="update_component_status">
                                 <input type="hidden" name="component_id" value="<?php echo $comp['id']; ?>">
-                                <select name="status" class="filter-select" style="padding: 6px 12px; font-size: 0.75rem; min-width: auto;" onchange="this.form.submit()">
+                                <select name="status" class="filter-select filter-select--compact" onchange="this.form.submit()">
                                     <option value="operational" <?php echo $comp['status'] === 'operational' ? 'selected' : ''; ?>>Operational</option>
                                     <option value="degraded" <?php echo $comp['status'] === 'degraded' ? 'selected' : ''; ?>>Degraded</option>
                                     <option value="partial_outage" <?php echo $comp['status'] === 'partial_outage' ? 'selected' : ''; ?>>Partial Outage</option>
@@ -1641,12 +1725,12 @@ if (isset($_GET['ticket_id'])) {
                 
                 <!-- Scheduled Maintenance -->
                 <div class="maintenance-section">
-                    <h6 style="color: var(--slate-400); font-size: 0.85rem; font-weight: 600; margin-bottom: 16px;">
+                    <h6 class="section-heading-muted">
                         <i class="fas fa-calendar-alt me-2"></i>Scheduled Maintenance
                     </h6>
                     <?php if (empty($maintenances)): ?>
-                    <div class="empty-state" style="padding: 40px;">
-                        <i class="fas fa-calendar-check" style="font-size: 40px;"></i>
+                    <div class="empty-state empty-state--compact">
+                        <i class="fas fa-calendar-check"></i>
                         <h5>No Scheduled Maintenance</h5>
                         <p>There are no upcoming maintenance windows.</p>
                     </div>
@@ -1691,7 +1775,7 @@ if (isset($_GET['ticket_id'])) {
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title"><i class="fas fa-calendar-plus me-2"></i>Schedule Maintenance</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <form method="POST">
                     <input type="hidden" name="action" value="schedule_maintenance">
@@ -1718,9 +1802,9 @@ if (isset($_GET['ticket_id'])) {
                             <label class="form-label">Affected Services</label>
                             <div class="d-flex flex-wrap gap-2">
                                 <?php foreach ($components as $comp): ?>
-                                <label style="display: flex; align-items: center; gap: 6px; padding: 8px 12px; background: rgba(15,23,42,0.5); border-radius: 8px; cursor: pointer;">
-                                    <input type="checkbox" name="services[]" value="<?php echo htmlspecialchars($comp['component']); ?>" class="form-check-input" style="margin: 0;">
-                                    <span style="color: var(--slate-300); font-size: 0.85rem;"><?php echo htmlspecialchars($comp['component']); ?></span>
+                                <label class="maintenance-service-option">
+                                    <input type="checkbox" name="services[]" value="<?php echo htmlspecialchars($comp['component']); ?>" class="form-check-input">
+                                    <span><?php echo htmlspecialchars($comp['component']); ?></span>
                                 </label>
                                 <?php endforeach; ?>
                             </div>

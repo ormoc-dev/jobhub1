@@ -10,7 +10,7 @@ $pending_users = $pdo->query("SELECT COUNT(*) FROM users WHERE status = 'pending
             <img src="../images/LOGO.png" alt="WORKLINK"  style="height: 70px; width: 100%;  object-fit: cover;">
         </a>
         <hr class="mx-3 my-0" style="border-color: #495057;">
-        <ul class="nav nav-pills flex-column mb-auto">
+        <ul class="nav nav-pills flex-column">
             <li class="nav-item">
                 <a href="dashboard.php" class="nav-link <?php echo basename($_SERVER['PHP_SELF']) === 'dashboard.php' ? 'active' : ''; ?>">
                     <i class="fas fa-tachometer-alt me-2"></i>File Maintenance
@@ -97,14 +97,21 @@ $pending_users = $pdo->query("SELECT COUNT(*) FROM users WHERE status = 'pending
 .sidebar-wrapper {
     display: flex;
     flex-direction: column;
-    height: 100%;   
+    height: 100%;
+    min-height: 0;
     padding: 0;
     overflow: hidden;
 }
 
-.sidebar-wrapper ul {
-    flex: 1;
+.sidebar-wrapper > ul.nav {
+    flex: 1 1 auto;
+    min-height: 0;
+    min-width: 0;
+    width: 100%;
+    flex-wrap: nowrap;
+    overflow-x: hidden;
     overflow-y: auto;
+    overscroll-behavior: contain;
     margin: 0;
     padding: 0;
 }
@@ -112,6 +119,8 @@ $pending_users = $pdo->query("SELECT COUNT(*) FROM users WHERE status = 'pending
 .sidebar .nav-item {
     margin: 0;
     padding: 0;
+    width: 100%;
+    max-width: 100%;
 }
 
 .sidebar .nav-link {

@@ -239,53 +239,119 @@ try {
     <link href="css/modern.css" rel="stylesheet">
     <style>
         .career-tool-card {
-            border: none;
-            border-radius: 16px;
-            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
-            transition: all 0.3s ease;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(15, 23, 42, 0.06);
+            transition: box-shadow 0.2s ease, border-color 0.2s ease;
             overflow: hidden;
-            margin-bottom: 2rem;
+            margin-bottom: 1.75rem;
             background: #ffffff;
         }
 
         .career-tool-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+            box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08);
         }
 
         .tool-header {
-            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
-            color: white;
-            padding: 1.5rem;
-            border-radius: 16px 16px 0 0;
+            padding: 1.25rem 1.5rem;
+            border-bottom: 1px solid #e2e8f0;
+            border-radius: 11px 11px 0 0;
+            background: #f8fafc;
+            color: #0f172a;
         }
 
         .tool-header h3 {
             margin: 0;
             font-weight: 700;
-            font-size: 1.5rem;
+            font-size: 1.2rem;
+            color: #0f172a;
         }
 
         .tool-header p {
-            margin: 0.5rem 0 0 0;
-            opacity: 0.9;
-            font-size: 0.95rem;
+            margin: 0.35rem 0 0 0;
+            color: #64748b;
+            font-size: 0.9rem;
+            line-height: 1.45;
         }
 
         .tool-body {
-            padding: 2rem;
+            padding: 1.75rem 1.5rem;
+            background: #fff;
         }
 
-        .resume-builder-section {
-            background: linear-gradient(135deg, #10b981 0%, #047857 100%);
+        .tool-header--resume {
+            background: #f0fdf4;
+            border-left: 4px solid #10b981;
         }
 
-        .career-assessment-section {
-            background: linear-gradient(135deg, #f59e0b 0%, #b45309 100%);
+        .tool-header--assessment {
+            background: #fffbeb;
+            border-left: 4px solid #f59e0b;
         }
 
-        .skill-gap-section {
-            background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+        .tool-header--skillgap {
+            background: #f0f9ff;
+            border-left: 4px solid #0ea5e9;
+        }
+
+        .tool-header-inner .tool-icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 0;
+            flex-shrink: 0;
+            background: #fff;
+            border: 1px solid #e2e8f0;
+        }
+
+        .tool-header-inner .tool-icon i {
+            font-size: 1.35rem;
+        }
+
+        .tool-header--resume .tool-icon {
+            background: #ecfdf5;
+            border-color: #a7f3d0;
+        }
+
+        .tool-header--resume .tool-icon i {
+            color: #059669;
+        }
+
+        .tool-header--assessment .tool-icon {
+            background: #fef3c7;
+            border-color: #fde68a;
+        }
+
+        .tool-header--assessment .tool-icon i {
+            color: #d97706;
+        }
+
+        .tool-header--skillgap .tool-icon {
+            background: #e0f2fe;
+            border-color: #bae6fd;
+        }
+
+        .tool-header--skillgap .tool-icon i {
+            color: #0284c7;
+        }
+
+        .employee-main-content--fill {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .tool-header-inner {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .tool-header-text {
+            flex: 1;
+            min-width: 0;
         }
 
         .form-section {
@@ -293,42 +359,43 @@ try {
         }
 
         .form-section h5 {
-            color: #4f46e5;
+            color: #334155;
             font-weight: 600;
             margin-bottom: 1rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 2px solid #e2e8f0;
+            padding: 0 0 0.5rem 0.65rem;
+            border-bottom: 1px solid #e2e8f0;
+            border-left: 3px solid #2563eb;
         }
 
         .btn-tool-primary {
-            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+            background: #2563eb;
             border: none;
             color: white;
-            padding: 0.75rem 2rem;
+            padding: 0.65rem 1.5rem;
             border-radius: 10px;
             font-weight: 600;
-            transition: all 0.3s ease;
+            transition: background-color 0.15s ease;
         }
 
         .btn-tool-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 16px rgba(79, 70, 229, 0.3);
+            background: #1d4ed8;
             color: white;
         }
 
         .btn-tool-secondary {
-            background: #f1f5f9;
+            background: #f8fafc;
             border: 1px solid #e2e8f0;
             color: #475569;
-            padding: 0.75rem 2rem;
+            padding: 0.65rem 1.5rem;
             border-radius: 10px;
             font-weight: 600;
-            transition: all 0.3s ease;
+            transition: background-color 0.15s ease, border-color 0.15s ease;
         }
 
         .btn-tool-secondary:hover {
-            background: #e2e8f0;
+            background: #f1f5f9;
             color: #334155;
+            border-color: #cbd5e1;
         }
 
         .preview-section {
@@ -415,22 +482,6 @@ try {
             color: white;
         }
 
-        .tool-icon {
-            width: 60px;
-            height: 60px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: rgba(255, 255, 255, 0.2);
-            margin-bottom: 1rem;
-        }
-
-        .tool-icon i {
-            font-size: 2rem;
-            color: white;
-        }
-
         .status-badge {
             padding: 0.5rem 1rem;
             border-radius: 20px;
@@ -476,18 +527,19 @@ try {
 
         /* Live Resume Preview Styles */
         .resume-preview-container {
-            background: #f1f5f9;
+            background: #f8fafc;
             border-radius: 12px;
             padding: 20px;
-            box-shadow: inset 0 2px 8px rgba(0,0,0,0.08);
+            border: 1px solid #e2e8f0;
         }
         .resume-preview {
             background: #ffffff;
             max-width: 800px;
             margin: 0 auto;
             padding: 40px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08);
             border-radius: 8px;
+            border: 1px solid #e2e8f0;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         .resume-header {
@@ -495,20 +547,20 @@ try {
             align-items: flex-start;
             gap: 24px;
             padding-bottom: 20px;
-            border-bottom: 3px solid #4f46e5;
+            border-bottom: 3px solid #2563eb;
             margin-bottom: 24px;
         }
         .resume-photo-area {
             width: 100px;
             height: 100px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #e2e8f0 0%, #cbd5e1 100%);
+            background: #e2e8f0;
             display: flex;
             align-items: center;
             justify-content: center;
             overflow: hidden;
             flex-shrink: 0;
-            border: 3px solid #4f46e5;
+            border: 3px solid #2563eb;
         }
         .resume-photo-area img {
             width: 100%;
@@ -536,7 +588,7 @@ try {
             align-items: center;
         }
         .resume-contact i {
-            color: #4f46e5;
+            color: #2563eb;
         }
         .resume-section {
             margin-bottom: 24px;
@@ -544,7 +596,7 @@ try {
         .resume-section h2 {
             font-size: 1.1rem;
             font-weight: 700;
-            color: #4f46e5;
+            color: #2563eb;
             border-bottom: 2px solid #e2e8f0;
             padding-bottom: 8px;
             margin-bottom: 16px;
@@ -565,7 +617,7 @@ try {
             border-left: 3px solid #e2e8f0;
         }
         .resume-entry:hover {
-            border-left-color: #4f46e5;
+            border-left-color: #2563eb;
         }
         .resume-entry-title {
             font-weight: 600;
@@ -573,7 +625,7 @@ try {
             font-size: 1rem;
         }
         .resume-entry-subtitle {
-            color: #4f46e5;
+            color: #2563eb;
             font-size: 0.9rem;
         }
         .resume-entry-date {
@@ -592,7 +644,7 @@ try {
             gap: 8px;
         }
         .resume-skill-tag {
-            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+            background: #2563eb;
             color: white;
             padding: 6px 14px;
             border-radius: 20px;
@@ -609,22 +661,28 @@ try {
     <div class="d-flex">
         <?php include 'includes/sidebar.php'; ?>
 
-        <div class="employee-main-content" style="flex: 1;">
-            <div class="d-flex justify-content-between align-items-center mb-4">
-                <div>
-                    <h1 class="h3 mb-0">Career Tools</h1>
-                    <p class="text-muted mb-0">Build your resume, assess your career, and identify skill gaps</p>
+        <div class="employee-main-content employee-main-content--fill">
+            <div class="hero-section">
+                <div class="hero-content">
+                    <p class="hero-eyebrow mb-1">Professional growth</p>
+                    <h1 class="hero-title mb-2">Career Tools</h1>
+                    <p class="hero-lead mb-0">Build your resume, assess your career direction, and spot skill gaps so you can present your best self to employers.</p>
                 </div>
             </div>
 
+            <div class="content-container">
             <!-- Resume Builder Section -->
             <div class="career-tool-card">
-                <div class="tool-header resume-builder-section">
-                    <div class="tool-icon">
-                        <i class="fas fa-file-alt"></i>
+                <div class="tool-header tool-header--resume">
+                    <div class="tool-header-inner">
+                        <div class="tool-icon">
+                            <i class="fas fa-file-alt"></i>
+                        </div>
+                        <div class="tool-header-text">
+                            <h3>Resume Builder</h3>
+                            <p>Create a professional resume that stands out to employers</p>
+                        </div>
                     </div>
-                    <h3><i class="fas fa-file-alt me-2"></i>Resume Builder</h3>
-                    <p>Create a professional resume that stands out to employers</p>
                 </div>
                 <div class="tool-body">
                     <?php if ($saved_resume): ?>
@@ -859,12 +917,16 @@ try {
 
             <!-- Career Assessment Section -->
             <div class="career-tool-card">
-                <div class="tool-header career-assessment-section">
-                    <div class="tool-icon">
-                        <i class="fas fa-clipboard-check"></i>
+                <div class="tool-header tool-header--assessment">
+                    <div class="tool-header-inner">
+                        <div class="tool-icon">
+                            <i class="fas fa-clipboard-check"></i>
+                        </div>
+                        <div class="tool-header-text">
+                            <h3>Career Assessment</h3>
+                            <p>Discover your career strengths and find the right path for you</p>
+                        </div>
                     </div>
-                    <h3><i class="fas fa-clipboard-check me-2"></i>Career Assessment</h3>
-                    <p>Discover your career strengths and find the right path for you</p>
                 </div>
                 <div class="tool-body">
                     <?php if ($assessment_result): ?>
@@ -993,12 +1055,16 @@ try {
 
             <!-- Skill Gap Analysis Section -->
             <div class="career-tool-card">
-                <div class="tool-header skill-gap-section">
-                    <div class="tool-icon">
-                        <i class="fas fa-chart-line"></i>
+                <div class="tool-header tool-header--skillgap">
+                    <div class="tool-header-inner">
+                        <div class="tool-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="tool-header-text">
+                            <h3>Skill Gap Analysis</h3>
+                            <p>Identify skills you need to develop for your target roles</p>
+                        </div>
                     </div>
-                    <h3><i class="fas fa-chart-line me-2"></i>Skill Gap Analysis</h3>
-                    <p>Identify skills you need to develop for your target roles</p>
                 </div>
                 <div class="tool-body">
                     <?php if ($skill_gap): ?>
@@ -1107,6 +1173,7 @@ try {
                         </button>
                     </form>
                 </div>
+            </div>
             </div>
         </div>
     </div>
@@ -1416,21 +1483,21 @@ try {
                     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
                     <style>
                         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 20px; }
-                        .resume-header { display: flex; align-items: flex-start; gap: 24px; padding-bottom: 20px; border-bottom: 3px solid #4f46e5; margin-bottom: 24px; }
-                        .resume-photo-area { width: 100px; height: 100px; border-radius: 50%; overflow: hidden; border: 3px solid #4f46e5; }
+                        .resume-header { display: flex; align-items: flex-start; gap: 24px; padding-bottom: 20px; border-bottom: 3px solid #2563eb; margin-bottom: 24px; }
+                        .resume-photo-area { width: 100px; height: 100px; border-radius: 50%; overflow: hidden; border: 3px solid #2563eb; }
                         .resume-photo-area img { width: 100%; height: 100%; object-fit: cover; }
                         .resume-header-info h1 { font-size: 1.8rem; margin: 0 0 8px 0; color: #1e293b; }
                         .resume-contact { display: flex; flex-wrap: wrap; gap: 16px; font-size: 0.9rem; color: #475569; }
-                        .resume-contact i { color: #4f46e5; }
+                        .resume-contact i { color: #2563eb; }
                         .resume-section { margin-bottom: 24px; }
-                        .resume-section h2 { font-size: 1.1rem; color: #4f46e5; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; margin-bottom: 16px; }
+                        .resume-section h2 { font-size: 1.1rem; color: #2563eb; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; margin-bottom: 16px; }
                         .resume-entry { margin-bottom: 16px; padding-left: 12px; border-left: 3px solid #e2e8f0; }
                         .resume-entry-title { font-weight: 600; color: #1e293b; }
-                        .resume-entry-subtitle { color: #4f46e5; font-size: 0.9rem; }
+                        .resume-entry-subtitle { color: #2563eb; font-size: 0.9rem; }
                         .resume-entry-date { color: #64748b; font-size: 0.85rem; }
                         .resume-entry-desc { color: #475569; font-size: 0.9rem; }
                         .resume-skills { display: flex; flex-wrap: wrap; gap: 8px; }
-                        .resume-skill-tag { background: #4f46e5; color: white; padding: 6px 14px; border-radius: 20px; font-size: 0.85rem; }
+                        .resume-skill-tag { background: #2563eb; color: white; padding: 6px 14px; border-radius: 20px; font-size: 0.85rem; }
                     </style>
                 </head>
                 <body>${content}</body>

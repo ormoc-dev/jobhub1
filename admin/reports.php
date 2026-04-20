@@ -219,261 +219,244 @@ $top_jobs = $pdo->query("
     <link href="../assets/style.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        /* Reports Page Custom Styles */
-        .reports-container {
+        .reports-admin-page .main-content.reports-container {
             font-family: 'Plus Jakarta Sans', sans-serif;
-            background: linear-gradient(135deg, #0f0f1a 0%, #1a1a2e 50%, #16213e 100%);
+            background: linear-gradient(180deg, #eef2ff 0%, #f8fafc 18%, #f1f5f9 55%, #f8fafc 100%);
             min-height: 100vh;
-            padding: 30px;
+            padding: 1.5rem 1.25rem 2.5rem;
         }
 
-        /* Page Header */
         .reports-header {
-            background: linear-gradient(135deg, rgba(139, 92, 246, 0.15) 0%, rgba(59, 130, 246, 0.15) 100%);
-            border: 1px solid rgba(139, 92, 246, 0.3);
-            border-radius: 24px;
-            padding: 35px 40px;
-            margin-bottom: 30px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .reports-header::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -10%;
-            width: 400px;
-            height: 400px;
-            background: radial-gradient(circle, rgba(139, 92, 246, 0.2) 0%, transparent 70%);
-            border-radius: 50%;
+            background: linear-gradient(120deg, #ffffff 0%, #f5f8ff 50%, #eef4ff 100%);
+            border: 1px solid rgba(37, 99, 235, 0.12);
+            border-radius: 14px;
+            padding: 1.25rem 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 2px 8px rgba(30, 58, 138, 0.06);
         }
 
         .reports-header h1 {
-            font-size: 2.25rem;
-            font-weight: 800;
-            color: #ffffff;
-            margin-bottom: 10px;
-            position: relative;
-            z-index: 1;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1e3a8a;
+            margin-bottom: 0.35rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .reports-header h1 i {
+            color: #6366f1;
         }
 
         .reports-header p {
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 1.05rem;
+            color: #64748b;
+            font-size: 0.95rem;
             margin: 0;
-            position: relative;
-            z-index: 1;
-        }
-
-        .header-actions {
-            position: relative;
-            z-index: 1;
         }
 
         .btn-export {
-            background: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%);
+            background: linear-gradient(135deg, #2563eb, #4f46e5);
             border: none;
-            color: #ffffff;
-            padding: 12px 24px;
-            border-radius: 12px;
+            color: #fff;
+            padding: 0.65rem 1.15rem;
+            border-radius: 10px;
             font-weight: 600;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+            font-size: 0.875rem;
+            transition: box-shadow 0.2s, transform 0.15s;
+            box-shadow: 0 2px 8px rgba(37, 99, 235, 0.25);
         }
 
         .btn-export:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(139, 92, 246, 0.4);
-            color: #ffffff;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
+            color: #fff;
         }
 
-        /* Filter Card */
         .filter-card {
-            background: rgba(30, 41, 59, 0.7);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            padding: 25px 30px;
-            margin-bottom: 30px;
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 14px;
+            padding: 1.25rem 1.35rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05);
         }
 
         .filter-card .form-label {
-            color: #94a3b8;
+            color: #64748b;
             font-weight: 600;
-            font-size: 0.85rem;
+            font-size: 0.72rem;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 8px;
+            letter-spacing: 0.04em;
+            margin-bottom: 6px;
         }
 
         .filter-card .form-control,
         .filter-card .form-select {
-            background: rgba(15, 23, 42, 0.8);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: #fff;
+            border: 1px solid #cbd5e1;
             border-radius: 10px;
-            color: #ffffff;
-            padding: 12px 15px;
-            transition: all 0.3s ease;
+            color: #0f172a;
+            padding: 10px 14px;
         }
 
         .filter-card .form-control:focus,
         .filter-card .form-select:focus {
-            background: rgba(15, 23, 42, 0.9);
-            border-color: #8b5cf6;
-            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2);
-            color: #ffffff;
+            border-color: #6366f1;
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.12);
         }
 
         .btn-filter {
-            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            background: linear-gradient(135deg, #059669, #0d9488);
             border: none;
-            color: #ffffff;
-            padding: 12px 30px;
+            color: #fff;
+            padding: 10px 20px;
             border-radius: 10px;
             font-weight: 600;
-            transition: all 0.3s ease;
+            transition: box-shadow 0.2s, transform 0.15s;
         }
 
         .btn-filter:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
-            color: #ffffff;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 14px rgba(5, 150, 105, 0.35);
+            color: #fff;
         }
 
-        /* Tab Navigation */
         .report-tabs {
-            background: rgba(30, 41, 59, 0.5);
-            border-radius: 16px;
-            padding: 8px;
-            margin-bottom: 30px;
+            background: #f1f5f9;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 6px;
+            margin-bottom: 1.5rem;
             display: inline-flex;
-            gap: 5px;
+            flex-wrap: wrap;
+            gap: 6px;
         }
 
         .report-tab {
             background: transparent;
             border: none;
-            color: #94a3b8;
-            padding: 12px 24px;
-            border-radius: 12px;
+            color: #64748b;
+            padding: 10px 18px;
+            border-radius: 10px;
             font-weight: 600;
-            transition: all 0.3s ease;
-            cursor: pointer;
+            font-size: 0.875rem;
+            transition: background 0.2s, color 0.2s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
         }
 
         .report-tab:hover {
-            color: #ffffff;
-            background: rgba(139, 92, 246, 0.2);
+            color: #4338ca;
+            background: rgba(255, 255, 255, 0.85);
         }
 
         .report-tab.active {
-            background: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%);
-            color: #ffffff;
-            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+            background: #fff;
+            color: #4338ca;
+            box-shadow: 0 1px 4px rgba(30, 58, 138, 0.12);
         }
 
-        /* Stat Cards */
         .stat-card-report {
-            background: rgba(30, 41, 59, 0.7);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            padding: 28px;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 14px;
+            padding: 1.25rem;
+            transition: box-shadow 0.2s, border-color 0.2s;
             position: relative;
-            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05);
+            border-top: 3px solid #6366f1;
         }
 
         .stat-card-report:hover {
-            transform: translateY(-8px);
-            border-color: rgba(139, 92, 246, 0.3);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            transform: none;
+            box-shadow: 0 4px 14px rgba(30, 58, 138, 0.08);
+            border-color: rgba(99, 102, 241, 0.25);
         }
 
         .stat-card-report::before {
-            content: '';
-            position: absolute;
-            top: -30%;
-            right: -10%;
-            width: 150px;
-            height: 150px;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.05) 0%, transparent 70%);
-            border-radius: 50%;
+            display: none;
         }
 
         .stat-icon-box {
-            width: 60px;
-            height: 60px;
-            border-radius: 16px;
+            width: 52px;
+            height: 52px;
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.5rem;
-            margin-bottom: 20px;
+            font-size: 1.35rem;
+            margin-bottom: 1rem;
         }
 
-        .stat-icon-purple { background: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%); color: #fff; }
-        .stat-icon-emerald { background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: #fff; }
-        .stat-icon-amber { background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); color: #fff; }
-        .stat-icon-rose { background: linear-gradient(135deg, #f43f5e 0%, #e11d48 100%); color: #fff; }
-        .stat-icon-sky { background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%); color: #fff; }
-        .stat-icon-indigo { background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%); color: #fff; }
+        .stat-icon-purple { background: #eef2ff; color: #4338ca; }
+        .stat-icon-emerald { background: #d1fae5; color: #047857; }
+        .stat-icon-amber { background: #fef3c7; color: #b45309; }
+        .stat-icon-rose { background: #ffe4e6; color: #be123c; }
+        .stat-icon-sky { background: #e0f2fe; color: #0369a1; }
+        .stat-icon-indigo { background: #e0e7ff; color: #3730a3; }
 
         .stat-number-report {
-            font-size: 2.5rem;
-            font-weight: 800;
-            color: #ffffff;
+            font-size: 2rem;
+            font-weight: 700;
+            color: #0f172a;
             line-height: 1;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
         }
 
         .stat-label-report {
-            color: #94a3b8;
-            font-size: 0.95rem;
+            color: #64748b;
+            font-size: 0.875rem;
             font-weight: 600;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
 
         .stat-change {
             display: inline-flex;
             align-items: center;
             gap: 5px;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             font-weight: 600;
             padding: 4px 10px;
             border-radius: 20px;
         }
 
         .stat-change.positive {
-            background: rgba(16, 185, 129, 0.15);
-            color: #10b981;
+            background: #ecfdf5;
+            color: #047857;
         }
 
         .stat-change.negative {
-            background: rgba(244, 63, 94, 0.15);
-            color: #f43f5e;
+            background: #fef2f2;
+            color: #be123c;
         }
 
-        /* Placement Rate Gauge */
         .placement-gauge-card {
-            background: linear-gradient(135deg, rgba(139, 92, 246, 0.2) 0%, rgba(99, 102, 241, 0.2) 100%);
-            border: 1px solid rgba(139, 92, 246, 0.3);
-            border-radius: 24px;
-            padding: 35px;
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 14px;
+            padding: 1.5rem;
             text-align: center;
+            box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05);
+        }
+
+        .reports-gauge-title {
+            color: #1e3a8a;
+            font-weight: 700;
+            font-size: 1.05rem;
         }
 
         .gauge-container {
             position: relative;
             width: 200px;
             height: 200px;
-            margin: 0 auto 25px;
+            margin: 0 auto 1rem;
         }
 
         .gauge-circle {
             fill: none;
-            stroke: rgba(255, 255, 255, 0.1);
+            stroke: #e2e8f0;
             stroke-width: 15;
         }
 
@@ -496,44 +479,44 @@ $top_jobs = $pdo->query("
         }
 
         .gauge-percentage {
-            font-size: 3rem;
-            font-weight: 800;
-            color: #ffffff;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #0f172a;
             line-height: 1;
         }
 
         .gauge-label {
-            color: #94a3b8;
-            font-size: 0.9rem;
+            color: #64748b;
+            font-size: 0.875rem;
             font-weight: 600;
-            margin-top: 5px;
+            margin-top: 4px;
         }
 
-        /* Chart Cards */
         .chart-card {
-            background: rgba(30, 41, 59, 0.7);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 14px;
             overflow: hidden;
-            transition: all 0.3s ease;
+            box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05);
+            transition: box-shadow 0.2s;
         }
 
         .chart-card:hover {
-            border-color: rgba(139, 92, 246, 0.3);
+            box-shadow: 0 4px 14px rgba(30, 58, 138, 0.06);
         }
 
         .chart-header {
-            padding: 20px 25px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 1.1rem 1.25rem;
+            border-bottom: 1px solid #e2e8f0;
+            background: linear-gradient(120deg, #fafbff 0%, #f8fafc 100%);
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
         .chart-title {
-            color: #ffffff;
-            font-size: 1.1rem;
+            color: #1e3a8a;
+            font-size: 1.05rem;
             font-weight: 700;
             margin: 0;
             display: flex;
@@ -542,33 +525,34 @@ $top_jobs = $pdo->query("
         }
 
         .chart-title i {
-            color: #8b5cf6;
+            color: #6366f1;
         }
 
         .chart-body {
-            padding: 25px;
+            padding: 1.25rem;
+            background: #fff;
         }
 
-        /* Activity Log Styles */
         .activity-card {
-            background: rgba(30, 41, 59, 0.7);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 14px;
             overflow: hidden;
+            box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05);
         }
 
         .activity-header {
-            padding: 20px 25px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 1.1rem 1.25rem;
+            border-bottom: 1px solid #e2e8f0;
+            background: linear-gradient(120deg, #fafbff 0%, #f8fafc 100%);
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
         .activity-title {
-            color: #ffffff;
-            font-size: 1.1rem;
+            color: #1e3a8a;
+            font-size: 1.05rem;
             font-weight: 700;
             margin: 0;
             display: flex;
@@ -579,6 +563,7 @@ $top_jobs = $pdo->query("
         .activity-body {
             max-height: 450px;
             overflow-y: auto;
+            background: #fff;
         }
 
         .activity-body::-webkit-scrollbar {
@@ -586,25 +571,25 @@ $top_jobs = $pdo->query("
         }
 
         .activity-body::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.05);
+            background: #f1f5f9;
         }
 
         .activity-body::-webkit-scrollbar-thumb {
-            background: rgba(139, 92, 246, 0.5);
+            background: #c7d2fe;
             border-radius: 3px;
         }
 
         .activity-item {
-            padding: 18px 25px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            transition: all 0.3s ease;
+            padding: 1rem 1.25rem;
+            border-bottom: 1px solid #f1f5f9;
+            transition: background 0.2s;
             display: flex;
             align-items: flex-start;
-            gap: 15px;
+            gap: 12px;
         }
 
         .activity-item:hover {
-            background: rgba(139, 92, 246, 0.1);
+            background: #f8fafc;
         }
 
         .activity-item:last-child {
@@ -612,187 +597,189 @@ $top_jobs = $pdo->query("
         }
 
         .activity-icon-wrapper {
-            width: 42px;
-            height: 42px;
-            border-radius: 12px;
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
             flex-shrink: 0;
         }
 
-        .activity-icon-user { background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%); }
-        .activity-icon-job { background: linear-gradient(135deg, #0ea5e9 0%, #06b6d4 100%); }
-        .activity-icon-application { background: linear-gradient(135deg, #f59e0b 0%, #f97316 100%); }
-        .activity-icon-hired { background: linear-gradient(135deg, #10b981 0%, #14b8a6 100%); }
-        .activity-icon-rejected { background: linear-gradient(135deg, #f43f5e 0%, #ef4444 100%); }
+        .activity-icon-user { background: #4f46e5; }
+        .activity-icon-job { background: #0284c7; }
+        .activity-icon-application { background: #d97706; }
+        .activity-icon-hired { background: #059669; }
+        .activity-icon-rejected { background: #e11d48; }
 
         .activity-content {
             flex: 1;
         }
 
         .activity-text {
-            color: #e2e8f0;
-            font-size: 0.95rem;
+            color: #334155;
+            font-size: 0.925rem;
             font-weight: 500;
-            margin-bottom: 5px;
+            margin-bottom: 4px;
         }
 
         .activity-text strong {
-            color: #ffffff;
+            color: #0f172a;
         }
 
         .activity-meta {
             color: #64748b;
-            font-size: 0.8rem;
+            font-size: 0.78rem;
             display: flex;
-            gap: 15px;
+            flex-wrap: wrap;
+            gap: 12px;
         }
 
         .activity-time {
-            color: #8b5cf6;
+            color: #4338ca;
+            font-weight: 500;
         }
 
-        /* Status Badge */
         .status-pill {
-            padding: 5px 12px;
+            padding: 4px 10px;
             border-radius: 20px;
-            font-size: 0.75rem;
+            font-size: 0.72rem;
             font-weight: 600;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.03em;
         }
 
-        .status-pending { background: rgba(245, 158, 11, 0.15); color: #f59e0b; }
-        .status-reviewed { background: rgba(14, 165, 233, 0.15); color: #0ea5e9; }
-        .status-accepted { background: rgba(16, 185, 129, 0.15); color: #10b981; }
-        .status-rejected { background: rgba(244, 63, 94, 0.15); color: #f43f5e; }
-        .status-active { background: rgba(16, 185, 129, 0.15); color: #10b981; }
+        .status-pending { background: #fffbeb; color: #b45309; }
+        .status-reviewed { background: #e0f2fe; color: #0369a1; }
+        .status-accepted { background: #ecfdf5; color: #047857; }
+        .status-rejected { background: #fef2f2; color: #be123c; }
+        .status-active { background: #ecfdf5; color: #047857; }
+        .status-inactive { background: #f1f5f9; color: #64748b; }
 
-        /* Top Performers Table */
         .table-card {
-            background: rgba(30, 41, 59, 0.7);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 14px;
             overflow: hidden;
+            box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05);
         }
 
         .table-dark-custom {
-            background: transparent;
-            color: #e2e8f0;
+            background: #fff;
+            color: #334155;
             margin: 0;
         }
 
         .table-dark-custom thead th {
-            background: rgba(139, 92, 246, 0.2);
-            color: #ffffff;
+            background: #f1f5f9;
+            color: #64748b;
             border: none;
-            padding: 15px 20px;
+            padding: 12px 16px;
             font-weight: 600;
-            font-size: 0.85rem;
+            font-size: 0.72rem;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.04em;
         }
 
         .table-dark-custom tbody td {
             border: none;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            padding: 15px 20px;
+            border-bottom: 1px solid #e2e8f0;
+            padding: 12px 16px;
             vertical-align: middle;
         }
 
         .table-dark-custom tbody tr:hover {
-            background: rgba(139, 92, 246, 0.1);
+            background: #f8fafc;
+        }
+
+        .table-dark-custom tbody tr:last-child td {
+            border-bottom: none;
         }
 
         .rank-badge {
-            width: 30px;
-            height: 30px;
+            width: 28px;
+            height: 28px;
             border-radius: 8px;
             display: inline-flex;
             align-items: center;
             justify-content: center;
             font-weight: 700;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
         }
 
-        .rank-1 { background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%); color: #1f2937; }
-        .rank-2 { background: linear-gradient(135deg, #94a3b8 0%, #64748b 100%); color: #ffffff; }
-        .rank-3 { background: linear-gradient(135deg, #cd7c2e 0%, #b45309 100%); color: #ffffff; }
-        .rank-default { background: rgba(139, 92, 246, 0.2); color: #a78bfa; }
+        .rank-1 { background: linear-gradient(135deg, #fbbf24, #f59e0b); color: #1f2937; }
+        .rank-2 { background: linear-gradient(135deg, #cbd5e1, #94a3b8); color: #fff; }
+        .rank-3 { background: linear-gradient(135deg, #fdba74, #ea580c); color: #fff; }
+        .rank-default { background: #e0e7ff; color: #4338ca; }
 
-        /* Section Title */
         .section-title-report {
-            color: #ffffff;
-            font-size: 1.5rem;
+            color: #1e3a8a;
+            font-size: 1.35rem;
             font-weight: 700;
-            margin-bottom: 25px;
+            margin-bottom: 1.25rem;
             display: flex;
             align-items: center;
             gap: 12px;
         }
 
         .section-title-report i {
-            color: #8b5cf6;
+            color: #6366f1;
         }
 
-        /* Print Styles */
         @media print {
-            .reports-container {
-                background: #ffffff;
+            .reports-admin-page .main-content.reports-container {
+                background: #fff;
                 padding: 20px;
             }
-            
+
             .filter-card, .btn-export, .report-tabs {
                 display: none;
             }
-            
-            .stat-card-report, .chart-card, .activity-card, .table-card {
-                background: #ffffff;
+
+            .stat-card-report, .chart-card, .activity-card, .table-card, .placement-gauge-card {
+                background: #fff;
                 border: 1px solid #e2e8f0;
                 box-shadow: none;
             }
-            
-            .stat-number-report, .chart-title, .activity-title, .section-title-report {
+
+            .stat-number-report, .chart-title, .activity-title, .section-title-report, .reports-gauge-title {
                 color: #1e293b;
             }
-            
-            .stat-label-report, .activity-text {
+
+            .stat-label-report, .activity-text, .gauge-label {
                 color: #64748b;
+            }
+
+            .gauge-percentage {
+                color: #0f172a;
             }
         }
 
-        /* Responsive */
         @media (max-width: 768px) {
-            .reports-container {
-                padding: 15px;
+            .reports-admin-page .main-content.reports-container {
+                padding: 1rem 0.85rem 1.5rem;
             }
-            
-            .reports-header {
-                padding: 25px 20px;
-            }
-            
+
             .reports-header h1 {
+                font-size: 1.35rem;
+            }
+
+            .stat-number-report {
                 font-size: 1.75rem;
             }
-            
-            .stat-number-report {
-                font-size: 2rem;
-            }
-            
+
             .gauge-container {
-                width: 150px;
-                height: 150px;
+                width: 160px;
+                height: 160px;
             }
-            
+
             .gauge-percentage {
                 font-size: 2rem;
             }
         }
     </style>
 </head>
-<body class="admin-layout">
+<body class="admin-layout reports-admin-page">
     <?php include 'includes/sidebar.php'; ?>
     
     <div class="main-content reports-container">
@@ -987,13 +974,13 @@ $top_jobs = $pdo->query("
         <div class="row g-4 mb-4">
             <div class="col-lg-4">
                 <div class="placement-gauge-card">
-                    <h5 class="text-white mb-4 fw-bold">Overall Placement Rate</h5>
+                    <h5 class="reports-gauge-title mb-4">Overall Placement Rate</h5>
                     <div class="gauge-container">
                         <svg viewBox="0 0 200 200" style="width: 100%; height: 100%;">
                             <defs>
                                 <linearGradient id="gaugeGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                                    <stop offset="0%" style="stop-color:#8b5cf6" />
-                                    <stop offset="100%" style="stop-color:#06b6d4" />
+                                    <stop offset="0%" style="stop-color:#4f46e5" />
+                                    <stop offset="100%" style="stop-color:#0284c7" />
                                 </linearGradient>
                             </defs>
                             <circle class="gauge-circle" cx="100" cy="100" r="85"/>
@@ -1385,8 +1372,9 @@ $top_jobs = $pdo->query("
         const companyData = <?php echo json_encode(array_column($placement_by_company, 'hired_count')); ?>;
 
         // Chart.js Global Defaults
-        Chart.defaults.color = '#94a3b8';
+        Chart.defaults.color = '#64748b';
         Chart.defaults.font.family = "'Plus Jakarta Sans', sans-serif";
+        const chartGridColor = 'rgba(148, 163, 184, 0.35)';
 
         <?php if ($report_type === 'employment'): ?>
         // Trend Chart
@@ -1397,23 +1385,23 @@ $top_jobs = $pdo->query("
                 datasets: [{
                     label: 'Applications',
                     data: monthlyApplicationsData,
-                    borderColor: '#8b5cf6',
-                    backgroundColor: 'rgba(139, 92, 246, 0.1)',
+                    borderColor: '#4f46e5',
+                    backgroundColor: 'rgba(79, 70, 229, 0.08)',
                     borderWidth: 3,
                     fill: true,
                     tension: 0.4,
                     pointRadius: 4,
-                    pointBackgroundColor: '#8b5cf6'
+                    pointBackgroundColor: '#4f46e5'
                 }, {
                     label: 'Placements',
                     data: monthlyPlacementsData,
-                    borderColor: '#10b981',
-                    backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                    borderColor: '#059669',
+                    backgroundColor: 'rgba(5, 150, 105, 0.08)',
                     borderWidth: 3,
                     fill: true,
                     tension: 0.4,
                     pointRadius: 4,
-                    pointBackgroundColor: '#10b981'
+                    pointBackgroundColor: '#059669'
                 }]
             },
             options: {
@@ -1428,7 +1416,7 @@ $top_jobs = $pdo->query("
                 scales: {
                     y: {
                         beginAtZero: true,
-                        grid: { color: 'rgba(255, 255, 255, 0.05)' }
+                        grid: { color: chartGridColor }
                     },
                     x: {
                         grid: { display: false }
@@ -1444,7 +1432,7 @@ $top_jobs = $pdo->query("
                 labels: ['Pending', 'Reviewed', 'Accepted', 'Rejected'],
                 datasets: [{
                     data: [statusData.pending, statusData.reviewed, statusData.accepted, statusData.rejected],
-                    backgroundColor: ['#f59e0b', '#0ea5e9', '#10b981', '#f43f5e'],
+                    backgroundColor: ['#d97706', '#0284c7', '#059669', '#e11d48'],
                     borderWidth: 0,
                     hoverOffset: 10
                 }]
@@ -1472,8 +1460,8 @@ $top_jobs = $pdo->query("
                 datasets: [{
                     label: 'Placements',
                     data: monthlyPlacementsData,
-                    backgroundColor: 'rgba(139, 92, 246, 0.8)',
-                    borderColor: '#8b5cf6',
+                    backgroundColor: 'rgba(79, 70, 229, 0.75)',
+                    borderColor: '#4f46e5',
                     borderWidth: 2,
                     borderRadius: 8
                 }]
@@ -1487,7 +1475,7 @@ $top_jobs = $pdo->query("
                 scales: {
                     y: {
                         beginAtZero: true,
-                        grid: { color: 'rgba(255, 255, 255, 0.05)' }
+                        grid: { color: chartGridColor }
                     },
                     x: {
                         grid: { display: false }
@@ -1505,11 +1493,11 @@ $top_jobs = $pdo->query("
                     label: 'Hired',
                     data: companyData.slice(0, 5),
                     backgroundColor: [
-                        'rgba(139, 92, 246, 0.8)',
-                        'rgba(16, 185, 129, 0.8)',
-                        'rgba(14, 165, 233, 0.8)',
-                        'rgba(245, 158, 11, 0.8)',
-                        'rgba(244, 63, 94, 0.8)'
+                        'rgba(79, 70, 229, 0.8)',
+                        'rgba(5, 150, 105, 0.8)',
+                        'rgba(2, 132, 199, 0.8)',
+                        'rgba(217, 119, 6, 0.8)',
+                        'rgba(225, 29, 72, 0.8)'
                     ],
                     borderRadius: 8
                 }]
@@ -1524,7 +1512,7 @@ $top_jobs = $pdo->query("
                 scales: {
                     x: {
                         beginAtZero: true,
-                        grid: { color: 'rgba(255, 255, 255, 0.05)' }
+                        grid: { color: chartGridColor }
                     },
                     y: {
                         grid: { display: false }

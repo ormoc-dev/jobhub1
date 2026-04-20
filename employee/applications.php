@@ -98,34 +98,39 @@ $stats['offers'] = count(array_filter($all_applications, function($app) {
 
     <!-- Main Content -->
     <div class="employee-main-content">
-        <!-- Hero Header -->
-        <div class="page-header">
-            <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
-                <div>
-                    <h1><i class="fas fa-file-alt me-2"></i>My Applications</h1>
-                    <p>Track your job applications and their status</p>
+        <div class="hero-section">
+            <div class="hero-content">
+                <div class="row align-items-center g-4">
+                    <div class="col-lg">
+                        <p class="hero-eyebrow mb-1">Pipeline</p>
+                        <h1 class="hero-title mb-2"><i class="fas fa-file-alt text-primary me-2 fs-5 align-middle"></i>My applications</h1>
+                        <p class="hero-lead mb-0">See every submission, review, and decision in one place.</p>
+                    </div>
+                    <div class="col-lg-auto">
+                        <a href="jobs.php" class="btn btn-primary btn-lg px-4">
+                            <i class="fas fa-search me-2"></i>Browse more jobs
+                        </a>
+                    </div>
                 </div>
-                <a href="jobs.php" class="btn btn-primary">
-                    <i class="fas fa-search me-2"></i>Browse More Jobs
-                </a>
             </div>
         </div>
 
         <div class="content-container">
-        <!-- Application Statistics -->
-        <div class="stats-grid">
-            <div class="stat-card primary">
+        <div class="applications-kpi">
+            <p class="applications-kpi-label">Overview</p>
+            <div class="stats-grid stats-grid--applications">
+                <div class="stat-card stat-card--kpi primary">
                 <div class="stat-card-header">
                     <div>
                         <div class="stat-card-value"><?php echo $stats['total']; ?></div>
-                        <div class="stat-card-label">Total Applications</div>
+                        <div class="stat-card-label">Total</div>
                     </div>
                     <div class="stat-card-icon blue">
-                        <i class="fas fa-file-alt"></i>
+                        <i class="fas fa-layer-group"></i>
                     </div>
                 </div>
             </div>
-            <div class="stat-card warning">
+            <div class="stat-card stat-card--kpi warning">
                 <div class="stat-card-header">
                     <div>
                         <div class="stat-card-value"><?php echo $stats['pending']; ?></div>
@@ -136,7 +141,7 @@ $stats['offers'] = count(array_filter($all_applications, function($app) {
                     </div>
                 </div>
             </div>
-            <div class="stat-card info">
+            <div class="stat-card stat-card--kpi info">
                 <div class="stat-card-header">
                     <div>
                         <div class="stat-card-value"><?php echo $stats['reviewed']; ?></div>
@@ -147,7 +152,7 @@ $stats['offers'] = count(array_filter($all_applications, function($app) {
                     </div>
                 </div>
             </div>
-            <div class="stat-card success">
+            <div class="stat-card stat-card--kpi success">
                 <div class="stat-card-header">
                     <div>
                         <div class="stat-card-value"><?php echo $stats['accepted']; ?></div>
@@ -158,20 +163,21 @@ $stats['offers'] = count(array_filter($all_applications, function($app) {
                     </div>
                 </div>
             </div>
-            <div class="stat-card purple">
+            <div class="stat-card stat-card--kpi danger-kpi">
                 <div class="stat-card-header">
                     <div>
                         <div class="stat-card-value"><?php echo $stats['rejected']; ?></div>
                         <div class="stat-card-label">Rejected</div>
                     </div>
-                    <div class="stat-card-icon purple">
+                    <div class="stat-card-icon red">
                         <i class="fas fa-times-circle"></i>
                     </div>
                 </div>
             </div>
+            </div>
         </div>
 
-        <!-- Tab Navigation -->
+        <!-- Tab navigation -->
         <div class="row mb-3">
             <div class="col-12">
                 <ul class="nav nav-tabs" id="applicationsTab" role="tablist">

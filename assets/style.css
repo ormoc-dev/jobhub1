@@ -427,6 +427,21 @@ body.admin-layout {
     height: 100%;
     display: flex;
     flex-direction: column;
+    min-height: 0;
+    overflow: hidden;
+}
+
+/* Scroll nav links inside fixed sidebar; min-height:0 lets flex child shrink below content size */
+.admin-layout .sidebar .sidebar-wrapper > ul.nav {
+    flex: 1 1 auto;
+    min-height: 0;
+    min-width: 0;
+    width: 100%;
+    flex-wrap: nowrap; /* Bootstrap .nav defaults to wrap; with column + height limit that creates extra columns */
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
 }
 
 .admin-layout .sidebar .navbar-brand {
@@ -440,6 +455,11 @@ body.admin-layout {
 .admin-layout .sidebar .navbar-brand .small {
     color: rgba(255,255,255,0.85);
     opacity: 0.9;
+}
+
+.admin-layout .sidebar .sidebar-wrapper > ul.nav > .nav-item {
+    width: 100%;
+    max-width: 100%;
 }
 
 .admin-layout .sidebar .nav-pills .nav-link,
@@ -679,24 +699,8 @@ body.admin-layout {
     max-width: 100%;
 }
 
-.admin-layout .row {
-    margin: 0;
-}
-
-.admin-layout .col-md-3,
-.admin-layout .col-lg-2 {
-    padding: 0;
-    width: 250px;
-    flex: none;
-}
-
-.admin-layout .col-md-9,
-.admin-layout .col-lg-10 {
-    padding: 0;
-    margin-left: 250px;
-    width: calc(100% - 250px);
-    flex: none;
-}
+/* Sidebar is a fixed .sidebar + .admin-main-content / .main-content — do not reset
+   Bootstrap row gutters or col widths globally; that collapsed dashboard stat grids. */
 
 /* Override button styles for admin */
 .admin-layout .btn {
@@ -1328,12 +1332,6 @@ body.employee-layout {
     }
     
     .admin-main-content {
-        margin-left: 0;
-        width: 100%;
-    }
-    
-    .admin-layout .col-md-9,
-    .admin-layout .col-lg-10 {
         margin-left: 0;
         width: 100%;
     }

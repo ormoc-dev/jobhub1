@@ -183,24 +183,27 @@ $user_stats['active_jobs_available'] = $system_stats['total_active_jobs'];
         <!-- Hero Section -->
         <div class="hero-section">
             <div class="hero-content">
-                <div class="d-flex justify-content-between align-items-start flex-wrap gap-3">
-                    <div>
-                        <h1>Welcome back, <?php echo htmlspecialchars($profile['first_name'] ?? $_SESSION['username']); ?>! 👋</h1>
-                        <p class="mb-0">Ready to find your next opportunity? Explore <?php echo number_format($system_stats['total_active_jobs']); ?> active jobs from <?php echo number_format($system_stats['total_active_companies']); ?> companies.</p>
+                <div class="row align-items-center g-4">
+                    <div class="col-lg">
+                        <p class="hero-eyebrow mb-1">Your dashboard</p>
+                        <h1 class="hero-title mb-2">Welcome back, <?php echo htmlspecialchars($profile['first_name'] ?? $_SESSION['username']); ?></h1>
+                        <p class="hero-lead mb-0">Ready for your next role? There are <strong><?php echo number_format($system_stats['total_active_jobs']); ?></strong> open jobs from <strong><?php echo number_format($system_stats['total_active_companies']); ?></strong> companies right now.</p>
                     </div>
-                    <div class="d-flex align-items-center gap-2">
-                        <a href="jobs.php" class="btn btn-light btn-lg">
-                            <i class="fas fa-search me-2"></i>Browse Jobs
-                        </a>
-                        <?php if ($profile['status'] === 'pending'): ?>
-                            <span class="hero-badge">
-                                <i class="fas fa-clock"></i>Profile Pending
-                            </span>
-                        <?php else: ?>
-                            <span class="hero-badge">
-                                <i class="fas fa-check-circle"></i>Active
-                            </span>
-                        <?php endif; ?>
+                    <div class="col-lg-auto">
+                        <div class="d-flex flex-wrap align-items-center gap-2 justify-content-lg-end">
+                            <a href="jobs.php" class="btn btn-primary btn-lg px-4">
+                                <i class="fas fa-search me-2"></i>Browse jobs
+                            </a>
+                            <?php if ($profile['status'] === 'pending'): ?>
+                                <span class="hero-badge hero-badge--warning">
+                                    <i class="fas fa-clock"></i>Profile pending
+                                </span>
+                            <?php else: ?>
+                                <span class="hero-badge hero-badge--success">
+                                    <i class="fas fa-check-circle"></i>Profile active
+                                </span>
+                            <?php endif; ?>
+                        </div>
                     </div>
                 </div>
             </div>

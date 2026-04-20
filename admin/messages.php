@@ -121,232 +121,255 @@ $employer_messages = $pdo->query("SELECT COUNT(*) FROM messages m JOIN users u O
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="../assets/style.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            --success-gradient: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
-            --warning-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            --info-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-            --dark-gradient: linear-gradient(135deg, #434343 0%, #000000 100%);
-            --purple-light: #f3e8ff;
-            --purple-main: #8b5cf6;
-            --purple-dark: #6d28d9;
-            --teal-light: #ccfbf1;
-            --teal-main: #14b8a6;
-            --rose-light: #ffe4e6;
-            --rose-main: #f43f5e;
-            --amber-light: #fef3c7;
-            --amber-main: #f59e0b;
-            --slate-50: #f8fafc;
-            --slate-100: #f1f5f9;
-            --slate-200: #e2e8f0;
-            --slate-600: #475569;
-            --slate-800: #1e293b;
+        .comm-admin-page .admin-main-content {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: linear-gradient(180deg, #eef2ff 0%, #f8fafc 18%, #f1f5f9 55%, #f8fafc 100%);
+            padding: 1.5rem 0 2.5rem;
         }
 
-        .page-header {
-            background: var(--primary-gradient);
-            border-radius: 20px;
-            padding: 2rem;
-            margin-bottom: 2rem;
-            color: white;
-            position: relative;
-            overflow: hidden;
+        .comm-page-header {
+            padding: 1.25rem 1.5rem;
+            margin: 0 1rem 1.5rem;
+            background: linear-gradient(120deg, #ffffff 0%, #f5f8ff 50%, #eef4ff 100%);
+            border: 1px solid rgba(37, 99, 235, 0.12);
+            border-radius: 14px;
+            box-shadow: 0 2px 8px rgba(30, 58, 138, 0.06);
         }
 
-        .page-header::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -20%;
-            width: 400px;
-            height: 400px;
-            background: rgba(255,255,255,0.1);
-            border-radius: 50%;
-        }
-
-        .page-header::after {
-            content: '';
-            position: absolute;
-            bottom: -30%;
-            left: -10%;
-            width: 300px;
-            height: 300px;
-            background: rgba(255,255,255,0.05);
-            border-radius: 50%;
-        }
-
-        .page-header h1 {
+        .comm-page-header h1 {
+            color: #1e3a8a;
             font-weight: 700;
-            margin-bottom: 0.5rem;
-            position: relative;
-            z-index: 1;
+            font-size: 1.5rem;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
-        .page-header p {
-            opacity: 0.9;
-            margin-bottom: 0;
-            position: relative;
-            z-index: 1;
+        .comm-page-header h1 i {
+            color: #6366f1;
+        }
+
+        .comm-page-header p {
+            color: #64748b;
+            margin: 0.35rem 0 0;
+            font-size: 0.95rem;
+        }
+
+        .btn-comm-compose {
+            border-radius: 10px;
+            font-weight: 600;
+            padding: 0.65rem 1.25rem;
+            background: linear-gradient(135deg, #2563eb, #4f46e5);
+            border: none;
+            color: #fff;
+            box-shadow: 0 2px 8px rgba(37, 99, 235, 0.25);
+        }
+
+        .btn-comm-compose:hover {
+            color: #fff;
+            box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
+            transform: translateY(-1px);
+        }
+
+        .comm-alert {
+            border-radius: 12px;
+            border: 1px solid transparent;
+        }
+
+        .comm-alert.alert-success {
+            background: #ecfdf5;
+            border-color: #a7f3d0;
+            color: #065f46;
+        }
+
+        .comm-alert.alert-danger {
+            background: #fef2f2;
+            border-color: #fecaca;
+            color: #991b1b;
         }
 
         .stat-card {
-            border: none;
-            border-radius: 16px;
+            border: 1px solid #e2e8f0;
+            border-radius: 14px;
             overflow: hidden;
-            transition: all 0.3s ease;
-            position: relative;
+            background: #fff;
+            box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05);
+            transition: box-shadow 0.2s, border-color 0.2s;
         }
 
         .stat-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            transform: none;
+            box-shadow: 0 4px 14px rgba(30, 58, 138, 0.08);
+            border-color: rgba(99, 102, 241, 0.2);
         }
 
         .stat-card .card-body {
-            padding: 1.5rem;
+            padding: 1.25rem;
         }
 
         .stat-card .stat-icon {
-            width: 60px;
-            height: 60px;
-            border-radius: 16px;
+            width: 52px;
+            height: 52px;
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
+            font-size: 1.35rem;
+            margin-bottom: 0.85rem;
         }
 
         .stat-card .stat-value {
             font-size: 2rem;
             font-weight: 700;
-            color: var(--slate-800);
+            color: #0f172a;
             line-height: 1;
         }
 
         .stat-card .stat-label {
             font-size: 0.875rem;
-            color: var(--slate-600);
+            color: #64748b;
             margin-top: 0.5rem;
+            font-weight: 500;
         }
 
-        .stat-card.purple .stat-icon { background: var(--purple-light); color: var(--purple-main); }
-        .stat-card.teal .stat-icon { background: var(--teal-light); color: var(--teal-main); }
-        .stat-card.rose .stat-icon { background: var(--rose-light); color: var(--rose-main); }
-        .stat-card.amber .stat-icon { background: var(--amber-light); color: var(--amber-main); }
+        .stat-card.purple { border-top: 3px solid #6366f1; }
+        .stat-card.purple .stat-icon { background: #eef2ff; color: #4338ca; }
 
-        /* Navigation Tabs */
+        .stat-card.teal { border-top: 3px solid #0d9488; }
+        .stat-card.teal .stat-icon { background: #ccfbf1; color: #0f766e; }
+
+        .stat-card.rose { border-top: 3px solid #e11d48; }
+        .stat-card.rose .stat-icon { background: #ffe4e6; color: #be123c; }
+
+        .stat-card.amber { border-top: 3px solid #d97706; }
+        .stat-card.amber .stat-icon { background: #fef3c7; color: #b45309; }
+
         .nav-section {
-            background: white;
-            border-radius: 20px;
-            padding: 0.5rem;
-            margin-bottom: 2rem;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            background: #f1f5f9;
+            border-radius: 12px;
+            padding: 6px;
+            margin: 0 1rem 1.5rem;
+            border: 1px solid #e2e8f0;
+            box-shadow: none;
         }
 
         .nav-section .nav-pills {
-            gap: 0.5rem;
+            gap: 6px;
+            flex-wrap: wrap;
         }
 
         .nav-section .nav-link {
-            border-radius: 12px;
-            padding: 1rem 1.5rem;
-            color: var(--slate-600);
-            font-weight: 500;
-            transition: all 0.3s ease;
+            border-radius: 10px;
+            padding: 0.75rem 1.25rem;
+            color: #64748b;
+            font-weight: 600;
+            font-size: 0.875rem;
+            transition: background 0.2s, color 0.2s;
             display: flex;
             align-items: center;
-            gap: 0.75rem;
+            gap: 0.65rem;
+            border: none;
         }
 
         .nav-section .nav-link:hover {
-            background: var(--slate-100);
+            background: rgba(255, 255, 255, 0.9);
+            color: #4338ca;
         }
 
         .nav-section .nav-link.active {
-            background: var(--primary-gradient);
-            color: white;
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            background: #fff;
+            color: #4338ca;
+            box-shadow: 0 1px 4px rgba(30, 58, 138, 0.12);
         }
 
         .nav-section .nav-link .nav-icon {
-            width: 40px;
-            height: 40px;
+            width: 38px;
+            height: 38px;
             border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.1rem;
-            transition: all 0.3s ease;
+            font-size: 1rem;
+            transition: background 0.2s;
         }
 
         .nav-section .nav-link:not(.active) .nav-icon {
-            background: var(--slate-100);
+            background: #e2e8f0;
+            color: #64748b;
         }
 
         .nav-section .nav-link.active .nav-icon {
-            background: rgba(255,255,255,0.2);
+            background: #eef2ff;
+            color: #4338ca;
         }
 
         .nav-badge {
-            background: #f43f5e;
+            background: #e11d48;
             color: white;
             font-size: 0.7rem;
-            padding: 0.25rem 0.5rem;
+            padding: 0.2rem 0.45rem;
             border-radius: 20px;
             font-weight: 600;
         }
 
         .nav-section .nav-link.active .nav-badge {
-            background: white;
-            color: var(--purple-main);
+            background: #4338ca;
+            color: #fff;
         }
 
-        /* Content Cards */
         .content-card {
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            background: #fff;
+            border-radius: 14px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05);
             overflow: hidden;
-            border: none;
         }
 
         .content-card .card-header {
-            background: white;
-            border-bottom: 1px solid var(--slate-200);
-            padding: 1.25rem 1.5rem;
-            font-weight: 600;
+            background: linear-gradient(120deg, #fafbff 0%, #f8fafc 100%);
+            border-bottom: 1px solid #e2e8f0;
+            padding: 1.1rem 1.35rem;
+            font-weight: 700;
+            font-size: 1.05rem;
+            color: #1e3a8a;
             display: flex;
             align-items: center;
             justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .content-card .card-header i {
+            color: #6366f1;
         }
 
         .content-card .card-body {
-            padding: 1.5rem;
+            padding: 1.25rem;
         }
 
-        /* Message List */
         .message-item {
             display: flex;
             align-items: flex-start;
-            padding: 1.25rem;
+            padding: 1.1rem;
             border-radius: 12px;
-            margin-bottom: 0.75rem;
-            background: var(--slate-50);
+            margin-bottom: 0.65rem;
+            background: #f8fafc;
             border: 1px solid transparent;
-            transition: all 0.3s ease;
+            transition: background 0.2s, border-color 0.2s, box-shadow 0.2s;
         }
 
         .message-item:hover {
-            background: white;
-            border-color: var(--slate-200);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            background: #fff;
+            border-color: #e2e8f0;
+            box-shadow: 0 2px 10px rgba(15, 23, 42, 0.06);
         }
 
         .message-item.unread {
-            background: linear-gradient(135deg, rgba(139, 92, 246, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
-            border-left: 4px solid var(--purple-main);
+            background: #f5f3ff;
+            border-left: 4px solid #6366f1;
         }
 
         .message-avatar {
@@ -362,14 +385,14 @@ $employer_messages = $pdo->query("SELECT COUNT(*) FROM messages m JOIN users u O
             flex-shrink: 0;
         }
 
-        .message-avatar.employee { background: var(--success-gradient); }
-        .message-avatar.employer { background: var(--info-gradient); }
-        .message-avatar.admin { background: var(--primary-gradient); }
+        .message-avatar.employee { background: #059669; }
+        .message-avatar.employer { background: #2563eb; }
+        .message-avatar.admin { background: #4f46e5; }
 
         .message-content { flex: 1; min-width: 0; }
-        .message-content h6 { font-weight: 600; color: var(--slate-800); margin-bottom: 0.25rem; }
-        .message-content .message-subject { font-weight: 500; color: var(--slate-800); margin-bottom: 0.25rem; }
-        .message-content .message-preview { color: var(--slate-600); font-size: 0.875rem; margin-bottom: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .message-content h6 { font-weight: 600; color: #0f172a; margin-bottom: 0.25rem; }
+        .message-content .message-subject { font-weight: 500; color: #0f172a; margin-bottom: 0.25rem; }
+        .message-content .message-preview { color: #64748b; font-size: 0.875rem; margin-bottom: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
         .message-meta {
             text-align: right;
@@ -377,51 +400,56 @@ $employer_messages = $pdo->query("SELECT COUNT(*) FROM messages m JOIN users u O
             margin-left: 1rem;
         }
 
-        .message-meta .time { font-size: 0.75rem; color: var(--slate-600); margin-bottom: 0.5rem; }
-        .message-meta .badge-new { background: var(--primary-gradient); color: white; font-size: 0.65rem; padding: 0.25rem 0.5rem; border-radius: 20px; }
+        .message-meta .time { font-size: 0.75rem; color: #64748b; margin-bottom: 0.5rem; }
+        .message-meta .badge-new {
+            background: #4338ca;
+            color: white;
+            font-size: 0.65rem;
+            padding: 0.25rem 0.5rem;
+            border-radius: 20px;
+            font-weight: 600;
+        }
 
-        /* Notification Templates */
         .notification-template {
-            background: var(--slate-50);
-            border-radius: 16px;
-            padding: 1.5rem;
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 1.25rem;
             margin-bottom: 1rem;
-            border: 1px solid var(--slate-200);
-            transition: all 0.3s ease;
+            border: 1px solid #e2e8f0;
+            transition: box-shadow 0.2s;
         }
 
         .notification-template:hover {
-            background: white;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            background: #fff;
+            box-shadow: 0 2px 10px rgba(15, 23, 42, 0.06);
         }
 
         .notification-template .template-icon {
-            width: 50px;
-            height: 50px;
-            border-radius: 12px;
+            width: 48px;
+            height: 48px;
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.25rem;
+            font-size: 1.15rem;
             margin-bottom: 1rem;
         }
 
-        .notification-template.email .template-icon { background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); color: #d97706; }
-        .notification-template.sms .template-icon { background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%); color: #2563eb; }
-        .notification-template.push .template-icon { background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%); color: #16a34a; }
+        .notification-template.email .template-icon { background: #fef3c7; color: #b45309; }
+        .notification-template.sms .template-icon { background: #dbeafe; color: #1d4ed8; }
+        .notification-template.push .template-icon { background: #dcfce7; color: #15803d; }
 
-        /* Support Ticket Styles */
         .ticket-item {
-            background: white;
+            background: #fff;
             border-radius: 12px;
-            padding: 1.25rem;
-            margin-bottom: 0.75rem;
-            border: 1px solid var(--slate-200);
-            transition: all 0.3s ease;
+            padding: 1.15rem;
+            margin-bottom: 0.65rem;
+            border: 1px solid #e2e8f0;
+            transition: box-shadow 0.2s;
         }
 
         .ticket-item:hover {
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            box-shadow: 0 2px 10px rgba(15, 23, 42, 0.06);
         }
 
         .ticket-status {
@@ -434,10 +462,10 @@ $employer_messages = $pdo->query("SELECT COUNT(*) FROM messages m JOIN users u O
             font-weight: 600;
         }
 
-        .ticket-status.open { background: #dcfce7; color: #16a34a; }
-        .ticket-status.pending { background: #fef3c7; color: #d97706; }
-        .ticket-status.resolved { background: #dbeafe; color: #2563eb; }
-        .ticket-status.closed { background: var(--slate-200); color: var(--slate-600); }
+        .ticket-status.open { background: #dcfce7; color: #15803d; }
+        .ticket-status.pending { background: #fef3c7; color: #b45309; }
+        .ticket-status.resolved { background: #dbeafe; color: #1d4ed8; }
+        .ticket-status.closed { background: #e2e8f0; color: #64748b; }
 
         .priority-badge {
             display: inline-flex;
@@ -450,150 +478,191 @@ $employer_messages = $pdo->query("SELECT COUNT(*) FROM messages m JOIN users u O
         }
 
         .priority-badge.high { background: #fee2e2; color: #dc2626; }
-        .priority-badge.medium { background: #fef3c7; color: #d97706; }
-        .priority-badge.low { background: #dbeafe; color: #2563eb; }
+        .priority-badge.medium { background: #fef3c7; color: #b45309; }
+        .priority-badge.low { background: #dbeafe; color: #1d4ed8; }
 
-        /* Action Buttons */
         .btn-action {
             border-radius: 10px;
             padding: 0.5rem 1rem;
-            font-weight: 500;
+            font-weight: 600;
             font-size: 0.875rem;
-            transition: all 0.3s ease;
+            transition: background 0.2s, box-shadow 0.2s, transform 0.15s;
         }
 
         .btn-action.btn-primary {
-            background: var(--primary-gradient);
+            background: linear-gradient(135deg, #2563eb, #4f46e5);
             border: none;
             color: white;
         }
 
         .btn-action.btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
+            color: white;
         }
 
         .btn-action.btn-outline {
-            background: white;
-            border: 1px solid var(--slate-200);
-            color: var(--slate-600);
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            color: #64748b;
         }
 
         .btn-action.btn-outline:hover {
-            background: var(--slate-100);
+            background: #f1f5f9;
+            color: #334155;
         }
 
-        /* Empty State */
         .empty-state {
             text-align: center;
-            padding: 3rem 2rem;
+            padding: 2.5rem 1.5rem;
         }
 
         .empty-state .empty-icon {
-            width: 100px;
-            height: 100px;
+            width: 88px;
+            height: 88px;
             border-radius: 50%;
-            background: var(--slate-100);
+            background: #f1f5f9;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto 1.5rem;
-            font-size: 2.5rem;
-            color: var(--slate-400);
+            margin: 0 auto 1.25rem;
+            font-size: 2rem;
+            color: #94a3b8;
         }
 
-        .empty-state h5 { color: var(--slate-800); margin-bottom: 0.5rem; }
-        .empty-state p { color: var(--slate-600); margin-bottom: 1.5rem; }
+        .empty-state h5 { color: #0f172a; margin-bottom: 0.5rem; font-weight: 700; }
+        .empty-state p { color: #64748b; margin-bottom: 1.25rem; }
 
-        /* Modal Styling */
-        .modal-content {
-            border: none;
-            border-radius: 20px;
+        .comm-admin-page .modal-content {
+            border: 1px solid #e2e8f0;
+            border-radius: 14px;
             overflow: hidden;
+            box-shadow: 0 12px 40px rgba(15, 23, 42, 0.12);
         }
 
-        .modal-header {
-            background: var(--primary-gradient);
-            color: white;
+        .comm-admin-page .modal-header {
+            background: linear-gradient(120deg, #f5f3ff 0%, #eef2ff 100%);
+            color: #1e3a8a;
             border: none;
-            padding: 1.5rem;
-        }
-
-        .modal-header .btn-close {
-            filter: brightness(0) invert(1);
-        }
-
-        .modal-body { padding: 1.5rem; }
-
-        .form-control, .form-select {
-            border-radius: 10px;
-            border: 1px solid var(--slate-200);
-            padding: 0.75rem 1rem;
-        }
-
-        .form-control:focus, .form-select:focus {
-            border-color: var(--purple-main);
-            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
-        }
-
-        .form-label {
-            font-weight: 500;
-            color: var(--slate-800);
-            margin-bottom: 0.5rem;
-        }
-
-        /* Alert Styling */
-        .alert-custom {
-            border-radius: 12px;
-            border: none;
+            border-bottom: 1px solid #e2e8f0;
             padding: 1rem 1.25rem;
         }
 
-        .alert-custom.alert-success { background: linear-gradient(135deg, rgba(17, 153, 142, 0.1) 0%, rgba(56, 239, 125, 0.1) 100%); color: #059669; }
-        .alert-custom.alert-danger { background: linear-gradient(135deg, rgba(240, 147, 251, 0.1) 0%, rgba(245, 87, 108, 0.1) 100%); color: #dc2626; }
+        .comm-admin-page .modal-header .modal-title {
+            font-weight: 700;
+        }
 
-        /* Quick Stats Row */
+        .comm-admin-page .modal-header .btn-close {
+            filter: none;
+        }
+
+        .comm-admin-page .modal-body {
+            padding: 1.25rem 1.5rem;
+            background: #fff;
+        }
+
+        .comm-admin-page .modal-footer {
+            border-top: 1px solid #e2e8f0;
+            padding: 1rem 1.5rem 1.15rem;
+            background: #fafafa;
+        }
+
+        .comm-admin-page .form-control,
+        .comm-admin-page .form-select {
+            border-radius: 10px;
+            border: 1px solid #cbd5e1;
+            padding: 0.65rem 1rem;
+            background: #fff;
+            color: #0f172a;
+        }
+
+        .comm-admin-page .form-control:focus,
+        .comm-admin-page .form-select:focus {
+            border-color: #6366f1;
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.12);
+        }
+
+        .comm-admin-page .form-label {
+            font-weight: 600;
+            color: #0f172a;
+            margin-bottom: 0.5rem;
+        }
+
         .quick-stat {
             display: flex;
             align-items: center;
-            padding: 1rem;
-            background: var(--slate-50);
+            padding: 0.85rem 1rem;
+            background: #f8fafc;
             border-radius: 12px;
-            margin-bottom: 0.75rem;
+            margin-bottom: 0.65rem;
+            border: 1px solid #e2e8f0;
         }
 
         .quick-stat .stat-icon {
-            width: 45px;
-            height: 45px;
+            width: 44px;
+            height: 44px;
             border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-right: 1rem;
+            margin-right: 0.85rem;
+            background: #eef2ff;
+            color: #4338ca;
         }
 
-        .quick-stat .stat-info h6 { margin: 0; font-weight: 600; color: var(--slate-800); }
-        .quick-stat .stat-info small { color: var(--slate-600); }
+        .quick-stat-icon--amber {
+            background: #fef3c7 !important;
+            color: #b45309 !important;
+        }
+
+        .quick-stat-icon--blue {
+            background: #dbeafe !important;
+            color: #1d4ed8 !important;
+        }
+
+        .quick-stat-icon--green {
+            background: #dcfce7 !important;
+            color: #15803d !important;
+        }
+
+        .quick-stat .stat-info h6 { margin: 0; font-weight: 600; color: #0f172a; }
+        .quick-stat .stat-info small { color: #64748b; }
+
+        .comm-stat-highlight {
+            color: #4338ca;
+            font-weight: 700;
+        }
+
+        .comm-progress {
+            height: 8px;
+            border-radius: 8px;
+            background: #e2e8f0;
+        }
+
+        .comm-progress .progress-bar {
+            border-radius: 8px;
+            background: linear-gradient(90deg, #2563eb, #6366f1);
+        }
 
         @media (max-width: 768px) {
             .nav-section .nav-link span.nav-text { display: none; }
-            .nav-section .nav-link { padding: 0.75rem 1rem; }
+            .nav-section .nav-link { padding: 0.65rem 0.85rem; }
         }
     </style>
 </head>
-<body class="admin-layout">
+<body class="admin-layout comm-admin-page">
     <?php include 'includes/sidebar.php'; ?>
 
     <!-- Main Content -->
     <div class="admin-main-content">
         <!-- Page Header -->
-        <div class="page-header">
-            <div class="d-flex justify-content-between align-items-center flex-wrap">
+        <div class="comm-page-header">
+            <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
                 <div>
                     <h1><i class="fas fa-satellite-dish me-2"></i>Communication Center</h1>
                     <p>Manage system messages, notifications, and support tickets</p>
                 </div>
-                <button class="btn btn-light btn-lg" style="border-radius: 12px; font-weight: 600;" data-bs-toggle="modal" data-bs-target="#composeModal">
+                <button type="button" class="btn btn-comm-compose btn-lg" data-bs-toggle="modal" data-bs-target="#composeModal">
                     <i class="fas fa-plus me-2"></i>Compose
                 </button>
             </div>
@@ -601,14 +670,14 @@ $employer_messages = $pdo->query("SELECT COUNT(*) FROM messages m JOIN users u O
 
         <!-- Alert Messages -->
         <?php if ($message_alert): ?>
-            <div class="alert alert-custom alert-success alert-dismissible fade show mb-4">
+            <div class="alert alert-success alert-dismissible fade show mb-4 mx-4 comm-alert">
                 <i class="fas fa-check-circle me-2"></i><?php echo $message_alert; ?>
                 <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             </div>
         <?php endif; ?>
 
         <?php if ($error_alert): ?>
-            <div class="alert alert-custom alert-danger alert-dismissible fade show mb-4">
+            <div class="alert alert-danger alert-dismissible fade show mb-4 mx-4 comm-alert">
                 <i class="fas fa-exclamation-circle me-2"></i><?php echo $error_alert; ?>
                 <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             </div>
@@ -769,7 +838,7 @@ $employer_messages = $pdo->query("SELECT COUNT(*) FROM messages m JOIN users u O
                                 <?php else: ?>
                                     <?php foreach (array_slice($sent_messages, 0, 5) as $msg): ?>
                                         <div class="quick-stat">
-                                            <div class="stat-icon" style="background: var(--purple-light); color: var(--purple-main);">
+                                            <div class="stat-icon">
                                                 <i class="fas fa-arrow-right"></i>
                                             </div>
                                             <div class="stat-info">
@@ -912,7 +981,7 @@ $employer_messages = $pdo->query("SELECT COUNT(*) FROM messages m JOIN users u O
                             </div>
                             <div class="card-body">
                                 <div class="quick-stat">
-                                    <div class="stat-icon" style="background: #fef3c7; color: #d97706;">
+                                    <div class="stat-icon quick-stat-icon--amber">
                                         <i class="fas fa-envelope"></i>
                                     </div>
                                     <div class="stat-info">
@@ -921,7 +990,7 @@ $employer_messages = $pdo->query("SELECT COUNT(*) FROM messages m JOIN users u O
                                     </div>
                                 </div>
                                 <div class="quick-stat">
-                                    <div class="stat-icon" style="background: #dbeafe; color: #2563eb;">
+                                    <div class="stat-icon quick-stat-icon--blue">
                                         <i class="fas fa-mobile-alt"></i>
                                     </div>
                                     <div class="stat-info">
@@ -930,7 +999,7 @@ $employer_messages = $pdo->query("SELECT COUNT(*) FROM messages m JOIN users u O
                                     </div>
                                 </div>
                                 <div class="quick-stat">
-                                    <div class="stat-icon" style="background: #dcfce7; color: #16a34a;">
+                                    <div class="stat-icon quick-stat-icon--green">
                                         <i class="fas fa-bullhorn"></i>
                                     </div>
                                     <div class="stat-info">
@@ -1035,7 +1104,7 @@ $employer_messages = $pdo->query("SELECT COUNT(*) FROM messages m JOIN users u O
                             </div>
                             <div class="card-body">
                                 <div class="quick-stat">
-                                    <div class="stat-icon" style="background: #dcfce7; color: #16a34a;">
+                                    <div class="stat-icon quick-stat-icon--green">
                                         <i class="fas fa-folder-open"></i>
                                     </div>
                                     <div class="stat-info">
@@ -1044,7 +1113,7 @@ $employer_messages = $pdo->query("SELECT COUNT(*) FROM messages m JOIN users u O
                                     </div>
                                 </div>
                                 <div class="quick-stat">
-                                    <div class="stat-icon" style="background: #fef3c7; color: #d97706;">
+                                    <div class="stat-icon quick-stat-icon--amber">
                                         <i class="fas fa-clock"></i>
                                     </div>
                                     <div class="stat-info">
@@ -1053,7 +1122,7 @@ $employer_messages = $pdo->query("SELECT COUNT(*) FROM messages m JOIN users u O
                                     </div>
                                 </div>
                                 <div class="quick-stat">
-                                    <div class="stat-icon" style="background: #dbeafe; color: #2563eb;">
+                                    <div class="stat-icon quick-stat-icon--blue">
                                         <i class="fas fa-check-circle"></i>
                                     </div>
                                     <div class="stat-info">
@@ -1071,11 +1140,11 @@ $employer_messages = $pdo->query("SELECT COUNT(*) FROM messages m JOIN users u O
                             </div>
                             <div class="card-body">
                                 <div class="text-center mb-3">
-                                    <h2 class="mb-0" style="color: var(--purple-main);">2.5h</h2>
+                                    <h2 class="mb-0 comm-stat-highlight">2.5h</h2>
                                     <small class="text-muted">Avg. Response Time</small>
                                 </div>
-                                <div class="progress mb-3" style="height: 8px; border-radius: 4px;">
-                                    <div class="progress-bar" role="progressbar" style="width: 85%; background: var(--primary-gradient);" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"></div>
+                                <div class="progress mb-3 comm-progress">
+                                    <div class="progress-bar" role="progressbar" style="width: 85%;" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"></div>
                                 </div>
                                 <div class="d-flex justify-content-between small text-muted">
                                     <span>Resolution Rate</span>

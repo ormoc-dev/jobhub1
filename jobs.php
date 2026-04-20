@@ -84,9 +84,8 @@ $categories = $pdo->query("SELECT * FROM job_categories WHERE status = 'active' 
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top navbar-glass">
         <div class="container">
-            <a class="navbar-brand fw-bold" href="index.php">
-            <img src="worklink.jpg" alt="WORKLINK" class="logo-img me-2" style="height: 30px; width: 30px; border-radius: 50%; object-fit: cover;"> 
-                WORKLINK
+            <a class="navbar-brand d-flex align-items-center py-1" href="index.php">
+                <img src="images/LOGO.png" alt="WORKLINK Job Seeker System" class="navbar-brand-logo" style="height: 48px; width: auto; max-width: min(260px, 58vw); object-fit: contain;">
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>

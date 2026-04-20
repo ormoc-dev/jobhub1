@@ -154,8 +154,6 @@ $admin = $stmt->fetch();
     <style>
         .message-card { border-left: 3px solid #e2e8f0; }
         .message-card.unread { border-left-color: #3b82f6; background: #f8fafc; }
-        .compose-btn { background: #3b82f6; color: white; }
-        .compose-btn:hover { background: #2563eb; color: white; }
     </style>
 </head>
 <body class="employee-layout">
@@ -163,20 +161,29 @@ $admin = $stmt->fetch();
 
     <!-- Main Content -->
     <div class="employee-main-content">
-        <div class="page-header d-flex justify-content-between align-items-center">
-            <div>
-                <h1>Messages
-                    <?php if ($unread_count > 0): ?>
-                        <span class="badge bg-danger"><?php echo $unread_count; ?></span>
-                    <?php endif; ?>
-                </h1>
-                <p>Communicate with employers and stay updated</p>
+        <div class="hero-section">
+            <div class="hero-content">
+                <div class="row align-items-center g-4">
+                    <div class="col-lg">
+                        <p class="hero-eyebrow mb-1">Inbox</p>
+                        <h1 class="hero-title mb-2">
+                            <i class="fas fa-envelope text-primary me-2 fs-5 align-middle"></i>Messages
+                            <?php if ($unread_count > 0): ?>
+                                <span class="hero-badge hero-badge--warning ms-2 align-middle"><?php echo (int) $unread_count; ?> unread</span>
+                            <?php endif; ?>
+                        </h1>
+                        <p class="hero-lead mb-0">Chat with employers and get updates on applications, interviews, and offers.</p>
+                    </div>
+                    <div class="col-lg-auto">
+                        <button type="button" class="btn btn-primary btn-lg px-4" data-bs-toggle="modal" data-bs-target="#composeModal">
+                            <i class="fas fa-plus me-2"></i>Compose message
+                        </button>
+                    </div>
+                </div>
             </div>
-            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#composeModal">
-                <i class="fas fa-plus me-1"></i>Compose Message
-            </button>
         </div>
 
+        <div class="content-container">
         <!-- Alert Messages -->
         <?php if ($message_alert): ?>
             <div class="alert alert-success alert-dismissible fade show">
@@ -192,28 +199,34 @@ $admin = $stmt->fetch();
             </div>
         <?php endif; ?>
 
-        <!-- Message Stats -->
-        <div class="row g-3 mb-4">
-            <div class="col-md-2">
-                <div class="card stat-card text-center">
-                    <div class="card-body">
-                        <h3 class="card-title"><?php echo $total_messages; ?></h3>
-                        <p class="card-text">Total Messages</p>
+        <div class="messages-summary mb-4">
+            <p class="applications-kpi-label">Overview</p>
+            <div class="stats-grid stats-grid--messages">
+                <div class="stat-card stat-card--kpi primary">
+                    <div class="stat-card-header">
+                        <div>
+                            <div class="stat-card-value"><?php echo (int) $total_messages; ?></div>
+                            <div class="stat-card-label">Total messages</div>
+                        </div>
+                        <div class="stat-card-icon blue">
+                            <i class="fas fa-inbox"></i>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-2">
-                <div class="card stat-card text-center">
-                    <div class="card-body">
-                        <h3 class="card-title"><?php echo $unread_count; ?></h3>
-                        <p class="card-text">Unread</p>
+                <div class="stat-card stat-card--kpi warning">
+                    <div class="stat-card-header">
+                        <div>
+                            <div class="stat-card-value"><?php echo (int) $unread_count; ?></div>
+                            <div class="stat-card-label">Unread</div>
+                        </div>
+                        <div class="stat-card-icon orange">
+                            <i class="fas fa-envelope-open-text"></i>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-8">
-                <div class="alert alert-info mb-0">
-                    <i class="fas fa-info-circle me-2"></i>
-                    Communicate with employers and stay updated on your job applications.
+                <div class="messages-tip-card">
+                    <i class="fas fa-info-circle text-primary flex-shrink-0 mt-1"></i>
+                    <p class="mb-0">Employer replies, interview notes, and system notices stay organized in the tabs below.</p>
                 </div>
             </div>
         </div>
@@ -397,6 +410,7 @@ $admin = $stmt->fetch();
                     </div>
                 </div>
             </div>
+        </div>
         </div>
     </div>
 
