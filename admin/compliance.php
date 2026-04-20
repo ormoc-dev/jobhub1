@@ -390,368 +390,328 @@ $dataTypes = [
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link href="../assets/style.css" rel="stylesheet">
-    <style>
-        :root {
-            --primary: #6366f1;
-            --primary-light: #818cf8;
-            --primary-dark: #4f46e5;
-            --cyan: #06b6d4;
-            --cyan-light: #22d3ee;
-            --emerald: #10b981;
-            --emerald-light: #34d399;
-            --amber: #f59e0b;
-            --amber-light: #fbbf24;
-            --rose: #f43f5e;
-            --rose-light: #fb7185;
-            --violet: #8b5cf6;
-            --violet-light: #a78bfa;
-            --teal: #14b8a6;
-            --slate-900: #0f172a;
-            --slate-800: #1e293b;
-            --slate-700: #334155;
-            --slate-600: #475569;
-            --slate-500: #64748b;
-            --slate-400: #94a3b8;
-            --slate-300: #cbd5e1;
-            --slate-200: #e2e8f0;
-            --slate-100: #f1f5f9;
-        }
-        
-        .compliance-page {
+        <style>
+.compliance-admin-page .admin-main-content {
             font-family: 'Plus Jakarta Sans', sans-serif;
-            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #0f172a 100%);
-            min-height: 100vh;
+            background: linear-gradient(180deg, #eef2ff 0%, #f8fafc 18%, #f1f5f9 55%, #f8fafc 100%);
+            padding: 1.5rem 2rem 2.5rem;
         }
-        
-        .compliance-page .admin-main-content {
-            background: transparent;
-            padding: 24px 32px;
+
+        .compliance-page-header {
+            padding: 1.25rem 1.5rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(120deg, #ffffff 0%, #f5f8ff 50%, #eef4ff 100%);
+            border: 1px solid rgba(37, 99, 235, 0.12);
+            border-radius: 14px;
+            box-shadow: 0 2px 8px rgba(30, 58, 138, 0.06);
         }
-        
-        /* Page Header */
-        .page-header {
-            margin-bottom: 28px;
-        }
-        
-        .page-header h1 {
-            font-weight: 800;
-            font-size: 1.75rem;
-            color: #fff;
-            margin-bottom: 6px;
+
+        .compliance-page-header h1 {
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: #1e3a8a;
+            margin-bottom: 0.35rem;
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 0.65rem;
         }
-        
-        .page-header h1 i {
-            background: linear-gradient(135deg, var(--teal), var(--cyan));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+
+        .compliance-page-header h1 i {
+            color: #0d9488;
+            opacity: 0.95;
         }
-        
-        .page-header p {
-            color: var(--slate-500);
+
+        .compliance-page-header p {
+            color: #64748b;
             margin: 0;
             font-size: 0.95rem;
         }
-        
-        /* Stats Row */
+
         .stats-row {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 16px;
-            margin-bottom: 28px;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
         }
-        
+
         @media (max-width: 1200px) {
             .stats-row { grid-template-columns: repeat(2, 1fr); }
         }
-        
+
         @media (max-width: 576px) {
             .stats-row { grid-template-columns: 1fr; }
         }
-        
+
         .stat-box {
-            background: rgba(30, 41, 59, 0.7);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 16px;
-            padding: 20px;
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 14px;
+            padding: 1.1rem 1.15rem;
             display: flex;
             align-items: center;
-            gap: 16px;
-            transition: all 0.3s ease;
+            gap: 1rem;
+            transition: box-shadow 0.2s ease, border-color 0.2s ease;
+            box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05);
         }
-        
+
         .stat-box:hover {
-            transform: translateY(-4px);
-            border-color: rgba(20, 184, 166, 0.3);
-            box-shadow: 0 12px 40px rgba(20, 184, 166, 0.15);
+            border-color: rgba(13, 148, 136, 0.28);
+            box-shadow: 0 4px 14px rgba(13, 148, 136, 0.1);
         }
-        
+
         .stat-icon {
-            width: 52px;
-            height: 52px;
-            border-radius: 14px;
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 20px;
+            font-size: 1.05rem;
+            flex-shrink: 0;
         }
-        
-        .stat-box.privacy .stat-icon { background: linear-gradient(135deg, var(--teal), var(--cyan)); color: white; }
-        .stat-box.policies .stat-icon { background: linear-gradient(135deg, var(--violet), var(--violet-light)); color: white; }
-        .stat-box.audit .stat-icon { background: linear-gradient(135deg, var(--amber), var(--amber-light)); color: white; }
-        .stat-box.retention .stat-icon { background: linear-gradient(135deg, var(--rose), var(--rose-light)); color: white; }
-        
+
+        .stat-box.privacy .stat-icon { background: #ccfbf1; color: #0f766e; }
+        .stat-box.policies .stat-icon { background: #ede9fe; color: #6d28d9; }
+        .stat-box.audit .stat-icon { background: #fffbeb; color: #b45309; }
+        .stat-box.retention .stat-icon { background: #ffe4e6; color: #be123c; }
+
         .stat-info h3 {
-            font-size: 1.5rem;
+            font-size: 1.35rem;
             font-weight: 700;
-            color: #fff;
+            color: #0f172a;
             margin: 0;
-            line-height: 1;
+            line-height: 1.15;
         }
-        
+
         .stat-info span {
             font-size: 0.8rem;
-            color: var(--slate-500);
+            color: #64748b;
             font-weight: 500;
         }
-        
+
         .stat-badge {
             font-size: 0.65rem;
             padding: 3px 8px;
             border-radius: 6px;
             font-weight: 600;
             margin-left: 8px;
+            display: inline-block;
         }
-        
+
         .stat-badge.warning {
-            background: rgba(245, 158, 11, 0.2);
-            color: var(--amber-light);
+            background: #fffbeb;
+            color: #b45309;
+            border: 1px solid #fde68a;
         }
-        
+
         .stat-badge.danger {
-            background: rgba(244, 63, 94, 0.2);
-            color: var(--rose-light);
+            background: #fef2f2;
+            color: #b91c1c;
+            border: 1px solid #fecaca;
         }
-        
-        /* Alert Styles */
+
         .alert-custom {
-            border: none;
-            border-radius: 14px;
-            padding: 16px 20px;
-            margin-bottom: 24px;
+            border-radius: 12px;
+            padding: 14px 18px;
+            margin-bottom: 1.25rem;
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             gap: 12px;
+            border: 1px solid transparent;
         }
-        
+
         .alert-custom.success {
-            background: rgba(16, 185, 129, 0.15);
-            border-left: 4px solid var(--emerald);
-            color: #6ee7b7;
+            background: #ecfdf5;
+            border-color: #a7f3d0;
+            color: #065f46;
         }
-        
+
         .alert-custom.danger {
-            background: rgba(244, 63, 94, 0.15);
-            border-left: 4px solid var(--rose);
-            color: #fda4af;
+            background: #fef2f2;
+            border-color: #fecaca;
+            color: #991b1b;
         }
-        
+
         .alert-custom.info {
-            background: rgba(6, 182, 212, 0.15);
-            border-left: 4px solid var(--cyan);
-            color: var(--cyan-light);
+            background: #ecfeff;
+            border-color: #a5f3fc;
+            color: #0e7490;
         }
-        
-        /* Tab Navigation */
+
         .tab-nav {
             display: flex;
-            gap: 4px;
-            margin-bottom: 24px;
-            background: rgba(30, 41, 59, 0.5);
+            gap: 6px;
+            margin-bottom: 1.25rem;
+            background: #f1f5f9;
             padding: 6px;
-            border-radius: 16px;
-            flex-wrap: wrap;
-        }
-        
-        .tab-link {
-            padding: 14px 22px;
             border-radius: 12px;
-            color: var(--slate-400);
+            flex-wrap: wrap;
+            border: 1px solid #e2e8f0;
+        }
+
+        .tab-link {
+            padding: 10px 16px;
+            border-radius: 10px;
+            color: #64748b;
             text-decoration: none;
             font-weight: 600;
-            font-size: 0.9rem;
-            transition: all 0.3s ease;
+            font-size: 0.875rem;
+            transition: background 0.2s, color 0.2s;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
             white-space: nowrap;
         }
-        
+
         .tab-link:hover {
-            color: #fff;
-            background: rgba(255,255,255,0.05);
+            color: #1e3a8a;
+            background: rgba(255, 255, 255, 0.85);
         }
-        
+
         .tab-link.active {
-            background: linear-gradient(135deg, var(--teal), var(--cyan));
-            color: white;
-            box-shadow: 0 4px 20px rgba(20, 184, 166, 0.4);
+            background: #fff;
+            color: #0f766e;
+            box-shadow: 0 1px 4px rgba(30, 58, 138, 0.12);
         }
-        
-        .tab-link i {
-            font-size: 1rem;
-        }
-        
+
+        .tab-link i { font-size: 1rem; }
+
         .tab-link .badge {
-            background: rgba(244, 63, 94, 0.3);
-            color: var(--rose-light);
+            background: #fee2e2;
+            color: #b91c1c;
             font-size: 0.65rem;
             padding: 2px 6px;
             border-radius: 4px;
+            font-weight: 600;
         }
-        
+
         .tab-link.active .badge {
-            background: rgba(255,255,255,0.2);
-            color: white;
+            background: #ccfbf1;
+            color: #0f766e;
         }
-        
-        /* Main Card */
+
         .main-card {
-            background: rgba(30, 41, 59, 0.7);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 20px;
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 14px;
             overflow: hidden;
+            box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05);
         }
-        
+
         .card-header-custom {
-            padding: 20px 24px;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
+            padding: 1.1rem 1.35rem;
+            border-bottom: 1px solid #e2e8f0;
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: 16px;
+            gap: 14px;
+            background: linear-gradient(120deg, #fafbff 0%, #f8fafc 100%);
         }
-        
+
         .card-header-custom h5 {
-            color: #fff;
+            color: #1e3a8a;
             font-weight: 700;
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             margin: 0;
             display: flex;
             align-items: center;
             gap: 10px;
         }
-        
-        .card-header-custom h5 i {
-            color: var(--teal);
-        }
-        
+
+        .card-header-custom h5 i { color: #0d9488; }
+
         .card-body-custom {
-            padding: 24px;
+            padding: 1.35rem 1.35rem 1.5rem;
+            background: #fff;
         }
-        
-        /* Filter Bar */
+
         .filter-bar {
-            background: rgba(15, 23, 42, 0.5);
-            border-radius: 14px;
-            padding: 16px 20px;
-            margin-bottom: 24px;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 14px 18px;
+            margin-bottom: 1.25rem;
             display: flex;
-            gap: 16px;
+            gap: 14px;
             align-items: flex-end;
             flex-wrap: wrap;
         }
-        
+
         .filter-group {
             display: flex;
             flex-direction: column;
             gap: 6px;
         }
-        
+
         .filter-group label {
-            color: var(--slate-400);
-            font-size: 0.75rem;
+            color: #64748b;
+            font-size: 0.72rem;
             font-weight: 600;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.04em;
         }
-        
+
         .filter-group input,
         .filter-group select {
-            background: var(--slate-800);
-            border: 1px solid rgba(255,255,255,0.1);
+            background: #fff;
+            border: 1px solid #cbd5e1;
             border-radius: 8px;
-            color: #fff;
+            color: #0f172a;
             padding: 10px 14px;
             font-size: 0.85rem;
             min-width: 140px;
         }
-        
+
         .filter-group input:focus,
         .filter-group select:focus {
-            border-color: var(--teal);
+            border-color: #0d9488;
             outline: none;
-            box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.15);
+            box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.15);
         }
-        
-        /* Log Table */
+
         .log-table {
             width: 100%;
             border-collapse: separate;
             border-spacing: 0 8px;
         }
-        
+
         .log-table thead th {
-            background: rgba(15, 23, 42, 0.5);
-            color: var(--slate-400);
-            font-size: 0.75rem;
+            background: #f1f5f9;
+            color: #64748b;
+            font-size: 0.72rem;
             font-weight: 600;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
-            padding: 14px 16px;
+            letter-spacing: 0.04em;
+            padding: 12px 14px;
             border: none;
         }
-        
-        .log-table thead th:first-child {
-            border-radius: 10px 0 0 10px;
-        }
-        
-        .log-table thead th:last-child {
-            border-radius: 0 10px 10px 0;
-        }
-        
+
+        .log-table thead th:first-child { border-radius: 10px 0 0 10px; }
+        .log-table thead th:last-child { border-radius: 0 10px 10px 0; }
+
         .log-table tbody tr {
-            background: rgba(15, 23, 42, 0.3);
-            transition: all 0.3s ease;
+            background: #f8fafc;
+            transition: background 0.2s, box-shadow 0.2s;
+            box-shadow: 0 1px 0 rgba(226, 232, 240, 0.8);
         }
-        
+
         .log-table tbody tr:hover {
-            background: rgba(15, 23, 42, 0.6);
-            transform: translateX(4px);
+            background: #fff;
+            box-shadow: 0 2px 8px rgba(15, 23, 42, 0.06);
         }
-        
+
         .log-table tbody td {
-            padding: 14px 16px;
-            color: var(--slate-300);
+            padding: 12px 14px;
+            color: #334155;
             font-size: 0.85rem;
             border: none;
             vertical-align: middle;
         }
-        
-        .log-table tbody td:first-child {
-            border-radius: 10px 0 0 10px;
-        }
-        
-        .log-table tbody td:last-child {
-            border-radius: 0 10px 10px 0;
-        }
-        
-        /* Action Type Badges */
+
+        .log-table tbody td:first-child { border-radius: 10px 0 0 10px; }
+        .log-table tbody td:last-child { border-radius: 0 10px 10px 0; }
+
         .action-badge {
             display: inline-flex;
             align-items: center;
@@ -760,64 +720,57 @@ $dataTypes = [
             border-radius: 8px;
             font-size: 0.75rem;
             font-weight: 600;
+            border: 1px solid transparent;
         }
-        
-        .action-badge.primary { background: rgba(99, 102, 241, 0.15); color: var(--primary-light); }
-        .action-badge.cyan { background: rgba(6, 182, 212, 0.15); color: var(--cyan-light); }
-        .action-badge.rose { background: rgba(244, 63, 94, 0.15); color: var(--rose-light); }
-        .action-badge.amber { background: rgba(245, 158, 11, 0.15); color: var(--amber-light); }
-        .action-badge.emerald { background: rgba(16, 185, 129, 0.15); color: var(--emerald-light); }
-        .action-badge.violet { background: rgba(139, 92, 246, 0.15); color: var(--violet-light); }
-        .action-badge.slate { background: rgba(100, 116, 139, 0.15); color: var(--slate-400); }
-        .action-badge.teal { background: rgba(20, 184, 166, 0.15); color: var(--teal); }
-        
-        /* Risk Level Badges */
+
+        .action-badge.primary { background: #eef2ff; color: #4338ca; border-color: #c7d2fe; }
+        .action-badge.cyan { background: #ecfeff; color: #0e7490; border-color: #a5f3fc; }
+        .action-badge.rose { background: #ffe4e6; color: #be123c; border-color: #fecdd3; }
+        .action-badge.amber { background: #fffbeb; color: #b45309; border-color: #fde68a; }
+        .action-badge.emerald { background: #ecfdf5; color: #047857; border-color: #a7f3d0; }
+        .action-badge.violet { background: #f5f3ff; color: #6d28d9; border-color: #ddd6fe; }
+        .action-badge.slate { background: #f1f5f9; color: #475569; border-color: #e2e8f0; }
+        .action-badge.teal { background: #ccfbf1; color: #0f766e; border-color: #99f6e4; }
+
         .risk-badge {
             padding: 4px 10px;
             border-radius: 6px;
-            font-size: 0.7rem;
+            font-size: 0.68rem;
             font-weight: 600;
             text-transform: uppercase;
         }
-        
-        .risk-badge.low { background: rgba(16, 185, 129, 0.15); color: var(--emerald-light); }
-        .risk-badge.medium { background: rgba(245, 158, 11, 0.15); color: var(--amber-light); }
-        .risk-badge.high { background: rgba(244, 63, 94, 0.15); color: var(--rose-light); }
-        .risk-badge.critical { background: rgba(244, 63, 94, 0.3); color: #ff6b6b; border: 1px solid rgba(244, 63, 94, 0.5); }
-        
-        /* Status Badges */
+
+        .risk-badge.low { background: #ecfdf5; color: #047857; }
+        .risk-badge.medium { background: #fffbeb; color: #b45309; }
+        .risk-badge.high { background: #fef2f2; color: #b91c1c; }
+        .risk-badge.critical { background: #fee2e2; color: #991b1b; border: 1px solid #fecaca; }
+
         .status-badge {
             padding: 5px 12px;
             border-radius: 8px;
             font-size: 0.75rem;
             font-weight: 600;
         }
-        
-        .status-badge.active { background: rgba(16, 185, 129, 0.15); color: var(--emerald-light); }
-        .status-badge.inactive { background: rgba(100, 116, 139, 0.15); color: var(--slate-400); }
-        .status-badge.pending { background: rgba(245, 158, 11, 0.15); color: var(--amber-light); }
-        .status-badge.processing { background: rgba(99, 102, 241, 0.15); color: var(--primary-light); }
-        .status-badge.completed { background: rgba(16, 185, 129, 0.15); color: var(--emerald-light); }
-        .status-badge.rejected { background: rgba(244, 63, 94, 0.15); color: var(--rose-light); }
-        
-        /* Policy Cards */
-        .policy-section {
-            margin-bottom: 32px;
-        }
-        
-        .policy-section:last-child {
-            margin-bottom: 0;
-        }
-        
+
+        .status-badge.active { background: #ecfdf5; color: #047857; }
+        .status-badge.inactive { background: #f1f5f9; color: #64748b; }
+        .status-badge.pending { background: #fffbeb; color: #b45309; }
+        .status-badge.processing { background: #eef2ff; color: #4338ca; }
+        .status-badge.completed { background: #ecfdf5; color: #047857; }
+        .status-badge.rejected { background: #fef2f2; color: #b91c1c; }
+
+        .policy-section { margin-bottom: 28px; }
+        .policy-section:last-child { margin-bottom: 0; }
+
         .policy-type-header {
             display: flex;
             align-items: center;
             gap: 12px;
-            margin-bottom: 16px;
-            padding-bottom: 12px;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
+            margin-bottom: 14px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #e2e8f0;
         }
-        
+
         .policy-type-icon {
             width: 40px;
             height: 40px;
@@ -827,45 +780,44 @@ $dataTypes = [
             justify-content: center;
             font-size: 1rem;
         }
-        
-        .policy-type-icon.primary { background: linear-gradient(135deg, var(--primary), var(--primary-light)); color: white; }
-        .policy-type-icon.cyan { background: linear-gradient(135deg, var(--cyan), var(--cyan-light)); color: white; }
-        .policy-type-icon.amber { background: linear-gradient(135deg, var(--amber), var(--amber-light)); color: white; }
-        .policy-type-icon.emerald { background: linear-gradient(135deg, var(--emerald), var(--emerald-light)); color: white; }
-        .policy-type-icon.violet { background: linear-gradient(135deg, var(--violet), var(--violet-light)); color: white; }
-        .policy-type-icon.rose { background: linear-gradient(135deg, var(--rose), var(--rose-light)); color: white; }
-        
+
+        .policy-type-icon.primary { background: #eef2ff; color: #2563eb; }
+        .policy-type-icon.cyan { background: #ecfeff; color: #0e7490; }
+        .policy-type-icon.amber { background: #fffbeb; color: #d97706; }
+        .policy-type-icon.emerald { background: #ecfdf5; color: #059669; }
+        .policy-type-icon.violet { background: #f5f3ff; color: #7c3aed; }
+        .policy-type-icon.rose { background: #ffe4e6; color: #be123c; }
+
         .policy-type-title {
-            color: #fff;
+            color: #0f172a;
             font-weight: 700;
             font-size: 1rem;
             margin: 0;
         }
-        
+
         .policy-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-            gap: 16px;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 14px;
         }
-        
+
         .policy-card {
-            background: rgba(15, 23, 42, 0.5);
-            border: 1px solid rgba(255,255,255,0.05);
+            background: #fff;
+            border: 1px solid #e2e8f0;
             border-radius: 14px;
-            padding: 20px;
-            transition: all 0.3s ease;
+            padding: 18px;
+            transition: box-shadow 0.2s, border-color 0.2s;
             position: relative;
+            box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
         }
-        
+
         .policy-card:hover {
-            border-color: rgba(20, 184, 166, 0.3);
-            transform: translateY(-2px);
+            border-color: rgba(13, 148, 136, 0.35);
+            box-shadow: 0 4px 14px rgba(13, 148, 136, 0.08);
         }
-        
-        .policy-card.active {
-            border-color: rgba(16, 185, 129, 0.3);
-        }
-        
+
+        .policy-card.active { border-color: rgba(5, 150, 105, 0.4); }
+
         .policy-card.active::before {
             content: '';
             position: absolute;
@@ -873,170 +825,164 @@ $dataTypes = [
             left: 0;
             right: 0;
             height: 3px;
-            background: linear-gradient(90deg, var(--emerald), var(--teal));
+            background: linear-gradient(90deg, #059669, #14b8a6);
             border-radius: 14px 14px 0 0;
         }
-        
+
         .policy-header {
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
             margin-bottom: 12px;
         }
-        
+
         .policy-title {
-            color: #fff;
+            color: #0f172a;
             font-weight: 700;
             font-size: 0.95rem;
             margin: 0 0 4px 0;
         }
-        
+
         .policy-version {
             display: inline-flex;
             align-items: center;
             gap: 6px;
             font-size: 0.7rem;
-            color: var(--slate-500);
+            color: #64748b;
         }
-        
+
         .policy-content-preview {
-            color: var(--slate-400);
+            color: #64748b;
             font-size: 0.8rem;
             line-height: 1.5;
-            margin-bottom: 16px;
+            margin-bottom: 14px;
             display: -webkit-box;
             -webkit-line-clamp: 3;
             -webkit-box-orient: vertical;
             overflow: hidden;
         }
-        
+
         .policy-meta {
             display: flex;
-            gap: 16px;
+            gap: 14px;
             font-size: 0.75rem;
-            color: var(--slate-500);
-            margin-bottom: 16px;
+            color: #64748b;
+            margin-bottom: 14px;
             flex-wrap: wrap;
         }
-        
+
         .policy-meta span {
             display: flex;
             align-items: center;
             gap: 6px;
         }
-        
+
         .policy-actions {
             display: flex;
             gap: 8px;
             padding-top: 12px;
-            border-top: 1px solid rgba(255,255,255,0.05);
+            border-top: 1px solid #e2e8f0;
         }
-        
-        /* Retention Policy Cards */
-        .retention-grid {
-            display: grid;
-            gap: 16px;
-        }
-        
+
+        .retention-grid { display: grid; gap: 14px; }
+
         .retention-card {
-            background: rgba(15, 23, 42, 0.5);
-            border: 1px solid rgba(255,255,255,0.05);
-            border-radius: 16px;
-            padding: 20px;
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 14px;
+            padding: 18px;
             display: flex;
             align-items: center;
-            gap: 20px;
-            transition: all 0.3s ease;
+            gap: 18px;
+            transition: box-shadow 0.2s, border-color 0.2s;
         }
-        
+
         .retention-card:hover {
-            border-color: rgba(244, 63, 94, 0.3);
+            border-color: rgba(190, 18, 60, 0.25);
+            box-shadow: 0 4px 14px rgba(190, 18, 60, 0.06);
         }
-        
-        .retention-card.inactive {
-            opacity: 0.6;
-        }
-        
+
+        .retention-card.inactive { opacity: 0.68; }
+
         .retention-icon {
-            width: 56px;
-            height: 56px;
-            border-radius: 14px;
-            background: linear-gradient(135deg, var(--rose), var(--rose-light));
+            width: 52px;
+            height: 52px;
+            border-radius: 12px;
+            background: #ffe4e6;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.4rem;
-            color: white;
+            font-size: 1.25rem;
+            color: #be123c;
             flex-shrink: 0;
         }
-        
-        .retention-info {
-            flex: 1;
-        }
-        
+
+        .retention-info { flex: 1; min-width: 0; }
+
         .retention-name {
-            color: #fff;
+            color: #0f172a;
             font-weight: 700;
             font-size: 1rem;
             margin: 0 0 6px 0;
         }
-        
+
         .retention-meta {
             display: flex;
-            gap: 16px;
+            gap: 14px;
             font-size: 0.75rem;
-            color: var(--slate-500);
+            color: #64748b;
             flex-wrap: wrap;
         }
-        
+
         .retention-meta span {
             display: flex;
             align-items: center;
             gap: 6px;
         }
-        
+
         .retention-actions {
             display: flex;
             gap: 8px;
             align-items: center;
+            flex-shrink: 0;
         }
-        
-        /* Deletion Request Cards */
+
         .deletion-card {
-            background: rgba(15, 23, 42, 0.5);
-            border: 1px solid rgba(255,255,255,0.05);
+            background: #fff;
+            border: 1px solid #e2e8f0;
             border-radius: 14px;
-            padding: 20px;
-            margin-bottom: 16px;
-            transition: all 0.3s ease;
+            padding: 18px;
+            margin-bottom: 14px;
+            transition: box-shadow 0.2s, border-color 0.2s;
         }
-        
+
         .deletion-card:hover {
-            border-color: rgba(244, 63, 94, 0.3);
+            border-color: rgba(190, 18, 60, 0.25);
+            box-shadow: 0 4px 12px rgba(15, 23, 42, 0.06);
         }
-        
+
         .deletion-card.pending {
-            border-left: 4px solid var(--amber);
+            border-left: 4px solid #d97706;
         }
-        
+
         .deletion-header {
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
             margin-bottom: 12px;
         }
-        
+
         .deletion-user {
             display: flex;
             align-items: center;
             gap: 12px;
         }
-        
+
         .deletion-avatar {
             width: 44px;
             height: 44px;
             border-radius: 12px;
-            background: linear-gradient(135deg, var(--rose), var(--violet));
+            background: linear-gradient(135deg, #fda4af, #c4b5fd);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -1044,60 +990,60 @@ $dataTypes = [
             font-weight: 700;
             font-size: 1rem;
         }
-        
+
         .deletion-user-info h6 {
-            color: #fff;
+            color: #0f172a;
             font-weight: 600;
             margin: 0 0 4px 0;
             font-size: 0.95rem;
         }
-        
+
         .deletion-user-info span {
-            color: var(--slate-500);
+            color: #64748b;
             font-size: 0.8rem;
         }
-        
+
         .deletion-details {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 16px;
-            margin-bottom: 16px;
+            gap: 14px;
+            margin-bottom: 14px;
         }
-        
+
         .deletion-detail {
-            background: rgba(15, 23, 42, 0.5);
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
             border-radius: 10px;
             padding: 12px;
         }
-        
+
         .deletion-detail label {
             display: block;
-            color: var(--slate-500);
-            font-size: 0.7rem;
+            color: #64748b;
+            font-size: 0.68rem;
             font-weight: 600;
             text-transform: uppercase;
             margin-bottom: 4px;
         }
-        
+
         .deletion-detail span {
-            color: #fff;
+            color: #0f172a;
             font-size: 0.85rem;
             font-weight: 500;
         }
-        
-        /* Toggle Switch */
+
         .toggle-switch {
             position: relative;
             width: 48px;
             height: 26px;
         }
-        
+
         .toggle-switch input {
             opacity: 0;
             width: 0;
             height: 0;
         }
-        
+
         .toggle-slider {
             position: absolute;
             cursor: pointer;
@@ -1105,11 +1051,11 @@ $dataTypes = [
             left: 0;
             right: 0;
             bottom: 0;
-            background-color: var(--slate-700);
+            background-color: #cbd5e1;
             transition: 0.3s;
             border-radius: 26px;
         }
-        
+
         .toggle-slider:before {
             position: absolute;
             content: "";
@@ -1120,331 +1066,463 @@ $dataTypes = [
             background-color: white;
             transition: 0.3s;
             border-radius: 50%;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.12);
         }
-        
+
         .toggle-switch input:checked + .toggle-slider {
-            background: linear-gradient(135deg, var(--teal), var(--cyan));
+            background: linear-gradient(135deg, #0d9488, #14b8a6);
         }
-        
+
         .toggle-switch input:checked + .toggle-slider:before {
             transform: translateX(22px);
         }
-        
-        /* Buttons */
+
         .btn-primary-custom {
-            background: linear-gradient(135deg, var(--teal), var(--cyan));
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
             border: none;
             color: white;
-            padding: 12px 24px;
+            padding: 10px 20px;
             border-radius: 10px;
             font-weight: 600;
-            font-size: 0.9rem;
+            font-size: 0.875rem;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: box-shadow 0.2s, transform 0.15s;
             display: inline-flex;
             align-items: center;
             gap: 8px;
         }
-        
+
         .btn-primary-custom:hover {
-            box-shadow: 0 4px 20px rgba(20, 184, 166, 0.4);
-            transform: translateY(-2px);
+            box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
+            transform: translateY(-1px);
             color: white;
         }
-        
+
         .btn-action {
             padding: 8px 12px;
             border-radius: 8px;
             font-size: 0.75rem;
             font-weight: 600;
-            border: none;
+            border: 1px solid transparent;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: background 0.2s;
             display: inline-flex;
             align-items: center;
             gap: 6px;
         }
-        
-        .btn-action:hover { transform: translateY(-2px); }
-        
-        .btn-view { background: rgba(20, 184, 166, 0.15); color: var(--teal); }
-        .btn-view:hover { background: rgba(20, 184, 166, 0.25); color: var(--teal); }
-        
-        .btn-edit { background: rgba(99, 102, 241, 0.15); color: var(--primary-light); }
-        .btn-edit:hover { background: rgba(99, 102, 241, 0.25); color: var(--primary-light); }
-        
-        .btn-run { background: rgba(16, 185, 129, 0.15); color: var(--emerald-light); }
-        .btn-run:hover { background: rgba(16, 185, 129, 0.25); color: var(--emerald-light); }
-        
-        .btn-delete { background: rgba(244, 63, 94, 0.15); color: var(--rose-light); }
-        .btn-delete:hover { background: rgba(244, 63, 94, 0.25); color: var(--rose-light); }
-        
-        .btn-approve { background: rgba(16, 185, 129, 0.15); color: var(--emerald-light); }
-        .btn-approve:hover { background: rgba(16, 185, 129, 0.25); color: var(--emerald-light); }
-        
-        .btn-reject { background: rgba(244, 63, 94, 0.15); color: var(--rose-light); }
-        .btn-reject:hover { background: rgba(244, 63, 94, 0.25); color: var(--rose-light); }
-        
+
+        .btn-view {
+            background: #ccfbf1;
+            color: #0f766e;
+            border-color: #99f6e4;
+        }
+        .btn-view:hover { background: #99f6e4; }
+
+        .btn-edit {
+            background: #fff;
+            color: #2563eb;
+            border-color: rgba(37, 99, 235, 0.35);
+        }
+        .btn-edit:hover { background: #eef2ff; }
+
+        .btn-run {
+            background: #ecfdf5;
+            color: #047857;
+            border-color: #a7f3d0;
+        }
+        .btn-run:hover { background: #d1fae5; }
+
+        .btn-delete {
+            background: #fff;
+            color: #b91c1c;
+            border-color: #fecaca;
+        }
+        .btn-delete:hover { background: #fef2f2; }
+
+        .btn-approve {
+            background: #ecfdf5;
+            color: #047857;
+            border-color: #a7f3d0;
+        }
+        .btn-approve:hover { background: #d1fae5; }
+
+        .btn-reject {
+            background: #fff;
+            color: #b91c1c;
+            border-color: #fecaca;
+        }
+        .btn-reject:hover { background: #fef2f2; }
+
         .btn-export {
-            background: rgba(139, 92, 246, 0.15);
-            color: var(--violet-light);
+            background: #f5f3ff;
+            color: #6d28d9;
+            border-color: #ddd6fe;
         }
-        
         .btn-export:hover {
-            background: rgba(139, 92, 246, 0.25);
-            color: var(--violet-light);
+            background: #ede9fe;
         }
-        
-        /* Form Elements */
-        .form-control, .form-select {
-            background: var(--slate-900);
-            border: 1px solid rgba(255,255,255,0.1);
+
+        .compliance-admin-page .form-control,
+        .compliance-admin-page .form-select {
+            background: #fff;
+            border: 1px solid #cbd5e1;
             border-radius: 10px;
-            color: #fff;
-            padding: 12px 16px;
+            color: #0f172a;
+            padding: 10px 14px;
             font-size: 0.9rem;
         }
-        
-        .form-control:focus, .form-select:focus {
-            background: var(--slate-900);
-            border-color: var(--teal);
-            box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.15);
-            color: #fff;
+
+        .compliance-admin-page .form-control:focus,
+        .compliance-admin-page .form-select:focus {
+            background: #fff;
+            border-color: #0d9488;
+            box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.15);
+            color: #0f172a;
         }
-        
-        .form-control::placeholder { color: var(--slate-500); }
-        
-        .form-label {
-            color: var(--slate-300);
+
+        .compliance-admin-page .form-control::placeholder {
+            color: #94a3b8;
+        }
+
+        .compliance-admin-page .form-label {
+            color: #334155;
             font-weight: 600;
             font-size: 0.85rem;
             margin-bottom: 8px;
         }
-        
-        .form-check-input {
-            background-color: var(--slate-700);
-            border-color: var(--slate-600);
+
+        .compliance-admin-page .form-check-input {
+            background-color: #fff;
+            border-color: #cbd5e1;
         }
-        
-        .form-check-input:checked {
-            background-color: var(--teal);
-            border-color: var(--teal);
+
+        .compliance-admin-page .form-check-input:checked {
+            background-color: #0d9488;
+            border-color: #0d9488;
         }
-        
-        /* Modal Styles */
-        .modal-content {
-            background: var(--slate-800);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 20px;
+
+        .compliance-admin-page .form-check-label {
+            color: #475569;
         }
-        
-        .modal-header {
-            background: linear-gradient(135deg, var(--teal), var(--cyan));
-            border-radius: 20px 20px 0 0;
-            padding: 20px 24px;
-            border: none;
+
+        .compliance-admin-page .modal-content {
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 14px;
+            box-shadow: 0 12px 40px rgba(15, 23, 42, 0.12);
         }
-        
-        .modal-title {
-            color: white;
+
+        .compliance-admin-page .modal-header {
+            background: linear-gradient(120deg, #f0fdfa 0%, #eef4ff 100%);
+            border-bottom: 1px solid #e2e8f0;
+            border-radius: 14px 14px 0 0;
+            padding: 16px 20px;
+        }
+
+        .compliance-admin-page .modal-title {
+            color: #1e3a8a;
             font-weight: 700;
         }
-        
-        .modal-body {
-            padding: 24px;
-            color: var(--slate-300);
+
+        .compliance-admin-page .modal-body {
+            padding: 20px;
+            color: #334155;
             max-height: 70vh;
             overflow-y: auto;
         }
-        
-        .modal-footer {
-            padding: 16px 24px;
-            border-top: 1px solid rgba(255,255,255,0.05);
+
+        .compliance-admin-page .modal-footer {
+            padding: 14px 20px;
+            border-top: 1px solid #e2e8f0;
+            background: #fafafa;
         }
-        
+
         .btn-modal-cancel {
-            background: var(--slate-700);
-            color: var(--slate-300);
-            border: none;
-            padding: 10px 20px;
+            background: #fff;
+            color: #475569;
+            border: 1px solid #cbd5e1;
+            padding: 10px 18px;
             border-radius: 10px;
             font-weight: 600;
         }
-        
+
         .btn-modal-cancel:hover {
-            background: var(--slate-600);
-            color: #fff;
+            background: #f1f5f9;
+            color: #0f172a;
         }
-        
+
         .btn-modal-save {
-            background: linear-gradient(135deg, var(--teal), var(--cyan));
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
             color: white;
             border: none;
-            padding: 10px 20px;
+            padding: 10px 18px;
             border-radius: 10px;
             font-weight: 600;
         }
-        
+
         .btn-modal-save:hover {
-            box-shadow: 0 4px 20px rgba(20, 184, 166, 0.3);
+            box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3);
             color: white;
         }
-        
-        /* Empty State */
+
         .empty-state {
             text-align: center;
-            padding: 60px 20px;
+            padding: 48px 20px;
         }
-        
+
         .empty-state i {
-            font-size: 60px;
-            color: var(--slate-700);
-            margin-bottom: 20px;
+            font-size: 48px;
+            color: #cbd5e1;
+            margin-bottom: 16px;
         }
-        
+
         .empty-state h5 {
-            color: var(--slate-300);
+            color: #334155;
             font-weight: 600;
             margin-bottom: 8px;
         }
-        
+
         .empty-state p {
-            color: var(--slate-500);
+            color: #64748b;
             font-size: 0.9rem;
         }
-        
-        /* Timeline styles for audit */
+
         .audit-timeline {
             position: relative;
-            padding-left: 30px;
+            padding-left: 28px;
         }
-        
+
         .audit-timeline::before {
             content: '';
             position: absolute;
-            left: 10px;
+            left: 9px;
             top: 0;
             bottom: 0;
             width: 2px;
-            background: rgba(255,255,255,0.1);
+            background: #e2e8f0;
         }
-        
+
         .audit-item {
             position: relative;
-            padding-bottom: 24px;
+            padding-bottom: 22px;
         }
-        
+
         .audit-item::before {
             content: '';
             position: absolute;
-            left: -24px;
+            left: -22px;
             top: 6px;
             width: 10px;
             height: 10px;
             border-radius: 50%;
-            background: var(--teal);
-            border: 2px solid var(--slate-800);
+            background: #14b8a6;
+            border: 2px solid #fff;
+            box-shadow: 0 0 0 1px #e2e8f0;
         }
-        
-        .audit-item.high::before { background: var(--amber); }
-        .audit-item.critical::before { background: var(--rose); }
-        
+
+        .audit-item.high::before { background: #d97706; }
+        .audit-item.critical::before { background: #dc2626; }
+
         .audit-content {
-            background: rgba(15, 23, 42, 0.5);
+            background: #f8fafc;
             border-radius: 12px;
-            padding: 16px;
-            border: 1px solid rgba(255,255,255,0.05);
+            padding: 14px 16px;
+            border: 1px solid #e2e8f0;
         }
-        
+
         .audit-header {
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
             margin-bottom: 8px;
         }
-        
+
         .audit-action {
-            color: #fff;
+            color: #0f172a;
             font-weight: 600;
             font-size: 0.9rem;
         }
-        
+
         .audit-time {
-            color: var(--slate-500);
+            color: #64748b;
             font-size: 0.75rem;
         }
-        
+
         .audit-description {
-            color: var(--slate-400);
+            color: #475569;
             font-size: 0.85rem;
             margin-bottom: 8px;
         }
-        
+
         .audit-meta {
             display: flex;
-            gap: 16px;
+            gap: 14px;
             font-size: 0.75rem;
-            color: var(--slate-500);
+            color: #64748b;
+            flex-wrap: wrap;
         }
-        
+
         .audit-meta span {
             display: flex;
             align-items: center;
             gap: 6px;
         }
-        
-        /* GDPR Info Box */
+
         .gdpr-info {
-            background: linear-gradient(135deg, rgba(20, 184, 166, 0.1), rgba(6, 182, 212, 0.1));
-            border: 1px solid rgba(20, 184, 166, 0.2);
-            border-radius: 14px;
-            padding: 20px;
-            margin-bottom: 24px;
+            background: linear-gradient(120deg, #f0fdfa 0%, #ecfeff 100%);
+            border: 1px solid rgba(13, 148, 136, 0.2);
+            border-radius: 12px;
+            padding: 16px 18px;
+            margin-bottom: 1.25rem;
         }
-        
+
         .gdpr-info h6 {
-            color: var(--teal);
+            color: #0f766e;
             font-weight: 700;
             margin-bottom: 8px;
             display: flex;
             align-items: center;
             gap: 8px;
         }
-        
+
         .gdpr-info p {
-            color: var(--slate-400);
-            font-size: 0.85rem;
+            color: #475569;
+            font-size: 0.875rem;
             margin: 0;
             line-height: 1.6;
         }
-        
-        /* Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
+
+        .compliance-section-title {
+            color: #1e3a8a;
+            font-weight: 700;
+            margin: 0 0 1rem 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
         }
-        
-        ::-webkit-scrollbar-track {
-            background: rgba(15, 23, 42, 0.5);
+
+        .compliance-section-title i {
+            color: #be123c;
+        }
+
+        .compliance-section-title--spaced {
+            margin-top: 2rem;
+        }
+
+        .retention-meta-auto {
+            color: #047857;
+            font-weight: 600;
+        }
+
+        .legal-basis-box {
+            margin-top: 0.75rem;
+            padding: 0.75rem 1rem;
+            background: #f0fdfa;
+            border: 1px solid rgba(13, 148, 136, 0.2);
+            border-radius: 8px;
+        }
+
+        .legal-basis-box .legal-basis-label {
+            color: #0f766e;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .legal-basis-box .legal-basis-text {
+            color: #475569;
+            font-size: 0.8rem;
+            margin: 4px 0 0 0;
+        }
+
+        .compliance-quote {
+            color: #64748b;
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+        }
+
+        .compliance-quote .fa-quote-left {
+            color: #94a3b8;
+        }
+
+        .form-hint {
+            display: block;
+            color: #64748b;
+            font-size: 0.8rem;
+            margin-top: 0.35rem;
+        }
+
+        .log-stack-primary {
+            color: #0f172a;
+            font-weight: 500;
+        }
+
+        .log-stack-muted {
+            color: #64748b;
+            font-size: 0.75rem;
+        }
+
+        .log-ip-code {
+            color: #0e7490;
+            font-size: 0.8rem;
+            background: #ecfeff;
+            padding: 2px 6px;
             border-radius: 4px;
         }
-        
-        ::-webkit-scrollbar-thumb {
-            background: var(--slate-600);
-            border-radius: 4px;
+
+        .policy-type-empty {
+            padding: 1.25rem;
+            text-align: center;
+            color: #64748b;
+            background: #f8fafc;
+            border-radius: 12px;
+            border: 1px dashed #e2e8f0;
         }
-        
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--slate-500);
+
+        .policy-type-empty > i {
+            font-size: 24px;
+            margin-bottom: 8px;
+            display: block;
+            color: #cbd5e1;
+        }
+
+        .policy-modal-toolbar {
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .policy-modal-meta {
+            color: #64748b;
+        }
+
+        .policy-modal-content-text {
+            color: #334155;
+            line-height: 1.8;
+            white-space: pre-wrap;
+        }
+
+        .log-desc-cell {
+            max-width: 300px;
+        }
+
+        .deletion-actions-row {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary-custom.btn-compact {
+            padding: 10px 20px;
         }
     </style>
 </head>
-<body class="admin-layout compliance-page">
+<body class="admin-layout compliance-admin-page">
     <?php include 'includes/sidebar.php'; ?>
 
     <div class="admin-main-content">
         <!-- Page Header -->
-        <div class="page-header">
+        <div class="compliance-page-header">
             <h1><i class="fas fa-balance-scale"></i> Compliance & Audit</h1>
             <p>Data privacy, policy management, audit trails, and data retention controls</p>
         </div>
@@ -1563,7 +1641,7 @@ $dataTypes = [
                     </div>
                     <div class="filter-group">
                         <label>&nbsp;</label>
-                        <button type="submit" class="btn-primary-custom" style="padding: 10px 20px;">
+                        <button type="submit" class="btn-primary-custom btn-compact">
                             <i class="fas fa-filter"></i> Apply
                         </button>
                     </div>
@@ -1591,12 +1669,12 @@ $dataTypes = [
                                 <?php foreach ($privacyLogs as $log): ?>
                                     <tr>
                                         <td>
-                                            <div style="color: #fff; font-weight: 500;"><?php echo date('M j, Y', strtotime($log['created_at'])); ?></div>
-                                            <div style="color: var(--slate-500); font-size: 0.75rem;"><?php echo date('g:i A', strtotime($log['created_at'])); ?></div>
+                                            <div class="log-stack-primary"><?php echo date('M j, Y', strtotime($log['created_at'])); ?></div>
+                                            <div class="log-stack-muted"><?php echo date('g:i A', strtotime($log['created_at'])); ?></div>
                                         </td>
                                         <td>
-                                            <div style="color: #fff;"><?php echo htmlspecialchars($log['username'] ?? 'System'); ?></div>
-                                            <div style="color: var(--slate-500); font-size: 0.75rem;"><?php echo htmlspecialchars($log['email'] ?? ''); ?></div>
+                                            <div class="log-stack-primary"><?php echo htmlspecialchars($log['username'] ?? 'System'); ?></div>
+                                            <div class="log-stack-muted"><?php echo htmlspecialchars($log['email'] ?? ''); ?></div>
                                         </td>
                                         <td>
                                             <?php $actionInfo = $actionTypes[$log['action_type']] ?? ['icon' => 'fa-question', 'label' => ucfirst($log['action_type']), 'color' => 'slate']; ?>
@@ -1605,9 +1683,9 @@ $dataTypes = [
                                                 <?php echo $actionInfo['label']; ?>
                                             </span>
                                         </td>
-                                        <td style="max-width: 300px;"><?php echo htmlspecialchars($log['description'] ?? '-'); ?></td>
+                                        <td class="log-desc-cell"><?php echo htmlspecialchars($log['description'] ?? '-'); ?></td>
                                         <td>
-                                            <code style="color: var(--cyan-light); font-size: 0.8rem;"><?php echo htmlspecialchars($log['ip_address']); ?></code>
+                                            <code class="log-ip-code"><?php echo htmlspecialchars($log['ip_address']); ?></code>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>
@@ -1626,7 +1704,7 @@ $dataTypes = [
                 </button>
             </div>
             <div class="card-body-custom">
-                <div class="alert-custom info" style="margin-bottom: 24px;">
+                <div class="alert-custom info">
                     <i class="fas fa-info-circle"></i>
                     <span>Only one policy of each type can be active at a time. Activating a new version will automatically deactivate the previous one.</span>
                 </div>
@@ -1642,8 +1720,8 @@ $dataTypes = [
                         </div>
                         
                         <?php if (empty($typePolicies)): ?>
-                            <div style="padding: 20px; text-align: center; color: var(--slate-500);">
-                                <i class="fas fa-file-alt" style="font-size: 24px; margin-bottom: 8px; display: block;"></i>
+                            <div class="policy-type-empty">
+                                <i class="fas fa-file-alt"></i>
                                 No <?php echo strtolower($typeInfo['label']); ?> created yet.
                             </div>
                         <?php else: ?>
@@ -1692,14 +1770,14 @@ $dataTypes = [
                                             <div class="modal-content">
                                                 <div class="modal-header">
                                                     <h5 class="modal-title"><i class="fas <?php echo $typeInfo['icon']; ?> me-2"></i><?php echo htmlspecialchars($policy['title']); ?></h5>
-                                                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <div style="margin-bottom: 16px; padding-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,0.1);">
+                                                    <div class="policy-modal-toolbar">
                                                         <span class="status-badge <?php echo $policy['is_active'] ? 'active' : 'inactive'; ?> me-2"><?php echo $policy['is_active'] ? 'Active' : 'Inactive'; ?></span>
-                                                        <span style="color: var(--slate-400);">Version <?php echo htmlspecialchars($policy['version']); ?> • Effective <?php echo date('F j, Y', strtotime($policy['effective_date'])); ?></span>
+                                                        <span class="policy-modal-meta">Version <?php echo htmlspecialchars($policy['version']); ?> • Effective <?php echo date('F j, Y', strtotime($policy['effective_date'])); ?></span>
                                                     </div>
-                                                    <div style="color: var(--slate-300); line-height: 1.8; white-space: pre-wrap;"><?php echo nl2br(htmlspecialchars($policy['content'])); ?></div>
+                                                    <div class="policy-modal-content-text"><?php echo nl2br(htmlspecialchars($policy['content'])); ?></div>
                                                 </div>
                                             </div>
                                         </div>
@@ -1711,7 +1789,7 @@ $dataTypes = [
                                             <div class="modal-content">
                                                 <div class="modal-header">
                                                     <h5 class="modal-title"><i class="fas fa-edit me-2"></i>Edit Policy</h5>
-                                                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                                 </div>
                                                 <form method="POST">
                                                     <input type="hidden" name="action" value="update_policy">
@@ -1737,7 +1815,7 @@ $dataTypes = [
                                                         </div>
                                                         <div class="form-check">
                                                             <input type="checkbox" name="requires_acceptance" class="form-check-input" id="reqAccept<?php echo $policy['id']; ?>" <?php echo $policy['requires_acceptance'] ? 'checked' : ''; ?>>
-                                                            <label class="form-check-label" for="reqAccept<?php echo $policy['id']; ?>" style="color: var(--slate-300);">Requires user acceptance</label>
+                                                            <label class="form-check-label" for="reqAccept<?php echo $policy['id']; ?>">Requires user acceptance</label>
                                                         </div>
                                                     </div>
                                                     <div class="modal-footer">
@@ -1796,7 +1874,7 @@ $dataTypes = [
                     </div>
                     <div class="filter-group">
                         <label>&nbsp;</label>
-                        <button type="submit" class="btn-primary-custom" style="padding: 10px 20px;">
+                        <button type="submit" class="btn-primary-custom btn-compact">
                             <i class="fas fa-filter"></i> Apply
                         </button>
                     </div>
@@ -1854,8 +1932,8 @@ $dataTypes = [
                     <p>Data retention policies ensure compliance with GDPR Article 5(1)(e) - Storage Limitation Principle. Personal data must be kept in a form which permits identification of data subjects for no longer than is necessary for the purposes for which the personal data are processed.</p>
                 </div>
                 
-                <h6 style="color: #fff; font-weight: 700; margin-bottom: 16px; display: flex; align-items: center; gap: 8px;">
-                    <i class="fas fa-clock" style="color: var(--rose);"></i> Retention Policies
+                <h6 class="compliance-section-title">
+                    <i class="fas fa-clock"></i> Retention Policies
                 </h6>
                 
                 <div class="retention-grid">
@@ -1873,7 +1951,7 @@ $dataTypes = [
                                     <span><i class="fas fa-calendar-alt"></i> <?php echo $policy['retention_period']; ?> days</span>
                                     <span><i class="fas fa-tasks"></i> <?php echo ucfirst($policy['action_after_expiry']); ?></span>
                                     <?php if ($policy['auto_execute']): ?>
-                                        <span style="color: var(--emerald-light);"><i class="fas fa-robot"></i> Auto</span>
+                                        <span class="retention-meta-auto"><i class="fas fa-robot"></i> Auto</span>
                                     <?php endif; ?>
                                     <?php if ($policy['last_executed_at']): ?>
                                         <span><i class="fas fa-play-circle"></i> Last: <?php echo date('M j', strtotime($policy['last_executed_at'])); ?></span>
@@ -1908,7 +1986,7 @@ $dataTypes = [
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h5 class="modal-title"><i class="fas fa-edit me-2"></i>Edit Retention Policy</h5>
-                                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                     </div>
                                     <form method="POST">
                                         <input type="hidden" name="action" value="update_retention">
@@ -1937,12 +2015,12 @@ $dataTypes = [
                                             </div>
                                             <div class="form-check">
                                                 <input type="checkbox" name="auto_execute" class="form-check-input" id="autoExec<?php echo $policy['id']; ?>" <?php echo $policy['auto_execute'] ? 'checked' : ''; ?>>
-                                                <label class="form-check-label" for="autoExec<?php echo $policy['id']; ?>" style="color: var(--slate-300);">Auto-execute on schedule</label>
+                                                <label class="form-check-label" for="autoExec<?php echo $policy['id']; ?>">Auto-execute on schedule</label>
                                             </div>
                                             <?php if ($policy['legal_basis']): ?>
-                                                <div class="mt-3 p-3" style="background: rgba(20, 184, 166, 0.1); border-radius: 8px;">
-                                                    <small style="color: var(--teal);"><i class="fas fa-gavel me-1"></i> Legal Basis:</small>
-                                                    <p style="color: var(--slate-400); font-size: 0.8rem; margin: 4px 0 0 0;"><?php echo htmlspecialchars($policy['legal_basis']); ?></p>
+                                                <div class="legal-basis-box mt-3">
+                                                    <small class="legal-basis-label"><i class="fas fa-gavel me-1"></i> Legal Basis:</small>
+                                                    <p class="legal-basis-text"><?php echo htmlspecialchars($policy['legal_basis']); ?></p>
                                                 </div>
                                             <?php endif; ?>
                                         </div>
@@ -1959,8 +2037,8 @@ $dataTypes = [
                 
                 <!-- Deletion Requests Section -->
                 <?php if (!empty($deletionRequests)): ?>
-                    <h6 style="color: #fff; font-weight: 700; margin: 32px 0 16px; display: flex; align-items: center; gap: 8px;">
-                        <i class="fas fa-user-times" style="color: var(--rose);"></i> Data Deletion Requests
+                    <h6 class="compliance-section-title compliance-section-title--spaced">
+                        <i class="fas fa-user-times"></i> Data Deletion Requests
                         <?php if ($stats['pending_deletions'] > 0): ?>
                             <span class="stat-badge warning"><?php echo $stats['pending_deletions']; ?> Pending</span>
                         <?php endif; ?>
@@ -2005,14 +2083,14 @@ $dataTypes = [
                             </div>
                             
                             <?php if ($request['reason']): ?>
-                                <p style="color: var(--slate-400); font-size: 0.85rem; margin-bottom: 16px;">
-                                    <i class="fas fa-quote-left me-2" style="color: var(--slate-600);"></i>
+                                <p class="compliance-quote">
+                                    <i class="fas fa-quote-left me-2"></i>
                                     <?php echo htmlspecialchars($request['reason']); ?>
                                 </p>
                             <?php endif; ?>
                             
                             <?php if ($request['status'] === 'pending'): ?>
-                                <div style="display: flex; gap: 8px;">
+                                <div class="deletion-actions-row">
                                     <form method="POST" class="d-inline">
                                         <input type="hidden" name="action" value="process_deletion_request">
                                         <input type="hidden" name="request_id" value="<?php echo $request['id']; ?>">
@@ -2045,7 +2123,7 @@ $dataTypes = [
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title"><i class="fas fa-plus me-2"></i>Create New Policy</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <form method="POST">
                     <input type="hidden" name="action" value="create_policy">
@@ -2075,11 +2153,11 @@ $dataTypes = [
                         <div class="mb-3">
                             <label class="form-label">Content</label>
                             <textarea name="content" class="form-control" rows="12" placeholder="Enter the policy content here..." required></textarea>
-                            <small style="color: var(--slate-500);">You can use markdown formatting. The content will be displayed as plain text.</small>
+                            <small class="form-hint">You can use markdown formatting. The content will be displayed as plain text.</small>
                         </div>
                         <div class="form-check">
                             <input type="checkbox" name="requires_acceptance" class="form-check-input" id="reqAcceptNew" checked>
-                            <label class="form-check-label" for="reqAcceptNew" style="color: var(--slate-300);">Requires user acceptance before using the platform</label>
+                            <label class="form-check-label" for="reqAcceptNew">Requires user acceptance before using the platform</label>
                         </div>
                     </div>
                     <div class="modal-footer">

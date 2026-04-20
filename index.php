@@ -81,9 +81,8 @@
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top navbar-glass">
         <div class="container">
-            <a class="navbar-brand fw-bold" href="index.php">
-                <img src="worklink.jpg" alt="WORKLINK" class="logo-img me-2" style="height: 40px; width: 40px; border-radius: 50%; object-fit: cover;">
-                WORKLINK
+            <a class="navbar-brand d-flex align-items-center py-1" href="index.php">
+                <img src="images/LOGO.png" alt="WORKLINK Job Seeker System" class="navbar-brand-logo" style="height: 48px; width: auto; max-width: min(260px, 58vw); object-fit: contain;">
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
@@ -337,92 +336,104 @@
     </section>
 
     <!-- Features Section -->
-    <section class="py-5 section-soft">
+    <section class="py-5 home-why-section">
         <div class="container">
-            <div class="row text-center mb-5">
-                <div class="col">
-                    <h2 class="fw-bold section-title">Why Choose WORKLINK?</h2>
-                    <p class="text-muted section-subtitle">Your gateway to career success</p>
+            <div class="row justify-content-center mb-5 pb-lg-2">
+                <div class="col-lg-8 text-center">
+                    <p class="home-eyebrow mb-2">Why WORKLINK</p>
+                    <h2 class="home-section-heading mb-3">Your gateway to career success</h2>
+                    <p class="home-lead text-muted mb-0">One platform for discovery, applications, and hiring—clear, fast, and built for real workplaces.</p>
                 </div>
             </div>
             <div class="row g-4">
                 <div class="col-md-4">
-                    <div class="card h-100 border-0 shadow-sm feature-card">
-                        <div class="card-body text-center p-4">
-                            <div class="icon-bubble icon-primary mb-3">
-                                <i class="fas fa-briefcase"></i>
-                            </div>
-                            <h5 class="card-title">For Job Seekers</h5>
-                            <p class="card-text">Browse thousands of job opportunities, apply easily, and track your applications.</p>
+                    <article class="home-feature-card h-100">
+                        <div class="home-feature-icon home-feature-icon--seeker" aria-hidden="true">
+                            <i class="fas fa-user-tie"></i>
                         </div>
-                    </div>
+                        <h3 class="home-feature-title">For job seekers</h3>
+                        <p class="home-feature-text">Browse roles, apply in a few steps, and keep every application organized in one place.</p>
+                        <ul class="home-feature-bullets">
+                            <li><i class="fas fa-check"></i> Smart search &amp; filters</li>
+                            <li><i class="fas fa-check"></i> Application tracking</li>
+                        </ul>
+                    </article>
                 </div>
                 <div class="col-md-4">
-                    <div class="card h-100 border-0 shadow-sm feature-card">
-                        <div class="card-body text-center p-4">
-                            <div class="icon-bubble icon-secondary mb-3">
-                                <i class="fas fa-building"></i>
-                            </div>
-                            <h5 class="card-title">For Employers</h5>
-                            <p class="card-text">Post jobs, manage applications, and find the perfect candidates for your company.</p>
+                    <article class="home-feature-card h-100">
+                        <div class="home-feature-icon home-feature-icon--employer" aria-hidden="true">
+                            <i class="fas fa-building"></i>
                         </div>
-                    </div>
+                        <h3 class="home-feature-title">For employers</h3>
+                        <p class="home-feature-text">Publish openings, review candidates, and shorten the path from post to hire.</p>
+                        <ul class="home-feature-bullets">
+                            <li><i class="fas fa-check"></i> Job post management</li>
+                            <li><i class="fas fa-check"></i> Structured applications</li>
+                        </ul>
+                    </article>
                 </div>
                 <div class="col-md-4">
-                    <div class="card h-100 border-0 shadow-sm feature-card">
-                        <div class="card-body text-center p-4">
-                            <div class="icon-bubble icon-accent mb-3">
-                                <i class="fas fa-handshake"></i>
-                            </div>
-                            <h5 class="card-title">Perfect Match</h5>
-                            <p class="card-text">Our platform connects the right talent with the right opportunities.</p>
+                    <article class="home-feature-card h-100">
+                        <div class="home-feature-icon home-feature-icon--match" aria-hidden="true">
+                            <i class="fas fa-link"></i>
                         </div>
-                    </div>
+                        <h3 class="home-feature-title">The right match</h3>
+                        <p class="home-feature-text">We focus on clarity and fit so people and companies find each other faster.</p>
+                        <ul class="home-feature-bullets">
+                            <li><i class="fas fa-check"></i> Trusted local network</li>
+                            <li><i class="fas fa-check"></i> Support for both sides</li>
+                        </ul>
+                    </article>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Statistics Section -->
-    <section class="py-5 stats-section">
+    <section class="py-5 home-stats-section">
         <div class="container">
-            <div class="row text-center g-4">
-                <?php
-                // Get statistics
-                $stmt = $pdo->query("SELECT COUNT(*) FROM job_postings WHERE status = 'active'");
-                $activeJobs = $stmt->fetchColumn();
-                
-                $stmt = $pdo->query("SELECT COUNT(*) FROM companies WHERE status = 'active'");
-                $activeCompanies = $stmt->fetchColumn();
-                
-                $stmt = $pdo->query("SELECT COUNT(*) FROM employee_profiles");
-                $totalEmployees = $stmt->fetchColumn();
-                
-                $stmt = $pdo->query("SELECT COUNT(*) FROM job_applications");
-                $totalApplications = $stmt->fetchColumn();
-                ?>
-                <div class="col-md-3">
-                    <div class="stat-card">
-                        <h3 class="display-4 fw-bold text-primary"><?php echo $activeJobs; ?></h3>
-                        <p class="text-muted">Active Jobs</p>
+            <?php
+            $stmt = $pdo->query("SELECT COUNT(*) FROM job_postings WHERE status = 'active'");
+            $activeJobs = $stmt->fetchColumn();
+
+            $stmt = $pdo->query("SELECT COUNT(*) FROM companies WHERE status = 'active'");
+            $activeCompanies = $stmt->fetchColumn();
+
+            $stmt = $pdo->query("SELECT COUNT(*) FROM employee_profiles");
+            $totalEmployees = $stmt->fetchColumn();
+
+            $stmt = $pdo->query("SELECT COUNT(*) FROM job_applications");
+            $totalApplications = $stmt->fetchColumn();
+            ?>
+            <div class="home-stats-panel">
+                <div class="row g-0">
+                    <div class="col-6 col-lg-3">
+                        <div class="home-stat-cell">
+                            <span class="home-stat-icon home-stat-icon--jobs"><i class="fas fa-briefcase"></i></span>
+                            <span class="home-stat-value"><?php echo (int) $activeJobs; ?></span>
+                            <span class="home-stat-label">Active jobs</span>
+                        </div>
                     </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="stat-card">
-                        <h3 class="display-4 fw-bold text-primary"><?php echo $activeCompanies; ?></h3>
-                        <p class="text-muted">Companies</p>
+                    <div class="col-6 col-lg-3">
+                        <div class="home-stat-cell">
+                            <span class="home-stat-icon home-stat-icon--companies"><i class="fas fa-city"></i></span>
+                            <span class="home-stat-value"><?php echo (int) $activeCompanies; ?></span>
+                            <span class="home-stat-label">Companies</span>
+                        </div>
                     </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="stat-card">
-                        <h3 class="display-4 fw-bold text-warning"><?php echo $totalEmployees; ?></h3>
-                        <p class="text-muted">Job Seekers</p>
+                    <div class="col-6 col-lg-3">
+                        <div class="home-stat-cell">
+                            <span class="home-stat-icon home-stat-icon--seekers"><i class="fas fa-users"></i></span>
+                            <span class="home-stat-value"><?php echo (int) $totalEmployees; ?></span>
+                            <span class="home-stat-label">Job seekers</span>
+                        </div>
                     </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="stat-card">
-                        <h3 class="display-4 fw-bold text-info"><?php echo $totalApplications; ?></h3>
-                        <p class="text-muted">Applications</p>
+                    <div class="col-6 col-lg-3">
+                        <div class="home-stat-cell">
+                            <span class="home-stat-icon home-stat-icon--apps"><i class="fas fa-paper-plane"></i></span>
+                            <span class="home-stat-value"><?php echo (int) $totalApplications; ?></span>
+                            <span class="home-stat-label">Applications</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -430,15 +441,27 @@
     </section>
 
     <!-- Footer -->
-    <footer class="footer-dark text-white py-4">
+    <footer class="home-footer">
         <div class="container">
-            <div class="row">
-                <div class="col-md-6">
-                    <h5><i class="fas fa-briefcase me-2"></i>WORKLINK</h5>
-                    <p class="text-muted">Connecting talent with opportunity since 2025.</p>
+            <div class="row align-items-start align-items-lg-center gy-4 py-4 py-lg-5">
+                <div class="col-lg-5">
+                    <a href="index.php" class="d-inline-block mb-3">
+                        <img src="images/LOGO.png" alt="WORKLINK Job Seeker System" class="home-footer-logo">
+                    </a>
+                    <p class="home-footer-tagline mb-0">Connecting talent with opportunity.</p>
                 </div>
-                <div class="col-md-6 text-md-end">
-                    <p class="text-muted mb-0">&copy; 2025 WORKLINK. All rights reserved.</p>
+                <div class="col-lg-4">
+                    <p class="home-footer-nav-title mb-2">Explore</p>
+                    <nav class="home-footer-nav" aria-label="Footer">
+                        <a href="jobs.php">Jobs</a>
+                        <a href="companies.php">Companies</a>
+                        <a href="about.php">About</a>
+                        <a href="contact.php">Contact</a>
+                    </nav>
+                </div>
+                <div class="col-lg-3 text-lg-end">
+                    <p class="home-footer-copy mb-1">&copy; <?php echo date('Y'); ?> WORKLINK. All rights reserved.</p>
+                    <p class="home-footer-note mb-0">Job Seeker System</p>
                 </div>
             </div>
         </div>
@@ -637,67 +660,284 @@
             animation: slideInLeft 1s ease-out 0.2s both;
         }
 
-        .section-soft {
-            background: var(--wl-soft);
+        .home-why-section {
+            position: relative;
+            background:
+                linear-gradient(180deg, #f8fafc 0%, #eef2ff 35%, #f8fafc 100%);
+            overflow: hidden;
         }
 
-        .section-title {
+        .home-why-section::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image:
+                radial-gradient(circle at 12% 20%, rgba(30, 58, 138, 0.06) 0%, transparent 45%),
+                radial-gradient(circle at 88% 70%, rgba(20, 184, 166, 0.08) 0%, transparent 42%);
+            pointer-events: none;
+        }
+
+        .home-why-section .container {
+            position: relative;
+            z-index: 1;
+        }
+
+        .home-eyebrow {
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: #4338ca;
+        }
+
+        .home-section-heading {
+            font-size: clamp(1.65rem, 4vw, 2.25rem);
+            font-weight: 800;
+            color: var(--wl-primary);
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+        }
+
+        .home-lead {
+            font-size: 1.05rem;
+            line-height: 1.65;
+            max-width: 36rem;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .home-feature-card {
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 1.75rem 1.5rem;
+            box-shadow: 0 4px 20px rgba(15, 23, 42, 0.06);
+            transition: border-color 0.2s ease, box-shadow 0.25s ease, transform 0.2s ease;
+            border-top: 3px solid transparent;
+        }
+
+        .home-feature-card:hover {
+            transform: translateY(-4px);
+            border-color: #c7d2fe;
+            box-shadow: 0 16px 40px rgba(30, 58, 138, 0.12);
+        }
+
+        .row.g-4 > div:nth-child(1) .home-feature-card {
+            border-top-color: #1e3a8a;
+        }
+
+        .row.g-4 > div:nth-child(2) .home-feature-card {
+            border-top-color: #0d9488;
+        }
+
+        .row.g-4 > div:nth-child(3) .home-feature-card {
+            border-top-color: #4f46e5;
+        }
+
+        .home-feature-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.35rem;
+            margin-bottom: 1.15rem;
+        }
+
+        .home-feature-icon--seeker {
+            background: #e0e7ff;
+            color: #3730a3;
+        }
+
+        .home-feature-icon--employer {
+            background: #ccfbf1;
+            color: #0f766e;
+        }
+
+        .home-feature-icon--match {
+            background: #fef3c7;
+            color: #b45309;
+        }
+
+        .home-feature-title {
+            font-size: 1.15rem;
+            font-weight: 700;
             color: var(--wl-ink);
+            margin-bottom: 0.65rem;
         }
 
-        .section-subtitle {
-            max-width: 560px;
-            margin: 0 auto;
+        .home-feature-text {
+            color: #64748b;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 1rem;
         }
 
-        .feature-card {
-            border-radius: 20px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            background: var(--wl-card);
+        .home-feature-bullets {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            font-size: 0.875rem;
+            color: #475569;
         }
 
-        .feature-card:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 20px 40px rgba(15, 23, 42, 0.12);
+        .home-feature-bullets li {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.4rem;
         }
 
-        .icon-bubble {
-            width: 70px;
-            height: 70px;
+        .home-feature-bullets li:last-child {
+            margin-bottom: 0;
+        }
+
+        .home-feature-bullets i {
+            color: #059669;
+            font-size: 0.7rem;
+        }
+
+        .home-stats-section {
+            background: linear-gradient(180deg, #f1f5f9 0%, #e2e8f0 100%);
+            padding-top: 2.5rem !important;
+            padding-bottom: 2.5rem !important;
+        }
+
+        .home-stats-panel {
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            box-shadow: 0 8px 30px rgba(15, 23, 42, 0.08);
+            overflow: hidden;
+        }
+
+        .home-stat-cell {
+            padding: 1.75rem 1rem;
+            text-align: center;
+            border-right: 1px solid #f1f5f9;
+            border-bottom: 1px solid #f1f5f9;
+            height: 100%;
+            min-height: 140px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.35rem;
+            transition: background 0.2s ease;
+        }
+
+        @media (min-width: 992px) {
+            .home-stat-cell {
+                border-bottom: none;
+            }
+            .row.g-0 > div:last-child .home-stat-cell {
+                border-right: none;
+            }
+        }
+
+        @media (max-width: 991.98px) {
+            .col-6:nth-child(2n) .home-stat-cell {
+                border-right: none;
+            }
+            .row.g-0 > div:nth-last-child(-n+2) .home-stat-cell {
+                border-bottom: none;
+            }
+        }
+
+        .home-stat-cell:hover {
+            background: #fafbff;
+        }
+
+        .home-stat-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            border-radius: 18px;
-            font-size: 28px;
-            color: #ffffff;
-            box-shadow: 0 12px 20px rgba(15, 23, 42, 0.15);
+            font-size: 1rem;
+            margin-bottom: 0.25rem;
         }
 
-        .icon-primary {
-            background: linear-gradient(135deg, var(--wl-primary), var(--wl-primary-dark));
+        .home-stat-icon--jobs { background: #dbeafe; color: #1d4ed8; }
+        .home-stat-icon--companies { background: #e0e7ff; color: #4338ca; }
+        .home-stat-icon--seekers { background: #ccfbf1; color: #0f766e; }
+        .home-stat-icon--apps { background: #cffafe; color: #0e7490; }
+
+        .home-stat-value {
+            font-size: clamp(1.75rem, 4vw, 2.35rem);
+            font-weight: 800;
+            color: var(--wl-primary);
+            line-height: 1.1;
+            letter-spacing: -0.02em;
         }
 
-        .icon-secondary {
-            background: linear-gradient(135deg, #38bdf8, #0ea5e9);
+        .home-stat-label {
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: #64748b;
         }
 
-        .icon-accent {
-            background: linear-gradient(135deg, var(--wl-accent), #f97316);
+        .home-footer {
+            background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 45%, #172554 100%);
+            color: rgba(255, 255, 255, 0.92);
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
         }
 
-        .stats-section {
-            background: linear-gradient(135deg, rgba(30, 58, 138, 0.12), rgba(29, 78, 216, 0.08));
+        .home-footer-logo {
+            height: 44px;
+            width: auto;
+            max-width: 240px;
+            object-fit: contain;
+            background: rgba(255, 255, 255, 0.96);
+            padding: 8px 14px;
+            border-radius: 12px;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
         }
 
-        .stat-card {
-            background: var(--wl-card);
-            border-radius: 18px;
-            padding: 2rem 1.5rem;
-            box-shadow: 0 16px 30px rgba(15, 23, 42, 0.08);
+        .home-footer-tagline {
+            font-size: 0.95rem;
+            color: rgba(226, 232, 240, 0.85);
+            max-width: 22rem;
         }
 
-        .footer-dark {
-            background: #0b1220;
+        .home-footer-nav-title {
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: rgba(255, 255, 255, 0.55);
+        }
+
+        .home-footer-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem 1.25rem;
+        }
+
+        .home-footer-nav a {
+            color: rgba(255, 255, 255, 0.88);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: color 0.2s ease;
+        }
+
+        .home-footer-nav a:hover {
+            color: #5eead4;
+        }
+
+        .home-footer-copy {
+            font-size: 0.85rem;
+            color: rgba(226, 232, 240, 0.75);
+        }
+
+        .home-footer-note {
+            font-size: 0.75rem;
+            color: rgba(148, 163, 184, 0.9);
         }
         
         .hero-content .btn {

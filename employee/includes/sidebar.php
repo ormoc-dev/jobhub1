@@ -14,7 +14,7 @@ $firstName = $userData['first_name'] ?? '';
 $displayName = $firstName !== '' ? ('Hi ' . $firstName) : ('Hi ' . ($_SESSION['username'] ?? 'Employee'));
 ?>
 <!-- Employee Sidebar -->
-<div class="sidebar">
+<div class="sidebar employee-sidebar">
     <div class="sidebar-wrapper d-flex flex-column h-100">
         <a href="../index.php" class="navbar-brand">
             <img src="../images/LOGO.png" alt="WORKLINK"  style="height: 70px; width: 100%;  object-fit: cover;">
@@ -76,14 +76,14 @@ $displayName = $firstName !== '' ? ('Hi ' . $firstName) : ('Hi ' . ($_SESSION['u
                 <?php endif; ?>
                 <div>
                     <span><?php echo htmlspecialchars($displayName); ?></span>
-                    <small style="color: #94a3b8; display: block; font-size: 0.75rem;"><?php echo htmlspecialchars($userData['email'] ?? ''); ?></small>
+                    <small class="d-block" style="font-size: 0.75rem;"><?php echo htmlspecialchars($userData['email'] ?? ''); ?></small>
                 </div>
             </a>
-            <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownUser1">
+            <ul class="dropdown-menu dropdown-menu-end shadow border-0" aria-labelledby="dropdownUser1">
                 <li><a class="dropdown-item" href="../logout.php"><i class="fas fa-sign-out-alt me-2"></i>Sign out</a></li>
             </ul>
         </div>
     </div>
 </div>
 
-<link href="css/minimal.css" rel="stylesheet">
+<link href="css/modern.css" rel="stylesheet">

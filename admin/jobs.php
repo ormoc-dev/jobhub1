@@ -247,59 +247,168 @@ $categories = $pdo->query("SELECT id, category_name FROM job_categories WHERE st
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="../assets/style.css" rel="stylesheet">
     <style>
-        .jobs-nav {
-            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
-            border-radius: 16px;
-            padding: 8px;
-            margin-bottom: 24px;
-            box-shadow: 0 4px 20px rgba(30, 58, 138, 0.3);
+        .jobs-admin-page .admin-main-content {
+            background: linear-gradient(180deg, #eef2ff 0%, #f8fafc 18%, #f1f5f9 55%, #f8fafc 100%);
         }
-        .jobs-nav .nav-link {
-            color: rgba(255,255,255,0.7);
+
+        .jobs-page-header {
+            padding: 1.25rem 1.5rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(120deg, #ffffff 0%, #f5f8ff 50%, #eef4ff 100%);
+            border: 1px solid rgba(37, 99, 235, 0.12);
+            border-radius: 14px;
+            box-shadow: 0 2px 8px rgba(30, 58, 138, 0.06);
+        }
+
+        .jobs-page-header h1 {
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: #1e3a8a;
+            margin-bottom: 0.35rem;
+        }
+
+        .jobs-page-header .text-muted {
+            color: #64748b !important;
+        }
+
+        .jobs-admin-page .jobs-nav {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
             border-radius: 12px;
-            padding: 14px 20px;
+            padding: 6px;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+        }
+
+        .jobs-admin-page .jobs-nav .nav {
+            flex-wrap: wrap;
+            gap: 4px;
+        }
+
+        .jobs-admin-page .jobs-nav .nav-link {
+            color: #64748b;
+            border-radius: 10px;
+            padding: 12px 16px;
             font-weight: 600;
-            transition: all 0.3s ease;
+            font-size: 0.875rem;
+            transition: background 0.2s ease, color 0.2s ease;
             border: none;
             display: flex;
             align-items: center;
             gap: 10px;
         }
-        .jobs-nav .nav-link:hover {
-            color: #fff;
-            background: rgba(255,255,255,0.1);
+
+        .jobs-admin-page .jobs-nav .nav-link:hover {
+            color: #1e40af;
+            background: #f1f5f9;
         }
-        .jobs-nav .nav-link.active {
-            background: #fff;
-            color: #1e3a8a;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+
+        .jobs-admin-page .jobs-nav .nav-link.active {
+            background: linear-gradient(180deg, #2563eb 0%, #1d4ed8 100%);
+            color: #ffffff;
+            box-shadow: 0 4px 14px rgba(37, 99, 235, 0.25);
         }
-        .jobs-nav .badge {
-            font-size: 11px;
+
+        .jobs-admin-page .jobs-nav .badge {
+            font-size: 0.65rem;
             padding: 4px 8px;
-            border-radius: 20px;
+            border-radius: 6px;
+            font-weight: 600;
         }
+
+        .jobs-admin-page .jobs-nav .nav-link.active .badge {
+            background: rgba(255, 255, 255, 0.28) !important;
+            color: #ffffff !important;
+        }
+
         .stat-mini {
-            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
-            border-radius: 12px;
-            padding: 16px 20px;
-            text-align: center;
+            background: linear-gradient(165deg, #ffffff 0%, #fafbff 100%);
             border: 1px solid #e2e8f0;
-            transition: all 0.3s ease;
+            border-radius: 12px;
+            padding: 1rem 0.85rem;
+            text-align: center;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+            box-shadow: 0 1px 3px rgba(30, 58, 138, 0.06);
         }
+
+        .stat-mini--total { border-left: 3px solid #2563eb; }
+        .stat-mini--total h3 { color: #1d4ed8; }
+
+        .stat-mini--pending { border-left: 3px solid #d97706; }
+        .stat-mini--pending h3 { color: #b45309; }
+
+        .stat-mini--active { border-left: 3px solid #059669; }
+        .stat-mini--active h3 { color: #047857; }
+
+        .stat-mini--flagged { border-left: 3px solid #dc2626; }
+        .stat-mini--flagged h3 { color: #b91c1c; }
+
+        .stat-mini--closed { border-left: 3px solid #64748b; }
+        .stat-mini--closed h3 { color: #475569; }
+
+        .stat-mini--categories { border-left: 3px solid #7c3aed; }
+        .stat-mini--categories h3 { color: #6d28d9; }
+
         .stat-mini:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+            border-color: #cbd5e1;
+            box-shadow: 0 10px 28px rgba(30, 58, 138, 0.08);
         }
+
         .stat-mini h3 {
-            font-size: 1.75rem;
+            font-size: 1.35rem;
             font-weight: 700;
             margin: 0;
+            line-height: 1.15;
         }
+
         .stat-mini p {
-            margin: 4px 0 0;
-            font-size: 0.85rem;
+            margin: 0.4rem 0 0;
+            font-size: 0.6875rem;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
             color: #64748b;
+        }
+
+        .jobs-panel {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05);
+        }
+
+        .jobs-panel-header {
+            background: linear-gradient(180deg, #f8fafc 0%, #f0f6ff 100%);
+            border-bottom: 1px solid rgba(37, 99, 235, 0.1);
+            padding: 0.9rem 1.25rem;
+        }
+
+        .jobs-panel-header h5 {
+            margin: 0;
+            font-weight: 600;
+            font-size: 1rem;
+            color: #334155;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            flex: 1;
+        }
+
+        .jobs-admin-page .jobs-nav .nav-pills .nav-link:not(.active) {
+            background: transparent;
+        }
+
+        .jobs-admin-page .jobs-nav .nav-link.active:hover,
+        .jobs-admin-page .jobs-nav .nav-link.active:focus {
+            background: linear-gradient(180deg, #2563eb 0%, #1d4ed8 100%);
+            color: #ffffff;
+        }
+
+        .jobs-panel-header .fas {
+            color: #2563eb !important;
+            opacity: 0.88;
         }
         .job-card {
             background: #fff;
@@ -371,13 +480,21 @@ $categories = $pdo->query("SELECT id, category_name FROM job_categories WHERE st
         }
         .empty-state {
             text-align: center;
-            padding: 60px 20px;
+            padding: 3rem 1.25rem;
             color: #94a3b8;
         }
         .empty-state i {
-            font-size: 4rem;
-            margin-bottom: 16px;
-            opacity: 0.5;
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #cbd5e1;
+            opacity: 1;
+        }
+        .empty-state h5 {
+            color: #475569;
+            font-weight: 600;
+        }
+        .job-card--flagged {
+            border-left: 3px solid #dc2626 !important;
         }
         .search-box {
             position: relative;
@@ -486,24 +603,24 @@ $categories = $pdo->query("SELECT id, category_name FROM job_categories WHERE st
         }
     </style>
 </head>
-<body class="admin-layout">
+<body class="admin-layout jobs-admin-page">
     <?php include 'includes/sidebar.php'; ?>
 
     <!-- Main Content -->
     <div class="admin-main-content">
         <div class="container-fluid px-4 py-4">
             <!-- Page Header -->
-            <div class="d-flex justify-content-between align-items-center mb-4">
+            <div class="jobs-page-header d-flex justify-content-between align-items-start flex-wrap gap-3">
                 <div>
-                    <h1 class="h3 mb-1 fw-bold" style="color: #1e293b;">Job Management</h1>
+                    <h1 class="h3 mb-1">Job management</h1>
                     <p class="text-muted mb-0">Manage job postings, approvals, and categories</p>
                 </div>
-                <div class="d-flex gap-2">
+                <div class="d-flex gap-2 flex-shrink-0">
                     <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#addCategoryModal">
-                        <i class="fas fa-tags me-1"></i>Add Category
+                        <i class="fas fa-tags me-1"></i>Add category
                     </button>
-                    <button type="button" class="btn text-white" style="background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);" data-bs-toggle="modal" data-bs-target="#addJobModal">
-                        <i class="fas fa-plus me-1"></i>Add Job
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addJobModal">
+                        <i class="fas fa-plus me-1"></i>Add job
                     </button>
                 </div>
             </div>
@@ -526,38 +643,38 @@ $categories = $pdo->query("SELECT id, category_name FROM job_categories WHERE st
             <!-- Statistics Row -->
             <div class="row g-3 mb-4">
                 <div class="col-md-2 col-sm-4 col-6">
-                    <div class="stat-mini">
-                        <h3 style="color: #3b82f6;"><?php echo $stats['total']; ?></h3>
-                        <p>Total Jobs</p>
+                    <div class="stat-mini stat-mini--total">
+                        <h3><?php echo $stats['total']; ?></h3>
+                        <p>Total jobs</p>
                     </div>
                 </div>
                 <div class="col-md-2 col-sm-4 col-6">
-                    <div class="stat-mini">
-                        <h3 style="color: #f59e0b;"><?php echo $stats['pending']; ?></h3>
+                    <div class="stat-mini stat-mini--pending">
+                        <h3><?php echo $stats['pending']; ?></h3>
                         <p>Pending</p>
                     </div>
                 </div>
                 <div class="col-md-2 col-sm-4 col-6">
-                    <div class="stat-mini">
-                        <h3 style="color: #10b981;"><?php echo $stats['active']; ?></h3>
+                    <div class="stat-mini stat-mini--active">
+                        <h3><?php echo $stats['active']; ?></h3>
                         <p>Active</p>
                     </div>
                 </div>
                 <div class="col-md-2 col-sm-4 col-6">
-                    <div class="stat-mini">
-                        <h3 style="color: #ef4444;"><?php echo $stats['flagged']; ?></h3>
+                    <div class="stat-mini stat-mini--flagged">
+                        <h3><?php echo $stats['flagged']; ?></h3>
                         <p>Flagged</p>
                     </div>
                 </div>
                 <div class="col-md-2 col-sm-4 col-6">
-                    <div class="stat-mini">
-                        <h3 style="color: #6b7280;"><?php echo $stats['closed']; ?></h3>
+                    <div class="stat-mini stat-mini--closed">
+                        <h3><?php echo $stats['closed']; ?></h3>
                         <p>Closed</p>
                     </div>
                 </div>
                 <div class="col-md-2 col-sm-4 col-6">
-                    <div class="stat-mini">
-                        <h3 style="color: #8b5cf6;"><?php echo $stats['categories']; ?></h3>
+                    <div class="stat-mini stat-mini--categories">
+                        <h3><?php echo $stats['categories']; ?></h3>
                         <p>Categories</p>
                     </div>
                 </div>
@@ -625,9 +742,9 @@ $categories = $pdo->query("SELECT id, category_name FROM job_categories WHERE st
                 <!-- Job Post Approval Tab -->
                 <?php if ($activeTab === 'approval'): ?>
                 <div class="tab-pane fade show active">
-                    <div class="card border-0 shadow-sm" style="border-radius: 16px;">
-                        <div class="card-header bg-white border-0 py-3 px-4" style="border-radius: 16px 16px 0 0;">
-                            <h5 class="mb-0 fw-bold"><i class="fas fa-hourglass-half me-2 text-warning"></i>Pending Job Approvals</h5>
+                    <div class="jobs-panel">
+                        <div class="jobs-panel-header">
+                            <h5><i class="fas fa-hourglass-half me-2"></i>Pending job approvals</h5>
                         </div>
                         <div class="card-body p-4">
                             <?php if (empty($pendingJobs)): ?>
@@ -693,9 +810,9 @@ $categories = $pdo->query("SELECT id, category_name FROM job_categories WHERE st
                 <!-- Active Job Listings Tab -->
                 <?php if ($activeTab === 'active'): ?>
                 <div class="tab-pane fade show active">
-                    <div class="card border-0 shadow-sm" style="border-radius: 16px;">
-                        <div class="card-header bg-white border-0 py-3 px-4" style="border-radius: 16px 16px 0 0;">
-                            <h5 class="mb-0 fw-bold"><i class="fas fa-briefcase me-2 text-success"></i>Active Job Listings</h5>
+                    <div class="jobs-panel">
+                        <div class="jobs-panel-header">
+                            <h5><i class="fas fa-briefcase me-2"></i>Active job listings</h5>
                         </div>
                         <div class="card-body p-4">
                             <?php if (empty($activeJobs)): ?>
@@ -766,9 +883,9 @@ $categories = $pdo->query("SELECT id, category_name FROM job_categories WHERE st
                 <!-- Flagged / Reported Jobs Tab -->
                 <?php if ($activeTab === 'flagged'): ?>
                 <div class="tab-pane fade show active">
-                    <div class="card border-0 shadow-sm" style="border-radius: 16px;">
-                        <div class="card-header bg-white border-0 py-3 px-4" style="border-radius: 16px 16px 0 0;">
-                            <h5 class="mb-0 fw-bold"><i class="fas fa-flag me-2 text-danger"></i>Flagged / Reported Jobs</h5>
+                    <div class="jobs-panel">
+                        <div class="jobs-panel-header">
+                            <h5><i class="fas fa-flag me-2"></i>Flagged / reported jobs</h5>
                         </div>
                         <div class="card-body p-4">
                             <?php if (empty($flaggedJobs)): ?>
@@ -779,7 +896,7 @@ $categories = $pdo->query("SELECT id, category_name FROM job_categories WHERE st
                             </div>
                             <?php else: ?>
                                 <?php foreach ($flaggedJobs as $job): ?>
-                                <div class="job-card" style="border-left: 4px solid #ef4444;">
+                                <div class="job-card job-card--flagged">
                                     <div class="row align-items-center">
                                         <div class="col-md-7">
                                             <div class="job-title"><?php echo htmlspecialchars($job['title']); ?></div>
@@ -831,11 +948,11 @@ $categories = $pdo->query("SELECT id, category_name FROM job_categories WHERE st
                 <!-- Job Categories Tab -->
                 <?php if ($activeTab === 'categories'): ?>
                 <div class="tab-pane fade show active">
-                    <div class="card border-0 shadow-sm" style="border-radius: 16px;">
-                        <div class="card-header bg-white border-0 py-3 px-4 d-flex justify-content-between align-items-center" style="border-radius: 16px 16px 0 0;">
-                            <h5 class="mb-0 fw-bold"><i class="fas fa-tags me-2 text-info"></i>Job Categories</h5>
-                            <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addCategoryModal">
-                                <i class="fas fa-plus me-1"></i>Add Category
+                    <div class="jobs-panel">
+                        <div class="jobs-panel-header d-flex justify-content-between align-items-center flex-wrap gap-2">
+                            <h5 class="mb-0"><i class="fas fa-tags me-2"></i>Job categories</h5>
+                            <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addCategoryModal">
+                                <i class="fas fa-plus me-1"></i>Add category
                             </button>
                         </div>
                         <div class="card-body p-4">

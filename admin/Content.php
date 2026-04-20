@@ -209,314 +209,286 @@ $stats = [
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link href="../assets/style.css" rel="stylesheet">
-    <style>
-        :root {
-            --coral: #f97316;
-            --coral-light: #fb923c;
-            --coral-dark: #ea580c;
-            --teal: #14b8a6;
-            --teal-light: #2dd4bf;
-            --purple: #8b5cf6;
-            --rose: #f43f5e;
-            --amber: #f59e0b;
-            --sky: #0ea5e9;
-            --slate-900: #0f172a;
-            --slate-800: #1e293b;
-            --slate-700: #334155;
-            --slate-600: #475569;
-            --slate-500: #64748b;
-            --slate-400: #94a3b8;
-            --slate-300: #cbd5e1;
-            --slate-100: #f1f5f9;
-        }
-        
-        .content-page {
+        <style>
+.content-admin-page .admin-main-content {
             font-family: 'Plus Jakarta Sans', sans-serif;
-            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #0f172a 100%);
-            min-height: 100vh;
+            background: linear-gradient(180deg, #eef2ff 0%, #f8fafc 18%, #f1f5f9 55%, #f8fafc 100%);
+            padding: 1.5rem 2rem 2.5rem;
         }
-        
-        .content-page .admin-main-content {
-            background: transparent;
-            padding: 24px 32px;
-        }
-        
-        /* Page Header */
-        .page-header {
-            margin-bottom: 28px;
+
+        .content-page-header {
+            margin-bottom: 1.5rem;
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
             flex-wrap: wrap;
             gap: 16px;
+            padding: 1.25rem 1.5rem;
+            background: linear-gradient(120deg, #ffffff 0%, #f5f8ff 50%, #fff7ed 100%);
+            border: 1px solid rgba(37, 99, 235, 0.12);
+            border-radius: 14px;
+            box-shadow: 0 2px 8px rgba(30, 58, 138, 0.06);
         }
-        
-        .page-header h1 {
-            font-weight: 800;
-            font-size: 1.85rem;
-            color: #fff;
-            margin-bottom: 6px;
+
+        .content-page-header h1 {
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: #1e3a8a;
+            margin-bottom: 0.35rem;
             display: flex;
             align-items: center;
             gap: 14px;
         }
-        
-        .page-header h1 .icon-wrapper {
+
+        .content-page-header h1 .icon-wrapper {
             width: 48px;
             height: 48px;
-            background: linear-gradient(135deg, var(--coral), var(--coral-light));
+            background: linear-gradient(135deg, #ffedd5 0%, #fed7aa 100%);
+            border: 1px solid rgba(234, 88, 12, 0.2);
             border-radius: 14px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 22px;
-            box-shadow: 0 8px 24px rgba(249, 115, 22, 0.3);
+            font-size: 1.25rem;
+            color: #ea580c;
+            box-shadow: 0 2px 8px rgba(234, 88, 12, 0.12);
         }
-        
-        .page-header p {
-            color: var(--slate-400);
+
+        .content-page-header p {
+            color: #64748b;
             margin: 0;
             font-size: 0.95rem;
         }
-        
-        /* Stats Grid */
+
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 16px;
-            margin-bottom: 28px;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
         }
-        
+
         @media (max-width: 1200px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
         @media (max-width: 576px) { .stats-grid { grid-template-columns: 1fr; } }
-        
+
         .stat-card {
-            background: var(--slate-800);
-            border: 1px solid rgba(255,255,255,0.05);
-            border-radius: 18px;
-            padding: 22px;
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 14px;
+            padding: 1.25rem;
             position: relative;
             overflow: hidden;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: box-shadow 0.2s, border-color 0.2s;
+            box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05);
         }
-        
-        .stat-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            opacity: 0.1;
-            transition: all 0.4s ease;
-        }
-        
+
         .stat-card:hover {
-            transform: translateY(-6px);
-            border-color: rgba(255,255,255,0.1);
-            box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+            border-color: rgba(37, 99, 235, 0.2);
+            box-shadow: 0 4px 14px rgba(30, 58, 138, 0.08);
         }
-        
-        .stat-card:hover::before {
-            transform: scale(1.5);
-            opacity: 0.15;
-        }
-        
-        .stat-card.announcements::before { background: var(--coral); }
-        .stat-card.faqs::before { background: var(--teal); }
-        .stat-card.resources::before { background: var(--purple); }
-        .stat-card.pages::before { background: var(--sky); }
-        
+
         .stat-card .stat-icon {
-            width: 56px;
-            height: 56px;
-            border-radius: 16px;
+            width: 52px;
+            height: 52px;
+            border-radius: 14px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 24px;
-            margin-bottom: 16px;
+            font-size: 1.35rem;
+            margin-bottom: 14px;
         }
-        
-        .stat-card.announcements .stat-icon { background: linear-gradient(135deg, var(--coral), var(--coral-light)); color: white; }
-        .stat-card.faqs .stat-icon { background: linear-gradient(135deg, var(--teal), var(--teal-light)); color: white; }
-        .stat-card.resources .stat-icon { background: linear-gradient(135deg, var(--purple), #a78bfa); color: white; }
-        .stat-card.pages .stat-icon { background: linear-gradient(135deg, var(--sky), #38bdf8); color: white; }
-        
+
+        .stat-card.announcements .stat-icon { background: #ffedd5; color: #c2410c; }
+        .stat-card.faqs .stat-icon { background: #ccfbf1; color: #0f766e; }
+        .stat-card.resources .stat-icon { background: #ede9fe; color: #6d28d9; }
+        .stat-card.pages .stat-icon { background: #e0f2fe; color: #0369a1; }
+
         .stat-card h3 {
-            font-size: 2rem;
-            font-weight: 800;
-            color: #fff;
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: #0f172a;
             margin: 0;
-            line-height: 1;
+            line-height: 1.1;
         }
-        
+
         .stat-card .stat-label {
-            color: var(--slate-400);
-            font-size: 0.85rem;
+            color: #64748b;
+            font-size: 0.875rem;
             font-weight: 500;
             margin-top: 4px;
         }
-        
+
         .stat-card .stat-sub {
             font-size: 0.75rem;
-            color: var(--slate-500);
+            color: #94a3b8;
             margin-top: 8px;
         }
-        
+
         .stat-card .stat-sub span {
-            color: #4ade80;
+            color: #047857;
             font-weight: 600;
         }
-        
-        /* Alert */
+
         .alert-custom {
-            border: none;
-            border-radius: 14px;
-            padding: 16px 20px;
-            margin-bottom: 24px;
+            border-radius: 12px;
+            padding: 14px 18px;
+            margin-bottom: 1.25rem;
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             gap: 12px;
-            background: rgba(16, 185, 129, 0.12);
-            border-left: 4px solid #10b981;
-            color: #6ee7b7;
+            background: #ecfdf5;
+            border: 1px solid #a7f3d0;
+            color: #065f46;
         }
-        
-        /* Tab Navigation */
+
         .tab-nav {
             display: flex;
             gap: 6px;
-            margin-bottom: 24px;
-            background: var(--slate-800);
+            margin-bottom: 1.25rem;
+            background: #f1f5f9;
             padding: 6px;
-            border-radius: 16px;
-            width: fit-content;
-            border: 1px solid rgba(255,255,255,0.05);
-        }
-        
-        .tab-link {
-            padding: 14px 22px;
             border-radius: 12px;
-            color: var(--slate-400);
+            width: fit-content;
+            max-width: 100%;
+            flex-wrap: wrap;
+            border: 1px solid #e2e8f0;
+        }
+
+        .tab-link {
+            padding: 10px 18px;
+            border-radius: 10px;
+            color: #64748b;
             text-decoration: none;
             font-weight: 600;
-            font-size: 0.9rem;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .tab-link:hover {
-            color: #fff;
-            background: rgba(255,255,255,0.05);
-        }
-        
-        .tab-link.active {
-            color: white;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-        }
-        
-        .tab-link.active.announcements { background: linear-gradient(135deg, var(--coral), var(--coral-dark)); }
-        .tab-link.active.faqs { background: linear-gradient(135deg, var(--teal), #0d9488); }
-        .tab-link.active.resources { background: linear-gradient(135deg, var(--purple), #7c3aed); }
-        .tab-link.active.pages { background: linear-gradient(135deg, var(--sky), #0284c7); }
-        
-        .tab-link .badge {
-            font-size: 0.7rem;
-            padding: 4px 8px;
-            border-radius: 6px;
-            font-weight: 600;
-            background: rgba(255,255,255,0.15);
-        }
-        
-        /* Main Card */
-        .main-card {
-            background: var(--slate-800);
-            border: 1px solid rgba(255,255,255,0.05);
-            border-radius: 20px;
-            overflow: hidden;
-        }
-        
-        .card-header-custom {
-            padding: 20px 24px;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 16px;
-        }
-        
-        .card-header-custom h5 {
-            color: #fff;
-            font-weight: 700;
-            font-size: 1.1rem;
-            margin: 0;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .card-header-custom h5 .count {
-            padding: 4px 10px;
-            border-radius: 8px;
-            font-size: 0.85rem;
-        }
-        
-        .announcements-section .count { background: rgba(249, 115, 22, 0.2); color: var(--coral-light); }
-        .faqs-section .count { background: rgba(20, 184, 166, 0.2); color: var(--teal-light); }
-        .resources-section .count { background: rgba(139, 92, 246, 0.2); color: #a78bfa; }
-        .pages-section .count { background: rgba(14, 165, 233, 0.2); color: #38bdf8; }
-        
-        .btn-add {
-            padding: 12px 20px;
-            border-radius: 12px;
-            font-weight: 600;
-            font-size: 0.9rem;
-            border: none;
-            color: white;
-            cursor: pointer;
-            transition: all 0.3s ease;
+            font-size: 0.875rem;
+            transition: background 0.2s, color 0.2s;
             display: flex;
             align-items: center;
             gap: 8px;
         }
-        
+
+        .tab-link:hover {
+            color: #1e3a8a;
+            background: rgba(255, 255, 255, 0.85);
+        }
+
+        .tab-link.active {
+            color: #0f172a;
+            background: #fff;
+            box-shadow: 0 1px 4px rgba(30, 58, 138, 0.1);
+        }
+
+        .tab-link.active.announcements { color: #c2410c; background: #fff7ed; }
+        .tab-link.active.faqs { color: #0f766e; background: #f0fdfa; }
+        .tab-link.active.resources { color: #6d28d9; background: #f5f3ff; }
+        .tab-link.active.pages { color: #0369a1; background: #f0f9ff; }
+
+        .tab-link .badge {
+            font-size: 0.68rem;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-weight: 600;
+            background: #e2e8f0;
+            color: #475569;
+        }
+
+        .tab-link.active .badge {
+            background: rgba(15, 23, 42, 0.08);
+            color: inherit;
+        }
+
+        .main-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05);
+        }
+
+        .card-header-custom {
+            padding: 1.1rem 1.35rem;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 14px;
+            background: linear-gradient(120deg, #fafbff 0%, #f8fafc 100%);
+        }
+
+        .card-header-custom h5 {
+            color: #1e3a8a;
+            font-weight: 700;
+            font-size: 1.05rem;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .card-header-custom h5 .count {
+            padding: 4px 10px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .announcements-section .count { background: #ffedd5; color: #c2410c; }
+        .faqs-section .count { background: #ccfbf1; color: #0f766e; }
+        .resources-section .count { background: #ede9fe; color: #6d28d9; }
+        .pages-section .count { background: #e0f2fe; color: #0369a1; }
+
+        .card-header-icon--coral { color: #ea580c; }
+        .card-header-icon--teal { color: #0d9488; }
+        .card-header-icon--purple { color: #7c3aed; }
+        .card-header-icon--sky { color: #0284c7; }
+
+        .btn-add {
+            padding: 10px 18px;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 0.875rem;
+            border: none;
+            color: white;
+            cursor: pointer;
+            transition: box-shadow 0.2s, transform 0.15s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
         .btn-add:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 14px rgba(15, 23, 42, 0.15);
             color: white;
         }
-        
-        .announcements-section .btn-add { background: linear-gradient(135deg, var(--coral), var(--coral-dark)); }
-        .faqs-section .btn-add { background: linear-gradient(135deg, var(--teal), #0d9488); }
-        .resources-section .btn-add { background: linear-gradient(135deg, var(--purple), #7c3aed); }
-        .pages-section .btn-add { background: linear-gradient(135deg, var(--sky), #0284c7); }
-        
-        /* Content Items */
+
+        .announcements-section .btn-add { background: linear-gradient(135deg, #ea580c, #c2410c); }
+        .faqs-section .btn-add { background: linear-gradient(135deg, #0d9488, #0f766e); }
+        .resources-section .btn-add { background: linear-gradient(135deg, #7c3aed, #6d28d9); }
+        .pages-section .btn-add { background: linear-gradient(135deg, #0284c7, #0369a1); }
+
         .content-list {
-            padding: 16px;
+            padding: 14px;
         }
-        
+
         .content-item {
-            background: rgba(15, 23, 42, 0.5);
-            border: 1px solid rgba(255,255,255,0.05);
-            border-radius: 14px;
-            padding: 18px 20px;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 16px 18px;
             margin-bottom: 12px;
-            transition: all 0.3s ease;
+            transition: box-shadow 0.2s, border-color 0.2s;
         }
-        
+
         .content-item:hover {
-            border-color: rgba(255,255,255,0.1);
-            background: rgba(15, 23, 42, 0.8);
+            border-color: rgba(37, 99, 235, 0.2);
+            background: #fff;
+            box-shadow: 0 2px 8px rgba(15, 23, 42, 0.06);
         }
-        
+
         .content-item:last-child { margin-bottom: 0; }
-        
+
         .content-item .item-header {
             display: flex;
             justify-content: space-between;
@@ -524,24 +496,24 @@ $stats = [
             gap: 16px;
             margin-bottom: 10px;
         }
-        
+
         .content-item h6 {
-            color: #fff;
+            color: #0f172a;
             font-weight: 600;
             font-size: 1rem;
             margin: 0;
             flex: 1;
         }
-        
+
         .content-item .item-meta {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
             flex-wrap: wrap;
         }
-        
+
         .content-item .item-preview {
-            color: var(--slate-400);
+            color: #64748b;
             font-size: 0.85rem;
             line-height: 1.5;
             display: -webkit-box;
@@ -549,256 +521,286 @@ $stats = [
             -webkit-box-orient: vertical;
             overflow: hidden;
         }
-        
-        /* Badges */
+
         .badge-type {
             padding: 5px 10px;
             border-radius: 6px;
-            font-size: 0.7rem;
+            font-size: 0.68rem;
             font-weight: 600;
             text-transform: uppercase;
+            border: 1px solid transparent;
         }
-        
-        .badge-type.info { background: rgba(14, 165, 233, 0.15); color: #38bdf8; }
-        .badge-type.warning { background: rgba(245, 158, 11, 0.15); color: #fbbf24; }
-        .badge-type.success { background: rgba(34, 197, 94, 0.15); color: #4ade80; }
-        .badge-type.urgent { background: rgba(239, 68, 68, 0.15); color: #f87171; }
-        
+
+        .badge-type.info { background: #e0f2fe; color: #0369a1; border-color: #bae6fd; }
+        .badge-type.warning { background: #fffbeb; color: #b45309; border-color: #fde68a; }
+        .badge-type.success { background: #ecfdf5; color: #047857; border-color: #a7f3d0; }
+        .badge-type.urgent { background: #fef2f2; color: #b91c1c; border-color: #fecaca; }
+
         .badge-category {
             padding: 5px 10px;
             border-radius: 6px;
-            font-size: 0.7rem;
+            font-size: 0.68rem;
             font-weight: 600;
+            border: 1px solid #e2e8f0;
         }
-        
-        .badge-category.general { background: rgba(100, 116, 139, 0.2); color: var(--slate-300); }
-        .badge-category.employers { background: rgba(139, 92, 246, 0.15); color: #a78bfa; }
-        .badge-category.jobseekers { background: rgba(20, 184, 166, 0.15); color: var(--teal-light); }
-        .badge-category.account { background: rgba(14, 165, 233, 0.15); color: #38bdf8; }
-        .badge-category.technical { background: rgba(245, 158, 11, 0.15); color: #fbbf24; }
-        .badge-category.resume { background: rgba(249, 115, 22, 0.15); color: var(--coral-light); }
-        .badge-category.interview { background: rgba(236, 72, 153, 0.15); color: #f472b6; }
-        .badge-category.career { background: rgba(34, 197, 94, 0.15); color: #4ade80; }
-        .badge-category.skills { background: rgba(99, 102, 241, 0.15); color: #818cf8; }
-        .badge-category.workplace { background: rgba(168, 85, 247, 0.15); color: #c084fc; }
-        
+
+        .badge-category.general { background: #f1f5f9; color: #475569; }
+        .badge-category.employers { background: #ede9fe; color: #6d28d9; }
+        .badge-category.jobseekers { background: #ccfbf1; color: #0f766e; }
+        .badge-category.account { background: #e0f2fe; color: #0369a1; }
+        .badge-category.technical { background: #fffbeb; color: #b45309; }
+        .badge-category.resume { background: #ffedd5; color: #c2410c; }
+        .badge-category.interview { background: #fce7f3; color: #be185d; }
+        .badge-category.career { background: #ecfdf5; color: #047857; }
+        .badge-category.skills { background: #eef2ff; color: #4338ca; }
+        .badge-category.workplace { background: #f3e8ff; color: #7e22ce; }
+
         .badge-status {
             padding: 5px 10px;
             border-radius: 6px;
-            font-size: 0.7rem;
+            font-size: 0.68rem;
             font-weight: 600;
         }
-        
-        .badge-status.active { background: rgba(34, 197, 94, 0.15); color: #4ade80; }
-        .badge-status.inactive { background: rgba(107, 114, 128, 0.15); color: #9ca3af; }
-        .badge-status.featured { background: linear-gradient(135deg, rgba(139, 92, 246, 0.2), rgba(168, 85, 247, 0.2)); color: #c084fc; }
-        
+
+        .badge-status.active { background: #ecfdf5; color: #047857; }
+        .badge-status.inactive { background: #f1f5f9; color: #64748b; }
+        .badge-status.featured { background: #f5f3ff; color: #6d28d9; }
+
         .badge-audience {
             padding: 5px 10px;
             border-radius: 6px;
-            font-size: 0.7rem;
+            font-size: 0.68rem;
             font-weight: 600;
-            background: rgba(255,255,255,0.05);
-            color: var(--slate-300);
+            background: #f1f5f9;
+            color: #475569;
+            border: 1px solid #e2e8f0;
         }
-        
-        /* Action Buttons */
+
         .action-btns {
             display: flex;
             gap: 6px;
         }
-        
+
         .btn-action {
             padding: 8px 12px;
             border-radius: 8px;
             font-size: 0.8rem;
             font-weight: 600;
-            border: none;
+            border: 1px solid transparent;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: background 0.2s;
             display: inline-flex;
             align-items: center;
             gap: 6px;
         }
-        
-        .btn-action:hover { transform: translateY(-2px); }
-        
-        .btn-edit { background: rgba(14, 165, 233, 0.15); color: #38bdf8; }
-        .btn-edit:hover { background: rgba(14, 165, 233, 0.25); color: #38bdf8; }
-        
-        .btn-toggle { background: rgba(245, 158, 11, 0.15); color: #fbbf24; }
-        .btn-toggle:hover { background: rgba(245, 158, 11, 0.25); color: #fbbf24; }
-        
-        .btn-delete { background: rgba(239, 68, 68, 0.15); color: #f87171; }
-        .btn-delete:hover { background: rgba(239, 68, 68, 0.25); color: #f87171; }
-        
-        /* Empty State */
+
+        .btn-edit {
+            background: #fff;
+            color: #0284c7;
+            border-color: rgba(2, 132, 199, 0.35);
+        }
+        .btn-edit:hover { background: #e0f2fe; }
+
+        .btn-toggle {
+            background: #fffbeb;
+            color: #b45309;
+            border-color: #fde68a;
+        }
+        .btn-toggle:hover { background: #fef3c7; }
+
+        .btn-delete {
+            background: #fff;
+            color: #b91c1c;
+            border-color: #fecaca;
+        }
+        .btn-delete:hover { background: #fef2f2; }
+
         .empty-state {
             text-align: center;
-            padding: 60px 20px;
+            padding: 48px 20px;
         }
-        
+
         .empty-state i {
-            font-size: 56px;
-            margin-bottom: 20px;
-            opacity: 0.3;
+            font-size: 52px;
+            margin-bottom: 16px;
+            opacity: 0.35;
         }
-        
-        .announcements-section .empty-state i { color: var(--coral); }
-        .faqs-section .empty-state i { color: var(--teal); }
-        .resources-section .empty-state i { color: var(--purple); }
-        .pages-section .empty-state i { color: var(--sky); }
-        
+
+        .announcements-section .empty-state i { color: #ea580c; }
+        .faqs-section .empty-state i { color: #0d9488; }
+        .resources-section .empty-state i { color: #7c3aed; }
+        .pages-section .empty-state i { color: #0284c7; }
+
         .empty-state h5 {
-            color: var(--slate-300);
+            color: #334155;
             font-weight: 600;
             margin-bottom: 8px;
         }
-        
+
         .empty-state p {
-            color: var(--slate-500);
+            color: #64748b;
             font-size: 0.9rem;
         }
-        
-        /* Modal Styles */
-        .modal-content {
-            background: var(--slate-800);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 20px;
+
+        .content-admin-page .modal-content {
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 14px;
+            box-shadow: 0 12px 40px rgba(15, 23, 42, 0.12);
         }
-        
-        .modal-header {
-            border-radius: 20px 20px 0 0;
-            padding: 20px 24px;
-            border: none;
+
+        .announcements-section .modal-header {
+            background: linear-gradient(120deg, #fff7ed 0%, #ffedd5 100%);
+            border-bottom: 1px solid #fed7aa;
+            border-radius: 14px 14px 0 0;
+            padding: 16px 20px;
         }
-        
-        .announcements-section .modal-header { background: linear-gradient(135deg, var(--coral), var(--coral-dark)); }
-        .faqs-section .modal-header { background: linear-gradient(135deg, var(--teal), #0d9488); }
-        .resources-section .modal-header { background: linear-gradient(135deg, var(--purple), #7c3aed); }
-        .pages-section .modal-header { background: linear-gradient(135deg, var(--sky), #0284c7); }
-        
-        .modal-title {
-            color: white;
+
+        .faqs-section .modal-header {
+            background: linear-gradient(120deg, #f0fdfa 0%, #ccfbf1 100%);
+            border-bottom: 1px solid #99f6e4;
+            border-radius: 14px 14px 0 0;
+            padding: 16px 20px;
+        }
+
+        .resources-section .modal-header {
+            background: linear-gradient(120deg, #f5f3ff 0%, #ede9fe 100%);
+            border-bottom: 1px solid #ddd6fe;
+            border-radius: 14px 14px 0 0;
+            padding: 16px 20px;
+        }
+
+        .pages-section .modal-header {
+            background: linear-gradient(120deg, #f0f9ff 0%, #e0f2fe 100%);
+            border-bottom: 1px solid #bae6fd;
+            border-radius: 14px 14px 0 0;
+            padding: 16px 20px;
+        }
+
+        .content-admin-page .modal-title {
+            color: #1e3a8a;
             font-weight: 700;
         }
-        
-        .modal-body {
-            padding: 24px;
-            color: var(--slate-300);
+
+        .content-admin-page .modal-body {
+            padding: 20px;
+            color: #334155;
         }
-        
-        .modal-footer {
-            padding: 16px 24px;
-            border-top: 1px solid rgba(255,255,255,0.05);
+
+        .content-admin-page .modal-footer {
+            padding: 14px 20px;
+            border-top: 1px solid #e2e8f0;
+            background: #fafafa;
         }
-        
-        .form-label {
-            color: var(--slate-300);
+
+        .content-admin-page .form-label {
+            color: #334155;
             font-weight: 600;
             font-size: 0.85rem;
             margin-bottom: 8px;
         }
-        
-        .form-control, .form-select {
-            background: var(--slate-900);
-            border: 1px solid rgba(255,255,255,0.1);
+
+        .content-admin-page .form-control,
+        .content-admin-page .form-select {
+            background: #fff;
+            border: 1px solid #cbd5e1;
             border-radius: 10px;
-            color: #fff;
-            padding: 12px 16px;
+            color: #0f172a;
+            padding: 10px 14px;
         }
-        
-        .form-control:focus, .form-select:focus {
-            background: var(--slate-900);
-            border-color: var(--coral);
-            box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.15);
-            color: #fff;
+
+        .content-admin-page .form-control:focus,
+        .content-admin-page .form-select:focus {
+            background: #fff;
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+            color: #0f172a;
         }
-        
-        .form-control::placeholder { color: var(--slate-500); }
-        
-        .form-select option {
-            background: var(--slate-800);
-            color: #fff;
+
+        .content-admin-page .form-control::placeholder {
+            color: #94a3b8;
         }
-        
+
+        .content-admin-page .form-select option {
+            background: #fff;
+            color: #0f172a;
+        }
+
         .btn-modal-cancel {
-            background: var(--slate-700);
-            color: var(--slate-300);
-            border: none;
-            padding: 12px 20px;
+            background: #fff;
+            color: #475569;
+            border: 1px solid #cbd5e1;
+            padding: 10px 18px;
             border-radius: 10px;
             font-weight: 600;
         }
-        
+
         .btn-modal-cancel:hover {
-            background: var(--slate-600);
-            color: #fff;
+            background: #f1f5f9;
+            color: #0f172a;
         }
-        
+
         .btn-modal-save {
             color: white;
             border: none;
-            padding: 12px 24px;
+            padding: 10px 20px;
             border-radius: 10px;
             font-weight: 600;
         }
-        
-        .announcements-section .btn-modal-save { background: linear-gradient(135deg, var(--coral), var(--coral-dark)); }
-        .faqs-section .btn-modal-save { background: linear-gradient(135deg, var(--teal), #0d9488); }
-        .resources-section .btn-modal-save { background: linear-gradient(135deg, var(--purple), #7c3aed); }
-        .pages-section .btn-modal-save { background: linear-gradient(135deg, var(--sky), #0284c7); }
-        
+
+        .announcements-section .btn-modal-save { background: linear-gradient(135deg, #ea580c, #c2410c); }
+        .faqs-section .btn-modal-save { background: linear-gradient(135deg, #0d9488, #0f766e); }
+        .resources-section .btn-modal-save { background: linear-gradient(135deg, #7c3aed, #6d28d9); }
+        .pages-section .btn-modal-save { background: linear-gradient(135deg, #0284c7, #0369a1); }
+
         .btn-modal-save:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+            box-shadow: 0 4px 14px rgba(15, 23, 42, 0.15);
             color: white;
         }
-        
-        /* Resource Card */
+
         .resource-card {
-            background: rgba(15, 23, 42, 0.5);
-            border: 1px solid rgba(255,255,255,0.05);
-            border-radius: 16px;
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 14px;
             overflow: hidden;
-            transition: all 0.3s ease;
+            transition: box-shadow 0.2s, border-color 0.2s;
         }
-        
+
         .resource-card:hover {
-            border-color: rgba(255,255,255,0.1);
-            transform: translateY(-4px);
+            border-color: rgba(124, 58, 237, 0.3);
+            box-shadow: 0 6px 20px rgba(15, 23, 42, 0.08);
         }
-        
+
         .resource-card .resource-img {
             width: 100%;
             height: 140px;
             object-fit: cover;
-            background: linear-gradient(135deg, var(--slate-700), var(--slate-800));
+            background: #f1f5f9;
         }
-        
+
         .resource-card .resource-img-placeholder {
             width: 100%;
             height: 140px;
-            background: linear-gradient(135deg, var(--purple), #7c3aed);
+            background: linear-gradient(135deg, #ede9fe, #ddd6fe);
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 40px;
-            color: rgba(255,255,255,0.3);
+            color: rgba(109, 40, 217, 0.35);
         }
-        
+
         .resource-card .resource-body {
             padding: 16px;
         }
-        
+
         .resource-card h6 {
-            color: #fff;
+            color: #0f172a;
             font-weight: 600;
             margin-bottom: 8px;
         }
-        
+
         .resource-card .resource-desc {
-            color: var(--slate-400);
+            color: #64748b;
             font-size: 0.8rem;
             line-height: 1.5;
             display: -webkit-box;
@@ -807,84 +809,82 @@ $stats = [
             overflow: hidden;
             margin-bottom: 12px;
         }
-        
-        /* Page Item */
+
         .page-item {
             display: flex;
             align-items: center;
             gap: 16px;
-            background: rgba(15, 23, 42, 0.5);
-            border: 1px solid rgba(255,255,255,0.05);
-            border-radius: 14px;
-            padding: 18px 20px;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 16px 18px;
             margin-bottom: 12px;
-            transition: all 0.3s ease;
+            transition: box-shadow 0.2s, border-color 0.2s;
         }
-        
+
         .page-item:hover {
-            border-color: rgba(255,255,255,0.1);
+            border-color: rgba(2, 132, 199, 0.35);
+            background: #fff;
         }
-        
+
         .page-item .page-icon {
             width: 48px;
             height: 48px;
             border-radius: 12px;
-            background: linear-gradient(135deg, var(--sky), #0284c7);
+            background: linear-gradient(135deg, #e0f2fe, #bae6fd);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 20px;
-            color: white;
+            font-size: 1.15rem;
+            color: #0369a1;
         }
-        
+
         .page-item .page-info {
             flex: 1;
         }
-        
+
         .page-item h6 {
-            color: #fff;
+            color: #0f172a;
             font-weight: 600;
             margin: 0 0 4px 0;
         }
-        
+
         .page-item .page-slug {
-            color: var(--slate-500);
+            color: #64748b;
             font-size: 0.8rem;
-            font-family: monospace;
+            font-family: ui-monospace, 'Consolas', monospace;
         }
-        
-        /* Form Check */
-        .form-check-input {
-            background-color: var(--slate-700);
-            border-color: var(--slate-600);
+
+        .content-admin-page .form-check-input {
+            background-color: #fff;
+            border-color: #cbd5e1;
         }
-        
-        .form-check-input:checked {
-            background-color: var(--coral);
-            border-color: var(--coral);
+
+        .content-admin-page .form-check-input:checked {
+            background-color: #ea580c;
+            border-color: #ea580c;
         }
-        
-        .form-check-label {
-            color: var(--slate-300);
+
+        .content-admin-page .form-check-label {
+            color: #475569;
         }
-        
-        /* Date display */
+
         .date-info {
             font-size: 0.75rem;
-            color: var(--slate-500);
+            color: #64748b;
         }
-        
+
         .date-info i {
             margin-right: 4px;
         }
     </style>
 </head>
-<body class="admin-layout content-page">
+<body class="admin-layout content-admin-page">
     <?php include 'includes/sidebar.php'; ?>
 
     <div class="admin-main-content">
         <!-- Page Header -->
-        <div class="page-header">
+        <div class="content-page-header">
             <div>
                 <h1>
                     <span class="icon-wrapper"><i class="fas fa-bullhorn"></i></span>
@@ -954,7 +954,7 @@ $stats = [
         <div class="main-card announcements-section">
             <div class="card-header-custom">
                 <h5>
-                    <i class="fas fa-bullhorn" style="color: var(--coral);"></i>
+                    <i class="fas fa-bullhorn card-header-icon--coral"></i>
                     All Announcements
                     <span class="count"><?php echo count($announcements); ?></span>
                 </h5>
@@ -1008,7 +1008,7 @@ $stats = [
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h5 class="modal-title"><i class="fas fa-edit me-2"></i>Edit Announcement</h5>
-                                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                     </div>
                                     <form method="POST">
                                         <div class="modal-body">
@@ -1071,7 +1071,7 @@ $stats = [
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title"><i class="fas fa-plus me-2"></i>New Announcement</h5>
-                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
                     <form method="POST">
                         <div class="modal-body">
@@ -1129,7 +1129,7 @@ $stats = [
         <div class="main-card faqs-section">
             <div class="card-header-custom">
                 <h5>
-                    <i class="fas fa-question-circle" style="color: var(--teal);"></i>
+                    <i class="fas fa-question-circle card-header-icon--teal"></i>
                     Frequently Asked Questions
                     <span class="count"><?php echo count($faqs); ?></span>
                 </h5>
@@ -1182,7 +1182,7 @@ $stats = [
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h5 class="modal-title"><i class="fas fa-edit me-2"></i>Edit FAQ</h5>
-                                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                     </div>
                                     <form method="POST">
                                         <div class="modal-body">
@@ -1232,7 +1232,7 @@ $stats = [
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title"><i class="fas fa-plus me-2"></i>Add New FAQ</h5>
-                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
                     <form method="POST">
                         <div class="modal-body">
@@ -1277,7 +1277,7 @@ $stats = [
         <div class="main-card resources-section">
             <div class="card-header-custom">
                 <h5>
-                    <i class="fas fa-graduation-cap" style="color: var(--purple);"></i>
+                    <i class="fas fa-graduation-cap card-header-icon--purple"></i>
                     Career Resources
                     <span class="count"><?php echo count($resources); ?></span>
                 </h5>
@@ -1338,7 +1338,7 @@ $stats = [
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <h5 class="modal-title"><i class="fas fa-edit me-2"></i>Edit Resource</h5>
-                                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                         </div>
                                         <form method="POST" enctype="multipart/form-data">
                                             <div class="modal-body">
@@ -1397,7 +1397,7 @@ $stats = [
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title"><i class="fas fa-plus me-2"></i>Add Career Resource</h5>
-                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
                     <form method="POST" enctype="multipart/form-data">
                         <div class="modal-body">
@@ -1450,7 +1450,7 @@ $stats = [
         <div class="main-card pages-section">
             <div class="card-header-custom">
                 <h5>
-                    <i class="fas fa-file-alt" style="color: var(--sky);"></i>
+                    <i class="fas fa-file-alt card-header-icon--sky"></i>
                     System Pages
                     <span class="count"><?php echo count($pages); ?></span>
                 </h5>
@@ -1498,7 +1498,7 @@ $stats = [
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h5 class="modal-title"><i class="fas fa-edit me-2"></i>Edit Page</h5>
-                                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                     </div>
                                     <form method="POST">
                                         <div class="modal-body">
@@ -1542,7 +1542,7 @@ $stats = [
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title"><i class="fas fa-plus me-2"></i>Create New Page</h5>
-                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
                     <form method="POST">
                         <div class="modal-body">

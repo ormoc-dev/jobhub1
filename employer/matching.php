@@ -123,123 +123,152 @@ if (!empty($jobs) && !empty($allApplicants)) {
     <link href="../assets/style.css" rel="stylesheet">
     <style>
         :root {
-            --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            --gradient-success: linear-gradient(135deg, #10b981 0%, #059669 100%);
-            --gradient-info: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
-            --gradient-warning: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
-            --shadow-sm: 0 2px 8px rgba(0,0,0,0.08);
-            --shadow-md: 0 4px 16px rgba(0,0,0,0.12);
-            --shadow-lg: 0 8px 24px rgba(0,0,0,0.16);
+            --match-primary: #2563eb;
+            --match-primary-dark: #1d4ed8;
+            --match-success: #059669;
+            --match-success-dark: #047857;
+            --match-warning: #d97706;
+            --match-border: #e2e8f0;
+            --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.06);
+            --shadow-md: 0 4px 12px rgba(15, 23, 42, 0.08);
         }
-        
+
         .matching-header {
-            background: var(--gradient-primary);
-            color: white;
-            padding: 2rem;
-            border-radius: 15px;
-            margin-bottom: 2rem;
-            box-shadow: var(--shadow-md);
+            background: #ffffff;
+            color: #0f172a;
+            padding: 1.75rem 2rem;
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--match-border);
+            box-shadow: var(--shadow-sm);
         }
-        
+
         .matching-header h1 {
             margin: 0;
             font-weight: 700;
             font-size: 2rem;
+            color: #0f172a;
         }
-        
+
+        .matching-header h1 i {
+            color: var(--match-primary);
+        }
+
+        .matching-header p {
+            color: #64748b;
+        }
+
+        #matchingTabs.nav-pills {
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        #matchingTabs .nav-item {
+            margin: 0;
+        }
+
         .nav-pills .nav-link {
-            border-radius: 12px;
-            padding: 12px 24px;
-            margin-right: 10px;
+            border-radius: 10px;
+            padding: 0.65rem 1.25rem;
             font-weight: 500;
-            transition: all 0.3s ease;
-            border: 2px solid transparent;
+            transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+            border: 1px solid var(--match-border);
+            background: #fff;
+            color: #475569;
         }
-        
-    
-        
+
         .nav-pills .nav-link.active {
-            background: var(--gradient-primary);
-            color: white;
-            box-shadow: var(--shadow-md);
-            transform: translateY(-2px);
+            background: var(--match-primary);
+            color: #fff !important;
+            border-color: var(--match-primary);
+            box-shadow: var(--shadow-sm);
         }
-        
+
         .nav-pills .nav-link:hover:not(.active) {
-            background: #e9ecef;
-            transform: translateY(-2px);
+            background: #f8fafc;
+            border-color: #cbd5e1;
+            color: #0f172a;
         }
-        
+
         .filter-card {
-            background: white;
-            border-radius: 15px;
+            background: #fff;
+            border-radius: 12px;
             padding: 1.5rem;
             margin-bottom: 1.5rem;
             box-shadow: var(--shadow-sm);
-            border: none;
+            border: 1px solid var(--match-border);
         }
-        
+
         .results-card {
-            background: white;
-            border-radius: 15px;
-            box-shadow: var(--shadow-md);
-            border: none;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--match-border);
             overflow: hidden;
         }
-        
+
         .results-card .card-header {
-            background: var(--gradient-info);
-            color: white;
-            padding: 1.25rem 1.5rem;
+            background: #eff6ff;
+            color: #1e3a8a;
+            padding: 1rem 1.5rem;
             border: none;
+            border-bottom: 1px solid #bfdbfe;
             font-weight: 600;
-            font-size: 1.1rem;
+            font-size: 1rem;
         }
-        
+
+        .results-card .card-header i {
+            color: var(--match-primary);
+        }
+
+        .results-card .card-header .opacity-90 {
+            color: #334155;
+            font-weight: 500;
+        }
+
         .score-badge {
             padding: 8px 16px;
-            border-radius: 20px;
+            border-radius: 8px;
             font-weight: 600;
             font-size: 0.9rem;
             display: inline-flex;
             align-items: center;
             gap: 6px;
         }
-        
+
         .score-badge.excellent {
-            background: var(--gradient-success);
+            background: var(--match-success);
             color: white;
         }
-        
+
         .score-badge.good {
-            background: var(--gradient-info);
+            background: var(--match-primary);
             color: white;
         }
-        
+
         .score-badge.fair {
-            background: var(--gradient-warning);
+            background: var(--match-warning);
             color: white;
         }
-        
+
         .candidate-card {
-            transition: all 0.3s ease;
-            border-left: 4px solid transparent;
+            transition: background-color 0.15s ease;
+            border-left: 3px solid transparent;
         }
-        
+
         .candidate-card:hover {
-            background: #f8f9ff;
-            border-left-color: #667eea;
-            transform: translateX(5px);
+            background: #f8fafc;
+            border-left-color: var(--match-primary);
         }
         
         .table thead th {
-            background: #f8f9fa;
+            background: #f8fafc;
             font-weight: 600;
             text-transform: uppercase;
-            font-size: 0.85rem;
-            letter-spacing: 0.5px;
-            color: #4b5563;
-            border-bottom: 2px solid #e5e7eb;
+            font-size: 0.8rem;
+            letter-spacing: 0.04em;
+            color: #475569;
+            border-bottom: 2px solid var(--match-border);
         }
         
         .table tbody td {
@@ -252,25 +281,66 @@ if (!empty($jobs) && !empty($allApplicants)) {
             height: 50px;
             border-radius: 50%;
             object-fit: cover;
-            border: 3px solid #e5e7eb;
-            transition: all 0.3s ease;
+            border: 2px solid var(--match-border);
+            transition: border-color 0.2s ease;
         }
-        
+
         .candidate-avatar:hover {
-            border-color: #667eea;
-            transform: scale(1.1);
+            border-color: var(--match-primary);
         }
-        
+
+        .candidate-avatar-fallback {
+            background: var(--match-primary);
+        }
+
         .btn-action {
             border-radius: 8px;
             padding: 8px 16px;
             font-weight: 500;
-            transition: all 0.3s ease;
+            transition: background-color 0.2s ease, box-shadow 0.2s ease;
         }
-        
+
         .btn-action:hover {
-            transform: translateY(-2px);
             box-shadow: var(--shadow-sm);
+        }
+
+        .btn-matching-apply {
+            background: var(--match-success);
+            color: #fff !important;
+            border: none;
+            border-radius: 10px;
+            padding: 10px;
+            font-weight: 600;
+        }
+
+        .btn-matching-apply:hover {
+            background: var(--match-success-dark);
+            color: #fff !important;
+        }
+
+        .btn-matching-analyze {
+            background: var(--match-primary);
+            color: #fff !important;
+            border: none;
+            border-radius: 10px;
+            padding: 10px;
+            font-weight: 600;
+        }
+
+        .btn-matching-analyze:hover {
+            background: var(--match-primary-dark);
+            color: #fff !important;
+        }
+
+        .btn-matching-message {
+            background: var(--match-success);
+            color: #fff !important;
+            border: none;
+        }
+
+        .btn-matching-message:hover {
+            background: var(--match-success-dark);
+            color: #fff !important;
         }
         
         .empty-state {
@@ -280,19 +350,24 @@ if (!empty($jobs) && !empty($allApplicants)) {
         
         .empty-state i {
             font-size: 4rem;
-            color: #d1d5db;
+            color: #cbd5e1;
             margin-bottom: 1rem;
         }
-        
+
         .stats-badge {
             display: inline-block;
-            background: rgba(102, 126, 234, 0.1);
-            color: #667eea;
+            background: #dbeafe;
+            color: #1e40af;
             padding: 4px 12px;
-            border-radius: 12px;
+            border-radius: 8px;
             font-size: 0.85rem;
             font-weight: 600;
             margin-left: 10px;
+            border: 1px solid #bfdbfe;
+        }
+
+        .text-match-accent {
+            color: var(--match-primary) !important;
         }
     </style>
 </head>
@@ -302,7 +377,7 @@ if (!empty($jobs) && !empty($allApplicants)) {
     <div class="employer-main-content">
         <div class="matching-header">
             <h1><i class="fas fa-users-cog me-2"></i>Smart Candidate Matching</h1>
-            <p class="mb-0 mt-2 opacity-90">Discover the perfect candidates for your job openings</p>
+            <p class="mb-0 mt-2">Discover the perfect candidates for your job openings</p>
         </div>
 
         <?php if (empty($jobs)): ?>
@@ -356,7 +431,7 @@ if (!empty($jobs) && !empty($allApplicants)) {
                                 </select>
                             </div>
                             <div class="col-md-2">
-                                <button type="submit" class="btn w-100" style="background: var(--gradient-success); border: none; color: white; border-radius: 10px; padding: 10px;">
+                                <button type="submit" class="btn btn-matching-apply w-100">
                                     <i class="fas fa-filter me-1"></i>Apply
                                 </button>
                             </div>
@@ -403,7 +478,7 @@ if (!empty($jobs) && !empty($allApplicants)) {
                                                             <?php if ($imagePath): ?>
                                                                 <img src="<?php echo htmlspecialchars($imagePath); ?>" alt="Profile" class="candidate-avatar me-3">
                                                             <?php else: ?>
-                                                                <div class="candidate-avatar bg-gradient d-flex align-items-center justify-content-center me-3" style="background: var(--gradient-primary);">
+                                                                <div class="candidate-avatar candidate-avatar-fallback d-flex align-items-center justify-content-center me-3">
                                                                     <i class="fas fa-user text-white"></i>
                                                                 </div>
                                                             <?php endif; ?>
@@ -437,7 +512,7 @@ if (!empty($jobs) && !empty($allApplicants)) {
                                                             <a href="employee-documents.php" class="btn btn-sm btn-action btn-outline-primary">
                                                                 <i class="fas fa-file-alt"></i>
                                                             </a>
-                                                            <a href="messages.php?user_id=<?php echo $candidate['user_id']; ?>" class="btn btn-sm btn-action" style="background: var(--gradient-success); border: none; color: white;">
+                                                            <a href="messages.php?user_id=<?php echo $candidate['user_id']; ?>" class="btn btn-sm btn-action btn-matching-message">
                                                                 <i class="fas fa-envelope"></i>
                                                             </a>
                                                         </div>
@@ -460,7 +535,7 @@ if (!empty($jobs) && !empty($allApplicants)) {
                                 <label class="form-label fw-semibold">
                                     <i class="fas fa-briefcase me-2 text-primary"></i>Active Job Postings
                                 </label>
-                                <div class="form-control-plaintext fw-bold" style="color: #667eea;">
+                                <div class="form-control-plaintext fw-bold text-match-accent">
                                     <?php echo count($jobs); ?> active posting(s)
                                 </div>
                             </div>
@@ -473,7 +548,7 @@ if (!empty($jobs) && !empty($allApplicants)) {
                                 </select>
                             </div>
                             <div class="col-md-2">
-                                <button type="submit" class="btn w-100" style="background: var(--gradient-success); border: none; color: white; border-radius: 10px; padding: 10px;">
+                                <button type="submit" class="btn btn-matching-apply w-100">
                                     <i class="fas fa-filter me-1"></i>Apply
                                 </button>
                             </div>
@@ -518,7 +593,7 @@ if (!empty($jobs) && !empty($allApplicants)) {
                                                             <?php if ($imagePath): ?>
                                                                 <img src="<?php echo htmlspecialchars($imagePath); ?>" alt="Profile" class="candidate-avatar me-3">
                                                             <?php else: ?>
-                                                                <div class="candidate-avatar bg-gradient d-flex align-items-center justify-content-center me-3" style="background: var(--gradient-primary);">
+                                                                <div class="candidate-avatar candidate-avatar-fallback d-flex align-items-center justify-content-center me-3">
                                                                     <i class="fas fa-user text-white"></i>
                                                                 </div>
                                                             <?php endif; ?>
@@ -558,7 +633,7 @@ if (!empty($jobs) && !empty($allApplicants)) {
                                                             <a href="employee-documents.php" class="btn btn-sm btn-action btn-outline-primary">
                                                                 <i class="fas fa-file-alt"></i>
                                                             </a>
-                                                            <a href="messages.php?user_id=<?php echo $candidate['user_id']; ?>" class="btn btn-sm btn-action" style="background: var(--gradient-success); border: none; color: white;">
+                                                            <a href="messages.php?user_id=<?php echo $candidate['user_id']; ?>" class="btn btn-sm btn-action btn-matching-message">
                                                                 <i class="fas fa-envelope"></i>
                                                             </a>
                                                         </div>
@@ -593,12 +668,12 @@ if (!empty($jobs) && !empty($allApplicants)) {
                                 <label class="form-label fw-semibold">
                                     <i class="fas fa-brain me-2 text-primary"></i>AI Matching Mode
                                 </label>
-                                <div class="form-control-plaintext fw-bold" style="color: #667eea;">
+                                <div class="form-control-plaintext fw-bold text-match-accent">
                                     <i class="fas fa-magic me-1"></i>Intelligent Ranking
                                 </div>
                             </div>
                             <div class="col-md-2">
-                                <button type="submit" class="btn w-100" style="background: var(--gradient-primary); border: none; color: white; border-radius: 10px; padding: 10px;">
+                                <button type="submit" class="btn btn-matching-analyze w-100">
                                     <i class="fas fa-brain me-1"></i>Analyze
                                 </button>
                             </div>
@@ -606,13 +681,13 @@ if (!empty($jobs) && !empty($allApplicants)) {
                     </div>
 
                     <div class="results-card">
-                        <div class="card-header" style="background: var(--gradient-primary);">
+                        <div class="card-header">
                             <i class="fas fa-brain me-2"></i>
                             AI-Powered Matches
                             <?php if ($selectedJob): ?>
                                 <span class="opacity-90">for "<?php echo htmlspecialchars($selectedJob['title']); ?>"</span>
                             <?php endif; ?>
-                            <span class="stats-badge" style="background: rgba(255,255,255,0.2); color: white;"><?php echo count($aiCandidates); ?> candidates</span>
+                            <span class="stats-badge"><?php echo count($aiCandidates); ?> candidates</span>
                         </div>
                         <div class="card-body p-0">
                             <?php if (empty($aiCandidates)): ?>
@@ -634,9 +709,7 @@ if (!empty($jobs) && !empty($allApplicants)) {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <?php foreach ($aiCandidates as $candidate): 
-                                                $scoreClass = $score >= 80 ? 'excellent' : ($score >= 60 ? 'good' : 'fair');
-                                            ?>
+                                            <?php foreach ($aiCandidates as $candidate): ?>
                                                  <tr class="candidate-card" id="row-<?php echo $candidate['user_id']; ?>">
                                                     <td style="padding-left: 1.5rem;">
                                                         <div class="d-flex align-items-center">
@@ -647,7 +720,7 @@ if (!empty($jobs) && !empty($allApplicants)) {
                                                             <?php if ($imagePath): ?>
                                                                 <img src="<?php echo htmlspecialchars($imagePath); ?>" alt="Profile" class="candidate-avatar me-3">
                                                             <?php else: ?>
-                                                                <div class="candidate-avatar bg-gradient d-flex align-items-center justify-content-center me-3" style="background: var(--gradient-primary);">
+                                                                <div class="candidate-avatar candidate-avatar-fallback d-flex align-items-center justify-content-center me-3">
                                                                     <i class="fas fa-user text-white"></i>
                                                                 </div>
                                                             <?php endif; ?>
@@ -683,7 +756,7 @@ if (!empty($jobs) && !empty($allApplicants)) {
                                                             <a href="employee-documents.php" class="btn btn-sm btn-action btn-outline-primary">
                                                                 <i class="fas fa-file-alt"></i>
                                                             </a>
-                                                            <a href="messages.php?user_id=<?php echo $candidate['user_id']; ?>" class="btn btn-sm btn-action" style="background: var(--gradient-success); border: none; color: white;">
+                                                            <a href="messages.php?user_id=<?php echo $candidate['user_id']; ?>" class="btn btn-sm btn-action btn-matching-message">
                                                                 <i class="fas fa-envelope"></i>
                                                             </a>
                                                         </div>
@@ -757,7 +830,7 @@ if (!empty($jobs) && !empty($allApplicants)) {
             to { opacity: 1; transform: translateY(0); }
         }
         .ai-reasoning {
-            border-left: 2px solid #667eea;
+            border-left: 2px solid #2563eb;
             padding-left: 10px;
             font-style: italic;
             color: #4b5563 !important;

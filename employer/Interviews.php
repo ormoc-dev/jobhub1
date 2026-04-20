@@ -342,40 +342,88 @@ foreach ($offers as $offer) {
             min-height: 100vh;
         }
 
-        .stat-card {
-            background: white;
-            border-radius: 15px;
-            padding: 25px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-            transition: all 0.3s ease;
-            border-left: 5px solid;
-        }
-
-        .stat-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-        }
-
-        .stat-card.calendar { border-left-color: var(--primary-blue); }
-        .stat-card.results { border-left-color: var(--success-green); }
-        .stat-card.offers { border-left-color: var(--purple); }
-        .stat-card.accepted { border-left-color: var(--success-green); }
-
-        .stat-card .stat-icon {
-            width: 60px;
-            height: 60px;
+        .interview-stats-panel {
+            background: #fff;
             border-radius: 12px;
+            border: 1px solid rgba(226, 232, 240, 0.95);
+            box-shadow: 0 1px 2px rgba(15, 23, 42, 0.06);
+        }
+
+        .interview-stats-panel .card-body {
+            background: linear-gradient(180deg, #f8fafc 0%, #ffffff 48%);
+        }
+
+        .interview-stat-tile {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.65rem 0.85rem;
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            border-left: 3px solid;
+            height: 100%;
+            min-height: 4.25rem;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .interview-stat-tile:hover {
+            box-shadow: 0 2px 8px rgba(15, 23, 42, 0.06);
+        }
+
+        .interview-stat-tile.calendar { border-left-color: var(--primary-blue); }
+        .interview-stat-tile.results { border-left-color: var(--success-green); }
+        .interview-stat-tile.offers { border-left-color: var(--purple); }
+        .interview-stat-tile.accepted { border-left-color: #059669; }
+
+        .interview-stat-tile__icon {
+            width: 2.25rem;
+            height: 2.25rem;
+            border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 24px;
-            margin-bottom: 15px;
+            font-size: 0.95rem;
+            flex-shrink: 0;
         }
 
-        .stat-card.calendar .stat-icon { background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); color: white; }
-        .stat-card.results .stat-icon { background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; }
-        .stat-card.offers .stat-icon { background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%); color: white; }
-        .stat-card.accepted .stat-icon { background: linear-gradient(135deg, #10b981 0%, #047857 100%); color: white; }
+        .interview-stat-tile.calendar .interview-stat-tile__icon {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            color: #fff;
+        }
+
+        .interview-stat-tile.results .interview-stat-tile__icon {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: #fff;
+        }
+
+        .interview-stat-tile.offers .interview-stat-tile__icon {
+            background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%);
+            color: #fff;
+        }
+
+        .interview-stat-tile.accepted .interview-stat-tile__icon {
+            background: linear-gradient(135deg, #10b981 0%, #047857 100%);
+            color: #fff;
+        }
+
+        .interview-stat-tile__value {
+            font-size: 1.35rem;
+            font-weight: 700;
+            line-height: 1.15;
+            color: #0f172a;
+            letter-spacing: -0.02em;
+        }
+
+        .interview-stat-tile__label {
+            font-size: 0.72rem;
+            font-weight: 500;
+            color: #64748b;
+            line-height: 1.25;
+            margin: 0;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
 
         .nav-tabs-custom {
             border-bottom: 3px solid #e2e8f0;
@@ -611,42 +659,54 @@ foreach ($offers as $offer) {
             </div>
         <?php endif; ?>
 
-        <!-- Statistics Cards -->
-        <div class="row g-4 mb-4">
-            <div class="col-md-3 col-sm-6">
-                <div class="stat-card calendar">
-                    <div class="stat-icon">
-                        <i class="fas fa-calendar-alt"></i>
+        <!-- Statistics summary -->
+        <div class="card interview-stats-panel mb-4">
+            <div class="card-body p-3 p-md-4">
+                <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-4 g-3">
+                    <div class="col">
+                        <div class="interview-stat-tile calendar">
+                            <div class="interview-stat-tile__icon" aria-hidden="true">
+                                <i class="fas fa-calendar-alt"></i>
+                            </div>
+                            <div class="flex-grow-1 min-w-0">
+                                <div class="interview-stat-tile__value"><?php echo (int) $stats['scheduled']; ?></div>
+                                <p class="interview-stat-tile__label mb-0">Scheduled interviews</p>
+                            </div>
+                        </div>
                     </div>
-                    <h3 class="mb-1"><?php echo $stats['scheduled']; ?></h3>
-                    <p class="text-muted mb-0">Scheduled Interviews</p>
-                </div>
-            </div>
-            <div class="col-md-3 col-sm-6">
-                <div class="stat-card results">
-                    <div class="stat-icon">
-                        <i class="fas fa-clipboard-check"></i>
+                    <div class="col">
+                        <div class="interview-stat-tile results">
+                            <div class="interview-stat-tile__icon" aria-hidden="true">
+                                <i class="fas fa-clipboard-check"></i>
+                            </div>
+                            <div class="flex-grow-1 min-w-0">
+                                <div class="interview-stat-tile__value"><?php echo (int) $stats['completed']; ?></div>
+                                <p class="interview-stat-tile__label mb-0">Completed interviews</p>
+                            </div>
+                        </div>
                     </div>
-                    <h3 class="mb-1"><?php echo $stats['completed']; ?></h3>
-                    <p class="text-muted mb-0">Completed Interviews</p>
-                </div>
-            </div>
-            <div class="col-md-3 col-sm-6">
-                <div class="stat-card offers">
-                    <div class="stat-icon">
-                        <i class="fas fa-hand-holding-usd"></i>
+                    <div class="col">
+                        <div class="interview-stat-tile offers">
+                            <div class="interview-stat-tile__icon" aria-hidden="true">
+                                <i class="fas fa-hand-holding-usd"></i>
+                            </div>
+                            <div class="flex-grow-1 min-w-0">
+                                <div class="interview-stat-tile__value"><?php echo (int) $stats['offers_sent']; ?></div>
+                                <p class="interview-stat-tile__label mb-0">Offers sent</p>
+                            </div>
+                        </div>
                     </div>
-                    <h3 class="mb-1"><?php echo $stats['offers_sent']; ?></h3>
-                    <p class="text-muted mb-0">Offers Sent</p>
-                </div>
-            </div>
-            <div class="col-md-3 col-sm-6">
-                <div class="stat-card accepted">
-                    <div class="stat-icon">
-                        <i class="fas fa-check-double"></i>
+                    <div class="col">
+                        <div class="interview-stat-tile accepted">
+                            <div class="interview-stat-tile__icon" aria-hidden="true">
+                                <i class="fas fa-check-double"></i>
+                            </div>
+                            <div class="flex-grow-1 min-w-0">
+                                <div class="interview-stat-tile__value"><?php echo (int) $stats['offers_accepted']; ?></div>
+                                <p class="interview-stat-tile__label mb-0">Offers accepted</p>
+                            </div>
+                        </div>
                     </div>
-                    <h3 class="mb-1"><?php echo $stats['offers_accepted']; ?></h3>
-                    <p class="text-muted mb-0">Offers Accepted</p>
                 </div>
             </div>
         </div>

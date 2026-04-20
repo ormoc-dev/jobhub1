@@ -98,7 +98,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="auth-page">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -107,111 +107,362 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="assets/style.css" rel="stylesheet">
     <style>
-        body {
-            background: radial-gradient(circle at top, #f5f3ff 0%, #ecfeff 45%, #eef2ff 100%);
-            color: #0f172a;
+        :root {
+            --auth-bg: #f1f5f9;
+            --auth-card: #ffffff;
+            --auth-border: #e2e8f0;
+            --auth-text: #0f172a;
+            --auth-muted: #64748b;
+            --auth-primary: #2563eb;
+            --auth-primary-hover: #1d4ed8;
+            --auth-aside-bg: #f0f6ff;
+            --auth-aside-text: #0f172a;
+            --auth-aside-muted: #64748b;
+            --auth-aside-border: #dbeafe;
         }
-        .login-wrapper {
-            min-height: 100vh;
-            padding: 40px 16px;
-            display: flex;
-            align-items: center;
-        }
-        .login-shell {
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: 28px;
-            box-shadow: 0 28px 70px rgba(30, 41, 59, 0.18);
-            border: 1px solid rgba(148, 163, 184, 0.25);
+
+        html.auth-page {
+            height: 100%;
             overflow: hidden;
         }
-        .login-card {
-            background: #ffffff;
-            padding: 36px 34px;
+
+        body.auth-page {
+            margin: 0;
+            padding-top: 0 !important;
+            min-height: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: var(--auth-bg);
+            color: var(--auth-text);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
         }
-        .brand-pill {
-            display: inline-flex;
+
+        .login-wrapper {
+            height: 100%;
+            max-height: 100vh;
+            max-height: 100dvh;
+            padding: clamp(0.75rem, 2vmin, 1.5rem) 1rem;
+            display: flex;
             align-items: center;
-            gap: 10px;
-            padding: 8px 14px;
-            background: rgba(99, 102, 241, 0.12);
-            color: #4338ca;
-            border-radius: 999px;
-            font-weight: 600;
+            justify-content: center;
+            box-sizing: border-box;
+            overflow: hidden;
         }
-        .brand-pill img {
-            height: 34px;
-            width: 34px;
-            border-radius: 50%;
-            object-fit: cover;
+
+        .login-wrapper > .container {
+            height: 100%;
+            max-height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 0;
         }
+
+        .login-shell {
+            background: var(--auth-card);
+            border-radius: 16px;
+            border: 1px solid var(--auth-border);
+            box-shadow: 0 1px 3px rgba(15, 23, 42, 0.06), 0 12px 40px rgba(15, 23, 42, 0.06);
+            max-width: 1040px;
+            width: 100%;
+            margin-left: auto;
+            margin-right: auto;
+            flex: 0 1 auto;
+            min-height: 0;
+            max-height: min(100%, calc(100vh - 1.5rem));
+            max-height: min(100%, calc(100dvh - 1.5rem));
+            overflow-x: hidden;
+            overflow-y: auto;
+            overscroll-behavior: contain;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .login-shell > .row {
+            min-height: 0;
+        }
+
+        .login-shell .login-card {
+            padding: clamp(1.75rem, 4vw, 2.75rem);
+            width: 100%;
+            max-width: 420px;
+        }
+
+        .auth-brand {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.75rem;
+        }
+
+        .auth-brand-logo {
+            width: auto;
+            max-width: min(220px, 100%);
+            max-height: 72px;
+            height: auto;
+            display: block;
+            object-fit: contain;
+            object-position: center;
+        }
+
+        .auth-headline {
+            font-size: clamp(1.5rem, 2.5vw, 1.75rem);
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            color: var(--auth-text);
+            margin-bottom: 0.35rem;
+        }
+
+        .auth-sub {
+            font-size: 0.9375rem;
+            color: var(--auth-muted);
+            margin-bottom: 0;
+            line-height: 1.5;
+        }
+
         .form-label {
             font-weight: 600;
-            color: #111827;
+            font-size: 0.875rem;
+            color: #334155;
+            margin-bottom: 0.35rem;
         }
-        .input-group-text {
-            background: #eef2ff;
-            border-color: #e0e7ff;
-            color: #4f46e5;
+
+        .auth-page .input-group-text {
+            background: #f8fafc;
+            border-color: var(--auth-border);
+            color: #64748b;
         }
-        .form-control {
-            border-color: #e0e7ff;
+
+        .auth-page .form-control {
+            border-color: var(--auth-border);
+            padding-top: 0.6rem;
+            padding-bottom: 0.6rem;
         }
-        .form-control:focus {
-            border-color: #818cf8;
-            box-shadow: 0 0 0 0.2rem rgba(129, 140, 248, 0.25);
+
+        .auth-page .form-control:focus {
+            border-color: var(--auth-primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
         }
-        .btn-primary {
-            background: linear-gradient(135deg, #6366f1 0%, #22d3ee 100%);
+
+        .auth-page .input-group .btn-outline-secondary {
+            border-color: var(--auth-border);
+            color: #64748b;
+        }
+
+        .auth-page .input-group .btn-outline-secondary:hover {
+            background: #f8fafc;
+            color: #334155;
+        }
+
+        .auth-page .btn-primary {
+            background: var(--auth-primary);
             border: none;
-            box-shadow: 0 12px 24px rgba(99, 102, 241, 0.3);
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            font-weight: 600;
+            padding: 0.65rem 1rem;
+            border-radius: 10px;
+            box-shadow: none;
+            transition: background-color 0.15s ease;
         }
-        .btn-primary:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 16px 30px rgba(34, 211, 238, 0.35);
+
+        .auth-page .btn-primary:hover {
+            background: var(--auth-primary-hover);
+            transform: none;
         }
-        .login-side {
-            background: linear-gradient(145deg, #312e81 0%, #4338ca 45%, #0ea5e9 100%);
-            color: #ffffff;
-            padding: 48px 44px;
-            height: 100%;
+
+        .auth-page .btn-primary:focus {
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.35);
         }
-        .login-stat {
-            background: rgba(255, 255, 255, 0.15);
-            border-radius: 16px;
-            padding: 14px 10px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+
+        .auth-hint {
+            font-size: 0.8125rem;
+            color: var(--auth-muted);
+            margin-top: 0.35rem;
         }
-        .text-muted a {
-            color: #4f46e5 !important;
+
+        .auth-meta-row {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.5rem;
+            margin-bottom: 1.25rem;
         }
-        .divider {
+
+        .auth-page .form-check-label {
+            font-size: 0.875rem;
+            color: #475569;
+        }
+
+        .auth-page .text-muted a {
+            color: var(--auth-primary) !important;
+            font-weight: 500;
+            text-decoration: none;
+        }
+
+        .auth-page .text-muted a:hover {
+            text-decoration: underline;
+        }
+
+        .auth-divider {
             height: 1px;
-            background: #e2e8f0;
-            margin: 24px 0;
+            background: var(--auth-border);
+            margin: 1.5rem 0;
         }
-        .login-side .badge {
-            background: rgba(255, 255, 255, 0.9) !important;
-            color: #312e81 !important;
+
+        .auth-footer-links {
+            font-size: 0.875rem;
+        }
+
+        .login-side {
+            background: var(--auth-aside-bg);
+            color: var(--auth-aside-text);
+            padding: clamp(2rem, 5vw, 3rem);
+            min-height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            border-left: 1px solid var(--auth-aside-border);
+        }
+
+        .login-side-eyebrow {
+            display: inline-block;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--auth-primary);
+            margin-bottom: 1rem;
+        }
+
+        .login-side-icon {
+            width: 72px;
+            height: 72px;
+            margin: 0 auto 1.5rem;
+            border-radius: 16px;
+            background: #ffffff;
+            border: 1px solid var(--auth-aside-border);
+            box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--auth-primary);
+            font-size: 2rem;
+        }
+
+        .login-side h3 {
+            font-size: clamp(1.35rem, 2.5vw, 1.6rem);
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 0.75rem;
+            color: var(--auth-aside-text);
+        }
+
+        .login-side .lead {
+            font-size: 1rem;
+            color: var(--auth-aside-muted);
+            line-height: 1.6;
+            margin-bottom: 2rem;
+        }
+
+        .login-stat-row {
+            display: flex;
+            gap: 0.75rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .login-stat {
+            flex: 1 1 90px;
+            max-width: 120px;
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 1rem 0.75rem;
+            border: 1px solid var(--auth-border);
+            box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+        }
+
+        .login-stat h4 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.15rem;
+            color: var(--auth-aside-text);
+        }
+
+        .login-stat small {
+            font-size: 0.75rem;
+            color: var(--auth-aside-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .login-side-footer {
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--auth-aside-border);
+            font-size: 0.8125rem;
+            color: var(--auth-aside-muted);
+        }
+
+        @media (max-width: 991.98px) {
+            .login-shell {
+                border-radius: 12px;
+            }
+        }
+
+        @media (max-height: 760px) {
+            .login-shell .login-card {
+                padding: 1.15rem 1.25rem;
+            }
+
+            .auth-brand {
+                margin-bottom: 1rem;
+            }
+
+            .auth-brand-logo {
+                max-width: 200px;
+                max-height: 60px;
+            }
+
+            .login-side {
+                padding: 1.25rem 1.5rem;
+            }
+
+            .login-side-icon {
+                width: 56px;
+                height: 56px;
+                margin-bottom: 1rem;
+                font-size: 1.5rem;
+            }
+
+            .login-side .lead {
+                margin-bottom: 1.25rem;
+            }
+
+            .login-side-footer {
+                margin-top: 1.25rem;
+                padding-top: 1rem;
+            }
+
+            .auth-divider {
+                margin: 1rem 0;
+            }
         }
     </style>
 </head>
-<body>
+<body class="auth-page">
     <div class="container-fluid login-wrapper">
         <div class="container login-shell">
             <div class="row g-0 align-items-stretch">
-                <!-- Left Side - Login Form -->
-                <div class="col-lg-6 d-flex align-items-center justify-content-center">
-                    <div class="form-container w-100" style="max-width: 440px;">
-                        <div class="login-card">
-                            <div class="text-center mb-4">
-                                <span class="brand-pill">
-                                    <img src="worklink.jpg" alt="WORKLINK">
-                                    WORKLINK
-                                </span>
-                                <h2 class="fw-bold mt-3 mb-1 text-dark">Welcome back</h2>
-                                <p class="text-muted mb-0">Sign in to unlock your next opportunity</p>
+                <!-- Left: form (single inner wrapper) -->
+                <div class="col-lg-6 d-flex align-items-center justify-content-center px-3 px-lg-4">
+                    <div class="login-card">
+                        <div class="text-center mb-4">
+                            <div class="auth-brand">
+                                <img src="images/LOGO.png" alt="WORKLINK Job Seeker System" class="auth-brand-logo" decoding="async">
                             </div>
+                            <h1 class="auth-headline">Welcome back</h1>
+                            <p class="auth-sub">Sign in to unlock your next opportunity</p>
+                        </div>
 
                     <?php if ($error): ?>
                         <div class="alert alert-danger" <?php echo (strpos($error, '5 minutes') !== false) ? 'id="lockout-alert"' : ''; ?>>
@@ -242,10 +493,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                        placeholder="example@gmail.com" 
                                        value="<?php echo htmlspecialchars($_POST['username'] ?? ''); ?>" required <?php echo $disabledAttr; ?>>
                             </div>
-                            <small class="form-text text-muted">
-                                <i class="fas fa-info-circle me-1"></i>
-                                Enter your username or email address (e.g., example@gmail.com)
-                            </small>
+                            <p class="auth-hint mb-0">
+                                <i class="fas fa-info-circle me-1 opacity-75"></i>
+                                Use your username or email (e.g. example@gmail.com)
+                            </p>
                         </div>
 
                         <div class="mb-3">
@@ -261,64 +512,55 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             </div>
                         </div>
 
-                        <div class="mb-3 form-check">
-                            <input type="checkbox" class="form-check-input" id="remember">
-                            <label class="form-check-label" for="remember">
-                                Remember me
-                            </label>
-                        </div>
-                        <div class="mb-3 text-end">
-                            <a href="forgot_password.php" class="text-muted">Forgot password?</a>
+                        <div class="auth-meta-row">
+                            <div class="form-check mb-0">
+                                <input type="checkbox" class="form-check-input" id="remember">
+                                <label class="form-check-label" for="remember">Remember me</label>
+                            </div>
+                            <a href="forgot_password.php" class="text-muted small">Forgot password?</a>
                         </div>
 
                         <button type="submit" class="btn btn-primary w-100 mb-3" <?php echo $disabledAttr; ?>>
                             <i class="fas fa-sign-in-alt me-2"></i>Sign In
                         </button>
                     </form>
-                    <div class="divider"></div>
-                    <div class="text-center">
-                        <p class="text-muted mb-2">Don't have an account? 
-                            <a href="register.php" class="text-primary">Sign up here</a>
-                        </p>
-                        <a href="index.php" class="text-muted">
-                            <i class="fas fa-arrow-left me-1"></i>Back to Home
-                        </a>
-                    </div>
+                        <div class="auth-divider"></div>
+                        <div class="text-center auth-footer-links">
+                            <p class="text-muted mb-2">Don’t have an account?
+                                <a href="register.php">Create one</a>
+                            </p>
+                            <a href="index.php" class="text-muted">
+                                <i class="fas fa-arrow-left me-1"></i>Back to home
+                            </a>
                         </div>
                     </div>
                 </div>
 
-            <!-- Right Side - Information -->
+            <!-- Right: promo panel -->
                 <div class="col-lg-6 d-none d-lg-flex">
-                    <div class="login-side text-center d-flex flex-column justify-content-center w-100">
-                        <div class="mb-4">
-                            <span class="badge rounded-pill px-3 py-2">Trusted by teams</span>
+                    <div class="login-side text-center w-100">
+                        <span class="login-side-eyebrow">Trusted by teams</span>
+                        <div class="login-side-icon" aria-hidden="true">
+                            <i class="fas fa-briefcase"></i>
                         </div>
-                        <i class="fas fa-users fa-5x mb-4"></i>
-                        <h3 class="fw-bold mb-3">Welcome Back to WORKLINK</h3>
-                        <p class="lead mb-4">Discover roles that match your skills and goals</p>
-                        <div class="row text-center g-3">
-                            <div class="col-4">
-                                <div class="login-stat">
-                                    <h4 class="fw-bold mb-1">1000+</h4>
-                                    <small>Jobs</small>
-                                </div>
+                        <h3>Your next role starts here</h3>
+                        <p class="lead">Discover opportunities that match your skills, goals, and schedule—all in one place.</p>
+                        <div class="login-stat-row">
+                            <div class="login-stat">
+                                <h4>1000+</h4>
+                                <small>Jobs</small>
                             </div>
-                            <div class="col-4">
-                                <div class="login-stat">
-                                    <h4 class="fw-bold mb-1">500+</h4>
-                                    <small>Companies</small>
-                                </div>
+                            <div class="login-stat">
+                                <h4>500+</h4>
+                                <small>Companies</small>
                             </div>
-                            <div class="col-4">
-                                <div class="login-stat">
-                                    <h4 class="fw-bold mb-1">50+</h4>
-                                    <small>Categories</small>
-                                </div>
+                            <div class="login-stat">
+                                <h4>50+</h4>
+                                <small>Categories</small>
                             </div>
                         </div>
-                        <div class="mt-4">
-                            <small class="opacity-75">Secure login • Fast hiring • Smart matching</small>
+                        <div class="login-side-footer">
+                            Secure login · Fast hiring · Smart matching
                         </div>
                     </div>
                 </div>

@@ -174,31 +174,138 @@ $stats['total_views'] = $stats['total_applications'] * 3; // Estimated views
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="css/minimal.css" rel="stylesheet">
+    <style>
+        .employer-dashboard .dashboard-hero {
+            background: #fff;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.25rem 1.5rem;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .employer-dashboard .dashboard-eyebrow {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--gray-500);
+            margin: 0;
+        }
+
+        .employer-dashboard .dashboard-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin: 0 0 0.35rem;
+            line-height: 1.25;
+        }
+
+        .employer-dashboard .dashboard-subtitle {
+            font-size: 0.9375rem;
+            color: var(--gray-600);
+            max-width: 36rem;
+        }
+
+        .employer-dashboard .dashboard-kpi-row {
+            --bs-gutter-y: 0.75rem;
+        }
+
+        .employer-dashboard .dashboard-kpi-row .stat-card {
+            height: 100%;
+        }
+
+        .employer-dashboard .dashboard-section-label {
+            font-size: 0.8125rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            color: var(--gray-500);
+            margin-bottom: 0.75rem;
+        }
+
+        .employer-dashboard .dashboard-chart-card .card-header h5 {
+            font-size: 0.9375rem;
+            font-weight: 600;
+            color: var(--gray-800);
+        }
+
+        .employer-dashboard .dashboard-chart-card .card-body {
+            position: relative;
+            min-height: 240px;
+        }
+
+        .employer-dashboard .dashboard-chart-card canvas {
+            max-height: 260px;
+        }
+
+        .employer-dashboard .dashboard-stat-chip {
+            border-radius: 10px;
+            padding: 0.85rem 0.5rem;
+            border: 1px solid var(--border-color);
+            background: var(--gray-50);
+        }
+
+        .employer-dashboard .dashboard-stat-chip h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--gray-900);
+        }
+
+        .employer-dashboard .dashboard-stat-chip small {
+            color: var(--gray-500);
+            font-weight: 500;
+        }
+
+        .employer-dashboard .progress {
+            height: 10px !important;
+            border-radius: 999px;
+            background: var(--gray-100);
+            overflow: hidden;
+        }
+
+        .employer-dashboard .progress-bar {
+            box-shadow: none;
+        }
+
+        .employer-dashboard .dashboard-job-row {
+            padding: 0.75rem 0;
+            border-color: var(--border-color) !important;
+        }
+
+        .employer-dashboard .dashboard-job-row:last-child {
+            border-bottom: none !important;
+        }
+
+        .employer-dashboard .badge-status-pill {
+            font-weight: 600;
+        }
+    </style>
 </head>
 <body class="employer-layout">
     <?php include 'includes/sidebar.php'; ?>
 
     <!-- Main Content -->
-    <div class="employer-main-content">
-                <div class="page-header d-flex justify-content-between align-items-center">
-                    <div>
-                        <h1>Welcome back, <?php echo htmlspecialchars($company['company_name']); ?>!</h1>
-                        <p>Manage your job postings and applications</p>
-                    </div>
-                    <div class="text-end">
-                        <a href="reports.php" class="btn btn-success me-2">
-                            <i class="fas fa-chart-bar me-2"></i>View Reports
-                        </a>
-                        <?php if ($company['status'] === 'pending'): ?>
-                            <span class="badge bg-warning text-dark fs-6">Company Pending Approval</span>
-                        <?php else: ?>
-                            <span class="badge bg-success text-white fs-6">Company Active</span>
-                        <?php endif; ?>
-                    </div>
-                </div>
+    <div class="employer-main-content employer-dashboard">
+        <div class="page-header dashboard-hero d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3 mb-4">
+            <div class="min-w-0">
+                <p class="dashboard-eyebrow">Employer dashboard</p>
+                <h1 class="dashboard-title">Welcome back, <?php echo htmlspecialchars($company['company_name']); ?>!</h1>
+                <p class="dashboard-subtitle mb-0">Manage your job postings and applications.</p>
+            </div>
+            <div class="d-flex flex-wrap align-items-center gap-2 flex-shrink-0">
+                <a href="reports.php" class="btn btn-primary">
+                    <i class="fas fa-chart-bar me-2"></i>View Reports
+                </a>
+                <?php if ($company['status'] === 'pending'): ?>
+                    <span class="badge rounded-pill bg-warning bg-opacity-25 text-dark border border-warning">Pending approval</span>
+                <?php else: ?>
+                    <span class="badge rounded-pill bg-success bg-opacity-10 text-success border border-success border-opacity-25">Company active</span>
+                <?php endif; ?>
+            </div>
+        </div>
 
                 <!-- Key Performance Indicators -->
-                <div class="row g-3 mb-4">
+                <div class="row g-3 mb-4 dashboard-kpi-row">
                     <div class="col-md-3">
                         <div class="stat-card">
                             <div class="d-flex align-items-center">
@@ -253,12 +360,12 @@ $stats['total_views'] = $stats['total_applications'] * 3; // Estimated views
                     </div>
                 </div>
 
-                <!-- Performance Metrics -->
+                <p class="dashboard-section-label">Activity &amp; trends</p>
                 <div class="row g-4 mb-4">
                     <div class="col-md-6">
-                        <div class="card dashboard-card">
+                        <div class="card dashboard-card dashboard-chart-card">
                             <div class="card-header">
-                                <h5 class="mb-0">Daily Application Trends</h5>
+                                <h5 class="mb-0"><i class="fas fa-chart-column me-2 text-primary opacity-75"></i>Daily application trends</h5>
                             </div>
                             <div class="card-body">
                                 <canvas id="dailyApplicationsChart" width="400" height="200"></canvas>
@@ -266,22 +373,19 @@ $stats['total_views'] = $stats['total_applications'] * 3; // Estimated views
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <div class="card dashboard-card">
+                        <div class="card dashboard-card dashboard-chart-card">
                             <div class="card-header">
-                                <h5 class="mb-0">Application Response Rate</h5>
+                                <h5 class="mb-0"><i class="fas fa-chart-pie me-2 text-primary opacity-75"></i>Application response mix</h5>
                             </div>
                             <div class="card-body">
                                 <canvas id="responseRateChart" width="400" height="200"></canvas>
                             </div>
                         </div>
                     </div>
-                </div>
-
-                <div class="row g-4 mb-4">
                     <div class="col-md-6">
-                        <div class="card dashboard-card">
+                        <div class="card dashboard-card dashboard-chart-card">
                             <div class="card-header">
-                                <h5 class="mb-0">Hiring Funnel</h5>
+                                <h5 class="mb-0"><i class="fas fa-filter me-2 text-primary opacity-75"></i>Hiring funnel</h5>
                             </div>
                             <div class="card-body">
                                 <canvas id="hiringFunnelChart" width="400" height="200"></canvas>
@@ -289,9 +393,9 @@ $stats['total_views'] = $stats['total_applications'] * 3; // Estimated views
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <div class="card dashboard-card">
+                        <div class="card dashboard-card dashboard-chart-card">
                             <div class="card-header">
-                                <h5 class="mb-0">Monthly Job Postings</h5>
+                                <h5 class="mb-0"><i class="fas fa-calendar me-2 text-primary opacity-75"></i>Monthly job postings</h5>
                             </div>
                             <div class="card-body">
                                 <canvas id="monthlyJobsChart" width="400" height="200"></canvas>
@@ -300,36 +404,36 @@ $stats['total_views'] = $stats['total_applications'] * 3; // Estimated views
                     </div>
                 </div>
 
-                <!-- Application Insights -->
+                <p class="dashboard-section-label">Pipeline &amp; jobs</p>
                 <div class="row g-4">
                     <div class="col-md-6">
                         <div class="card dashboard-card">
-                            <div class="card-header d-flex justify-content-between align-items-center">
-                                <h5 class="mb-0">Application Status Overview</h5>
-                                <a href="applications.php" class="btn btn-sm btn-outline-success">View All</a>
+                            <div class="card-header d-flex justify-content-between align-items-center flex-wrap gap-2">
+                                <h5 class="mb-0">Application status</h5>
+                                <a href="applications.php" class="btn btn-sm btn-outline-primary">View all</a>
                             </div>
                             <div class="card-body">
-                                <div class="row text-center mb-3">
+                                <div class="row text-center g-2 mb-3">
                                     <div class="col-4">
-                                        <div class="p-3" style="background: rgba(245, 158, 11, 0.1); border-radius: 8px;">
-                                            <h3 class="mb-0 text-warning"><?php echo $stats['pending_applications']; ?></h3>
-                                            <small class="text-muted">Pending</small>
+                                        <div class="dashboard-stat-chip">
+                                            <h3 class="mb-0"><?php echo $stats['pending_applications']; ?></h3>
+                                            <small>Pending</small>
                                         </div>
                                     </div>
                                     <div class="col-4">
-                                        <div class="p-3" style="background: rgba(16, 185, 129, 0.1); border-radius: 8px;">
-                                            <h3 class="mb-0 text-success"><?php echo $stats['accepted_applications']; ?></h3>
-                                            <small class="text-muted">Accepted</small>
+                                        <div class="dashboard-stat-chip">
+                                            <h3 class="mb-0"><?php echo $stats['accepted_applications']; ?></h3>
+                                            <small>Accepted</small>
                                         </div>
                                     </div>
                                     <div class="col-4">
-                                        <div class="p-3" style="background: rgba(107, 114, 128, 0.1); border-radius: 8px;">
-                                            <h3 class="mb-0 text-secondary"><?php echo $stats['rejected_applications']; ?></h3>
-                                            <small class="text-muted">Rejected</small>
+                                        <div class="dashboard-stat-chip">
+                                            <h3 class="mb-0"><?php echo $stats['rejected_applications']; ?></h3>
+                                            <small>Rejected</small>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="progress mb-2" style="height: 8px;">
+                                <div class="progress mb-2">
                                     <div class="progress-bar bg-warning" role="progressbar" style="width: <?php echo $stats['total_applications'] > 0 ? ($stats['pending_applications'] / $stats['total_applications']) * 100 : 0; ?>%"></div>
                                     <div class="progress-bar bg-success" role="progressbar" style="width: <?php echo $stats['total_applications'] > 0 ? ($stats['accepted_applications'] / $stats['total_applications']) * 100 : 0; ?>%"></div>
                                     <div class="progress-bar bg-secondary" role="progressbar" style="width: <?php echo $stats['total_applications'] > 0 ? ($stats['rejected_applications'] / $stats['total_applications']) * 100 : 0; ?>%"></div>
@@ -338,39 +442,41 @@ $stats['total_views'] = $stats['total_applications'] * 3; // Estimated views
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="col-md-6">
                         <div class="card dashboard-card">
-                            <div class="card-header d-flex justify-content-between align-items-center">
-                                <h5 class="mb-0">Top Performing Jobs</h5>
-                                <a href="jobs.php" class="btn btn-sm btn-outline-success">View All</a>
+                            <div class="card-header d-flex justify-content-between align-items-center flex-wrap gap-2">
+                                <h5 class="mb-0">Top performing jobs</h5>
+                                <a href="jobs.php" class="btn btn-sm btn-outline-primary">View all</a>
                             </div>
                             <div class="card-body">
                                 <?php if (empty($top_jobs)): ?>
                                     <div class="text-center py-4">
                                         <i class="fas fa-briefcase fa-3x text-muted mb-3"></i>
                                         <p class="text-muted">No jobs posted yet</p>
-                                        <a href="post-job.php" class="btn btn-success">Post a Job</a>
+                                        <a href="post-job.php" class="btn btn-primary">Post a job</a>
                                     </div>
                                 <?php else: ?>
-                                    <?php foreach ($top_jobs as $job): ?>
-                                        <div class="d-flex justify-content-between align-items-center py-2 border-bottom">
-                                            <div class="flex-grow-1">
+                                    <?php foreach ($top_jobs as $job):
+                                        $jobPill = $job['status'] === 'active' ? 'success' : ($job['status'] === 'pending' ? 'warning' : 'secondary');
+                                        ?>
+                                        <div class="d-flex justify-content-between align-items-center dashboard-job-row border-bottom">
+                                            <div class="flex-grow-1 min-w-0">
                                                 <strong><?php echo htmlspecialchars($job['title']); ?></strong>
                                                 <br>
                                                 <small class="text-muted">
-                                                    <?php echo htmlspecialchars($job['location']); ?> • 
-                                                    <span class="badge bg-<?php echo $job['status'] === 'active' ? 'success' : ($job['status'] === 'pending' ? 'warning' : 'secondary'); ?>">
+                                                    <?php echo htmlspecialchars($job['location']); ?> •
+                                                    <span class="badge rounded-pill badge-status-pill bg-<?php echo $jobPill; ?> bg-opacity-10 text-<?php echo $jobPill; ?> border border-<?php echo $jobPill; ?> border-opacity-25">
                                                         <?php echo ucfirst($job['status']); ?>
                                                     </span>
                                                 </small>
                                             </div>
-                                            <div class="text-end ms-3">
+                                            <div class="text-end ms-3 flex-shrink-0">
                                                 <div class="mb-1">
-                                                    <span class="badge bg-info text-white fs-6"><?php echo $job['application_count']; ?></span>
+                                                    <span class="badge rounded-pill bg-primary bg-opacity-10 text-primary border border-primary border-opacity-25"><?php echo $job['application_count']; ?></span>
                                                 </div>
-                                                <small class="text-muted d-block">applications</small>
-                                                <a href="job-applications.php?job_id=<?php echo $job['id']; ?>" class="btn btn-sm btn-outline-success mt-1">View</a>
+                                                <small class="text-muted d-block">Applications</small>
+                                                <a href="job-applications.php?job_id=<?php echo $job['id']; ?>" class="btn btn-sm btn-outline-primary mt-1">Open</a>
                                             </div>
                                         </div>
                                     <?php endforeach; ?>
@@ -392,8 +498,6 @@ $stats['total_views'] = $stats['total_applications'] * 3; // Estimated views
                     </div>
                 </div>
                 <?php endif; ?>
-            </div>
-        </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -510,13 +614,13 @@ $stats['total_views'] = $stats['total_applications'] * 3; // Estimated views
                 datasets: [{
                     label: 'Hiring Funnel',
                     data: [chartData.hiringFunnel.total, chartData.hiringFunnel.pending, chartData.hiringFunnel.accepted],
-                    borderColor: '#8b5cf6',
-                    backgroundColor: 'rgba(139, 92, 246, 0.1)',
-                    borderWidth: 3,
+                    borderColor: '#2563eb',
+                    backgroundColor: 'rgba(37, 99, 235, 0.08)',
+                    borderWidth: 2,
                     fill: true,
-                    tension: 0.4,
-                    pointRadius: 6,
-                    pointBackgroundColor: '#8b5cf6'
+                    tension: 0.35,
+                    pointRadius: 5,
+                    pointBackgroundColor: '#2563eb'
                 }]
             },
             options: {
@@ -552,11 +656,11 @@ $stats['total_views'] = $stats['total_applications'] * 3; // Estimated views
                 datasets: [{
                     label: 'Jobs Posted',
                     data: chartData.monthlyJobs.data,
-                    borderColor: '#06b6d4',
-                    backgroundColor: 'rgba(6, 182, 212, 0.1)',
-                    borderWidth: 3,
+                    borderColor: '#475569',
+                    backgroundColor: 'rgba(71, 85, 105, 0.08)',
+                    borderWidth: 2,
                     fill: true,
-                    tension: 0.4
+                    tension: 0.35
                 }]
             },
             options: {
@@ -582,499 +686,6 @@ $stats['total_views'] = $stats['total_applications'] * 3; // Estimated views
                 }
             }
         });
-    </script>
-
-    <!-- AI Chat Widget -->
-    <div id="aiChatWidget" class="ai-chat-widget">
-        <!-- Chat Button -->
-        <button id="aiChatToggle" class="ai-chat-toggle" title="Chat with AI Assistant">
-            <i class="fas fa-robot"></i>
-            <span class="ai-chat-badge" id="aiChatBadge" style="display: none;">1</span>
-        </button>
-
-        <!-- Chat Window -->
-        <div id="aiChatWindow" class="ai-chat-window" style="display: none;">
-            <div class="ai-chat-header">
-                <div class="ai-chat-title">
-                    <i class="fas fa-robot me-2"></i>
-                    <span>AI Hiring Assistant</span>
-                </div>
-                <button id="aiChatClose" class="ai-chat-close">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <div id="aiChatMessages" class="ai-chat-messages">
-                <div class="ai-message ai-message-bot">
-                    <div class="ai-message-avatar">
-                        <i class="fas fa-robot"></i>
-                    </div>
-                    <div class="ai-message-content">
-                        <p>Hello! I'm your AI Hiring Assistant. I have access to your company's applicant data and can help you with:</p>
-                        <ul>
-                            <li>Analyzing applicants and their qualifications</li>
-                            <li>Writing job descriptions</li>
-                            <li>Drafting interview questions</li>
-                            <li>Creating offer letters</li>
-                            <li>Hiring tips and best practices</li>
-                        </ul>
-                        <p>Ask me anything about your applicants or hiring needs!</p>
-                    </div>
-                </div>
-            </div>
-            <div class="ai-chat-input-area">
-                <div class="ai-chat-suggestions">
-                    <button class="ai-suggestion-btn" data-message="Analyze my recent applicants">Analyze applicants</button>
-                    <button class="ai-suggestion-btn" data-message="Who are my top candidates?">Top candidates</button>
-                    <button class="ai-suggestion-btn" data-message="Help me write a job description">Write job description</button>
-                    <button class="ai-suggestion-btn" data-message="Generate interview questions">Interview questions</button>
-                    <button class="ai-suggestion-btn" data-message="Draft an offer letter">Draft offer letter</button>
-                </div>
-                <div class="ai-chat-input-wrapper">
-                    <textarea id="aiChatInput" class="ai-chat-input" placeholder="Type your message..." rows="1"></textarea>
-                    <button id="aiChatSend" class="ai-chat-send">
-                        <i class="fas fa-paper-plane"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <style>
-        /* AI Chat Widget Styles */
-        .ai-chat-widget {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            z-index: 9999;
-        }
-
-        .ai-chat-toggle {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #4c1d95 0%, #2d1b69 100%);
-            border: none;
-            color: white;
-            font-size: 24px;
-            cursor: pointer;
-            box-shadow: 0 4px 15px rgba(76, 29, 149, 0.4);
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-        }
-
-        .ai-chat-toggle:hover {
-            transform: scale(1.1);
-            box-shadow: 0 6px 20px rgba(76, 29, 149, 0.5);
-        }
-
-        .ai-chat-badge {
-            position: absolute;
-            top: -5px;
-            right: -5px;
-            background: #ef4444;
-            color: white;
-            font-size: 12px;
-            font-weight: bold;
-            width: 22px;
-            height: 22px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .ai-chat-window {
-            position: absolute;
-            bottom: 80px;
-            right: 0;
-            width: 380px;
-            height: 500px;
-            background: white;
-            border-radius: 16px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-            animation: aiChatSlideIn 0.3s ease;
-        }
-
-        @keyframes aiChatSlideIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .ai-chat-header {
-            background: linear-gradient(135deg, #4c1d95 0%, #2d1b69 100%);
-            color: white;
-            padding: 16px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .ai-chat-title {
-            display: flex;
-            align-items: center;
-            font-weight: 600;
-            font-size: 16px;
-        }
-
-        .ai-chat-close {
-            background: rgba(255, 255, 255, 0.2);
-            border: none;
-            color: white;
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.2s ease;
-        }
-
-        .ai-chat-close:hover {
-            background: rgba(255, 255, 255, 0.3);
-        }
-
-        .ai-chat-messages {
-            flex: 1;
-            overflow-y: auto;
-            padding: 20px;
-            background: #f8fafc;
-        }
-
-        .ai-message {
-            display: flex;
-            gap: 12px;
-            margin-bottom: 16px;
-        }
-
-        .ai-message-user {
-            flex-direction: row-reverse;
-        }
-
-        .ai-message-avatar {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            font-size: 14px;
-        }
-
-        .ai-message-bot .ai-message-avatar {
-            background: linear-gradient(135deg, #4c1d95 0%, #2d1b69 100%);
-            color: white;
-        }
-
-        .ai-message-user .ai-message-avatar {
-            background: #3b82f6;
-            color: white;
-        }
-
-        .ai-message-content {
-            max-width: 75%;
-            padding: 12px 16px;
-            border-radius: 12px;
-            font-size: 14px;
-            line-height: 1.5;
-        }
-
-        .ai-message-bot .ai-message-content {
-            background: white;
-            border: 1px solid #e2e8f0;
-            color: #1e293b;
-        }
-
-        .ai-message-user .ai-message-content {
-            background: #3b82f6;
-            color: white;
-        }
-
-        .ai-message-content ul {
-            margin: 8px 0;
-            padding-left: 20px;
-        }
-
-        .ai-message-content li {
-            margin: 4px 0;
-        }
-
-        .ai-message-content p {
-            margin: 0 0 8px 0;
-        }
-
-        .ai-message-content p:last-child {
-            margin-bottom: 0;
-        }
-
-        .ai-chat-input-area {
-            background: white;
-            border-top: 1px solid #e2e8f0;
-            padding: 12px 16px;
-        }
-
-        .ai-chat-suggestions {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 12px;
-            flex-wrap: wrap;
-        }
-
-        .ai-suggestion-btn {
-            background: #f1f5f9;
-            border: 1px solid #e2e8f0;
-            border-radius: 16px;
-            padding: 6px 12px;
-            font-size: 12px;
-            color: #475569;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            white-space: nowrap;
-        }
-
-        .ai-suggestion-btn:hover {
-            background: #e2e8f0;
-            border-color: #cbd5e1;
-        }
-
-        .ai-chat-input-wrapper {
-            display: flex;
-            gap: 8px;
-            align-items: flex-end;
-        }
-
-        .ai-chat-input {
-            flex: 1;
-            border: 1px solid #e2e8f0;
-            border-radius: 20px;
-            padding: 10px 16px;
-            font-size: 14px;
-            resize: none;
-            max-height: 100px;
-            font-family: inherit;
-        }
-
-        .ai-chat-input:focus {
-            outline: none;
-            border-color: #4c1d95;
-            box-shadow: 0 0 0 3px rgba(76, 29, 149, 0.1);
-        }
-
-        .ai-chat-send {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #4c1d95 0%, #2d1b69 100%);
-            border: none;
-            color: white;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.2s ease;
-            flex-shrink: 0;
-        }
-
-        .ai-chat-send:hover {
-            transform: scale(1.05);
-            box-shadow: 0 4px 12px rgba(76, 29, 149, 0.3);
-        }
-
-        .ai-chat-send:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        .ai-typing {
-            display: flex;
-            gap: 4px;
-            padding: 12px 16px;
-            align-items: center;
-        }
-
-        .ai-typing-dot {
-            width: 8px;
-            height: 8px;
-            background: #94a3b8;
-            border-radius: 50%;
-            animation: aiTypingBounce 1.4s infinite ease-in-out both;
-        }
-
-        .ai-typing-dot:nth-child(1) { animation-delay: -0.32s; }
-        .ai-typing-dot:nth-child(2) { animation-delay: -0.16s; }
-
-        @keyframes aiTypingBounce {
-            0%, 80%, 100% { transform: scale(0); }
-            40% { transform: scale(1); }
-        }
-
-        /* Responsive */
-        @media (max-width: 480px) {
-            .ai-chat-window {
-                width: calc(100vw - 40px);
-                right: -10px;
-            }
-        }
-    </style>
-
-    <script>
-        // AI Chat Widget Functionality
-        (function() {
-            const chatToggle = document.getElementById('aiChatToggle');
-            const chatWindow = document.getElementById('aiChatWindow');
-            const chatClose = document.getElementById('aiChatClose');
-            const chatInput = document.getElementById('aiChatInput');
-            const chatSend = document.getElementById('aiChatSend');
-            const chatMessages = document.getElementById('aiChatMessages');
-            const suggestionBtns = document.querySelectorAll('.ai-suggestion-btn');
-
-            let isOpen = false;
-
-            // Toggle chat window
-            chatToggle.addEventListener('click', () => {
-                isOpen = !isOpen;
-                chatWindow.style.display = isOpen ? 'flex' : 'none';
-                if (isOpen) {
-                    chatInput.focus();
-                }
-            });
-
-            // Close chat window
-            chatClose.addEventListener('click', () => {
-                isOpen = false;
-                chatWindow.style.display = 'none';
-            });
-
-            // Send message
-            async function sendMessage(message) {
-                if (!message.trim()) return;
-
-                // Add user message
-                addMessage(message, 'user');
-                chatInput.value = '';
-                chatInput.style.height = 'auto';
-
-                // Show typing indicator
-                showTyping();
-
-                try {
-                    // Call AI API
-                    const response = await fetch('ai_chat.php', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({
-                            message: message,
-                            context: 'employer_dashboard'
-                        })
-                    });
-
-                    const data = await response.json();
-
-                    // Remove typing indicator
-                    hideTyping();
-
-                    if (data.success) {
-                        addMessage(data.response, 'bot');
-                    } else {
-                        console.error('AI Chat Error:', data);
-                        addMessage('Sorry, I encountered an error: ' + (data.error || 'Unknown error'), 'bot');
-                    }
-                } catch (error) {
-                    hideTyping();
-                    console.error('AI Chat Exception:', error);
-                    addMessage('Sorry, I\'m having trouble connecting. Please try again later.', 'bot');
-                }
-            }
-
-            // Add message to chat
-            function addMessage(text, sender) {
-                const messageDiv = document.createElement('div');
-                messageDiv.className = `ai-message ai-message-${sender}`;
-                messageDiv.innerHTML = `
-                    <div class="ai-message-avatar">
-                        <i class="fas fa-${sender === 'bot' ? 'robot' : 'user'}"></i>
-                    </div>
-                    <div class="ai-message-content">
-                        <p>${escapeHtml(text)}</p>
-                    </div>
-                `;
-                chatMessages.appendChild(messageDiv);
-                chatMessages.scrollTop = chatMessages.scrollHeight;
-            }
-
-            // Show typing indicator
-            function showTyping() {
-                const typingDiv = document.createElement('div');
-                typingDiv.id = 'aiTyping';
-                typingDiv.className = 'ai-message ai-message-bot';
-                typingDiv.innerHTML = `
-                    <div class="ai-message-avatar">
-                        <i class="fas fa-robot"></i>
-                    </div>
-                    <div class="ai-message-content ai-typing">
-                        <div class="ai-typing-dot"></div>
-                        <div class="ai-typing-dot"></div>
-                        <div class="ai-typing-dot"></div>
-                    </div>
-                `;
-                chatMessages.appendChild(typingDiv);
-                chatMessages.scrollTop = chatMessages.scrollHeight;
-            }
-
-            // Hide typing indicator
-            function hideTyping() {
-                const typing = document.getElementById('aiTyping');
-                if (typing) typing.remove();
-            }
-
-            // Escape HTML
-            function escapeHtml(text) {
-                const div = document.createElement('div');
-                div.textContent = text;
-                return div.innerHTML;
-            }
-
-            // Send button click
-            chatSend.addEventListener('click', () => {
-                sendMessage(chatInput.value);
-            });
-
-            // Enter key to send
-            chatInput.addEventListener('keypress', (e) => {
-                if (e.key === 'Enter' && !e.shiftKey) {
-                    e.preventDefault();
-                    sendMessage(chatInput.value);
-                }
-            });
-
-            // Auto-resize textarea
-            chatInput.addEventListener('input', function() {
-                this.style.height = 'auto';
-                this.style.height = Math.min(this.scrollHeight, 100) + 'px';
-            });
-
-            // Suggestion buttons
-            suggestionBtns.forEach(btn => {
-                btn.addEventListener('click', () => {
-                    sendMessage(btn.dataset.message);
-                });
-            });
-        })();
     </script>
 </body>
 </html>

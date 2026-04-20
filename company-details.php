@@ -334,9 +334,8 @@ if (!empty($company['contact_email'])) {
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top navbar-glass" style="background: linear-gradient(135deg, rgba(30, 58, 138, 0.95) 0%, rgba(23, 37, 84, 0.95) 100%); box-shadow: 0 10px 30px rgba(15, 23, 42, 0.25); backdrop-filter: blur(8px);">
         <div class="container">
-            <a class="navbar-brand fw-bold" href="index.php">
-                <img src="worklink.jpg" alt="WORKLINK" class="logo-img me-2" style="height: 40px; width: auto;">
-                WORKLINK
+            <a class="navbar-brand d-flex align-items-center py-1" href="index.php">
+                <img src="images/LOGO.png" alt="WORKLINK Job Seeker System" class="navbar-brand-logo" style="height: 48px; width: auto; max-width: min(260px, 58vw); object-fit: contain;">
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>

@@ -176,211 +176,313 @@ $recent_offers = $pdo->query("
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="../assets/style.css" rel="stylesheet">
     <style>
-        /* Hiring Dashboard Custom Styles */
-        .admin-main-content {
+        .hiring-admin-page .admin-main-content {
             padding: 2rem 2.5rem;
+            background: linear-gradient(180deg, #eef2ff 0%, #f8fafc 18%, #f1f5f9 55%, #f8fafc 100%);
         }
 
-        /* Tab Navigation */
+        .hiring-page-header {
+            padding: 1.25rem 1.5rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(120deg, #ffffff 0%, #f5f8ff 50%, #eef4ff 100%);
+            border: 1px solid rgba(37, 99, 235, 0.12);
+            border-radius: 14px;
+            box-shadow: 0 2px 8px rgba(30, 58, 138, 0.06);
+        }
+
+        .hiring-page-header h1 {
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: #1e3a8a;
+            margin-bottom: 0.35rem;
+        }
+
+        .hiring-page-header h1 i {
+            color: #2563eb;
+            opacity: 0.9;
+        }
+
+        .hiring-page-header .text-muted {
+            color: #64748b !important;
+        }
+
+        .hiring-rate-pill {
+            font-size: 0.8125rem;
+            font-weight: 600;
+            padding: 0.45rem 0.9rem;
+            border-radius: 999px;
+            background: #ecfdf5;
+            color: #166534;
+            border: 1px solid #bbf7d0;
+        }
+
         .hiring-tabs {
-            background: rgba(30, 41, 59, 0.5);
-            border-radius: 16px;
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
             padding: 6px;
             display: inline-flex;
+            flex-wrap: wrap;
             gap: 4px;
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
         }
 
         .hiring-tab {
-            padding: 12px 24px;
-            border-radius: 12px;
-            color: #94a3b8;
+            padding: 10px 16px;
+            border-radius: 10px;
+            color: #64748b;
             text-decoration: none;
             font-weight: 600;
-            transition: all 0.3s ease;
+            font-size: 0.875rem;
+            transition: background 0.2s ease, color 0.2s ease;
             display: flex;
             align-items: center;
             gap: 8px;
         }
 
         .hiring-tab:hover {
-            color: #e2e8f0;
-            background: rgba(255, 255, 255, 0.05);
+            color: #1e40af;
+            background: #f1f5f9;
         }
 
         .hiring-tab.active {
-            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
-            color: white;
-            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
+            background: linear-gradient(180deg, #2563eb 0%, #1d4ed8 100%);
+            color: #ffffff;
+            box-shadow: 0 4px 14px rgba(37, 99, 235, 0.25);
         }
 
         .hiring-tab .badge {
-            font-size: 0.7rem;
+            font-size: 0.65rem;
             padding: 4px 8px;
+            border-radius: 6px;
+            font-weight: 600;
         }
 
-        /* Section Titles */
+        .hiring-tab.active .badge {
+            background: rgba(255, 255, 255, 0.28) !important;
+            color: #ffffff !important;
+        }
+
         .section-title {
-            color: #94a3b8;
+            color: #475569;
             font-weight: 600;
-            font-size: 0.9rem;
-            letter-spacing: 1px;
+            font-size: 0.8125rem;
+            letter-spacing: 0.06em;
             text-transform: uppercase;
-            margin-bottom: 1.5rem;
-            padding-bottom: 0.75rem;
-            border-bottom: 2px solid rgba(148, 163, 184, 0.15);
+            margin-bottom: 1.25rem;
+            padding-bottom: 0.65rem;
+            border-bottom: 2px solid rgba(37, 99, 235, 0.12);
             display: flex;
             align-items: center;
             gap: 10px;
         }
 
         .section-title i {
-            font-size: 1.1rem;
+            color: #2563eb;
+            opacity: 0.88;
+            font-size: 1rem;
         }
 
-        /* Stat Cards */
-        .stat-card {
-            border: none;
-            border-radius: 16px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-            transition: all 0.3s ease;
-            overflow: hidden;
-            height: 100%;
-        }
-
-        .stat-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
-        }
-
-        .stat-card .card-body {
-            padding: 1.5rem;
-        }
-
-        .stat-number {
-            font-size: 2.25rem;
-            font-weight: 700;
-            line-height: 1.2;
-        }
-
-        .stat-label {
-            font-size: 0.85rem;
-            color: rgba(255, 255, 255, 0.75);
-            margin-bottom: 0.25rem;
-        }
-
-        .stat-icon {
-            width: 50px;
-            height: 50px;
+        .hire-stat-card {
+            background: linear-gradient(165deg, #ffffff 0%, #fafbff 100%);
+            border: 1px solid #e2e8f0;
             border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(30, 58, 138, 0.06);
+            transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+        }
+
+        .hire-stat-card:hover {
+            transform: translateY(-2px);
+            border-color: #cbd5e1;
+            box-shadow: 0 10px 28px rgba(30, 58, 138, 0.08);
+        }
+
+        .hire-stat-card .card-body {
+            padding: 1.25rem 1.35rem;
+        }
+
+        .hire-stat-card .stat-label {
+            font-size: 0.6875rem;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            color: #64748b;
+            margin-bottom: 0.35rem;
+        }
+
+        .hire-stat-card .stat-number {
+            font-size: 1.65rem;
+            font-weight: 700;
+            line-height: 1.15;
+            color: #1e293b;
+        }
+
+        .hire-stat-card .stat-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: rgba(255, 255, 255, 0.2);
+            font-size: 1.1rem;
         }
 
-        /* Dashboard Card */
+        .hire-stat-meta {
+            font-size: 0.8125rem;
+            color: #94a3b8;
+            margin-top: 0.65rem;
+            display: block;
+        }
+
+        .hire-stat-card--blue { border-left: 3px solid #2563eb; }
+        .hire-stat-card--blue .stat-icon { background: rgba(37, 99, 235, 0.1); color: #1d4ed8; }
+
+        .hire-stat-card--amber { border-left: 3px solid #d97706; }
+        .hire-stat-card--amber .stat-icon { background: rgba(217, 119, 6, 0.1); color: #b45309; }
+
+        .hire-stat-card--green { border-left: 3px solid #059669; }
+        .hire-stat-card--green .stat-icon { background: rgba(5, 150, 105, 0.1); color: #047857; }
+
+        .hire-stat-card--red { border-left: 3px solid #dc2626; }
+        .hire-stat-card--red .stat-icon { background: rgba(220, 38, 38, 0.08); color: #b91c1c; }
+
+        .hire-stat-card--violet { border-left: 3px solid #7c3aed; }
+        .hire-stat-card--violet .stat-icon { background: rgba(124, 58, 237, 0.1); color: #6d28d9; }
+
+        .hire-stat-card--cyan { border-left: 3px solid #0891b2; }
+        .hire-stat-card--cyan .stat-icon { background: rgba(8, 145, 178, 0.1); color: #0e7490; }
+
         .dashboard-card {
-            border: none;
-            border-radius: 16px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-            background: #1e293b;
-            transition: all 0.3s ease;
+            border: 1px solid #e2e8f0;
+            border-radius: 14px;
+            box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05);
+            background: #ffffff;
+            transition: box-shadow 0.2s ease, transform 0.2s ease;
         }
 
         .dashboard-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 28px rgba(15, 23, 42, 0.07);
         }
 
         .dashboard-card .card-header {
-            background: rgba(255, 255, 255, 0.03);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-            padding: 1rem 1.5rem;
+            background: linear-gradient(180deg, #f8fafc 0%, #f0f6ff 100%);
+            border-bottom: 1px solid rgba(37, 99, 235, 0.1);
+            padding: 0.9rem 1.25rem;
         }
 
         .dashboard-card .card-header h5 {
             font-weight: 600;
             font-size: 1rem;
             margin: 0;
-            color: #e2e8f0;
+            color: #334155;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .dashboard-card .card-header h5 .fas {
+            color: #2563eb !important;
+            opacity: 0.88;
         }
 
         .dashboard-card .card-body {
-            padding: 1.5rem;
+            padding: 1.25rem;
         }
 
-        /* Filter Card */
         .filter-card {
-            background: rgba(30, 41, 59, 0.7);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 16px;
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 14px;
             padding: 1.25rem;
             margin-bottom: 1.5rem;
+            box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
         }
 
         .filter-card .form-select,
         .filter-card .form-control {
-            background: rgba(15, 23, 42, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: #e2e8f0;
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            color: #0f172a;
             border-radius: 10px;
         }
 
         .filter-card .form-select:focus,
         .filter-card .form-control:focus {
-            background: rgba(15, 23, 42, 0.8);
-            border-color: #6366f1;
-            box-shadow: 0 0 0 0.2rem rgba(99, 102, 241, 0.25);
-            color: #e2e8f0;
+            border-color: #93c5fd;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+            color: #0f172a;
         }
 
         .filter-card .form-label {
-            color: #94a3b8;
-            font-size: 0.8rem;
+            color: #64748b;
+            font-size: 0.6875rem;
             font-weight: 600;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.05em;
         }
 
-        /* Table Styles */
         .data-table {
-            background: #1e293b;
-            border-radius: 16px;
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 14px;
             overflow: hidden;
+            box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05);
+        }
+
+        .hire-table-toolbar {
+            background: linear-gradient(180deg, #f8fafc 0%, #f0f6ff 100%);
+            border-bottom: 1px solid rgba(37, 99, 235, 0.1);
+            padding: 0.9rem 1.25rem;
+        }
+
+        .hire-table-toolbar h5 {
+            margin: 0;
+            font-weight: 600;
+            font-size: 1rem;
+            color: #334155;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .hire-table-toolbar .fas {
+            color: #2563eb;
+            opacity: 0.88;
         }
 
         .data-table .table {
             margin-bottom: 0;
-            color: #e2e8f0;
+            color: #475569;
         }
 
         .data-table .table thead th {
-            background: rgba(99, 102, 241, 0.15);
-            color: #a5b4fc;
+            background: #f8fafc;
+            color: #64748b;
             font-weight: 600;
-            font-size: 0.8rem;
+            font-size: 0.6875rem;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
-            padding: 1rem 1.25rem;
+            letter-spacing: 0.06em;
+            padding: 0.85rem 1.15rem;
             border: none;
+            border-bottom: 1px solid #e2e8f0;
         }
 
         .data-table .table tbody td {
-            padding: 1rem 1.25rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 0.9rem 1.15rem;
+            border-bottom: 1px solid #f1f5f9;
             vertical-align: middle;
         }
 
         .data-table .table tbody tr:hover {
-            background: rgba(255, 255, 255, 0.03);
+            background: #f8fafc;
         }
 
         .data-table .table tbody tr:last-child td {
             border-bottom: none;
         }
 
-        /* Applicant Info */
         .applicant-info {
             display: flex;
             align-items: center;
@@ -392,14 +494,14 @@ $recent_offers = $pdo->query("
             height: 45px;
             border-radius: 12px;
             object-fit: cover;
-            border: 2px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid #e2e8f0;
         }
 
         .applicant-avatar-placeholder {
             width: 45px;
             height: 45px;
             border-radius: 12px;
-            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            background: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -410,7 +512,7 @@ $recent_offers = $pdo->query("
 
         .applicant-name {
             font-weight: 600;
-            color: #f1f5f9;
+            color: #0f172a;
         }
 
         .applicant-email {
@@ -418,7 +520,6 @@ $recent_offers = $pdo->query("
             color: #64748b;
         }
 
-        /* Status Badges */
         .status-badge {
             padding: 6px 12px;
             border-radius: 8px;
@@ -430,48 +531,59 @@ $recent_offers = $pdo->query("
         }
 
         .status-pending {
-            background: rgba(245, 158, 11, 0.15);
-            color: #fbbf24;
-            border: 1px solid rgba(245, 158, 11, 0.3);
+            background: #fef3c7;
+            color: #92400e;
+            border: 1px solid #fde68a;
         }
 
         .status-reviewed {
-            background: rgba(6, 182, 212, 0.15);
-            color: #22d3ee;
-            border: 1px solid rgba(6, 182, 212, 0.3);
+            background: #e0f2fe;
+            color: #0369a1;
+            border: 1px solid #7dd3fc;
         }
 
         .status-accepted {
-            background: rgba(16, 185, 129, 0.15);
-            color: #34d399;
-            border: 1px solid rgba(16, 185, 129, 0.3);
+            background: #dcfce7;
+            color: #166534;
+            border: 1px solid #bbf7d0;
         }
 
         .status-rejected {
-            background: rgba(239, 68, 68, 0.15);
-            color: #f87171;
-            border: 1px solid rgba(239, 68, 68, 0.3);
+            background: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #fecaca;
         }
 
         .status-passed {
-            background: rgba(16, 185, 129, 0.15);
-            color: #34d399;
-            border: 1px solid rgba(16, 185, 129, 0.3);
+            background: #dcfce7;
+            color: #166534;
+            border: 1px solid #bbf7d0;
         }
 
         .status-failed {
-            background: rgba(239, 68, 68, 0.15);
-            color: #f87171;
-            border: 1px solid rgba(239, 68, 68, 0.3);
+            background: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #fecaca;
         }
 
         .status-scheduled {
-            background: rgba(139, 92, 246, 0.15);
-            color: #a78bfa;
-            border: 1px solid rgba(139, 92, 246, 0.3);
+            background: #ede9fe;
+            color: #5b21b6;
+            border: 1px solid #ddd6fe;
         }
 
-        /* Progress Circles */
+        .status-withdrawn {
+            background: #f1f5f9;
+            color: #475569;
+            border: 1px solid #e2e8f0;
+        }
+
+        .status-sent {
+            background: #dbeafe;
+            color: #1e40af;
+            border: 1px solid #93c5fd;
+        }
+
         .progress-ring {
             position: relative;
             width: 120px;
@@ -486,7 +598,7 @@ $recent_offers = $pdo->query("
 
         .progress-ring__background {
             fill: none;
-            stroke: rgba(255, 255, 255, 0.1);
+            stroke: #e2e8f0;
             stroke-width: 8;
         }
 
@@ -506,105 +618,107 @@ $recent_offers = $pdo->query("
         }
 
         .progress-ring__percentage {
-            font-size: 1.75rem;
+            font-size: 1.65rem;
             font-weight: 700;
-            color: #f1f5f9;
+            color: #1e293b;
         }
 
         .progress-ring__label {
-            font-size: 0.7rem;
-            color: #94a3b8;
+            font-size: 0.65rem;
+            color: #64748b;
             text-transform: uppercase;
+            letter-spacing: 0.04em;
         }
 
-        /* Mini Stat Box */
         .mini-stat {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.06);
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
             border-radius: 12px;
             padding: 1rem;
             text-align: center;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
         }
 
         .mini-stat:hover {
-            background: rgba(255, 255, 255, 0.06);
-            transform: translateY(-2px);
+            background: #f1f5f9;
+            border-color: #cbd5e1;
         }
 
         .mini-stat-value {
-            font-size: 1.5rem;
+            font-size: 1.35rem;
             font-weight: 700;
-            color: #f1f5f9;
+            color: #1e293b;
         }
 
         .mini-stat-label {
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             color: #64748b;
             text-transform: uppercase;
+            letter-spacing: 0.03em;
         }
 
-        /* Activity Item */
         .activity-item {
             padding: 1rem;
-            margin-bottom: 0.75rem;
+            margin-bottom: 0.65rem;
             border-radius: 12px;
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            background: #fafbff;
+            border: 1px solid #e2e8f0;
             transition: all 0.2s ease;
         }
 
         .activity-item:hover {
-            background: rgba(255, 255, 255, 0.05);
-            border-color: rgba(255, 255, 255, 0.1);
+            background: #f0f6ff;
+            border-color: rgba(37, 99, 235, 0.2);
         }
 
         .activity-item:last-child {
             margin-bottom: 0;
         }
 
-        /* Interview Time Badge */
+        .activity-item strong {
+            color: #0f172a;
+        }
+
         .interview-time {
-            background: rgba(139, 92, 246, 0.15);
-            color: #a78bfa;
+            background: #ede9fe;
+            color: #5b21b6;
+            border: 1px solid #ddd6fe;
             padding: 4px 10px;
             border-radius: 6px;
             font-size: 0.8rem;
             font-weight: 600;
         }
 
-        /* Chart Container */
         .chart-container {
             position: relative;
             height: 250px;
             padding: 0.5rem;
         }
 
-        /* Empty State */
         .empty-state {
             text-align: center;
             padding: 3rem 2rem;
         }
 
         .empty-state i {
-            font-size: 4rem;
-            color: #475569;
+            font-size: 3rem;
+            color: #cbd5e1;
             margin-bottom: 1rem;
         }
 
         .empty-state h5 {
-            color: #94a3b8;
+            color: #475569;
+            font-weight: 600;
             margin-bottom: 0.5rem;
         }
 
         .empty-state p {
-            color: #64748b;
+            color: #94a3b8;
             font-size: 0.9rem;
         }
 
-        /* Button Styles */
         .btn-filter {
-            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            background: #2563eb;
             border: none;
             color: white;
             border-radius: 10px;
@@ -613,18 +727,15 @@ $recent_offers = $pdo->query("
         }
 
         .btn-filter:hover {
-            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+            background: #1d4ed8;
             color: white;
-            transform: translateY(-2px);
         }
 
-        /* Row spacing */
         .row.g-4 {
             --bs-gutter-x: 1.5rem;
             --bs-gutter-y: 1.5rem;
         }
 
-        /* Quick Stats Row */
         .quick-stats {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
@@ -632,22 +743,22 @@ $recent_offers = $pdo->query("
         }
     </style>
 </head>
-<body class="admin-layout">
+<body class="admin-layout hiring-admin-page">
     <?php include 'includes/sidebar.php'; ?>
 
     <!-- Main Content -->
     <div class="admin-main-content">
         <!-- Header -->
-        <div class="d-flex justify-content-between align-items-center mb-4">
+        <div class="hiring-page-header d-flex justify-content-between align-items-start flex-wrap gap-3">
             <div>
-                <h1 class="h3 text-white mb-1">
-                    <i class="fas fa-users-cog me-2" style="color: #a78bfa;"></i>Applications & Hiring
+                <h1 class="h3 mb-1">
+                    <i class="fas fa-users-cog me-2"></i>Applications &amp; hiring
                 </h1>
                 <p class="text-muted mb-0">Monitor applications, track interviews, and manage hiring outcomes</p>
             </div>
-            <div class="d-flex gap-2">
-                <span class="badge px-3 py-2" style="background: rgba(16, 185, 129, 0.15); color: #34d399; font-size: 0.85rem;">
-                    <i class="fas fa-chart-line me-2"></i><?php echo $stats['acceptance_rate']; ?>% Acceptance Rate
+            <div class="d-flex gap-2 align-items-center flex-shrink-0">
+                <span class="hiring-rate-pill">
+                    <i class="fas fa-chart-line me-2"></i><?php echo htmlspecialchars($stats['acceptance_rate']); ?>% acceptance rate
                 </span>
             </div>
         </div>
@@ -657,17 +768,17 @@ $recent_offers = $pdo->query("
             <a href="?tab=monitoring" class="hiring-tab <?php echo $tab === 'monitoring' ? 'active' : ''; ?>">
                 <i class="fas fa-file-alt"></i>
                 Application Monitoring
-                <span class="badge bg-light text-dark"><?php echo $stats['pending_applications']; ?></span>
+                <span class="badge rounded-pill bg-secondary bg-opacity-10 text-secondary"><?php echo $stats['pending_applications']; ?></span>
             </a>
             <a href="?tab=interviews" class="hiring-tab <?php echo $tab === 'interviews' ? 'active' : ''; ?>">
                 <i class="fas fa-calendar-check"></i>
                 Interview Tracking
-                <span class="badge bg-light text-dark"><?php echo $stats['scheduled_interviews']; ?></span>
+                <span class="badge rounded-pill bg-secondary bg-opacity-10 text-secondary"><?php echo $stats['scheduled_interviews']; ?></span>
             </a>
             <a href="?tab=outcomes" class="hiring-tab <?php echo $tab === 'outcomes' ? 'active' : ''; ?>">
                 <i class="fas fa-trophy"></i>
                 Hiring Outcomes
-                <span class="badge bg-light text-dark"><?php echo $stats['offers_accepted']; ?></span>
+                <span class="badge rounded-pill bg-secondary bg-opacity-10 text-secondary"><?php echo $stats['offers_accepted']; ?></span>
             </a>
         </div>
 
@@ -678,43 +789,43 @@ $recent_offers = $pdo->query("
         <h5 class="section-title"><i class="fas fa-chart-pie"></i> Application Overview</h5>
         <div class="row g-4 mb-4">
             <div class="col-md-3 col-sm-6">
-                <div class="stat-card text-white" style="background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);">
+                <div class="card border-0 hire-stat-card hire-stat-card--blue h-100">
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center">
                             <div>
-                                <p class="stat-label mb-1">Total Applications</p>
+                                <p class="stat-label mb-1">Total applications</p>
                                 <h3 class="stat-number mb-0"><?php echo number_format($stats['total_applications']); ?></h3>
                             </div>
                             <div class="stat-icon">
                                 <i class="fas fa-file-alt fa-lg"></i>
                             </div>
                         </div>
-                        <small class="text-white-50 mt-2 d-block">
+                        <small class="hire-stat-meta">
                             <i class="fas fa-arrow-up me-1"></i><?php echo $stats['this_week_applications']; ?> this week
                         </small>
                     </div>
                 </div>
             </div>
             <div class="col-md-3 col-sm-6">
-                <div class="stat-card text-white" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);">
+                <div class="card border-0 hire-stat-card hire-stat-card--amber h-100">
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center">
                             <div>
-                                <p class="stat-label mb-1">Pending Review</p>
+                                <p class="stat-label mb-1">Pending review</p>
                                 <h3 class="stat-number mb-0"><?php echo number_format($stats['pending_applications']); ?></h3>
                             </div>
                             <div class="stat-icon">
                                 <i class="fas fa-clock fa-lg"></i>
                             </div>
                         </div>
-                        <small class="text-white-50 mt-2 d-block">
+                        <small class="hire-stat-meta">
                             <i class="fas fa-hourglass-half me-1"></i>Awaiting action
                         </small>
                     </div>
                 </div>
             </div>
             <div class="col-md-3 col-sm-6">
-                <div class="stat-card text-white" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);">
+                <div class="card border-0 hire-stat-card hire-stat-card--green h-100">
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center">
                             <div>
@@ -725,14 +836,14 @@ $recent_offers = $pdo->query("
                                 <i class="fas fa-check-circle fa-lg"></i>
                             </div>
                         </div>
-                        <small class="text-white-50 mt-2 d-block">
-                            <i class="fas fa-percentage me-1"></i><?php echo $stats['acceptance_rate']; ?>% rate
+                        <small class="hire-stat-meta">
+                            <i class="fas fa-percentage me-1"></i><?php echo htmlspecialchars($stats['acceptance_rate']); ?>% rate
                         </small>
                     </div>
                 </div>
             </div>
             <div class="col-md-3 col-sm-6">
-                <div class="stat-card text-white" style="background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);">
+                <div class="card border-0 hire-stat-card hire-stat-card--red h-100">
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center">
                             <div>
@@ -743,7 +854,7 @@ $recent_offers = $pdo->query("
                                 <i class="fas fa-times-circle fa-lg"></i>
                             </div>
                         </div>
-                        <small class="text-white-50 mt-2 d-block">
+                        <small class="hire-stat-meta">
                             <i class="fas fa-info-circle me-1"></i>Not qualified
                         </small>
                     </div>
@@ -790,9 +901,9 @@ $recent_offers = $pdo->query("
 
         <!-- Applications Table -->
         <div class="data-table">
-            <div class="card-header bg-transparent border-0 px-4 py-3 d-flex justify-content-between align-items-center">
-                <h5 class="mb-0 text-white">
-                    <i class="fas fa-list me-2" style="color: #a78bfa;"></i>Applications (<?php echo count($applications); ?>)
+            <div class="hire-table-toolbar">
+                <h5>
+                    <i class="fas fa-list me-2"></i>Applications (<?php echo count($applications); ?>)
                 </h5>
             </div>
             <?php if (empty($applications)): ?>
@@ -839,10 +950,10 @@ $recent_offers = $pdo->query("
                                         <?php endif; ?>
                                     </td>
                                     <td>
-                                        <span style="color: #94a3b8;"><?php echo htmlspecialchars($app['company_name']); ?></span>
+                                        <span class="text-muted"><?php echo htmlspecialchars($app['company_name']); ?></span>
                                     </td>
                                     <td>
-                                        <div style="color: #e2e8f0;"><?php echo date('M j, Y', strtotime($app['applied_date'])); ?></div>
+                                        <div class="fw-medium text-dark"><?php echo date('M j, Y', strtotime($app['applied_date'])); ?></div>
                                         <small class="text-muted"><?php echo timeAgo($app['applied_date']); ?></small>
                                     </td>
                                     <td>
@@ -892,7 +1003,7 @@ $recent_offers = $pdo->query("
         <h5 class="section-title"><i class="fas fa-calendar-check"></i> Interview Statistics</h5>
         <div class="row g-4 mb-4">
             <div class="col-md-3 col-sm-6">
-                <div class="stat-card text-white" style="background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);">
+                <div class="card border-0 hire-stat-card hire-stat-card--violet h-100">
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center">
                             <div>
@@ -903,14 +1014,14 @@ $recent_offers = $pdo->query("
                                 <i class="fas fa-calendar-alt fa-lg"></i>
                             </div>
                         </div>
-                        <small class="text-white-50 mt-2 d-block">
+                        <small class="hire-stat-meta">
                             <i class="fas fa-clock me-1"></i><?php echo $stats['today_interviews']; ?> today
                         </small>
                     </div>
                 </div>
             </div>
             <div class="col-md-3 col-sm-6">
-                <div class="stat-card text-white" style="background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);">
+                <div class="card border-0 hire-stat-card hire-stat-card--cyan h-100">
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center">
                             <div>
@@ -921,14 +1032,14 @@ $recent_offers = $pdo->query("
                                 <i class="fas fa-check-double fa-lg"></i>
                             </div>
                         </div>
-                        <small class="text-white-50 mt-2 d-block">
+                        <small class="hire-stat-meta">
                             <i class="fas fa-user-check me-1"></i>Interviewed
                         </small>
                     </div>
                 </div>
             </div>
             <div class="col-md-3 col-sm-6">
-                <div class="stat-card text-white" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);">
+                <div class="card border-0 hire-stat-card hire-stat-card--green h-100">
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center">
                             <div>
@@ -939,14 +1050,14 @@ $recent_offers = $pdo->query("
                                 <i class="fas fa-thumbs-up fa-lg"></i>
                             </div>
                         </div>
-                        <small class="text-white-50 mt-2 d-block">
-                            <i class="fas fa-percentage me-1"></i><?php echo $stats['interview_pass_rate']; ?>% pass rate
+                        <small class="hire-stat-meta">
+                            <i class="fas fa-percentage me-1"></i><?php echo htmlspecialchars($stats['interview_pass_rate']); ?>% pass rate
                         </small>
                     </div>
                 </div>
             </div>
             <div class="col-md-3 col-sm-6">
-                <div class="stat-card text-white" style="background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);">
+                <div class="card border-0 hire-stat-card hire-stat-card--red h-100">
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center">
                             <div>
@@ -957,7 +1068,7 @@ $recent_offers = $pdo->query("
                                 <i class="fas fa-thumbs-down fa-lg"></i>
                             </div>
                         </div>
-                        <small class="text-white-50 mt-2 d-block">
+                        <small class="hire-stat-meta">
                             <i class="fas fa-user-times me-1"></i>Not passed
                         </small>
                     </div>
@@ -970,7 +1081,7 @@ $recent_offers = $pdo->query("
             <div class="col-md-6">
                 <div class="dashboard-card h-100">
                     <div class="card-header d-flex justify-content-between align-items-center">
-                        <h5><i class="fas fa-calendar-day me-2" style="color: #a78bfa;"></i>Upcoming Interviews</h5>
+                        <h5><i class="fas fa-calendar-day me-2"></i>Upcoming interviews</h5>
                     </div>
                     <div class="card-body">
                         <?php if (empty($recent_interviews)): ?>
@@ -982,7 +1093,7 @@ $recent_offers = $pdo->query("
                             <?php foreach ($recent_interviews as $interview): ?>
                                 <div class="activity-item d-flex justify-content-between align-items-center">
                                     <div>
-                                        <strong class="text-white"><?php echo htmlspecialchars($interview['first_name'] . ' ' . $interview['last_name']); ?></strong>
+                                        <strong><?php echo htmlspecialchars($interview['first_name'] . ' ' . $interview['last_name']); ?></strong>
                                         <br>
                                         <small class="text-muted"><?php echo htmlspecialchars($interview['job_title']); ?> • <?php echo htmlspecialchars($interview['company_name']); ?></small>
                                     </div>
@@ -1005,7 +1116,7 @@ $recent_offers = $pdo->query("
             <div class="col-md-6">
                 <div class="dashboard-card h-100">
                     <div class="card-header">
-                        <h5><i class="fas fa-chart-pie me-2" style="color: #34d399;"></i>Interview Results</h5>
+                        <h5><i class="fas fa-chart-pie me-2"></i>Interview results</h5>
                     </div>
                     <div class="card-body d-flex align-items-center justify-content-center">
                         <div class="row w-100">
@@ -1087,9 +1198,9 @@ $recent_offers = $pdo->query("
 
         <!-- Interviews Table -->
         <div class="data-table">
-            <div class="card-header bg-transparent border-0 px-4 py-3">
-                <h5 class="mb-0 text-white">
-                    <i class="fas fa-list me-2" style="color: #a78bfa;"></i>Interview Schedule (<?php echo count($applications); ?>)
+            <div class="hire-table-toolbar">
+                <h5>
+                    <i class="fas fa-list me-2"></i>Interview schedule (<?php echo count($applications); ?>)
                 </h5>
             </div>
             <?php if (empty($applications)): ?>
@@ -1133,7 +1244,7 @@ $recent_offers = $pdo->query("
                                         <strong><?php echo htmlspecialchars($app['job_title']); ?></strong>
                                     </td>
                                     <td>
-                                        <span style="color: #94a3b8;"><?php echo htmlspecialchars($app['company_name']); ?></span>
+                                        <span class="text-muted"><?php echo htmlspecialchars($app['company_name']); ?></span>
                                     </td>
                                     <td>
                                         <?php if ($app['interview_date']): ?>
@@ -1194,72 +1305,72 @@ $recent_offers = $pdo->query("
         <h5 class="section-title"><i class="fas fa-trophy"></i> Hiring Outcomes</h5>
         <div class="row g-4 mb-4">
             <div class="col-md-3 col-sm-6">
-                <div class="stat-card text-white" style="background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);">
+                <div class="card border-0 hire-stat-card hire-stat-card--blue h-100">
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center">
                             <div>
-                                <p class="stat-label mb-1">Offers Sent</p>
+                                <p class="stat-label mb-1">Offers sent</p>
                                 <h3 class="stat-number mb-0"><?php echo number_format($stats['offers_sent']); ?></h3>
                             </div>
                             <div class="stat-icon">
                                 <i class="fas fa-paper-plane fa-lg"></i>
                             </div>
                         </div>
-                        <small class="text-white-50 mt-2 d-block">
+                        <small class="hire-stat-meta">
                             <i class="fas fa-envelope me-1"></i>Job offers extended
                         </small>
                     </div>
                 </div>
             </div>
             <div class="col-md-3 col-sm-6">
-                <div class="stat-card text-white" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);">
+                <div class="card border-0 hire-stat-card hire-stat-card--green h-100">
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center">
                             <div>
-                                <p class="stat-label mb-1">Offers Accepted</p>
+                                <p class="stat-label mb-1">Offers accepted</p>
                                 <h3 class="stat-number mb-0"><?php echo number_format($stats['offers_accepted']); ?></h3>
                             </div>
                             <div class="stat-icon">
                                 <i class="fas fa-user-check fa-lg"></i>
                             </div>
                         </div>
-                        <small class="text-white-50 mt-2 d-block">
-                            <i class="fas fa-percentage me-1"></i><?php echo $stats['offer_acceptance_rate']; ?>% acceptance
+                        <small class="hire-stat-meta">
+                            <i class="fas fa-percentage me-1"></i><?php echo htmlspecialchars($stats['offer_acceptance_rate']); ?>% acceptance
                         </small>
                     </div>
                 </div>
             </div>
             <div class="col-md-3 col-sm-6">
-                <div class="stat-card text-white" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);">
+                <div class="card border-0 hire-stat-card hire-stat-card--amber h-100">
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center">
                             <div>
-                                <p class="stat-label mb-1">Pending Decision</p>
+                                <p class="stat-label mb-1">Pending decision</p>
                                 <h3 class="stat-number mb-0"><?php echo number_format($stats['offers_pending']); ?></h3>
                             </div>
                             <div class="stat-icon">
                                 <i class="fas fa-hourglass-half fa-lg"></i>
                             </div>
                         </div>
-                        <small class="text-white-50 mt-2 d-block">
+                        <small class="hire-stat-meta">
                             <i class="fas fa-clock me-1"></i>Awaiting response
                         </small>
                     </div>
                 </div>
             </div>
             <div class="col-md-3 col-sm-6">
-                <div class="stat-card text-white" style="background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);">
+                <div class="card border-0 hire-stat-card hire-stat-card--red h-100">
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center">
                             <div>
-                                <p class="stat-label mb-1">Offers Rejected</p>
+                                <p class="stat-label mb-1">Offers rejected</p>
                                 <h3 class="stat-number mb-0"><?php echo number_format($stats['offers_rejected']); ?></h3>
                             </div>
                             <div class="stat-icon">
                                 <i class="fas fa-user-times fa-lg"></i>
                             </div>
                         </div>
-                        <small class="text-white-50 mt-2 d-block">
+                        <small class="hire-stat-meta">
                             <i class="fas fa-times me-1"></i>Declined offers
                         </small>
                     </div>
@@ -1272,7 +1383,7 @@ $recent_offers = $pdo->query("
             <div class="col-md-8">
                 <div class="dashboard-card h-100">
                     <div class="card-header">
-                        <h5><i class="fas fa-chart-area me-2" style="color: #34d399;"></i>Hiring Trends (Last 6 Months)</h5>
+                        <h5><i class="fas fa-chart-area me-2"></i>Hiring trends (last 6 months)</h5>
                     </div>
                     <div class="card-body">
                         <div class="chart-container">
@@ -1286,7 +1397,7 @@ $recent_offers = $pdo->query("
             <div class="col-md-4">
                 <div class="dashboard-card h-100">
                     <div class="card-header">
-                        <h5><i class="fas fa-handshake me-2" style="color: #fbbf24;"></i>Recent Offers</h5>
+                        <h5><i class="fas fa-handshake me-2"></i>Recent offers</h5>
                     </div>
                     <div class="card-body">
                         <?php if (empty($recent_offers)): ?>
@@ -1299,7 +1410,7 @@ $recent_offers = $pdo->query("
                                 <div class="activity-item">
                                     <div class="d-flex justify-content-between align-items-start">
                                         <div>
-                                            <strong class="text-white"><?php echo htmlspecialchars($offer['first_name'] . ' ' . $offer['last_name']); ?></strong>
+                                            <strong><?php echo htmlspecialchars($offer['first_name'] . ' ' . $offer['last_name']); ?></strong>
                                             <br>
                                             <small class="text-muted"><?php echo htmlspecialchars($offer['job_title']); ?></small>
                                         </div>
@@ -1362,9 +1473,9 @@ $recent_offers = $pdo->query("
 
         <!-- Outcomes Table -->
         <div class="data-table">
-            <div class="card-header bg-transparent border-0 px-4 py-3">
-                <h5 class="mb-0 text-white">
-                    <i class="fas fa-list me-2" style="color: #a78bfa;"></i>Hiring Outcomes (<?php echo count($applications); ?>)
+            <div class="hire-table-toolbar">
+                <h5>
+                    <i class="fas fa-list me-2"></i>Hiring outcomes (<?php echo count($applications); ?>)
                 </h5>
             </div>
             <?php if (empty($applications)): ?>
@@ -1408,7 +1519,7 @@ $recent_offers = $pdo->query("
                                         <strong><?php echo htmlspecialchars($app['job_title']); ?></strong>
                                     </td>
                                     <td>
-                                        <span style="color: #94a3b8;"><?php echo htmlspecialchars($app['company_name']); ?></span>
+                                        <span class="text-muted"><?php echo htmlspecialchars($app['company_name']); ?></span>
                                     </td>
                                     <td>
                                         <?php if ($app['offer_salary']): ?>
@@ -1422,8 +1533,8 @@ $recent_offers = $pdo->query("
                                     </td>
                                     <td>
                                         <?php if ($app['offer_start_date']): ?>
-                                            <span style="color: #e2e8f0;">
-                                                <i class="fas fa-calendar-check me-1"></i>
+                                            <span class="text-dark fw-medium">
+                                                <i class="fas fa-calendar-check me-1 text-muted"></i>
                                                 <?php echo date('M j, Y', strtotime($app['offer_start_date'])); ?>
                                             </span>
                                         <?php else: ?>
@@ -1478,23 +1589,23 @@ $recent_offers = $pdo->query("
                     datasets: [{
                         label: 'Applications',
                         data: [<?php echo implode(',', $monthly_applications); ?>],
-                        borderColor: '#8b5cf6',
-                        backgroundColor: 'rgba(139, 92, 246, 0.1)',
-                        borderWidth: 3,
+                        borderColor: '#2563eb',
+                        backgroundColor: 'rgba(37, 99, 235, 0.08)',
+                        borderWidth: 2,
                         fill: true,
                         tension: 0.4,
-                        pointRadius: 5,
-                        pointBackgroundColor: '#8b5cf6'
+                        pointRadius: 4,
+                        pointBackgroundColor: '#2563eb'
                     }, {
                         label: 'Hired',
                         data: [<?php echo implode(',', $monthly_hired); ?>],
-                        borderColor: '#10b981',
-                        backgroundColor: 'rgba(16, 185, 129, 0.1)',
-                        borderWidth: 3,
+                        borderColor: '#059669',
+                        backgroundColor: 'rgba(5, 150, 105, 0.08)',
+                        borderWidth: 2,
                         fill: true,
                         tension: 0.4,
-                        pointRadius: 5,
-                        pointBackgroundColor: '#10b981'
+                        pointRadius: 4,
+                        pointBackgroundColor: '#059669'
                     }]
                 },
                 options: {
@@ -1504,7 +1615,7 @@ $recent_offers = $pdo->query("
                         legend: {
                             position: 'top',
                             labels: {
-                                color: '#94a3b8',
+                                color: '#475569',
                                 font: { size: 12 }
                             }
                         }
@@ -1512,7 +1623,7 @@ $recent_offers = $pdo->query("
                     scales: {
                         y: {
                             beginAtZero: true,
-                            grid: { color: 'rgba(255,255,255,0.05)' },
+                            grid: { color: 'rgba(15, 23, 42, 0.06)' },
                             ticks: { color: '#64748b' }
                         },
                         x: {

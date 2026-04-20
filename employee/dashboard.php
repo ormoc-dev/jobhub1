@@ -174,262 +174,283 @@ $user_stats['active_jobs_available'] = $system_stats['total_active_jobs'];
     <title>Employee Dashboard - WORKLINK</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="css/minimal.css" rel="stylesheet">
+    <link href="css/modern.css" rel="stylesheet">
 </head>
 <body class="employee-layout">
     <?php include 'includes/sidebar.php'; ?>
 
     <div class="employee-main-content">
-        <div class="page-header d-flex justify-content-between align-items-center">
-            <div>
-                <h1>Welcome back, <?php echo htmlspecialchars($profile['first_name'] ?? $_SESSION['username']); ?>!</h1>
-                <p>Ready to find your next opportunity?</p>
-            </div>
-            <div class="d-flex align-items-center gap-2">
-                <a href="jobs.php" class="btn btn-primary">
-                    <i class="fas fa-search me-2"></i>Browse Jobs
-                </a>
-                <?php if ($profile['status'] === 'pending'): ?>
-                    <span class="badge bg-warning">Profile Pending</span>
-                <?php else: ?>
-                    <span class="badge bg-success">Active</span>
-                <?php endif; ?>
-            </div>
-        </div>
-
-        <!-- System Overview -->
-        <div class="section-title">System Overview</div>
-        <div class="row g-3 mb-4">
-            <div class="col-md-3 col-sm-6">
-                <div class="card stat-card h-100">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div>
-                                <p class="card-text">Active Jobs</p>
-                                <h3 class="card-title"><?php echo number_format($system_stats['total_active_jobs']); ?></h3>
-                            </div>
-                            <div class="stat-icon blue">
-                                <i class="fas fa-briefcase"></i>
-                            </div>
-                        </div>
+        <!-- Hero Section -->
+        <div class="hero-section">
+            <div class="hero-content">
+                <div class="row align-items-center g-4">
+                    <div class="col-lg">
+                        <p class="hero-eyebrow mb-1">Your dashboard</p>
+                        <h1 class="hero-title mb-2">Welcome back, <?php echo htmlspecialchars($profile['first_name'] ?? $_SESSION['username']); ?></h1>
+                        <p class="hero-lead mb-0">Ready for your next role? There are <strong><?php echo number_format($system_stats['total_active_jobs']); ?></strong> open jobs from <strong><?php echo number_format($system_stats['total_active_companies']); ?></strong> companies right now.</p>
                     </div>
-                </div>
-            </div>
-            <div class="col-md-3 col-sm-6">
-                <div class="card stat-card h-100">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div>
-                                <p class="card-text">Active Companies</p>
-                                <h3 class="card-title"><?php echo number_format($system_stats['total_active_companies']); ?></h3>
-                            </div>
-                            <div class="stat-icon green">
-                                <i class="fas fa-building"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 col-sm-6">
-                <div class="card stat-card h-100">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div>
-                                <p class="card-text">Active Employees</p>
-                                <h3 class="card-title"><?php echo number_format($system_stats['total_active_employees']); ?></h3>
-                            </div>
-                            <div class="stat-icon purple">
-                                <i class="fas fa-users"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 col-sm-6">
-                <div class="card stat-card h-100">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div>
-                                <p class="card-text">Total Applications</p>
-                                <h3 class="card-title"><?php echo number_format($system_stats['total_applications']); ?></h3>
-                            </div>
-                            <div class="stat-icon orange">
-                                <i class="fas fa-file-alt"></i>
-                            </div>
+                    <div class="col-lg-auto">
+                        <div class="d-flex flex-wrap align-items-center gap-2 justify-content-lg-end">
+                            <a href="jobs.php" class="btn btn-primary btn-lg px-4">
+                                <i class="fas fa-search me-2"></i>Browse jobs
+                            </a>
+                            <?php if ($profile['status'] === 'pending'): ?>
+                                <span class="hero-badge hero-badge--warning">
+                                    <i class="fas fa-clock"></i>Profile pending
+                                </span>
+                            <?php else: ?>
+                                <span class="hero-badge hero-badge--success">
+                                    <i class="fas fa-check-circle"></i>Profile active
+                                </span>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- User Statistics -->
+        <div class="content-container">
+        <!-- Platform Overview -->
+        <div class="section-title">Platform Overview</div>
+        <div class="stats-grid">
+            <div class="stat-card primary">
+                <div class="stat-card-header">
+                    <div>
+                        <div class="stat-card-value"><?php echo number_format($system_stats['total_active_jobs']); ?></div>
+                        <div class="stat-card-label">Active Jobs</div>
+                    </div>
+                    <div class="stat-card-icon blue">
+                        <i class="fas fa-briefcase"></i>
+                    </div>
+                </div>
+                <div class="stat-card-meta">New opportunities available now</div>
+            </div>
+            <div class="stat-card success">
+                <div class="stat-card-header">
+                    <div>
+                        <div class="stat-card-value"><?php echo number_format($system_stats['total_active_companies']); ?></div>
+                        <div class="stat-card-label">Active Companies</div>
+                    </div>
+                    <div class="stat-card-icon green">
+                        <i class="fas fa-building"></i>
+                    </div>
+                </div>
+                <div class="stat-card-meta">Hiring right now</div>
+            </div>
+            <div class="stat-card purple">
+                <div class="stat-card-header">
+                    <div>
+                        <div class="stat-card-value"><?php echo number_format($system_stats['total_active_employees']); ?></div>
+                        <div class="stat-card-label">Job Seekers</div>
+                    </div>
+                    <div class="stat-card-icon purple">
+                        <i class="fas fa-users"></i>
+                    </div>
+                </div>
+                <div class="stat-card-meta">Active on platform</div>
+            </div>
+            <div class="stat-card info">
+                <div class="stat-card-header">
+                    <div>
+                        <div class="stat-card-value"><?php echo number_format($system_stats['total_applications']); ?></div>
+                        <div class="stat-card-label">Total Applications</div>
+                    </div>
+                    <div class="stat-card-icon cyan">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                </div>
+                <div class="stat-card-meta">Submitted across platform</div>
+            </div>
+        </div>
+
+        <!-- Your Statistics -->
         <div class="section-title">Your Statistics</div>
-        <div class="row g-3 mb-4">
-            <div class="col-md-3 col-sm-6">
-                <div class="card stat-card h-100">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div>
-                                <p class="card-text">Profile Completion</p>
-                                <h3 class="card-title"><?php echo $user_stats['profile_completion']; ?>%</h3>
-                                <small><?php echo $completed_fields; ?>/<?php echo $total_fields; ?> fields</small>
-                            </div>
-                            <div class="stat-icon blue">
-                                <i class="fas fa-user-check"></i>
-                            </div>
-                        </div>
-                        <div class="progress mt-2">
-                            <div class="progress-bar" role="progressbar" style="width: <?php echo $user_stats['profile_completion']; ?>%"></div>
-                        </div>
+        <div class="stats-grid">
+            <div class="stat-card primary">
+                <div class="stat-card-header">
+                    <div>
+                        <div class="stat-card-value"><?php echo $user_stats['profile_completion']; ?>%</div>
+                        <div class="stat-card-label">Profile Completion</div>
+                    </div>
+                    <div class="stat-card-icon blue">
+                        <i class="fas fa-user-check"></i>
                     </div>
                 </div>
+                <div class="stat-card-progress">
+                    <div class="progress">
+                        <div class="progress-bar" role="progressbar" style="width: <?php echo $user_stats['profile_completion']; ?>%"></div>
+                    </div>
+                </div>
+                <div class="stat-card-meta"><?php echo $completed_fields; ?> of <?php echo $total_fields; ?> fields completed</div>
             </div>
-            <div class="col-md-3 col-sm-6">
-                <div class="card stat-card h-100">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div>
-                                <p class="card-text">My Applications</p>
-                                <h3 class="card-title"><?php echo number_format($user_stats['total_applications']); ?></h3>
-                                <small><?php echo $stats['pending_applications']; ?> pending</small>
-                            </div>
-                            <div class="stat-icon purple">
-                                <i class="fas fa-paper-plane"></i>
-                            </div>
-                        </div>
+            <div class="stat-card purple">
+                <div class="stat-card-header">
+                    <div>
+                        <div class="stat-card-value"><?php echo number_format($user_stats['total_applications']); ?></div>
+                        <div class="stat-card-label">My Applications</div>
+                    </div>
+                    <div class="stat-card-icon purple">
+                        <i class="fas fa-paper-plane"></i>
                     </div>
                 </div>
+                <div class="stat-card-meta"><?php echo $stats['pending_applications']; ?> pending review</div>
             </div>
-            <div class="col-md-3 col-sm-6">
-                <div class="card stat-card h-100">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div>
-                                <p class="card-text">Saved Jobs</p>
-                                <h3 class="card-title"><?php echo number_format($user_stats['saved_jobs']); ?></h3>
-                                <small><a href="saved-jobs.php">View all</a></small>
-                            </div>
-                            <div class="stat-icon orange">
-                                <i class="fas fa-heart"></i>
-                            </div>
-                        </div>
+            <div class="stat-card warning">
+                <div class="stat-card-header">
+                    <div>
+                        <div class="stat-card-value"><?php echo number_format($user_stats['saved_jobs']); ?></div>
+                        <div class="stat-card-label">Saved Jobs</div>
+                    </div>
+                    <div class="stat-card-icon pink">
+                        <i class="fas fa-heart"></i>
                     </div>
                 </div>
+                <div class="stat-card-meta"><a href="saved-jobs.php" style="color: var(--primary);">View all saved jobs →</a></div>
             </div>
-            <div class="col-md-3 col-sm-6">
-                <div class="card stat-card h-100">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div>
-                                <p class="card-text">Acceptance Rate</p>
-                                <h3 class="card-title"><?php echo $user_stats['acceptance_rate']; ?>%</h3>
-                                <small><?php echo $stats['accepted_applications']; ?> accepted</small>
-                            </div>
-                            <div class="stat-icon green">
-                                <i class="fas fa-check-circle"></i>
-                            </div>
-                        </div>
+            <div class="stat-card success">
+                <div class="stat-card-header">
+                    <div>
+                        <div class="stat-card-value"><?php echo $user_stats['acceptance_rate']; ?>%</div>
+                        <div class="stat-card-label">Acceptance Rate</div>
+                    </div>
+                    <div class="stat-card-icon green">
+                        <i class="fas fa-check-circle"></i>
                     </div>
                 </div>
+                <div class="stat-card-meta"><?php echo $stats['accepted_applications']; ?> applications accepted</div>
             </div>
         </div>
 
-        <!-- Charts -->
+        <!-- Analytics Charts -->
         <div class="section-title">Analytics</div>
-        <div class="row g-3 mb-4">
-            <div class="col-md-6">
+        <div class="row g-4 mb-4">
+            <div class="col-lg-6">
                 <div class="card">
-                    <div class="card-header d-flex justify-content-between align-items-center">
-                        <span>Daily Applications</span>
+                    <div class="card-header">
+                        <h5><i class="fas fa-chart-bar me-2"></i>Daily Applications</h5>
                     </div>
                     <div class="card-body">
-                        <canvas id="dailyApplicationsChart" height="200"></canvas>
+                        <canvas id="dailyApplicationsChart" height="220"></canvas>
                     </div>
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-lg-6">
                 <div class="card">
-                    <div class="card-header d-flex justify-content-between align-items-center">
-                        <span>Application Status</span>
+                    <div class="card-header">
+                        <h5><i class="fas fa-chart-pie me-2"></i>Application Status</h5>
                         <a href="applications.php" class="btn btn-sm btn-outline-primary">View All</a>
                     </div>
                     <div class="card-body">
-                        <canvas id="responseRateChart" height="200"></canvas>
+                        <canvas id="responseRateChart" height="220"></canvas>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="row g-3 mb-4">
-            <div class="col-md-6">
+        <div class="row g-4 mb-4">
+            <div class="col-lg-6">
                 <div class="card">
                     <div class="card-header">
-                        <span>Application Funnel</span>
+                        <h5><i class="fas fa-filter me-2"></i>Application Funnel</h5>
                     </div>
                     <div class="card-body">
-                        <canvas id="funnelChart" height="200"></canvas>
+                        <canvas id="funnelChart" height="220"></canvas>
                     </div>
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-lg-6">
                 <div class="card">
-                    <div class="card-header d-flex justify-content-between align-items-center">
-                        <span>Monthly Activity</span>
+                    <div class="card-header">
+                        <h5><i class="fas fa-chart-line me-2"></i>Monthly Activity</h5>
                         <a href="jobs.php" class="btn btn-sm btn-outline-primary">View All</a>
                     </div>
                     <div class="card-body">
-                        <canvas id="monthlyApplicationsChart" height="200"></canvas>
+                        <canvas id="monthlyApplicationsChart" height="220"></canvas>
                     </div>
                 </div>
             </div>
         </div>
 
         <!-- Quick Actions + Recent Applications -->
-        <div class="row g-3">
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-header">Quick Actions</div>
+        <div class="row g-4">
+            <div class="col-lg-4">
+                <div class="card h-100">
+                    <div class="card-header">
+                        <h5><i class="fas fa-bolt me-2"></i>Quick Actions</h5>
+                    </div>
                     <div class="card-body">
-                        <div class="row g-2">
-                            <div class="col-6">
-                                <a href="jobs.php" class="btn btn-primary w-100"><i class="fas fa-search me-2"></i>Browse Jobs</a>
-                            </div>
-                            <div class="col-6">
-                                <a href="profile.php" class="btn btn-outline-primary w-100"><i class="fas fa-user-edit me-2"></i>Update Profile</a>
-                            </div>
-                            <div class="col-6">
-                                <a href="applications.php" class="btn btn-outline-primary w-100"><i class="fas fa-file-alt me-2"></i>Applications</a>
-                            </div>
-                            <div class="col-6">
-                                <a href="saved-jobs.php" class="btn btn-outline-primary w-100"><i class="fas fa-heart me-2"></i>Saved Jobs</a>
-                            </div>
+                        <div class="quick-actions">
+                            <a href="jobs.php" class="quick-action-btn">
+                                <i class="fas fa-search"></i>
+                                <span>Browse Jobs</span>
+                            </a>
+                            <a href="profile.php" class="quick-action-btn">
+                                <i class="fas fa-user-edit"></i>
+                                <span>Update Profile</span>
+                            </a>
+                            <a href="applications.php" class="quick-action-btn">
+                                <i class="fas fa-file-alt"></i>
+                                <span>My Applications</span>
+                            </a>
+                            <a href="saved-jobs.php" class="quick-action-btn">
+                                <i class="fas fa-heart"></i>
+                                <span>Saved Jobs</span>
+                            </a>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-header d-flex justify-content-between align-items-center">
-                        <span>Recent Applications</span>
+            <div class="col-lg-8">
+                <div class="card h-100">
+                    <div class="card-header">
+                        <h5><i class="fas fa-history me-2"></i>Recent Applications</h5>
                         <a href="applications.php" class="btn btn-sm btn-outline-primary">View All</a>
                     </div>
-                    <div class="card-body">
+                    <div class="card-body p-0">
                         <?php if (empty($recent_applications)): ?>
                             <div class="empty-state">
-                                <i class="fas fa-file-alt"></i>
-                                <p>No applications yet</p>
-                                <a href="jobs.php" class="btn btn-primary btn-sm">Start Applying</a>
+                                <div class="empty-state-icon">
+                                    <i class="fas fa-file-alt"></i>
+                                </div>
+                                <h5>No applications yet</h5>
+                                <p>Start applying to jobs to track your progress here</p>
+                                <a href="jobs.php" class="btn btn-primary">Browse Jobs</a>
                             </div>
                         <?php else: ?>
-                            <?php foreach ($recent_applications as $app): ?>
-                                <div class="d-flex justify-content-between align-items-center py-2 border-bottom">
-                                    <div>
-                                        <strong><?php echo htmlspecialchars($app['title']); ?></strong>
-                                        <br><small class="text-muted"><?php echo htmlspecialchars($app['company_name']); ?> • <?php echo date('M j, Y', strtotime($app['applied_date'])); ?></small>
-                                    </div>
-                                    <span class="badge bg-<?php echo $app['status'] === 'pending' ? 'warning' : ($app['status'] === 'accepted' ? 'success' : 'secondary'); ?>"><?php echo ucfirst($app['status']); ?></span>
-                                </div>
-                            <?php endforeach; ?>
+                            <div class="table-responsive">
+                                <table class="table mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th>Job Position</th>
+                                            <th>Company</th>
+                                            <th>Applied Date</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php foreach ($recent_applications as $app): ?>
+                                            <tr>
+                                                <td>
+                                                    <strong><?php echo htmlspecialchars($app['title']); ?></strong>
+                                                </td>
+                                                <td><?php echo htmlspecialchars($app['company_name']); ?></td>
+                                                <td><?php echo date('M j, Y', strtotime($app['applied_date'])); ?></td>
+                                                <td>
+                                                    <?php if ($app['status'] === 'pending'): ?>
+                                                        <span class="badge badge-soft-warning">Pending</span>
+                                                    <?php elseif ($app['status'] === 'accepted'): ?>
+                                                        <span class="badge badge-soft-success">Accepted</span>
+                                                    <?php elseif ($app['status'] === 'rejected'): ?>
+                                                        <span class="badge badge-soft-danger">Rejected</span>
+                                                    <?php else: ?>
+                                                        <span class="badge badge-soft-info"><?php echo ucfirst($app['status']); ?></span>
+                                                    <?php endif; ?>
+                                                </td>
+                                            </tr>
+                                        <?php endforeach; ?>
+                                    </tbody>
+                                </table>
+                            </div>
                         <?php endif; ?>
                     </div>
                 </div>
@@ -437,17 +458,19 @@ $user_stats['active_jobs_available'] = $system_stats['total_active_jobs'];
         </div>
 
         <?php if ($profile['status'] === 'pending' || empty($profile['first_name'])): ?>
-        <div class="row g-3 mt-2">
-            <div class="col-12">
-                <div class="alert alert-warning">
-                    <strong><i class="fas fa-exclamation-triangle me-2"></i>Complete Your Profile</strong>
-                    <p class="mb-2 mt-1">Your profile is incomplete. Complete your profile to get better job recommendations.</p>
-                    <a href="profile.php" class="btn btn-sm btn-warning">Complete Profile</a>
+        <div class="alert alert-warning mt-4">
+            <div class="d-flex align-items-center">
+                <i class="fas fa-exclamation-circle fa-lg me-3"></i>
+                <div class="flex-grow-1">
+                    <strong>Complete Your Profile</strong>
+                    <p class="mb-0">Your profile is incomplete. Complete it to get better job recommendations and increase your chances of getting hired.</p>
                 </div>
+                <a href="profile.php" class="btn btn-warning ms-3">Complete Profile</a>
             </div>
         </div>
         <?php endif; ?>
-    </div>
+        </div><!-- /content-container -->
+    </div><!-- /employee-main-content -->
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>

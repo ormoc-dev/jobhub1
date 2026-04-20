@@ -80,20 +80,156 @@ $categories = $pdo->query("SELECT DISTINCT category FROM skills WHERE status = '
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="../assets/style.css" rel="stylesheet">
+    <style>
+        .skills-admin-page .admin-main-content {
+            background: linear-gradient(180deg, #eef2ff 0%, #f8fafc 18%, #f1f5f9 55%, #f8fafc 100%);
+            padding: 1.5rem 2rem 2.5rem;
+        }
+
+        .skills-page-header {
+            padding: 1.25rem 1.5rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(120deg, #ffffff 0%, #f5f8ff 50%, #eef4ff 100%);
+            border: 1px solid rgba(37, 99, 235, 0.12);
+            border-radius: 14px;
+            box-shadow: 0 2px 8px rgba(30, 58, 138, 0.06);
+        }
+
+        .skills-page-header h1 {
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: #1e3a8a;
+            margin-bottom: 0.35rem;
+        }
+
+        .skills-page-header h1 i {
+            color: #2563eb;
+            opacity: 0.9;
+        }
+
+        .skills-page-header .text-muted {
+            color: #64748b !important;
+        }
+
+        .skills-panel {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05);
+        }
+
+        .skills-panel-header {
+            background: linear-gradient(180deg, #f8fafc 0%, #f0f6ff 100%);
+            border-bottom: 1px solid rgba(37, 99, 235, 0.1);
+            padding: 0.9rem 1.25rem;
+        }
+
+        .skills-panel-header h5 {
+            margin: 0;
+            font-weight: 600;
+            font-size: 1rem;
+            color: #334155;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .skills-panel-header .fas {
+            color: #2563eb;
+            opacity: 0.88;
+        }
+
+        .skills-panel-body {
+            padding: 0;
+        }
+
+        .skills-admin-page .table {
+            margin-bottom: 0;
+            color: #475569;
+        }
+
+        .skills-admin-page .table thead th {
+            background: #f8fafc;
+            color: #64748b;
+            font-weight: 600;
+            font-size: 0.6875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            padding: 0.85rem 1.15rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .skills-admin-page .table tbody td {
+            padding: 0.85rem 1.15rem;
+            vertical-align: middle;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .skills-admin-page .table tbody tr:hover {
+            background: #f8fafc;
+        }
+
+        .skills-admin-page .table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .skills-badge-cat {
+            font-weight: 600;
+            font-size: 0.75rem;
+            padding: 0.35rem 0.65rem;
+            border-radius: 8px;
+            background: #eff6ff;
+            color: #1d4ed8;
+            border: 1px solid #bfdbfe;
+        }
+
+        .skills-badge-active {
+            font-weight: 600;
+            font-size: 0.75rem;
+            background: #ecfdf5;
+            color: #166534;
+            border: 1px solid #bbf7d0;
+        }
+
+        .skills-badge-inactive {
+            font-weight: 600;
+            font-size: 0.75rem;
+            background: #f1f5f9;
+            color: #475569;
+            border: 1px solid #e2e8f0;
+        }
+
+        .skills-admin-page .modal-header {
+            background: linear-gradient(180deg, #f8fafc 0%, #eff6ff 100%);
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .skills-admin-page .modal-title {
+            color: #1e3a8a;
+            font-weight: 700;
+            font-size: 1rem;
+        }
+
+        .skills-admin-page .modal-footer {
+            background: #fafbff;
+            border-top: 1px solid #e2e8f0;
+        }
+    </style>
 </head>
-<body class="admin-layout">
+<body class="admin-layout skills-admin-page">
     <?php include 'includes/sidebar.php'; ?>
 
-    <div class="main-content">
-        <div class="container-fluid py-4">
+    <div class="admin-main-content">
+        <div class="container-fluid px-0">
             <!-- Header -->
-            <div class="d-flex justify-content-between align-items-center mb-4">
+            <div class="skills-page-header d-flex justify-content-between align-items-start flex-wrap gap-3">
                 <div>
-                    <h1 class="h3 mb-0"><i class="fas fa-tools me-2"></i>Skills Management</h1>
-                    <p class="text-muted">Manage skills for employee profiles and job postings</p>
+                    <h1 class="h3 mb-0"><i class="fas fa-tools me-2"></i>Skills management</h1>
+                    <p class="text-muted mb-0">Manage skills for employee profiles and job postings</p>
                 </div>
-                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addSkillModal">
-                    <i class="fas fa-plus me-2"></i>Add New Skill
+                <button type="button" class="btn btn-primary flex-shrink-0" data-bs-toggle="modal" data-bs-target="#addSkillModal">
+                    <i class="fas fa-plus me-2"></i>Add new skill
                 </button>
             </div>
 
@@ -113,13 +249,13 @@ $categories = $pdo->query("SELECT DISTINCT category FROM skills WHERE status = '
             <?php endif; ?>
 
             <!-- Skills Table -->
-            <div class="card">
-                <div class="card-header bg-primary text-white">
-                    <h5 class="mb-0"><i class="fas fa-list me-2"></i>All Skills (<?php echo count($skills); ?>)</h5>
+            <div class="skills-panel">
+                <div class="skills-panel-header">
+                    <h5><i class="fas fa-list me-2"></i>All skills (<?php echo count($skills); ?>)</h5>
                 </div>
-                <div class="card-body">
+                <div class="skills-panel-body">
                     <div class="table-responsive">
-                        <table class="table table-hover">
+                        <table class="table table-hover align-middle">
                             <thead>
                                 <tr>
                                     <th>ID</th>
@@ -137,24 +273,26 @@ $categories = $pdo->query("SELECT DISTINCT category FROM skills WHERE status = '
                                     <td><?php echo $skill['id']; ?></td>
                                     <td><strong><?php echo htmlspecialchars($skill['skill_name']); ?></strong></td>
                                     <td>
-                                        <span class="badge bg-info"><?php echo htmlspecialchars($skill['category']); ?></span>
+                                        <span class="badge skills-badge-cat"><?php echo htmlspecialchars($skill['category']); ?></span>
                                     </td>
-                                    <td><?php echo htmlspecialchars($skill['description'] ?? '-'); ?></td>
+                                    <td><span class="text-muted small"><?php echo htmlspecialchars($skill['description'] ?? '—'); ?></span></td>
                                     <td>
                                         <?php if ($skill['status'] == 'active'): ?>
-                                            <span class="badge bg-success">Active</span>
+                                            <span class="badge skills-badge-active">Active</span>
                                         <?php else: ?>
-                                            <span class="badge bg-secondary">Inactive</span>
+                                            <span class="badge skills-badge-inactive">Inactive</span>
                                         <?php endif; ?>
                                     </td>
-                                    <td><?php echo date('M d, Y', strtotime($skill['created_at'])); ?></td>
+                                    <td class="text-muted small"><?php echo date('M j, Y', strtotime($skill['created_at'])); ?></td>
                                     <td>
-                                        <button class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#editSkillModal<?php echo $skill['id']; ?>">
-                                            <i class="fas fa-edit"></i>
-                                        </button>
-                                        <a href="?delete=<?php echo $skill['id']; ?>" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this skill?')">
-                                            <i class="fas fa-trash"></i>
-                                        </a>
+                                        <div class="d-flex flex-wrap gap-1">
+                                            <button type="button" class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editSkillModal<?php echo $skill['id']; ?>" title="Edit">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                            <a href="?delete=<?php echo $skill['id']; ?>" class="btn btn-sm btn-outline-danger" title="Delete" onclick="return confirm('Are you sure you want to delete this skill?')">
+                                                <i class="fas fa-trash"></i>
+                                            </a>
+                                        </div>
                                     </td>
                                 </tr>
                                 <?php endforeach; ?>

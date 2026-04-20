@@ -6400,9 +6400,8 @@ $similar_jobs = $stmt->fetchAll();
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top job-nav">
         <div class="container">
-            <a class="navbar-brand" href="index.php">
-                <img src="worklink.jpg" alt="WORKLINK" class="logo-img me-2" style="height: 40px; width: 40px; border-radius: 50%; object-fit: cover;">
-                WORKLINK
+            <a class="navbar-brand d-flex align-items-center py-1" href="index.php">
+                <img src="images/LOGO.png" alt="WORKLINK Job Seeker System" class="navbar-brand-logo" style="height: 48px; width: auto; max-width: min(260px, 58vw); object-fit: contain;">
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>

@@ -161,261 +161,249 @@ $currentTab = $_GET['tab'] ?? 'rules';
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="../assets/style.css" rel="stylesheet">
-    <style>
-        :root {
-            --matching-primary: #6366f1;
-            --matching-secondary: #818cf8;
-            --matching-accent: #a5b4fc;
-            --matching-success: #10b981;
-            --matching-warning: #f59e0b;
-            --matching-danger: #ef4444;
-            --matching-dark: #1e1b4b;
-            --matching-light: #eef2ff;
-            --matching-gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #a855f7 100%);
-            --card-shadow: 0 10px 40px rgba(99, 102, 241, 0.15);
-        }
-        
-        .matching-page {
+        <style>
+        .matching-admin-page .admin-main-content {
             font-family: 'Plus Jakarta Sans', sans-serif;
-            background: linear-gradient(135deg, #f8fafc 0%, #eef2ff 100%);
-            min-height: 100vh;
+            background: linear-gradient(180deg, #eef2ff 0%, #f8fafc 18%, #f1f5f9 55%, #f8fafc 100%);
+            padding: 1.5rem 0 2.5rem;
         }
-        
-        .page-header {
-            background: var(--matching-gradient);
-            padding: 2rem 0;
-            margin-bottom: 2rem;
-            border-radius: 0 0 30px 30px;
-            position: relative;
-            overflow: hidden;
+
+        .matching-page-header {
+            padding: 1.25rem 1.5rem;
+            margin: 0 1rem 1.5rem;
+            background: linear-gradient(120deg, #ffffff 0%, #f5f8ff 50%, #eef4ff 100%);
+            border: 1px solid rgba(37, 99, 235, 0.12);
+            border-radius: 14px;
+            box-shadow: 0 2px 8px rgba(30, 58, 138, 0.06);
         }
-        
-        .page-header::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -10%;
-            width: 400px;
-            height: 400px;
-            background: rgba(255,255,255,0.1);
-            border-radius: 50%;
-        }
-        
-        .page-header::after {
-            content: '';
-            position: absolute;
-            bottom: -30%;
-            left: 5%;
-            width: 200px;
-            height: 200px;
-            background: rgba(255,255,255,0.08);
-            border-radius: 50%;
-        }
-        
-        .page-header h1 {
-            color: white;
+
+        .matching-page-header h1 {
+            color: #1e3a8a;
             font-weight: 700;
-            font-size: 2rem;
+            font-size: 1.5rem;
             margin: 0;
-            position: relative;
-            z-index: 1;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
-        
-        .page-header p {
-            color: rgba(255,255,255,0.85);
-            margin: 0.5rem 0 0;
-            position: relative;
-            z-index: 1;
+
+        .matching-page-header h1 i {
+            color: #6366f1;
+            opacity: 0.95;
         }
-        
-        /* Tab Navigation */
+
+        .matching-page-header p {
+            color: #64748b;
+            margin: 0.35rem 0 0;
+            font-size: 0.95rem;
+        }
+
+        .matching-alert {
+            border-radius: 12px;
+            border: 1px solid transparent;
+            margin-bottom: 1rem;
+        }
+
+        .matching-alert--success {
+            background: #ecfdf5;
+            border-color: #a7f3d0;
+            color: #065f46;
+        }
+
+        .matching-alert--danger {
+            background: #fef2f2;
+            border-color: #fecaca;
+            color: #991b1b;
+        }
+
         .matching-tabs {
-            background: white;
-            border-radius: 20px;
-            padding: 8px;
-            box-shadow: var(--card-shadow);
-            margin-bottom: 2rem;
+            background: #f1f5f9;
+            border-radius: 12px;
+            padding: 6px;
+            margin-bottom: 1.5rem;
             display: inline-flex;
-            gap: 8px;
+            flex-wrap: wrap;
+            gap: 6px;
+            border: 1px solid #e2e8f0;
+            box-shadow: none;
         }
-        
+
         .matching-tabs .nav-link {
-            border-radius: 15px;
-            padding: 12px 24px;
+            border-radius: 10px;
+            padding: 10px 20px;
             font-weight: 600;
+            font-size: 0.875rem;
             color: #64748b;
             border: none;
-            transition: all 0.3s ease;
+            transition: background 0.2s, color 0.2s;
             display: flex;
             align-items: center;
             gap: 8px;
         }
-        
+
         .matching-tabs .nav-link:hover {
-            background: var(--matching-light);
-            color: var(--matching-primary);
+            background: rgba(255, 255, 255, 0.9);
+            color: #4338ca;
         }
-        
+
         .matching-tabs .nav-link.active {
-            background: var(--matching-gradient);
-            color: white;
-            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
+            background: #fff;
+            color: #4338ca;
+            box-shadow: 0 1px 4px rgba(30, 58, 138, 0.12);
         }
-        
+
         .matching-tabs .nav-link i {
-            font-size: 1.1rem;
+            font-size: 1rem;
         }
-        
-        /* Cards */
+
         .matching-card {
-            background: white;
-            border-radius: 24px;
-            box-shadow: var(--card-shadow);
-            border: none;
+            background: #ffffff;
+            border-radius: 14px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05);
             overflow: hidden;
-            transition: all 0.3s ease;
+            transition: box-shadow 0.2s, border-color 0.2s;
         }
-        
+
         .matching-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 60px rgba(99, 102, 241, 0.2);
+            transform: none;
+            box-shadow: 0 4px 14px rgba(30, 58, 138, 0.08);
+            border-color: rgba(99, 102, 241, 0.2);
         }
-        
+
         .matching-card .card-header {
-            background: linear-gradient(90deg, var(--matching-light) 0%, white 100%);
-            border-bottom: 1px solid rgba(99, 102, 241, 0.1);
-            padding: 1.5rem;
+            background: linear-gradient(120deg, #fafbff 0%, #f8fafc 100%);
+            border-bottom: 1px solid #e2e8f0;
+            padding: 1.1rem 1.35rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
         }
-        
+
         .matching-card .card-header h5 {
             margin: 0;
             font-weight: 700;
-            color: var(--matching-dark);
+            font-size: 1.05rem;
+            color: #1e3a8a;
             display: flex;
             align-items: center;
             gap: 10px;
         }
-        
+
         .matching-card .card-header h5 i {
-            color: var(--matching-primary);
+            color: #6366f1;
         }
-        
+
         .matching-card .card-body {
-            padding: 1.5rem;
+            padding: 1.25rem;
         }
-        
-        /* Stats Cards */
+
         .stat-box {
-            background: var(--matching-gradient);
-            border-radius: 20px;
-            padding: 1.5rem;
-            color: white;
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 14px;
+            padding: 1.25rem;
             text-align: center;
             position: relative;
             overflow: hidden;
+            box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05);
+            border-top: 3px solid #6366f1;
         }
-        
+
         .stat-box::before {
-            content: '';
-            position: absolute;
-            top: -20px;
-            right: -20px;
-            width: 80px;
-            height: 80px;
-            background: rgba(255,255,255,0.1);
-            border-radius: 50%;
+            display: none;
         }
-        
+
         .stat-box .stat-number {
-            font-size: 2.5rem;
+            font-size: 2rem;
             font-weight: 700;
-            line-height: 1;
+            line-height: 1.1;
+            color: #0f172a;
         }
-        
+
         .stat-box .stat-label {
             font-size: 0.875rem;
-            opacity: 0.9;
-            margin-top: 5px;
+            color: #64748b;
+            margin-top: 6px;
+            font-weight: 500;
+            opacity: 1;
         }
-        
-        .stat-box.success { background: linear-gradient(135deg, #10b981 0%, #059669 100%); }
-        .stat-box.warning { background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); }
-        .stat-box.info { background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%); }
-        
-        /* Tables */
+
+        .stat-box.success { border-top-color: #059669; }
+        .stat-box.warning { border-top-color: #d97706; }
+        .stat-box.info { border-top-color: #0891b2; }
+
         .matching-table {
-            border-radius: 16px;
-            overflow: hidden;
+            border-radius: 0;
+            overflow: visible;
         }
-        
+
         .matching-table thead th {
-            background: linear-gradient(90deg, var(--matching-primary) 0%, var(--matching-secondary) 100%);
-            color: white;
+            background: #f1f5f9;
+            color: #64748b;
             font-weight: 600;
-            padding: 1rem;
+            padding: 12px 14px;
             border: none;
-            font-size: 0.875rem;
+            font-size: 0.72rem;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.04em;
         }
-        
+
         .matching-table tbody td {
-            padding: 1rem;
+            padding: 12px 14px;
             vertical-align: middle;
-            border-bottom: 1px solid #f1f5f9;
+            border-bottom: 1px solid #e2e8f0;
+            color: #334155;
         }
-        
+
         .matching-table tbody tr:last-child td {
             border-bottom: none;
         }
-        
+
         .matching-table tbody tr:hover {
-            background: var(--matching-light);
+            background: #f8fafc;
         }
-        
-        /* Badges */
+
         .type-badge {
-            padding: 6px 14px;
-            border-radius: 30px;
-            font-size: 0.75rem;
+            padding: 5px 12px;
+            border-radius: 8px;
+            font-size: 0.72rem;
             font-weight: 600;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.03em;
         }
-        
-        .type-badge.skill { background: #dbeafe; color: #1d4ed8; }
+
+        .type-badge.skill { background: #dbeafe; color: #1e40af; }
         .type-badge.experience { background: #fef3c7; color: #b45309; }
         .type-badge.education { background: #dcfce7; color: #15803d; }
         .type-badge.location { background: #fce7f3; color: #be185d; }
         .type-badge.salary { background: #e0e7ff; color: #4338ca; }
-        
+
         .status-badge {
-            padding: 6px 14px;
-            border-radius: 30px;
-            font-size: 0.75rem;
+            padding: 5px 12px;
+            border-radius: 8px;
+            font-size: 0.72rem;
             font-weight: 600;
         }
-        
+
         .status-badge.active {
-            background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%);
-            color: #15803d;
+            background: #ecfdf5;
+            color: #047857;
         }
-        
+
         .status-badge.inactive {
-            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+            background: #fef2f2;
             color: #b91c1c;
         }
-        
-        /* Weight Indicator */
+
         .weight-indicator {
             display: flex;
             align-items: center;
             gap: 10px;
         }
-        
+
         .weight-bar {
             flex: 1;
             height: 8px;
@@ -423,138 +411,154 @@ $currentTab = $_GET['tab'] ?? 'rules';
             border-radius: 10px;
             overflow: hidden;
         }
-        
+
         .weight-fill {
             height: 100%;
-            background: var(--matching-gradient);
+            background: linear-gradient(90deg, #6366f1, #818cf8);
             border-radius: 10px;
             transition: width 0.3s ease;
         }
-        
+
         .weight-value {
             font-weight: 700;
-            color: var(--matching-primary);
+            color: #4338ca;
             min-width: 45px;
+            font-size: 0.875rem;
         }
-        
-        /* Buttons */
+
         .btn-matching {
-            background: var(--matching-gradient);
+            background: linear-gradient(135deg, #2563eb, #4f46e5);
             border: none;
             color: white;
-            padding: 10px 24px;
-            border-radius: 12px;
+            padding: 10px 20px;
+            border-radius: 10px;
             font-weight: 600;
-            transition: all 0.3s ease;
+            font-size: 0.875rem;
+            transition: box-shadow 0.2s, transform 0.15s;
             display: inline-flex;
             align-items: center;
             gap: 8px;
         }
-        
+
         .btn-matching:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(99, 102, 241, 0.4);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
             color: white;
         }
-        
+
         .btn-action {
             width: 36px;
             height: 36px;
-            border-radius: 10px;
+            border-radius: 8px;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            border: none;
-            transition: all 0.2s ease;
+            border: 1px solid transparent;
+            transition: background 0.2s;
         }
-        
-        .btn-action.edit { background: #dbeafe; color: #1d4ed8; }
-        .btn-action.edit:hover { background: #1d4ed8; color: white; }
-        .btn-action.toggle { background: #fef3c7; color: #b45309; }
-        .btn-action.toggle:hover { background: #b45309; color: white; }
-        .btn-action.delete { background: #fee2e2; color: #b91c1c; }
-        .btn-action.delete:hover { background: #b91c1c; color: white; }
-        
-        /* Settings Panel */
+
+        .btn-action.edit {
+            background: #fff;
+            color: #2563eb;
+            border-color: rgba(37, 99, 235, 0.35);
+        }
+        .btn-action.edit:hover { background: #eef2ff; color: #1d4ed8; }
+
+        .btn-action.toggle {
+            background: #fffbeb;
+            color: #b45309;
+            border-color: #fde68a;
+        }
+        .btn-action.toggle:hover { background: #fef3c7; }
+
+        .btn-action.delete {
+            background: #fff;
+            color: #b91c1c;
+            border-color: #fecaca;
+        }
+        .btn-action.delete:hover { background: #fef2f2; }
+
         .settings-group {
-            background: var(--matching-light);
-            border-radius: 16px;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 1.25rem;
+            margin-bottom: 1.25rem;
         }
-        
+
         .settings-group-title {
             font-weight: 700;
-            color: var(--matching-dark);
+            color: #1e3a8a;
             margin-bottom: 1rem;
             display: flex;
             align-items: center;
             gap: 10px;
         }
-        
+
         .settings-group-title i {
-            color: var(--matching-primary);
+            color: #6366f1;
         }
-        
+
         .setting-item {
-            background: white;
-            border-radius: 12px;
-            padding: 1rem 1.25rem;
-            margin-bottom: 0.75rem;
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 12px 16px;
+            margin-bottom: 10px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            transition: all 0.2s ease;
+            transition: box-shadow 0.2s;
         }
-        
+
         .setting-item:hover {
-            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.1);
+            box-shadow: 0 2px 8px rgba(15, 23, 42, 0.06);
         }
-        
+
         .setting-item:last-child {
             margin-bottom: 0;
         }
-        
+
         .setting-label {
             font-weight: 600;
-            color: #334155;
+            color: #0f172a;
         }
-        
+
         .setting-desc {
             font-size: 0.8rem;
             color: #64748b;
             margin-top: 2px;
         }
-        
+
         .setting-input {
             width: 120px;
-            border: 2px solid #e2e8f0;
-            border-radius: 10px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
             padding: 8px 12px;
             font-weight: 600;
             text-align: center;
-            transition: all 0.2s ease;
+            color: #0f172a;
+            background: #fff;
         }
-        
+
         .setting-input:focus {
-            border-color: var(--matching-primary);
-            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+            border-color: #6366f1;
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.12);
             outline: none;
         }
-        
-        /* Toggle Switch */
+
         .toggle-switch {
             position: relative;
-            width: 56px;
+            width: 52px;
             height: 28px;
         }
-        
+
         .toggle-switch input {
             opacity: 0;
             width: 0;
             height: 0;
         }
-        
+
         .toggle-slider {
             position: absolute;
             cursor: pointer;
@@ -566,7 +570,7 @@ $currentTab = $_GET['tab'] ?? 'rules';
             border-radius: 28px;
             transition: 0.3s;
         }
-        
+
         .toggle-slider::before {
             position: absolute;
             content: "";
@@ -577,120 +581,138 @@ $currentTab = $_GET['tab'] ?? 'rules';
             background: white;
             border-radius: 50%;
             transition: 0.3s;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.12);
         }
-        
+
         .toggle-switch input:checked + .toggle-slider {
-            background: var(--matching-gradient);
+            background: linear-gradient(135deg, #6366f1, #818cf8);
         }
-        
+
         .toggle-switch input:checked + .toggle-slider::before {
-            transform: translateX(28px);
+            transform: translateX(24px);
         }
-        
-        /* Skill Tree */
+
         .skill-tree {
             padding: 0;
             list-style: none;
         }
-        
+
         .skill-tree-item {
-            background: white;
+            background: #fff;
             border-radius: 12px;
-            padding: 1rem;
-            margin-bottom: 0.75rem;
-            border-left: 4px solid var(--matching-primary);
-            transition: all 0.2s ease;
+            padding: 14px 16px;
+            margin-bottom: 10px;
+            border: 1px solid #e2e8f0;
+            border-left: 4px solid #6366f1;
+            transition: box-shadow 0.2s, border-color 0.2s;
         }
-        
+
         .skill-tree-item:hover {
-            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.15);
-            transform: translateX(5px);
+            box-shadow: 0 2px 10px rgba(15, 23, 42, 0.06);
+            transform: none;
         }
-        
+
         .skill-tree-item.child {
-            margin-left: 2rem;
-            border-left-color: var(--matching-secondary);
+            margin-left: 1.5rem;
+            border-left-color: #818cf8;
         }
-        
+
         .category-badge {
-            background: var(--matching-light);
-            color: var(--matching-primary);
+            background: #eef2ff;
+            color: #4338ca;
             padding: 4px 12px;
             border-radius: 20px;
-            font-size: 0.75rem;
+            font-size: 0.72rem;
             font-weight: 600;
+            border: 1px solid #c7d2fe;
         }
-        
-        /* Form Controls */
-        .form-control, .form-select {
-            border: 2px solid #e2e8f0;
-            border-radius: 12px;
-            padding: 12px 16px;
-            transition: all 0.2s ease;
+
+        .matching-admin-page .form-control,
+        .matching-admin-page .form-select {
+            border: 1px solid #cbd5e1;
+            border-radius: 10px;
+            padding: 10px 14px;
+            background: #fff;
+            color: #0f172a;
         }
-        
-        .form-control:focus, .form-select:focus {
-            border-color: var(--matching-primary);
-            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+
+        .matching-admin-page .form-control:focus,
+        .matching-admin-page .form-select:focus {
+            border-color: #6366f1;
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.12);
         }
-        
-        /* Modal Styling */
-        .modal-content {
-            border: none;
-            border-radius: 24px;
+
+        .form-select--narrow {
+            width: 140px;
+        }
+
+        .matching-admin-page .modal-content {
+            border: 1px solid #e2e8f0;
+            border-radius: 14px;
             overflow: hidden;
+            box-shadow: 0 12px 40px rgba(15, 23, 42, 0.12);
         }
-        
-        .modal-header {
-            background: var(--matching-gradient);
-            color: white;
+
+        .matching-admin-page .modal-header {
+            background: linear-gradient(120deg, #f5f3ff 0%, #eef2ff 100%);
+            color: #1e3a8a;
             border: none;
-            padding: 1.5rem;
+            border-bottom: 1px solid #e2e8f0;
+            padding: 16px 20px;
         }
-        
-        .modal-header .btn-close {
-            filter: brightness(0) invert(1);
+
+        .matching-admin-page .modal-header .modal-title {
+            color: #1e3a8a;
+            font-weight: 700;
         }
-        
-        .modal-body {
-            padding: 2rem;
+
+        .matching-admin-page .modal-header .btn-close {
+            filter: none;
         }
-        
-        .modal-footer {
-            border: none;
-            padding: 1rem 2rem 2rem;
+
+        .matching-admin-page .modal-body {
+            padding: 1.25rem 1.5rem;
+            background: #fff;
         }
-        
-        /* Animation */
+
+        .matching-admin-page .modal-footer {
+            border-top: 1px solid #e2e8f0;
+            padding: 14px 1.5rem 1.25rem;
+            background: #fafafa;
+        }
+
         @keyframes fadeInUp {
             from {
                 opacity: 0;
-                transform: translateY(20px);
+                transform: translateY(12px);
             }
             to {
                 opacity: 1;
                 transform: translateY(0);
             }
         }
-        
+
         .animate-in {
-            animation: fadeInUp 0.5s ease forwards;
+            animation: fadeInUp 0.45s ease forwards;
         }
-        
-        /* Responsive */
+
+        .animate-delay-1 { animation-delay: 0.1s; }
+        .animate-delay-2 { animation-delay: 0.2s; }
+        .animate-delay-3 { animation-delay: 0.3s; }
+        .animate-delay-4 { animation-delay: 0.4s; }
+
         @media (max-width: 768px) {
             .matching-tabs {
-                flex-wrap: wrap;
                 width: 100%;
+                justify-content: center;
             }
-            
+
             .matching-tabs .nav-link {
                 flex: 1;
                 justify-content: center;
-                padding: 10px 16px;
+                padding: 10px 14px;
             }
-            
+
             .setting-item {
                 flex-direction: column;
                 gap: 10px;
@@ -699,29 +721,27 @@ $currentTab = $_GET['tab'] ?? 'rules';
         }
     </style>
 </head>
-<body class="admin-layout matching-page">
+<body class="admin-layout matching-admin-page">
     <?php include 'includes/sidebar.php'; ?>
 
     <div class="admin-main-content">
         <!-- Page Header -->
-        <div class="page-header">
-            <div class="container-fluid px-4">
-                <h1><i class="fas fa-brain me-2"></i>AI Matching & System Logic</h1>
-                <p>Configure matching rules, skill taxonomy, and recommendation algorithms</p>
-            </div>
+        <div class="matching-page-header">
+            <h1><i class="fas fa-brain me-2"></i>AI Matching & System Logic</h1>
+            <p>Configure matching rules, skill taxonomy, and recommendation algorithms</p>
         </div>
 
         <div class="container-fluid px-4">
             <!-- Alert Messages -->
             <?php if (!empty($message)): ?>
-                <div class="alert alert-success alert-dismissible fade show animate-in" role="alert" style="border-radius: 12px; border: none; background: linear-gradient(90deg, #dcfce7 0%, #bbf7d0 100%);">
+                <div class="alert alert-success alert-dismissible fade show animate-in matching-alert matching-alert--success" role="alert">
                     <i class="fas fa-check-circle me-2"></i><?php echo htmlspecialchars($message); ?>
                     <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                 </div>
             <?php endif; ?>
 
             <?php if (!empty($error)): ?>
-                <div class="alert alert-danger alert-dismissible fade show animate-in" role="alert" style="border-radius: 12px; border: none; background: linear-gradient(90deg, #fee2e2 0%, #fecaca 100%);">
+                <div class="alert alert-danger alert-dismissible fade show animate-in matching-alert matching-alert--danger" role="alert">
                     <i class="fas fa-exclamation-circle me-2"></i><?php echo htmlspecialchars($error); ?>
                     <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                 </div>
@@ -729,25 +749,25 @@ $currentTab = $_GET['tab'] ?? 'rules';
 
             <!-- Stats Row -->
             <div class="row g-4 mb-4">
-                <div class="col-md-3 animate-in" style="animation-delay: 0.1s;">
+                <div class="col-md-3 animate-in animate-delay-1">
                     <div class="stat-box">
                         <div class="stat-number"><?php echo count($matchingRules); ?></div>
                         <div class="stat-label">Matching Rules</div>
                     </div>
                 </div>
-                <div class="col-md-3 animate-in" style="animation-delay: 0.2s;">
+                <div class="col-md-3 animate-in animate-delay-2">
                     <div class="stat-box success">
                         <div class="stat-number"><?php echo count($skills); ?></div>
                         <div class="stat-label">Skills in Taxonomy</div>
                     </div>
                 </div>
-                <div class="col-md-3 animate-in" style="animation-delay: 0.3s;">
+                <div class="col-md-3 animate-in animate-delay-3">
                     <div class="stat-box warning">
                         <div class="stat-number"><?php echo count(array_unique(array_column($skills, 'category'))); ?></div>
                         <div class="stat-label">Skill Categories</div>
                     </div>
                 </div>
-                <div class="col-md-3 animate-in" style="animation-delay: 0.4s;">
+                <div class="col-md-3 animate-in animate-delay-4">
                     <div class="stat-box info">
                         <div class="stat-number"><?php echo $settings['min_match_score'] ?? 60; ?>%</div>
                         <div class="stat-label">Min Match Score</div>
@@ -1059,7 +1079,7 @@ $currentTab = $_GET['tab'] ?? 'rules';
                     </div>
                 </div>
                 <div class="col-lg-4">
-                    <div class="matching-card animate-in" style="animation-delay: 0.2s;">
+                    <div class="matching-card animate-in animate-delay-2">
                         <div class="card-header">
                             <h5><i class="fas fa-chart-pie"></i> Categories Overview</h5>
                         </div>
@@ -1145,7 +1165,7 @@ $currentTab = $_GET['tab'] ?? 'rules';
                     </div>
                     
                     <div class="col-lg-6">
-                        <div class="matching-card animate-in" style="animation-delay: 0.2s;">
+                        <div class="matching-card animate-in animate-delay-2">
                             <div class="card-header">
                                 <h5><i class="fas fa-cogs"></i> General Settings</h5>
                             </div>
@@ -1190,7 +1210,7 @@ $currentTab = $_GET['tab'] ?? 'rules';
                                             <div class="setting-label">Algorithm Type</div>
                                             <div class="setting-desc">Matching algorithm to use</div>
                                         </div>
-                                        <select class="form-select" name="settings[match_algorithm]" style="width: 140px;">
+                                        <select class="form-select form-select--narrow" name="settings[match_algorithm]">
                                             <option value="weighted" <?php echo ($settings['match_algorithm'] ?? 'weighted') === 'weighted' ? 'selected' : ''; ?>>Weighted</option>
                                             <option value="ai" <?php echo ($settings['match_algorithm'] ?? '') === 'ai' ? 'selected' : ''; ?>>AI-Powered</option>
                                             <option value="hybrid" <?php echo ($settings['match_algorithm'] ?? '') === 'hybrid' ? 'selected' : ''; ?>>Hybrid</option>
@@ -1202,7 +1222,7 @@ $currentTab = $_GET['tab'] ?? 'rules';
                     </div>
                     
                     <div class="col-12">
-                        <div class="matching-card animate-in" style="animation-delay: 0.3s;">
+                        <div class="matching-card animate-in animate-delay-3">
                             <div class="card-header">
                                 <h5><i class="fas fa-toggle-on"></i> Feature Toggles</h5>
                             </div>

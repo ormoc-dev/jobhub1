@@ -161,322 +161,336 @@ $stats['reports_pending'] = $pdo->query("SELECT COUNT(*) FROM employer_reports W
     <link href="../assets/style.css" rel="stylesheet">
     <style>
         :root {
-            --emerald: #059669;
-            --emerald-light: #10b981;
-            --emerald-dark: #047857;
-            --amber: #f59e0b;
-            --rose: #f43f5e;
-            --violet: #8b5cf6;
-            --sky: #0ea5e9;
-            --slate-900: #0f172a;
-            --slate-800: #1e293b;
-            --slate-700: #334155;
-            --slate-500: #64748b;
-            --slate-300: #cbd5e1;
-            --slate-100: #f1f5f9;
+            --cp-border: #e2e8f0;
+            --cp-text: #0f172a;
+            --cp-muted: #64748b;
         }
-        
+
         .company-page {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
+            font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+            min-height: 100vh;
+            background: #f1f5f9;
+        }
+
+        .company-page .admin-main-content {
+            background: linear-gradient(180deg, #eef2ff 0%, #f8fafc 18%, #f1f5f9 55%, #f8fafc 100%);
+            padding: 1.5rem 2rem 2.5rem;
             min-height: 100vh;
         }
-        
-        .company-page .admin-main-content {
-            background: transparent;
-            padding: 24px 32px;
-        }
-        
-        /* Page Header */
+
         .page-header {
-            margin-bottom: 28px;
+            margin-bottom: 1.5rem;
+            padding: 1.25rem 1.5rem;
+            background: linear-gradient(120deg, #ffffff 0%, #f5f8ff 50%, #eef4ff 100%);
+            border: 1px solid rgba(37, 99, 235, 0.12);
+            border-radius: 14px;
+            box-shadow: 0 2px 8px rgba(30, 58, 138, 0.06);
         }
-        
+
         .page-header h1 {
-            font-weight: 800;
-            font-size: 1.75rem;
-            color: #fff;
-            margin-bottom: 6px;
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: #1e3a8a;
+            margin-bottom: 0.35rem;
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 0.65rem;
         }
-        
+
         .page-header h1 i {
-            background: linear-gradient(135deg, var(--emerald), var(--emerald-light));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: #2563eb;
+            opacity: 0.92;
+            -webkit-text-fill-color: #2563eb;
+            background: none;
         }
-        
+
         .page-header p {
-            color: var(--slate-500);
+            color: #64748b;
             margin: 0;
-            font-size: 0.95rem;
+            font-size: 0.9375rem;
         }
-        
-        /* Stats Row */
+
         .stats-row {
             display: grid;
             grid-template-columns: repeat(6, 1fr);
-            gap: 16px;
-            margin-bottom: 28px;
+            gap: 1.25rem;
+            margin-bottom: 1.75rem;
         }
-        
+
         @media (max-width: 1200px) {
             .stats-row { grid-template-columns: repeat(3, 1fr); }
         }
-        
+
         @media (max-width: 768px) {
             .stats-row { grid-template-columns: repeat(2, 1fr); }
         }
-        
+
         .stat-box {
-            background: var(--slate-800);
-            border: 1px solid rgba(255,255,255,0.05);
-            border-radius: 16px;
-            padding: 20px;
+            background: linear-gradient(165deg, #ffffff 0%, #fafbff 100%);
+            border: 1px solid var(--cp-border);
+            border-left: 3px solid rgba(37, 99, 235, 0.45);
+            border-radius: 12px;
+            padding: 1.1rem 1.15rem;
             display: flex;
             align-items: center;
-            gap: 16px;
-            transition: all 0.3s ease;
+            gap: 1rem;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease, border-left-color 0.2s ease, transform 0.2s ease;
+            box-shadow: 0 1px 3px rgba(30, 58, 138, 0.06);
         }
-        
+
         .stat-box:hover {
-            transform: translateY(-4px);
-            border-color: rgba(255,255,255,0.1);
-            box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+            transform: translateY(-2px);
+            border-color: #cbd5e1;
+            border-left-color: #2563eb;
+            box-shadow: 0 12px 28px rgba(30, 58, 138, 0.08);
         }
-        
+
         .stat-icon {
-            width: 52px;
-            height: 52px;
-            border-radius: 14px;
+            width: 46px;
+            height: 46px;
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 20px;
+            font-size: 1.05rem;
+            flex-shrink: 0;
         }
-        
-        .stat-box.total .stat-icon { background: linear-gradient(135deg, var(--emerald), var(--emerald-light)); color: white; }
-        .stat-box.active .stat-icon { background: linear-gradient(135deg, #22c55e, #4ade80); color: white; }
-        .stat-box.pending .stat-icon { background: linear-gradient(135deg, var(--amber), #fbbf24); color: white; }
-        .stat-box.suspended .stat-icon { background: linear-gradient(135deg, var(--rose), #fb7185); color: white; }
-        .stat-box.featured .stat-icon { background: linear-gradient(135deg, var(--violet), #a78bfa); color: white; }
-        .stat-box.reports .stat-icon { background: linear-gradient(135deg, #ef4444, #f87171); color: white; }
-        
+
+        .stat-box.total .stat-icon { background: rgba(37, 99, 235, 0.1); color: #1d4ed8; }
+        .stat-box.active .stat-icon { background: rgba(5, 150, 105, 0.1); color: #047857; }
+        .stat-box.pending .stat-icon { background: rgba(217, 119, 6, 0.1); color: #b45309; }
+        .stat-box.suspended .stat-icon { background: rgba(220, 38, 38, 0.08); color: #b91c1c; }
+        .stat-box.featured .stat-icon { background: rgba(124, 58, 237, 0.1); color: #6d28d9; }
+        .stat-box.reports .stat-icon { background: rgba(220, 38, 38, 0.08); color: #dc2626; }
+
         .stat-info h3 {
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             font-weight: 700;
-            color: #fff;
+            color: #1e293b;
             margin: 0;
-            line-height: 1;
+            line-height: 1.1;
         }
-        
+
         .stat-info span {
-            font-size: 0.8rem;
-            color: var(--slate-500);
-            font-weight: 500;
+            font-size: 0.75rem;
+            color: #64748b;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
         }
         
-        /* Alert Styles */
         .alert-custom {
-            border: none;
-            border-radius: 14px;
-            padding: 16px 20px;
-            margin-bottom: 24px;
+            border-radius: 12px;
+            padding: 14px 18px;
+            margin-bottom: 1.25rem;
             display: flex;
             align-items: center;
             gap: 12px;
+            border: 1px solid var(--cp-border);
         }
-        
+
         .alert-custom.success {
-            background: rgba(16, 185, 129, 0.15);
-            border-left: 4px solid var(--emerald-light);
-            color: #6ee7b7;
+            background: #ecfdf5;
+            border-color: #bbf7d0;
+            color: #166534;
         }
-        
+
         .alert-custom.warning {
-            background: rgba(245, 158, 11, 0.15);
-            border-left: 4px solid var(--amber);
-            color: #fcd34d;
+            background: #fffbeb;
+            border-color: #fde68a;
+            color: #92400e;
         }
-        
+
         .alert-custom.danger {
-            background: rgba(244, 63, 94, 0.15);
-            border-left: 4px solid var(--rose);
-            color: #fda4af;
+            background: #fef2f2;
+            border-color: #fecaca;
+            color: #991b1b;
         }
-        
-        /* Tab Navigation */
+
         .tab-nav {
             display: flex;
+            flex-wrap: wrap;
             gap: 8px;
-            margin-bottom: 24px;
-            background: var(--slate-800);
+            margin-bottom: 1.25rem;
+            background: #ffffff;
             padding: 6px;
-            border-radius: 14px;
+            border-radius: 12px;
+            border: 1px solid var(--cp-border);
+            box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
             width: fit-content;
+            max-width: 100%;
         }
-        
+
         .tab-link {
-            padding: 12px 20px;
+            padding: 10px 16px;
             border-radius: 10px;
-            color: var(--slate-500);
+            color: #64748b;
             text-decoration: none;
             font-weight: 600;
-            font-size: 0.9rem;
-            transition: all 0.3s ease;
+            font-size: 0.875rem;
+            transition: background 0.2s ease, color 0.2s ease;
             display: flex;
             align-items: center;
             gap: 8px;
         }
-        
+
         .tab-link:hover {
-            color: #fff;
-            background: rgba(255,255,255,0.05);
+            color: #1e40af;
+            background: #f1f5f9;
         }
-        
+
         .tab-link.active {
-            background: linear-gradient(135deg, var(--emerald), var(--emerald-dark));
+            background: linear-gradient(180deg, #2563eb 0%, #1d4ed8 100%);
             color: white;
-            box-shadow: 0 4px 20px rgba(5, 150, 105, 0.3);
+            box-shadow: 0 4px 14px rgba(37, 99, 235, 0.25);
         }
-        
+
         .tab-link .badge {
-            font-size: 0.7rem;
+            font-size: 0.65rem;
             padding: 4px 8px;
             border-radius: 6px;
             font-weight: 600;
         }
-        
+
         .tab-link.active .badge {
-            background: rgba(255,255,255,0.2);
+            background: rgba(255, 255, 255, 0.25) !important;
+            color: white !important;
         }
-        
-        /* Main Card */
+
         .main-card {
-            background: var(--slate-800);
-            border: 1px solid rgba(255,255,255,0.05);
-            border-radius: 20px;
+            background: #ffffff;
+            border: 1px solid var(--cp-border);
+            border-radius: 14px;
             overflow: hidden;
+            box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05);
         }
-        
+
         .card-header-custom {
-            padding: 20px 24px;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
+            padding: 1rem 1.25rem;
+            border-bottom: 1px solid rgba(37, 99, 235, 0.1);
+            background: linear-gradient(180deg, #f8fafc 0%, #f0f6ff 100%);
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: 16px;
+            gap: 1rem;
         }
-        
+
         .card-header-custom h5 {
-            color: #fff;
-            font-weight: 700;
-            font-size: 1.1rem;
+            color: #334155;
+            font-weight: 600;
+            font-size: 1rem;
             margin: 0;
             display: flex;
             align-items: center;
             gap: 10px;
         }
-        
+
+        .card-header-custom h5 i {
+            color: #2563eb;
+            opacity: 0.88;
+        }
+
         .card-header-custom h5 .count {
-            background: rgba(16, 185, 129, 0.2);
-            color: var(--emerald-light);
+            background: rgba(37, 99, 235, 0.1);
+            color: #1d4ed8;
             padding: 4px 10px;
             border-radius: 8px;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
+            font-weight: 700;
         }
-        
+
         .search-wrapper {
             display: flex;
             gap: 8px;
         }
-        
+
         .search-input {
-            background: var(--slate-900);
-            border: 1px solid rgba(255,255,255,0.1);
+            background: #ffffff;
+            border: 1px solid var(--cp-border);
             border-radius: 10px;
-            padding: 10px 16px;
-            color: #fff;
+            padding: 10px 14px;
+            color: #0f172a;
             width: 240px;
-            font-size: 0.9rem;
+            max-width: 100%;
+            font-size: 0.875rem;
         }
-        
-        .search-input::placeholder { color: var(--slate-500); }
-        .search-input:focus { outline: none; border-color: var(--emerald); }
-        
+
+        .search-input::placeholder { color: #94a3b8; }
+        .search-input:focus {
+            outline: none;
+            border-color: #93c5fd;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+        }
+
         .btn-search {
-            background: var(--emerald);
+            background: #2563eb;
             border: none;
             color: white;
             padding: 10px 16px;
             border-radius: 10px;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: background 0.2s ease;
         }
+
+        .btn-search:hover { background: #1d4ed8; }
         
-        .btn-search:hover { background: var(--emerald-dark); }
-        
-        /* Table Styles */
         .data-table {
             width: 100%;
             border-collapse: collapse;
         }
-        
+
         .data-table thead th {
-            background: rgba(15, 23, 42, 0.5);
-            color: var(--slate-500);
+            background: #f8fafc;
+            color: #64748b;
             font-weight: 600;
-            font-size: 0.75rem;
+            font-size: 0.6875rem;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
-            padding: 14px 20px;
+            letter-spacing: 0.06em;
+            padding: 12px 18px;
             text-align: left;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
+            border-bottom: 1px solid var(--cp-border);
         }
-        
+
         .data-table tbody tr {
-            transition: all 0.2s ease;
+            transition: background 0.15s ease;
         }
-        
+
         .data-table tbody tr:hover {
-            background: rgba(16, 185, 129, 0.05);
+            background: #f8fafc;
         }
-        
+
         .data-table tbody td {
-            padding: 16px 20px;
-            border-bottom: 1px solid rgba(255,255,255,0.03);
-            color: var(--slate-300);
-            font-size: 0.9rem;
+            padding: 14px 18px;
+            border-bottom: 1px solid #f1f5f9;
+            color: #475569;
+            font-size: 0.875rem;
             vertical-align: middle;
         }
-        
+
         .data-table tbody tr:last-child td {
             border-bottom: none;
         }
-        
-        /* Company Cell */
+
         .company-cell {
             display: flex;
             align-items: center;
             gap: 14px;
         }
-        
+
         .company-avatar {
             width: 48px;
             height: 48px;
             border-radius: 12px;
             object-fit: cover;
-            border: 2px solid rgba(255,255,255,0.1);
+            border: 1px solid var(--cp-border);
         }
-        
+
         .company-avatar-placeholder {
             width: 48px;
             height: 48px;
             border-radius: 12px;
-            background: linear-gradient(135deg, var(--emerald), var(--emerald-light));
+            background: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -484,20 +498,19 @@ $stats['reports_pending'] = $pdo->query("SELECT COUNT(*) FROM employer_reports W
             font-weight: 700;
             font-size: 1rem;
         }
-        
+
         .company-details h6 {
-            color: #fff;
+            color: #0f172a;
             font-weight: 600;
             margin: 0 0 4px 0;
-            font-size: 0.95rem;
+            font-size: 0.9375rem;
         }
-        
+
         .company-details small {
-            color: var(--slate-500);
+            color: #64748b;
             font-size: 0.8rem;
         }
-        
-        /* Status Badges */
+
         .status-badge {
             padding: 6px 12px;
             border-radius: 8px;
@@ -507,25 +520,25 @@ $stats['reports_pending'] = $pdo->query("SELECT COUNT(*) FROM employer_reports W
             align-items: center;
             gap: 6px;
         }
-        
-        .status-badge.active { background: rgba(34, 197, 94, 0.15); color: #4ade80; }
-        .status-badge.pending { background: rgba(245, 158, 11, 0.15); color: #fbbf24; }
-        .status-badge.suspended { background: rgba(244, 63, 94, 0.15); color: #fb7185; }
-        .status-badge.rejected { background: rgba(107, 114, 128, 0.15); color: #9ca3af; }
-        
+
+        .status-badge.active { background: #dcfce7; color: #166534; }
+        .status-badge.pending { background: #fef3c7; color: #92400e; }
+        .status-badge.suspended { background: #ffe4e6; color: #9f1239; }
+        .status-badge.rejected { background: #f1f5f9; color: #475569; }
+
         .status-badge i { font-size: 0.6rem; }
-        
+
         .featured-badge {
-            background: linear-gradient(135deg, var(--violet), #a78bfa);
-            color: white;
+            background: #ede9fe;
+            color: #5b21b6;
+            border: 1px solid #ddd6fe;
             padding: 4px 10px;
             border-radius: 6px;
             font-size: 0.7rem;
             font-weight: 600;
             margin-left: 8px;
         }
-        
-        /* Report Badges */
+
         .report-type {
             padding: 5px 10px;
             border-radius: 6px;
@@ -533,233 +546,240 @@ $stats['reports_pending'] = $pdo->query("SELECT COUNT(*) FROM employer_reports W
             font-weight: 600;
             text-transform: uppercase;
         }
-        
-        .report-type.fraudulent { background: rgba(239, 68, 68, 0.15); color: #f87171; }
-        .report-type.scam { background: rgba(249, 115, 22, 0.15); color: #fb923c; }
-        .report-type.harassment { background: rgba(236, 72, 153, 0.15); color: #f472b6; }
-        .report-type.misleading { background: rgba(245, 158, 11, 0.15); color: #fbbf24; }
-        .report-type.spam { background: rgba(107, 114, 128, 0.15); color: #9ca3af; }
-        .report-type.other { background: rgba(100, 116, 139, 0.15); color: #94a3b8; }
-        
+
+        .report-type.fraudulent { background: #fee2e2; color: #991b1b; }
+        .report-type.scam { background: #ffedd5; color: #9a3412; }
+        .report-type.harassment { background: #fce7f3; color: #9d174d; }
+        .report-type.misleading { background: #fef3c7; color: #92400e; }
+        .report-type.spam { background: #f1f5f9; color: #475569; }
+        .report-type.other { background: #f1f5f9; color: #64748b; }
+
         .report-status {
             padding: 5px 10px;
             border-radius: 6px;
             font-size: 0.7rem;
             font-weight: 600;
         }
-        
-        .report-status.pending { background: rgba(245, 158, 11, 0.15); color: #fbbf24; }
-        .report-status.investigating { background: rgba(99, 102, 241, 0.15); color: #818cf8; }
-        .report-status.resolved { background: rgba(34, 197, 94, 0.15); color: #4ade80; }
-        .report-status.dismissed { background: rgba(107, 114, 128, 0.15); color: #9ca3af; }
-        
-        /* Action Buttons */
+
+        .report-status.pending { background: #fef3c7; color: #92400e; }
+        .report-status.investigating { background: #dbeafe; color: #1e40af; }
+        .report-status.resolved { background: #dcfce7; color: #166534; }
+        .report-status.dismissed { background: #f1f5f9; color: #64748b; }
+
         .action-btns {
             display: flex;
             gap: 6px;
             flex-wrap: wrap;
         }
-        
+
         .btn-action {
             padding: 8px 12px;
             border-radius: 8px;
             font-size: 0.75rem;
             font-weight: 600;
-            border: none;
+            border: 1px solid transparent;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
             display: inline-flex;
             align-items: center;
             gap: 6px;
         }
-        
-        .btn-action:hover { transform: translateY(-2px); }
-        
-        .btn-view { background: rgba(14, 165, 233, 0.15); color: #38bdf8; }
-        .btn-view:hover { background: rgba(14, 165, 233, 0.25); color: #38bdf8; }
-        
-        .btn-approve { background: rgba(34, 197, 94, 0.15); color: #4ade80; }
-        .btn-approve:hover { background: rgba(34, 197, 94, 0.25); color: #4ade80; }
-        
-        .btn-reject { background: rgba(244, 63, 94, 0.15); color: #fb7185; }
-        .btn-reject:hover { background: rgba(244, 63, 94, 0.25); color: #fb7185; }
-        
-        .btn-suspend { background: rgba(245, 158, 11, 0.15); color: #fbbf24; }
-        .btn-suspend:hover { background: rgba(245, 158, 11, 0.25); color: #fbbf24; }
-        
-        .btn-activate { background: rgba(16, 185, 129, 0.15); color: #34d399; }
-        .btn-activate:hover { background: rgba(16, 185, 129, 0.25); color: #34d399; }
-        
-        .btn-feature { background: rgba(139, 92, 246, 0.15); color: #a78bfa; }
-        .btn-feature:hover { background: rgba(139, 92, 246, 0.25); color: #a78bfa; }
-        
-        .btn-delete { background: rgba(239, 68, 68, 0.15); color: #f87171; }
-        .btn-delete:hover { background: rgba(239, 68, 68, 0.25); color: #f87171; }
-        
-        /* Empty State */
+
+        .btn-action:hover { transform: translateY(-1px); }
+
+        .btn-view { background: #eff6ff; color: #1d4ed8; border-color: #bfdbfe; }
+        .btn-view:hover { background: #dbeafe; color: #1e3a8a; }
+
+        .btn-approve { background: #ecfdf5; color: #047857; border-color: #a7f3d0; }
+        .btn-approve:hover { background: #d1fae5; }
+
+        .btn-reject { background: #fef2f2; color: #b91c1c; border-color: #fecaca; }
+        .btn-reject:hover { background: #fee2e2; }
+
+        .btn-suspend { background: #fffbeb; color: #b45309; border-color: #fde68a; }
+        .btn-suspend:hover { background: #fef3c7; }
+
+        .btn-activate { background: #ecfdf5; color: #047857; border-color: #a7f3d0; }
+        .btn-activate:hover { background: #d1fae5; }
+
+        .btn-feature { background: #f5f3ff; color: #6d28d9; border-color: #ddd6fe; }
+        .btn-feature:hover { background: #ede9fe; }
+
+        .btn-delete { background: #fef2f2; color: #b91c1c; border-color: #fecaca; }
+        .btn-delete:hover { background: #fee2e2; }
+
         .empty-state {
             text-align: center;
-            padding: 60px 20px;
+            padding: 3rem 1.25rem;
         }
-        
+
         .empty-state i {
-            font-size: 60px;
-            color: var(--slate-700);
-            margin-bottom: 20px;
+            font-size: 3rem;
+            color: #cbd5e1;
+            margin-bottom: 1rem;
         }
-        
+
         .empty-state h5 {
-            color: var(--slate-300);
+            color: #475569;
             font-weight: 600;
             margin-bottom: 8px;
         }
-        
+
         .empty-state p {
-            color: var(--slate-500);
+            color: #94a3b8;
             font-size: 0.9rem;
         }
-        
-        /* Modal Styles */
-        .modal-content {
-            background: var(--slate-800);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 20px;
+
+        .company-page .modal-content {
+            background: #ffffff;
+            border: 1px solid var(--cp-border);
+            border-radius: 14px;
         }
-        
-        .modal-header {
-            background: linear-gradient(135deg, var(--emerald), var(--emerald-dark));
-            border-radius: 20px 20px 0 0;
-            padding: 20px 24px;
-            border: none;
+
+        .company-page .modal-header {
+            background: linear-gradient(180deg, #f8fafc 0%, #eff6ff 100%);
+            border-bottom: 1px solid var(--cp-border);
+            border-radius: 14px 14px 0 0;
+            padding: 1rem 1.25rem;
         }
-        
-        .modal-title {
-            color: white;
+
+        .company-page .modal-title {
+            color: #1e3a8a;
             font-weight: 700;
         }
-        
-        .modal-body {
-            padding: 24px;
-            color: var(--slate-300);
+
+        .company-page .modal-body {
+            padding: 1.25rem;
+            color: #475569;
         }
-        
-        .modal-footer {
-            padding: 16px 24px;
-            border-top: 1px solid rgba(255,255,255,0.05);
+
+        .company-page .modal-footer {
+            padding: 1rem 1.25rem;
+            border-top: 1px solid var(--cp-border);
+            background: #fafbff;
         }
-        
+
         .info-row {
             display: flex;
             margin-bottom: 12px;
             padding-bottom: 12px;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
+            border-bottom: 1px solid #f1f5f9;
         }
-        
+
         .info-row:last-child { border-bottom: none; }
-        
+
         .info-label {
             width: 140px;
-            color: var(--slate-500);
+            color: #64748b;
             font-size: 0.85rem;
             font-weight: 500;
         }
-        
+
         .info-value {
             flex: 1;
-            color: #fff;
+            color: #0f172a;
             font-weight: 500;
         }
-        
+
         .doc-link {
             display: inline-flex;
             align-items: center;
             gap: 8px;
             padding: 10px 16px;
-            background: rgba(16, 185, 129, 0.1);
-            border: 1px solid rgba(16, 185, 129, 0.2);
+            background: #eff6ff;
+            border: 1px solid #bfdbfe;
             border-radius: 10px;
-            color: var(--emerald-light);
+            color: #1d4ed8;
             text-decoration: none;
             font-size: 0.85rem;
             font-weight: 500;
-            transition: all 0.3s ease;
+            transition: background 0.2s ease;
         }
-        
+
         .doc-link:hover {
-            background: rgba(16, 185, 129, 0.2);
-            color: var(--emerald-light);
+            background: #dbeafe;
+            color: #1e3a8a;
         }
-        
-        .form-control, .form-select {
-            background: var(--slate-900);
-            border: 1px solid rgba(255,255,255,0.1);
+
+        .company-page .form-control,
+        .company-page .form-select {
+            background: #ffffff;
+            border: 1px solid var(--cp-border);
             border-radius: 10px;
-            color: #fff;
+            color: #0f172a;
             padding: 12px 16px;
         }
-        
-        .form-control:focus, .form-select:focus {
-            background: var(--slate-900);
-            border-color: var(--emerald);
-            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15);
-            color: #fff;
+
+        .company-page .form-control:focus,
+        .company-page .form-select:focus {
+            background: #ffffff;
+            border-color: #93c5fd;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+            color: #0f172a;
         }
-        
-        .form-label {
-            color: var(--slate-300);
+
+        .company-page .form-label {
+            color: #475569;
             font-weight: 600;
             font-size: 0.85rem;
             margin-bottom: 8px;
         }
-        
+
         .btn-modal-cancel {
-            background: var(--slate-700);
-            color: var(--slate-300);
-            border: none;
+            background: #f1f5f9;
+            color: #475569;
+            border: 1px solid var(--cp-border);
             padding: 10px 20px;
             border-radius: 10px;
             font-weight: 600;
         }
-        
+
         .btn-modal-cancel:hover {
-            background: var(--slate-900);
-            color: #fff;
+            background: #e2e8f0;
+            color: #0f172a;
         }
-        
+
         .btn-modal-save {
-            background: linear-gradient(135deg, var(--emerald), var(--emerald-dark));
+            background: #2563eb;
             color: white;
             border: none;
             padding: 10px 20px;
             border-radius: 10px;
             font-weight: 600;
         }
-        
+
         .btn-modal-save:hover {
-            box-shadow: 0 4px 20px rgba(16, 185, 129, 0.3);
+            background: #1d4ed8;
             color: white;
+            box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3);
         }
-        
-        /* Stats Mini */
+
         .stats-mini {
             display: flex;
             gap: 16px;
         }
-        
+
         .stat-mini-item {
             text-align: center;
         }
-        
+
         .stat-mini-item .num {
             font-size: 1.25rem;
             font-weight: 700;
-            color: var(--emerald-light);
+            color: #1d4ed8;
         }
-        
+
         .stat-mini-item .lbl {
             font-size: 0.7rem;
-            color: var(--slate-500);
+            color: #64748b;
             text-transform: uppercase;
+        }
+
+        .cp-readonly {
+            background: #f8fafc;
+            border: 1px solid var(--cp-border);
+            color: #475569;
+            font-size: 0.875rem;
         }
     </style>
 </head>
@@ -941,7 +961,7 @@ $stats['reports_pending'] = $pdo->query("SELECT COUNT(*) FROM employer_reports W
                                         <div class="modal-content">
                                             <div class="modal-header">
                                                 <h5 class="modal-title"><i class="fas fa-flag me-2"></i>Report Details</h5>
-                                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
                                                 <div class="row mb-4">
@@ -968,17 +988,17 @@ $stats['reports_pending'] = $pdo->query("SELECT COUNT(*) FROM employer_reports W
                                                 </div>
                                                 <div class="mb-4">
                                                     <label class="form-label">Description</label>
-                                                    <div class="p-3 rounded" style="background: var(--slate-900);"><?php echo nl2br(htmlspecialchars($report['description'])); ?></div>
+                                                    <div class="p-3 rounded cp-readonly"><?php echo nl2br(htmlspecialchars($report['description'])); ?></div>
                                                 </div>
                                                 <?php if ($report['admin_notes']): ?>
                                                 <div class="mb-4">
                                                     <label class="form-label">Admin Notes</label>
-                                                    <div class="p-3 rounded" style="background: var(--slate-900);"><?php echo nl2br(htmlspecialchars($report['admin_notes'])); ?></div>
+                                                    <div class="p-3 rounded cp-readonly"><?php echo nl2br(htmlspecialchars($report['admin_notes'])); ?></div>
                                                 </div>
                                                 <?php endif; ?>
                                                 
-                                                <hr style="border-color: rgba(255,255,255,0.1);">
-                                                <h6 class="mb-3" style="color: #fff;">Update Report</h6>
+                                                <hr class="border-secondary opacity-25">
+                                                <h6 class="mb-3 text-dark fw-semibold">Update report</h6>
                                                 <form method="POST">
                                                     <input type="hidden" name="action" value="resolve_report">
                                                     <input type="hidden" name="report_id" value="<?php echo $report['id']; ?>">
@@ -1057,8 +1077,8 @@ $stats['reports_pending'] = $pdo->query("SELECT COUNT(*) FROM employer_reports W
                                         </div>
                                     </td>
                                     <td>
-                                        <small><i class="fas fa-envelope me-1" style="color: var(--emerald);"></i><?php echo htmlspecialchars($company['contact_email']); ?></small><br>
-                                        <small><i class="fas fa-phone me-1" style="color: var(--emerald);"></i><?php echo htmlspecialchars($company['contact_number']); ?></small>
+                                        <small><i class="fas fa-envelope me-1 text-primary"></i><?php echo htmlspecialchars($company['contact_email']); ?></small><br>
+                                        <small><i class="fas fa-phone me-1 text-primary"></i><?php echo htmlspecialchars($company['contact_number']); ?></small>
                                     </td>
                                     <td><small><?php echo htmlspecialchars(substr($company['location_address'], 0, 35)); ?><?php echo strlen($company['location_address']) > 35 ? '...' : ''; ?></small></td>
                                     <?php if ($currentTab === 'profiles'): ?>
@@ -1151,13 +1171,13 @@ $stats['reports_pending'] = $pdo->query("SELECT COUNT(*) FROM employer_reports W
                                         <div class="modal-content">
                                             <div class="modal-header">
                                                 <h5 class="modal-title"><i class="fas fa-building me-2"></i><?php echo htmlspecialchars($company['company_name']); ?></h5>
-                                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
                                                 <div class="row">
                                                     <div class="col-md-4 text-center mb-4">
                                                         <?php if ($company['company_logo']): ?>
-                                                            <img src="../<?php echo htmlspecialchars($company['company_logo']); ?>" class="rounded-3" style="width:120px;height:120px;object-fit:cover;border:3px solid var(--emerald);">
+                                                            <img src="../<?php echo htmlspecialchars($company['company_logo']); ?>" class="rounded-3" style="width:120px;height:120px;object-fit:cover;border:3px solid #2563eb;">
                                                         <?php else: ?>
                                                             <div class="company-avatar-placeholder mx-auto" style="width:120px;height:120px;font-size:36px;"><?php echo strtoupper(substr($company['company_name'], 0, 2)); ?></div>
                                                         <?php endif; ?>
@@ -1203,7 +1223,7 @@ $stats['reports_pending'] = $pdo->query("SELECT COUNT(*) FROM employer_reports W
                                                 <?php if (!empty($company['description'])): ?>
                                                 <div class="mt-4">
                                                     <label class="form-label">Description</label>
-                                                    <div class="p-3 rounded" style="background: var(--slate-900);"><?php echo nl2br(htmlspecialchars($company['description'])); ?></div>
+                                                    <div class="p-3 rounded cp-readonly"><?php echo nl2br(htmlspecialchars($company['description'])); ?></div>
                                                 </div>
                                                 <?php endif; ?>
                                                 
@@ -1221,7 +1241,7 @@ $stats['reports_pending'] = $pdo->query("SELECT COUNT(*) FROM employer_reports W
                                                             </a>
                                                         <?php endif; ?>
                                                         <?php if (!$company['business_permit'] && !$company['supporting_document']): ?>
-                                                            <span style="color: var(--slate-500);">No documents uploaded</span>
+                                                            <span class="text-muted">No documents uploaded</span>
                                                         <?php endif; ?>
                                                     </div>
                                                 </div>
@@ -1239,13 +1259,13 @@ $stats['reports_pending'] = $pdo->query("SELECT COUNT(*) FROM employer_reports W
                                         <div class="modal-content">
                                             <div class="modal-header">
                                                 <h5 class="modal-title"><i class="fas fa-star me-2"></i>Feature Company</h5>
-                                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
                                             <form method="POST">
                                                 <input type="hidden" name="action" value="feature_company">
                                                 <input type="hidden" name="company_id" value="<?php echo $company['id']; ?>">
                                                 <div class="modal-body">
-                                                    <p style="color: var(--slate-300);">Feature <strong style="color:#fff;"><?php echo htmlspecialchars($company['company_name']); ?></strong> on the homepage.</p>
+                                                    <p class="text-muted mb-0">Feature <strong class="text-dark"><?php echo htmlspecialchars($company['company_name']); ?></strong> on the homepage.</p>
                                                     <div class="mb-3">
                                                         <label class="form-label">Featured Until</label>
                                                         <input type="date" name="featured_until" class="form-control" value="<?php echo date('Y-m-d', strtotime('+30 days')); ?>" min="<?php echo date('Y-m-d'); ?>" required>
